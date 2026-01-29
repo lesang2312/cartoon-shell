@@ -325,7 +325,7 @@ Item {
 
                                     // Current Wallpaper Indicator
                                     Rectangle {
-                                        visible: isCurrentWallpaper(filePath)
+                                      visible: isCurrentWallpaper(filePath) ? true : false
                                         anchors.top: parent.top
                                         anchors.right: parent.right
                                         anchors.margins: 5
@@ -639,8 +639,17 @@ Item {
     }
 
     function isCurrentWallpaper(filePath) {
-        return currentConfig.pictureWallpaper === filePath
-    }
+    if (!currentScreen) return false
+    
+    // Lấy hình nền hiện tại của màn hình từ WallpaperService
+    var currentWallpaper = WallpaperService.getWallpaper(currentScreen.name)
+    
+    // Chuẩn hóa đường dẫn để so sánh
+    var cleanFilePath = filePath.toString().replace("file://", "")
+    var cleanCurrentWallpaper = currentWallpaper.toString().replace("file://", "")
+    
+    return cleanFilePath === cleanCurrentWallpaper
+}
 
     Component.onCompleted: {
     }

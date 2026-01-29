@@ -57,6 +57,7 @@ PanelWindow {
       Component.onCompleted: {
         ThemeService.init()
         WallpaperService.init();
+        ProgramCheckerService.init();
       }
 
       Background {}

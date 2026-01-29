@@ -5,6 +5,7 @@ import Qt.labs.folderlistmodel
 import Quickshell
 import qs.commons
 import qs.utils
+import qs.services  // Thêm import này
 
 Singleton {
   id: root
@@ -188,10 +189,11 @@ Singleton {
         
         // Đợi một chút để đảm bảo file được lưu
         Qt.callLater(function() {
-            if (typeof Matugen !== 'undefined' && Matugen.triggerMatugenOnWallpaperChange) {
-                Matugen.triggerMatugenOnWallpaperChange(path)
-            } else if (typeof MatugenService !== 'undefined' && MatugenService.triggerMatugenOnWallpaperChange) {
-                MatugenService.triggerMatugenOnWallpaperChange(path)
+            // Gọi ThemeService thay vì MatugenService
+            if (typeof ThemeService !== 'undefined' && ThemeService.triggerMatugenOnWallpaperChange) {
+                ThemeService.triggerMatugenOnWallpaperChange(path)
+            } else {
+                console.warn("ThemeService not found or triggerMatugenOnWallpaperChange not available")
             }
         })
     }

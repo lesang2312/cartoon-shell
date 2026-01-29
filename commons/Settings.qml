@@ -10,14 +10,12 @@ Singleton {
 
   property bool ready: false
 
-
   readonly property alias appearance: adapter.appearance
   readonly property alias wallpaper: adapter.wallpaper
   readonly property alias general: adapter.general
   readonly property alias clock: adapter.clock
   readonly property alias weather: adapter.weather
   readonly property alias bar: adapter.bar
-
 
   signal settingsLoaded
   signal settingsSaved
@@ -77,7 +75,6 @@ Singleton {
     property Bar bar: Bar{}
   }
 
-
   component Bar: JsonObject {
     property string position: "top"
   }
@@ -99,6 +96,11 @@ Singleton {
     property string countryFlag: "vietnam"
     property string fonts: ""
     property int radius: 16
+    // Thêm các properties cho dynamic theme
+    property bool dynamic: false
+    property string light: "light"
+    property string dark: "dark"
+    property string matugenType: "scheme-tonal-spot"
   }
 
   component General: JsonObject {

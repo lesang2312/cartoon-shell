@@ -13,13 +13,6 @@ ColumnLayout {
     width: parent.width
     spacing: 15
     
-    // XÓA Timer này hoặc sửa thành chỉ chạy khi cần
-    // property Timer reloadTimer: Timer {
-    //     interval: 100
-    //     repeat: false
-    //     onTriggered: ThemeService.loadTheme()
-    // }
-    
     Text {
         text: "Preset Themes"
         color: theme.primary ? theme.primary.foreground : "#d8dee9"
@@ -70,7 +63,16 @@ ColumnLayout {
                         // Chỉ đổi theme nếu khác theme hiện tại
                         if (Settings.appearance.theme !== modal.type) {
                             Settings.appearance.theme = modal.type
+                            
+                            // Nếu theme là "matugen", bật dynamic, ngược lại tắt dynamic
+                            if (modal.type === "matugen") {
+                                Settings.appearance.dynamic = true
+                            } else {
+                                Settings.appearance.dynamic = false
+                            }
+                            
                             // Không cần gọi reloadTimer vì ThemeService sẽ tự động load
+                            console.log("Theme changed to:", modal.type, "dynamic:", Settings.appearance.dynamic)
                         }
                     }
                 }

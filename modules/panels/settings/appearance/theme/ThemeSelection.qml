@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Layouts
 import "." as Com
 import qs.services
+import qs.commons
 
 RowLayout {
     id: themeSelection
@@ -32,7 +33,10 @@ RowLayout {
             label: lang.appearance?.theme_light || "Sáng"
             theme: themeSelection.theme
             onClicked: {
-              MatugenService.triggerMatugenOnThemeChange("light")
+              // Set theme to matugen and mode to light
+              Settings.appearance.theme = "matugen"
+              Settings.appearance.dynamic = true
+              Settings.appearance.mode = "light"
             }
         }
 
@@ -43,7 +47,10 @@ RowLayout {
             label: lang.appearance?.theme_dark || "Tối"
             theme: themeSelection.theme
             onClicked: {
-              MatugenService.triggerMatugenOnThemeChange("dark")
+              // Set theme to matugen and mode to dark
+              Settings.appearance.theme = "matugen"
+              Settings.appearance.dynamic = true
+              Settings.appearance.mode = "dark"
             }
         }
     }
