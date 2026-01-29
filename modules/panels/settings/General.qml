@@ -8,7 +8,7 @@ import qs.components
 import "./general/" as Com
 
 Item {
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
     property var lang: currentLanguage
     id: root
     

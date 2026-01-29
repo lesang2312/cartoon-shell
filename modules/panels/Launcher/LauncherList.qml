@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
+import qs.services
 
 Rectangle {
     id: container
@@ -14,7 +15,7 @@ Rectangle {
     property var apps: []
     property var allApps: []
     property string lastQuery: ""
-    property var theme : currentTheme
+    property var theme : ThemeService.theme
     property int currentIndex: 0
 
     signal appLaunched()

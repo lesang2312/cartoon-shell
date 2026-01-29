@@ -1,5 +1,6 @@
 // components/Settings/ThemeCard.qml
 import QtQuick
+import qs.services
 
 Rectangle {
     id: themeCard
@@ -7,7 +8,8 @@ Rectangle {
     property string type: "light"
     property bool isSelected: false
     property string label: ""
-    property var theme
+    property var theme : ThemeService.theme
+
 
 
     // 👇 chỉ active khi matugen

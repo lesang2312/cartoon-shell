@@ -1,9 +1,11 @@
 import QtQuick
 import QtQuick.Layouts
+import qs.services
 
 Rectangle {
     id: emptyState
-    property var theme
+    property var theme : ThemeService.theme
+
     property var lang
     
     color: "transparent"

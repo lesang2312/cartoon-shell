@@ -1,13 +1,14 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Fusion
+import qs.services
 
 import "." as Com
 
 ColumnLayout {
     Layout.preferredWidth: 90
     spacing: 15
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
     RowLayout {
       spacing: 15
       Rectangle {

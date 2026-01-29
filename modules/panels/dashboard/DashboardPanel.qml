@@ -4,13 +4,15 @@ import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
 import "." as Com
+import qs.services
 
 PanelWindow {
   id: root
   implicitWidth:  1300
   implicitHeight: 600
 
-  property var theme: currentTheme
+  property var theme : ThemeService.theme
+
 
   color: "transparent"
   Rectangle {

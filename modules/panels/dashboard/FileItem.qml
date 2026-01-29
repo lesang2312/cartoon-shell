@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Fusion
+import qs.services
 
 Rectangle {
     id: root
@@ -8,7 +9,8 @@ Rectangle {
     property string iconLight: ""
     property string label: ""
     property color iconColor: "white"
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
+
 
     Layout.fillWidth: true
     Layout.preferredHeight: 35

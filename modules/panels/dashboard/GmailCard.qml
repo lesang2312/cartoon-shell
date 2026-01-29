@@ -1,11 +1,13 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Fusion
+import qs.services
 
 Rectangle {
     id: root
     property int emailCount: 230
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
+
 
     Layout.fillWidth: true
     Layout.fillHeight: true

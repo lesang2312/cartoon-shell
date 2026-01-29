@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Fusion
 import "." as Com
+import qs.services
 
 Rectangle {
     id: root
@@ -9,7 +10,8 @@ Rectangle {
     Layout.preferredWidth: 200
     Layout.preferredHeight: 220
     radius: 28
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
+
     color: theme.primary.background
     border.color: theme.button.border
     border.width: 3

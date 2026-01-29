@@ -2,11 +2,12 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Fusion
 import "." as Com
+import qs.services
 
 Rectangle {
     id: root
 
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
 
     Layout.preferredWidth: 220
     Layout.preferredHeight: 220

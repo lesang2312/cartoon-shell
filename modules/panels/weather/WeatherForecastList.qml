@@ -1,10 +1,11 @@
 import QtQuick
 import QtQuick.Layouts
+import qs.services
 
 Rectangle {
     id: forecastSection
 
-    required property var theme
+    property var theme : ThemeService.theme
     required property var forecastDays
 
     visible: forecastDays.length > 0

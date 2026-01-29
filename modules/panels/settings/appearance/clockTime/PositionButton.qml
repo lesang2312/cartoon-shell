@@ -1,12 +1,14 @@
 // components/Settings/PositionButton.qml
 import QtQuick
+import qs.services
 
 Rectangle {
     id: positionButton
     property string label: ""
     property string position: ""
     property bool isSelected: false
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
+
     
     signal clicked
     

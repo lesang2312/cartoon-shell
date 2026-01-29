@@ -3,13 +3,14 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
+import qs.services
 import "./" as Components
 
 PanelWindow {
     id: batteryDetailPanel
 
     property var sizes: currentSizes.batteryDetailPanel || {}
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
 
     width: 450
     height: 400

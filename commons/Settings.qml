@@ -14,6 +14,9 @@ Singleton {
   readonly property alias appearance: adapter.appearance
   readonly property alias wallpaper: adapter.wallpaper
   readonly property alias general: adapter.general
+  readonly property alias clock: adapter.clock
+  readonly property alias weather: adapter.weather
+  readonly property alias bar: adapter.bar
 
 
   signal settingsLoaded
@@ -69,6 +72,23 @@ Singleton {
     property Wallpaper wallpaper: Wallpaper {}
     property Appearance appearance: Appearance {}
     property General general: General {}
+    property Clock clock: Clock{}
+    property Weather weather: Weather{}
+    property Bar bar: Bar{}
+  }
+
+
+  component Bar: JsonObject {
+    property string position: "top"
+  }
+
+  component Clock: JsonObject {
+    property string timeFormat: "24h"
+  }
+
+  component Weather: JsonObject{
+    property string keyApi: "21e0f911c7de4308916165005251210"
+    property string location: "Ho Chi Minh City,Vietnam"
   }
 
   component Appearance: JsonObject {

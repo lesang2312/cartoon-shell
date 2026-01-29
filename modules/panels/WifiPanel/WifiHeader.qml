@@ -1,9 +1,11 @@
 import QtQuick
 import QtQuick.Layouts
+import qs.services
 
 RowLayout {
     id: header
-    property var theme
+    property var theme : ThemeService.theme
+
     property var lang
     property var wifiManager
     

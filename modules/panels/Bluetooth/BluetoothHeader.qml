@@ -1,11 +1,12 @@
 // Header component for Bluetooth panel
 import QtQuick
 import QtQuick.Layouts
+import qs.services
 
 Rectangle {
     id: header
     required property var adapter
-    required property var theme
+    property var theme : ThemeService.theme
     required property var lang
     required property bool isDiscovering
 

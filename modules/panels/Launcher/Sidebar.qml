@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell.Io
+import qs.services
 
 Rectangle {
     id: root
@@ -12,7 +13,7 @@ Rectangle {
     border.color: theme.button.border
     border.width: 2
 
-    property var theme : currentTheme
+    property var theme : ThemeService.theme
     property var lang : currentLanguage
 
 

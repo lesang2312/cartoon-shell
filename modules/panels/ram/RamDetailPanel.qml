@@ -4,6 +4,7 @@ import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
 import "." as Components
+import qs.services
 
 PanelWindow {
     id: root
@@ -26,7 +27,7 @@ PanelWindow {
     exclusiveZone: 0
     color: "transparent"
 
-    property var theme : currentTheme
+    property var theme : ThemeService.theme
     property var lang : currentLanguage
     
     Rectangle {

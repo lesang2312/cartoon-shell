@@ -1,10 +1,12 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+import qs.services
 
 Rectangle {
     id: passwordBox
-    property var theme
+    property var theme : ThemeService.theme
+
     property var lang
     property var wifiManager
     property var networkData

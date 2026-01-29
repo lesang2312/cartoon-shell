@@ -4,6 +4,7 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Mpris
+import qs.services
 
 
 Rectangle {
@@ -17,7 +18,7 @@ Rectangle {
     property string currentArtist: root.player ? (root.player.trackArtist || "Unknown Artist") : "Unknown Artist"
     property var player: Mpris.players.values.length > 0 ? Mpris.players.values[0] : null
     property bool isPlaying: player ? player.isPlaying : false
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
 
 
 

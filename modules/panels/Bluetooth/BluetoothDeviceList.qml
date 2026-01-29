@@ -3,12 +3,13 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell.Bluetooth
+import qs.services
 import "." as Components
 
 Rectangle {
     id: deviceListRoot
     required property var adapter
-    required property var theme
+    property var theme : ThemeService.theme
     required property var lang
     required property int connectedCount
 
@@ -44,7 +45,6 @@ Rectangle {
 
                 delegate: Components.BluetoothDeviceItem {
                     adapter: deviceListRoot.adapter
-                    theme: deviceListRoot.theme
                     lang: deviceListRoot.lang
                     onPairError: function(message) {
                         deviceListRoot.pairError(message)

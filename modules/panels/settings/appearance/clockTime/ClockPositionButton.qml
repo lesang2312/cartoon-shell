@@ -1,11 +1,13 @@
 // components/Settings/ClockPositionButton.qml
 import QtQuick
+import qs.services
 
 Rectangle {
     id: clockPositionButton
     property string position: ""
     property bool isSelected: false
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
+
     property var anchorConfig: ({})
     
     signal clicked

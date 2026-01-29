@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
+import qs.services
 import "." as Com
 
 PanelWindow {
@@ -27,7 +28,7 @@ PanelWindow {
       id: wifiManager
     }
 
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
     property var lang: currentLanguage
 
     Rectangle {

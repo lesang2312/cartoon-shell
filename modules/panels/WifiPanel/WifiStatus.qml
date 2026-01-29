@@ -1,9 +1,10 @@
 import QtQuick
 import QtQuick.Layouts
+import qs.services
 
 Rectangle {
     id: wifiStatus
-    property var theme
+    property var theme : ThemeService.theme
     property var lang
     property var wifiManager
     

@@ -1,10 +1,11 @@
 // components/Settings/PanelPositionSelector.qml
 import QtQuick
 import QtQuick.Layouts
+import qs.services
 
 RowLayout {
     id: panelPositionSelector
-    property var theme
+    property var theme : ThemeService.theme
     property var lang
     property var panelConfig
     

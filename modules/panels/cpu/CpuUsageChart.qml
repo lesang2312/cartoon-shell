@@ -1,8 +1,10 @@
 import QtQuick
 import QtQuick.Layouts
+import qs.services
 
 Rectangle {
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
+
     property var cpuHistory: []
 
     color: "transparent"

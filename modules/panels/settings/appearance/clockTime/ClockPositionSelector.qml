@@ -1,11 +1,13 @@
 // components/Settings/ClockPositionSelector.qml
 import QtQuick
 import QtQuick.Layouts
+import qs.services
 import "." as Com
 
 Item {
     id: clockPositionSelector
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
+
     property var lang: currentLanguage
     property var panelConfig
     

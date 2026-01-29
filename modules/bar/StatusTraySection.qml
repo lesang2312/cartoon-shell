@@ -25,7 +25,7 @@ Rectangle {
     property bool bluetoothVisible: true
     property real currentVolume: Pipewire.defaultAudioSink?.audio.volume ?? 0
     property bool isMuted: Pipewire.defaultAudioSink?.audio.mute ?? false
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
 
     // SystemTray singleton - bắt đầu theo dõi system tray
 

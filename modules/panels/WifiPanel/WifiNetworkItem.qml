@@ -1,10 +1,12 @@
 import QtQuick
 import QtQuick.Layouts
 import "." as Com
+import qs.services
 
 Column {
     id: networkItem
-    property var theme
+    property var theme : ThemeService.theme
+
     property var lang
     property var wifiManager
     property var networkData

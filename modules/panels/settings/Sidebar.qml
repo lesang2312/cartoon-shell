@@ -1,9 +1,10 @@
 import QtQuick
 import QtQuick.Layouts
+import qs.services
 
 Rectangle {
     id: sidebarSettings
-    property var theme : currentTheme
+    property var theme : ThemeService.theme
     property var lang : currentLanguage
     property int currentIndex: 0
     property bool anyItemHovered: false

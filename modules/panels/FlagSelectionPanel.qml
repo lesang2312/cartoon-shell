@@ -9,7 +9,8 @@ import qs.services
 PanelWindow {
     id: flagSelectionPanel
 
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
+
     property string selectedFlag: currentConfig.selectedFlag
 
     JsonEditor {

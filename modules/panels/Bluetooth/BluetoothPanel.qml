@@ -4,6 +4,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Bluetooth
+import qs.services
 import "." as Components
 
 PanelWindow {
@@ -25,7 +26,7 @@ PanelWindow {
     aboveWindows: true
     objectName: "BluetoothPanel"
 
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
     property var lang: currentLanguage
     property var adapter: Bluetooth.defaultAdapter
     property int connectedCount: {
@@ -78,7 +79,6 @@ PanelWindow {
                 // Header with title and scan button
                 Components.BluetoothHeader {
                     adapter: root.adapter
-                    theme: root.theme
                     lang: root.lang
                     isDiscovering: adapter?.discovering || false
 
@@ -138,7 +138,6 @@ PanelWindow {
                 // Status card with toggle
                 Components.BluetoothStatusCard {
                     adapter: root.adapter
-                    theme: root.theme
                     lang: root.lang
                     connectedCount: root.connectedCount
                 }
@@ -146,7 +145,6 @@ PanelWindow {
                 // Device list
                 Components.BluetoothDeviceList {
                     adapter: root.adapter
-                    theme: root.theme
                     lang: root.lang
                     connectedCount: root.connectedCount
 

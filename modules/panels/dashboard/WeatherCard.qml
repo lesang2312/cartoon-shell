@@ -3,10 +3,11 @@ import QtQuick.Layouts
 import QtQuick.Controls.Fusion
 import Quickshell.Io
 import "../../../services" as Services
+import qs.services
 
 Rectangle {
     id: root
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
     property string apiKey: ""
     property string location: ""
     property string temperature: ""

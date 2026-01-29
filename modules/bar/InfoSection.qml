@@ -17,7 +17,7 @@ Rectangle {
     property bool flagPanelVisible: false
     property bool weatherPanelVisible: false
     property string selectedFlag: currentConfig.countryFlag
-    property var theme : currentTheme
+    property var theme : ThemeService.theme
 
     WeatherService{
       id: weatherService

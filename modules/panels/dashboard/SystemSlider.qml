@@ -1,12 +1,14 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Fusion
+import qs.services
 
 RowLayout {
     id: root
     property string srcImage: ""
     property color iconColor: "white"
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
+
     property real value: 0.5
 
     Layout.fillWidth: true

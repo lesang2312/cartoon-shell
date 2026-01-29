@@ -13,7 +13,7 @@ Rectangle {
     clip: true
 
     property string memoryUsage: "0%"
-    property var theme : currentTheme
+    property var theme : ThemeService.theme
     CpuService{
       id: cpuService
       enableCpuHistory: true

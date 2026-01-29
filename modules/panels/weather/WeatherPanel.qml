@@ -4,15 +4,15 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
+import qs.services
 import "../../../services" as Services
 import "." as Com
 
 PanelWindow {
     id: weatherPanel
 
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
     property var lang: currentLanguage
-
     Services.JsonEditor {
         id: panelConfig
         filePath: Qt.resolvedUrl("../../../config/configs/" + currentConfigProfile + ".json")

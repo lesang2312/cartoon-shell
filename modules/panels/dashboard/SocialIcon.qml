@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Fusion
 import Quickshell
 import Quickshell.Io
+import qs.services
 
 Rectangle {
     id: root
@@ -10,7 +11,7 @@ Rectangle {
     property string linkSocial: ""
     property color bgColor: "white"
     property real hoverScale: 1.2 // Tỷ lệ phóng to khi hover
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
 
     Layout.fillHeight: true
     Layout.preferredWidth: height

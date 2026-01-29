@@ -7,7 +7,7 @@ import qs.services
 
 Rectangle {
     id: rootSettings
-    property var theme : currentTheme
+    property var theme : ThemeService.theme
     property var lang: currentLanguage
     property var launcherPanel: null  // Reference to LauncherPanel
     property int currentTab: 0

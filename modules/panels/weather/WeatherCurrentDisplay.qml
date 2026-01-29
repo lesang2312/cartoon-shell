@@ -1,11 +1,12 @@
 import QtQuick
 import QtQuick.Layouts
+import qs.services
 import "." as Com
 
 RowLayout {
     id: currentDisplay
 
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
     required property string temperature
     required property string condition
     required property string icon

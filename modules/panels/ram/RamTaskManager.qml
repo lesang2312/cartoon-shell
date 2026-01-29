@@ -2,10 +2,14 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
+import qs.services
 import Quickshell.Io
 
 Item {
     id: ramTaskManager
+
+  property var theme : ThemeService.theme
+
 
     property color headerColor: theme.normal.blue
     property color rowEvenColor: theme.primary.background

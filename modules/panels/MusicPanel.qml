@@ -11,7 +11,7 @@ import qs.services
 PanelWindow {
     id: musicPanel
 
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
     property var lang: currentLanguage
 
     // Music data

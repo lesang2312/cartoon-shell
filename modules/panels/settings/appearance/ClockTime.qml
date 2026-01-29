@@ -3,10 +3,12 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import "clockTime" as Com
 import qs.components
+import qs.services
 
 Item {
   id: root
-  property var theme: currentTheme
+  property var theme : ThemeService.theme
+
   property var lang: currentLanguage
   property var panelConfig
   

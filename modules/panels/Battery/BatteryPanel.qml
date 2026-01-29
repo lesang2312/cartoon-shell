@@ -4,11 +4,14 @@ import QtQuick.Layouts
 import QtQuick.Shapes
 import Quickshell.Io
 import Quickshell
+import qs.services
 
 Item {
     id: batteryDisplay
     width: 320
     height: 400
+
+    property var theme : ThemeService.theme
 
     // Catppuccin Mocha color scheme
     property color batteryHighColor: theme.normal.green       // "#a6da95"

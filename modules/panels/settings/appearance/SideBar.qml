@@ -1,10 +1,12 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import qs.services
 
 Rectangle {
     property int currentTab: 0
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
+
     property var lang: currentLanguage
     Layout.fillWidth: true
     color: theme.primary.dim_background

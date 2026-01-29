@@ -3,11 +3,12 @@ import Quickshell
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell.Io
+import qs.services
 import "."
 
 Item {
     id: root
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
     property var lang: currentLanguage
     property var panelConfig  // Received from parent SettingsPanel
 

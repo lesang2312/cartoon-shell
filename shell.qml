@@ -18,7 +18,6 @@ import qs.commons
 ShellRoot {
     id: root
 
-    ThemeLoader { id: themeLoader }
     LanguageLoader { id: languageLoader }
     ConfigLoader { id: configLoader }
     PanelManager { id: panelManager }
@@ -35,7 +34,6 @@ ShellRoot {
 
 
 
-    property var currentTheme: themeLoader.theme
     property var currentLanguage: languageLoader.translations
     property var currentConfig: configLoader.config
     property string currentConfigProfile: configLoader.currentConfigProfile
@@ -101,6 +99,7 @@ PanelWindow {
     sourceComponent: Item {
       Component.onCompleted: {
         WallpaperService.init();
+        ThemeService.init()
       }
 
       Background {}

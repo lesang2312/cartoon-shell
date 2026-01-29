@@ -1,11 +1,12 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import qs.services
 
 Rectangle {
     id: calendar
 
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
     property var lang: currentLanguage
 
     property date currentDate: new Date()

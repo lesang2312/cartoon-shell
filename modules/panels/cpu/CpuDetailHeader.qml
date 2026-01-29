@@ -1,10 +1,11 @@
 import QtQuick
+import qs.services
 
 Item {
     id: header
     signal closeClicked()
 
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
     property var lang : currentLanguage
 
 

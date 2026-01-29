@@ -30,7 +30,7 @@ PanelWindow {
 
     signal closeRequested()
 
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
 
     // Process để lấy CPU usage tổng
     CpuService {

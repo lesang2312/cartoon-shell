@@ -1,5 +1,6 @@
 // Device item component for Bluetooth panel
 import QtQuick
+import qs.services
 import QtQuick.Layouts
 
 Rectangle {
@@ -7,7 +8,7 @@ Rectangle {
     required property var modelData
     required property int index
     required property var adapter
-    required property var theme
+    property var theme : ThemeService.theme
     required property var lang
 
     signal pairError(string message)

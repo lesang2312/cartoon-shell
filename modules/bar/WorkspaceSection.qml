@@ -11,7 +11,7 @@ Rectangle {
     border.color: theme.button.border
     border.width: 3
 
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
     color: theme.primary.background
 
     // Hyprland service facade

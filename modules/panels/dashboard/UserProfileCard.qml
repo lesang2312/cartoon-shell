@@ -2,12 +2,14 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Fusion
 import Quickshell.Widgets
+import qs.services
 
 
 Rectangle {
     id: root
     
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
+
     property var config: currentConfig
     property string userName: config.dashboard.name
     property string userHandle: config.dashboard.username

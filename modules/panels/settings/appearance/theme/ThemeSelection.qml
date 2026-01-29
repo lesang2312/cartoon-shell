@@ -2,10 +2,11 @@
 import QtQuick
 import QtQuick.Layouts
 import "." as Com
+import qs.services
 
 RowLayout {
     id: themeSelection
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
     property var lang: currentLanguage
     property var panelConfig
     property var matugenHandler

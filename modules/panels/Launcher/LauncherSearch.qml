@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import qs.services
 
 Rectangle {
     id: root
@@ -14,7 +15,7 @@ Rectangle {
     signal searchChanged(string text) // phát ra khi cần tìm (sau debounce)
     signal accepted(string text)      // khi nhấn Enter
 
-    property var theme : currentTheme
+    property var theme : ThemeService.theme
     property alias searchField: searchField  // Expose searchField để có thể focus từ bên ngoài
 
     RowLayout {

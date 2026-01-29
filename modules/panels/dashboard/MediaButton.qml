@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Fusion
+import qs.services
 
 Rectangle {
     id: root
@@ -7,7 +8,8 @@ Rectangle {
     property int size: 35
     property color backgroundColor: "transparent"
     property var onButtonClicked: function() {}
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
+
 
     width: size
     height: size

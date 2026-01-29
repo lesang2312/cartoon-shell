@@ -2,9 +2,10 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import qs.services
 
 Item {
-    property var theme : currentTheme
+    property var theme : ThemeService.theme
     
     ScrollView {
         anchors.fill: parent

@@ -3,10 +3,12 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell.Io
 import qs.commons
+import qs.services
 
 ColumnLayout {
     id: presetThemesContainer
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
+
     property var panelConfig
     
     width: parent.width

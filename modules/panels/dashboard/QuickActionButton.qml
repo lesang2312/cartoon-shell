@@ -1,12 +1,14 @@
 import QtQuick
 import QtQuick.Controls.Fusion
 import QtQuick.Layouts
+import qs.services
 
 Rectangle {
     id: root
     property string icon: ""
     property color iconColor: "white"
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
+
 
     radius: 28
     color: theme.primary.background

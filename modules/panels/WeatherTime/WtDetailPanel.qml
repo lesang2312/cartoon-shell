@@ -3,12 +3,14 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
+import qs.services
 import "./" as Components
 
 PanelWindow {
     id: wtDetailPanel
 
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
+
 
     implicitWidth: 500
     implicitHeight: 500

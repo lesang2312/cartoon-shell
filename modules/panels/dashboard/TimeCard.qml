@@ -2,11 +2,13 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Fusion
 import Quickshell
+import qs.services
 
 Rectangle {
     id: root
 
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
+
     property var lang: currentLanguage
     property string currentHour: ""
     property string currentMin: ""

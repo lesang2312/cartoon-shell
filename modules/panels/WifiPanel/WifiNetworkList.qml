@@ -2,10 +2,12 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import "." as Com
+import qs.services
 
 ColumnLayout {
     id: networkList
-    property var theme
+    property var theme : ThemeService.theme
+
     property var lang
     property var wifiManager
     

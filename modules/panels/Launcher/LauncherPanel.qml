@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
+import qs.services
 
 // Import các thành phần phụ trong cùng thư mục
 import "../settings" as Settings
@@ -37,7 +38,7 @@ PanelWindow {
     Behavior on width { NumberAnimation { duration: 10 } }
     Behavior on height { NumberAnimation { duration: 10 } }
 
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
     property bool settingsPanelVisible: false
     property var lang : currentLanguage
     property bool launcherPanelVisible: true

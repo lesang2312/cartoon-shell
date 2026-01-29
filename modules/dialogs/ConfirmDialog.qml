@@ -2,12 +2,14 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
+import qs.services
 
 PanelWindow {
     id: root
 
-    property var theme: currentTheme
     property var lang: currentLanguage
+    property var theme : ThemeService.theme
+
     property string pendingAction: ""
     property string pendingActionLabel: ""
 

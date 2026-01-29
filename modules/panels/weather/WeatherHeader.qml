@@ -1,10 +1,11 @@
 import QtQuick
 import QtQuick.Layouts
+import qs.services
 
 Item {
     id: headerCard
 
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
     property var lang: currentLanguage
 
     Layout.fillWidth: true

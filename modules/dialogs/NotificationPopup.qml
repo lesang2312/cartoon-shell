@@ -2,10 +2,12 @@ import QtQuick
 import QtQuick.Window
 import Quickshell
 import Quickshell.Services.Notifications
+import qs.services
 
 PanelWindow {
     id: root
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
+
 
     implicitWidth: 430
     anchors {

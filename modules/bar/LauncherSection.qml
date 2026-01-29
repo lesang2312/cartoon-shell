@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import Quickshell
 import QtQuick.Effects
 import Quickshell.Io
+import qs.services
 
 Rectangle {
     id: root
@@ -12,7 +13,7 @@ Rectangle {
     radius: 10
     border.color: theme.button.border
     border.width: 3
-    property var theme : currentTheme
+    property var theme : ThemeService.theme
     RowLayout {
         anchors.centerIn: parent
         spacing: 15

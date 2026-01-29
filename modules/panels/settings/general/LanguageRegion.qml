@@ -3,10 +3,11 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import qs.commons
+import qs.services
 
 Item {
   id: root
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
     property var lang: currentLanguage
     
     property Timer reloadTimer: Timer {

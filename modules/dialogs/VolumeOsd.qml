@@ -3,11 +3,12 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Services.Pipewire
 import Quickshell.Widgets
+import qs.services
 
 Scope {
     id: root
 
-    property var theme: currentTheme
+    property var theme : ThemeService.theme
     property var lang: currentLanguage
     property bool shouldShowOsd: false
     property real currentVolume: Pipewire.defaultAudioSink?.audio.volume ?? 0
