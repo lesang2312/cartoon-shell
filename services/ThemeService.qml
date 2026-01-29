@@ -17,9 +17,9 @@ Singleton {
   property list<string> themeFiles: []
   property bool loading: false
   property alias palette: adapter
-
-  // For compatibility - thêm property theme
-  property var theme: getThemeFromPalette()
+  
+  // Theme property - sẽ chứa theme theo format mới
+  property var theme: getFallbackTheme()
   
   readonly property bool isInitialized: true
   property Timer reloadTimer: Timer {
@@ -62,6 +62,30 @@ Singleton {
       on_error_container: "mOnErrorContainer"
     })
 
+  // Thêm map cho theme mới sang Material Design 3
+  readonly property var themeToMaterialMap: ({
+      "primary.background": "mBackground",
+      "primary.foreground": "mOnBackground",
+      "primary.dim_background": "mSurfaceContainerLow",
+      "primary.dim_foreground": "mOnSurfaceVariant",
+      "primary.bright_foreground": "mPrimary",
+      "button.background": "mSurfaceVariant",
+      "button.text": "mPrimary",
+      "button.background_select": "mOutline",
+      "button.border": "mOutline",
+      "button.border_select": "mOutline",
+      "normal.red": "mError",
+      "normal.green": "mPrimary",
+      "normal.yellow": "mTertiary",
+      "normal.cyan": "mTertiary",
+      "normal.white": "mOnSurface",
+      "bright.red": "mError",
+      "bright.green": "mPrimary",
+      "bright.yellow": "mTertiary",
+      "bright.cyan": "mTertiary",
+      "bright.white": "mOnSurface"
+    })
+
   // Thêm các functions cho compatibility
   function init() {
     console.log("ThemeService initialized")
@@ -81,7 +105,7 @@ Singleton {
       // If theme is matugen, set dynamic to true
       Settings.appearance.dynamic = (newTheme === "matugen")
     }
-    return getThemeFromPalette()
+    return root.theme
   }
 
   function getFallbackTheme() {
@@ -128,60 +152,16 @@ Singleton {
     }
   }
 
-  // Hàm chuyển đổi từ theme file sang palette format
-  function convertThemeToPalette(themeData) {
-    console.log("Converting theme to palette format...")
-    
-    var paletteData = {}
-    
-    // Map từ theme structure sang palette structure
-    // Primary colors
-    if (themeData.primary) {
-      paletteData.mBackground = themeData.primary.background || "#24273a"
-      paletteData.mOnBackground = themeData.primary.foreground || "#cad3f5"
-      paletteData.mSurface = themeData.primary.background || "#24273a"
-      paletteData.mOnSurface = themeData.primary.foreground || "#cad3f5"
-      paletteData.mSurfaceVariant = themeData.primary.dim_background || "#1e2030"
-      paletteData.mOnSurfaceVariant = themeData.primary.dim_foreground || "#8087a2"
-      paletteData.mSurfaceTint = themeData.primary.bright_foreground || "#cad3f5"
-    }
-    
-    // Button colors
-    if (themeData.button) {
-      paletteData.mOutline = themeData.button.border || "#b8c0e0"
-      paletteData.mSurfaceContainer = themeData.button.background || "#494d64"
-      paletteData.mSurfaceContainerLow = themeData.button.background || "#494d64"
-      paletteData.mSurfaceContainerHigh = themeData.button.background_select || "#5b6078"
-      paletteData.mSurfaceContainerHighest = themeData.button.background_select || "#5b6078"
-    }
-    
-    // Normal colors
-    if (themeData.normal) {
-      paletteData.mPrimary = themeData.normal.blue || "#8aadf4"
-      paletteData.mError = themeData.normal.red || "#ed8796"
-      paletteData.mTertiary = themeData.normal.cyan || "#8bd5ca"
-    }
-    
-    // Các màu mặc định khác
-    paletteData.mOnPrimary = "#2e3300"
-    paletteData.mPrimaryContainer = "#444b05"
-    paletteData.mOnPrimaryContainer = "#e0e994"
-    paletteData.mSecondary = "#c7c9a7"
-    paletteData.mOnSecondary = "#2f321a"
-    paletteData.mOnTertiary = "#06372d"
-    paletteData.mShadow = "#000000"
-    paletteData.mOnError = "#690005"
-    paletteData.mErrorContainer = "#93000a"
-    paletteData.mOnErrorContainer = "#ffdad6"
-    
-    console.log("Palette conversion completed")
-    return paletteData
-  }
-
   function getThemeFromPalette() {
-    // Convert palette colors to theme format for compatibility
+    // Chuyển đổi từ Material Design 3 sang theme format mới
     var currentMode = Settings.appearance.mode || "dark"
     
+    // Nếu đã có theme mới được load, trả về nó
+    if (root._currentTheme && root._currentTheme.type) {
+      return root._currentTheme
+    }
+    
+    // Fallback: tạo theme từ palette
     return {
       "type": currentMode,
       "primary": {
@@ -228,100 +208,44 @@ Singleton {
   function refresh() {
     root.loading = true;
     
-    console.log("Refreshing theme. Current theme:", Settings.appearance.theme, "dynamic:", Settings.appearance.dynamic)
-    
     // Check if theme is matugen or dynamic
     if (Settings.appearance.theme === "matugen" || Settings.appearance.dynamic) {
-      console.log("Running matugen theme")
       generateFromWallpaper(Settings.appearance.mode, Settings.appearance.matugenType);
     } else {
       // Load static theme
       var themeName = Settings.appearance.theme
       if (themeName) {
-        console.log("Loading static theme:", themeName)
         loadThemeByName(themeName);
       } else {
-        console.log("No theme name specified")
         root.loading = false;
       }
     }
   }
 
-  // Sửa hàm này để dùng XMLHttpRequest thay vì FileView
   function loadThemeByName(name) {
     if (!name) {
       root.loading = false;
       return;
     }
     
-    console.log("Attempting to load theme:", name)
+    // First check if it's a built-in theme file
+    var path = ""
     
-    // Sử dụng XMLHttpRequest để load theme file
-    var filePath = Qt.resolvedUrl("../assets/themes/" + name + ".json")
-    console.log("Loading theme from:", filePath)
-    
-    var xhr = new XMLHttpRequest()
-    xhr.open("GET", filePath, false)
-    xhr.send()
-
-    if (xhr.status === 200) {
-      try {
-        var themeData = JSON.parse(xhr.responseText)
-        console.log("Successfully parsed theme:", name)
-        
-        // Chuyển đổi từ theme format sang palette format
-        var paletteData = convertThemeToPalette(themeData)
-        console.log("Converted palette data:", Object.keys(paletteData))
-        
-        // Cập nhật palette
-        updateColors(paletteData)
-        
-      } catch (e) {
-        console.error("Failed to parse theme JSON:", e)
-        // Fallback to default theme
-        console.log("Falling back to default theme")
-        loadDefaultTheme()
+    // Check if file exists in themes directory
+    for (var i = 0; i < themeFiles.length; i++) {
+      if (themeFiles[i].endsWith("/" + name + ".json")) {
+        path = themeFiles[i]
+        break
       }
-    } else {
-      console.error("Failed to load theme file. Status:", xhr.status, "Path:", filePath)
-      // Fallback to default theme
-      console.log("Falling back to default theme")
-      loadDefaultTheme()
-    }
-  }
-
-  // Hàm load default theme
-  function loadDefaultTheme() {
-    // Create default theme palette
-    var defaultPalette = {
-      "mPrimary": "#c4cd7b",
-      "mOnPrimary": "#2e3300",
-      "mPrimaryContainer": "#444b05",
-      "mOnPrimaryContainer": "#e0e994",
-      "mSecondary": "#c7c9a7",
-      "mOnSecondary": "#2f321a",
-      "mTertiary": "#a2d0c1",
-      "mOnTertiary": "#06372d",
-      "mBackground": "#13140d",
-      "mOnBackground": "#e5e3d6",
-      "mSurface": "#13140d",
-      "mOnSurface": "#e5e3d6",
-      "mSurfaceVariant": "#47483b",
-      "mOnSurfaceVariant": "#c8c7b7",
-      "mSurfaceTint": "#c4cd7b",
-      "mOutline": "#929282",
-      "mShadow": "#000000",
-      "mError": "#ffb4ab",
-      "mOnError": "#690005",
-      "mErrorContainer": "#93000a",
-      "mOnErrorContainer": "#ffdad6",
-      "mSurfaceContainer": "#202018",
-      "mSurfaceContainerLow": "#1c1c14",
-      "mSurfaceContainerHigh": "#2a2b22",
-      "mSurfaceContainerHighest": "#35352d"
     }
     
-    updateColors(defaultPalette)
+    if (path) {
+      themeReader.path = "";
+      themeReader.path = path;
+    } else {
+      console.warn("Theme not found:", name);
+      root.loading = false;
+    }
   }
 
   function updateColors(data) {
@@ -330,25 +254,91 @@ Singleton {
       return;
     }
 
-    console.log("Updating colors with data:", Object.keys(data))
-    
-    let changed = false;
-    for (const key in data) {
-      if (palette.hasOwnProperty(key) && palette[key] !== data[key]) {
-        palette[key] = data[key];
-        changed = true;
+    // Kiểm tra xem data có phải là theme mới hay Material Design 3
+    // Theme mới có cấu trúc: type, primary, button, cursor, normal, bright
+    if (data.type && data.primary && data.normal) {
+      // Đây là theme mới
+      console.log("Loading new theme format");
+      root._currentTheme = data;
+      root.theme = data;
+      
+      // Ánh xạ theme mới sang Material Design 3
+      var materialData = mapThemeToMaterial(data);
+      
+      // Cập nhật palette
+      let changed = false;
+      for (const key in materialData) {
+        if (palette.hasOwnProperty(key) && palette[key] !== materialData[key]) {
+          palette[key] = materialData[key];
+          changed = true;
+        }
       }
-    }
-    
-    if (changed) {
-      stateFileView.writeAdapter();
-      // Tạo file matugen.json từ palette hiện tại
-      createMatugenJsonFile();
+      if (changed) {
+        stateFileView.writeAdapter();
+      }
+    } else {
+      // Đây là Material Design 3 format
+      console.log("Loading Material Design 3 format");
+      let changed = false;
+      for (const key in data) {
+        if (palette.hasOwnProperty(key) && palette[key] !== data[key]) {
+          palette[key] = data[key];
+          changed = true;
+        }
+      }
+      if (changed) {
+        stateFileView.writeAdapter();
+        // Tạo file matugen.json từ palette hiện tại
+        createMatugenJsonFile();
+      }
+      
+      // Tạo theme mới từ palette
+      root._currentTheme = null;
+      root.theme = getThemeFromPalette();
     }
 
     root.loading = false;
-    themeReloaded()
-    console.log("Theme reloaded successfully")
+    themeReloaded();
+  }
+
+  // Hàm ánh xạ theme mới sang Material Design 3
+  function mapThemeToMaterial(themeData) {
+    var result = {};
+    
+    // Ánh xạ các màu từ theme mới sang Material Design 3
+    for (var key in themeToMaterialMap) {
+      var materialKey = themeToMaterialMap[key];
+      var keys = key.split(".");
+      var value = themeData;
+      
+      // Lấy giá trị theo path
+      for (var i = 0; i < keys.length; i++) {
+        if (value && typeof value === 'object') {
+          value = value[keys[i]];
+        } else {
+          value = null;
+          break;
+        }
+      }
+      
+      if (value && materialKey) {
+        result[materialKey] = value;
+      }
+    }
+    
+    // Set mode-based colors
+    var mode = themeData.type || "dark";
+    if (mode === "light") {
+      // Điều chỉnh một số màu cho light mode nếu cần
+      if (!result.mBackground && themeData.primary && themeData.primary.background) {
+        result.mBackground = themeData.primary.background;
+      }
+      if (!result.mOnBackground && themeData.primary && themeData.primary.foreground) {
+        result.mOnBackground = themeData.primary.foreground;
+      }
+    }
+    
+    return result;
   }
 
   function generateFromWallpaper(mode, type) {
@@ -413,7 +403,7 @@ Singleton {
 
   // Tạo file matugen.json từ palette hiện tại
   function createMatugenJsonFile() {
-    const themeData = getThemeFromPalette()
+    const themeData = root.theme
     const themeJson = JSON.stringify(themeData, null, 2)
     
     console.log("Creating matugen.json file at:", matugenFilePath)
@@ -538,7 +528,6 @@ Singleton {
       if (exitCode === 0) {
         themeFiles = stdout.text.trim().split("\n").filter(Boolean);
         console.log("Found theme files:", themeFiles.length)
-        console.log("First theme file:", themeFiles[0])
       } else {
         console.error("Find Theme Error:", stderr.text);
       }
@@ -584,7 +573,6 @@ Singleton {
       try {
         var jsonText = text()
         if (jsonText) {
-          // Giả sử file theme đã ở định dạng palette
           root.updateColors(JSON.parse(jsonText))
         } else {
           console.error("Theme file is empty")
@@ -639,21 +627,7 @@ Singleton {
     }
   }
 
-  Component.onCompleted: {
-    // Khởi động service
-    init()
-    
-    // Tạo file matugen.json khi khởi động nếu chưa có
-    Qt.callLater(function() {
-      // Wait for settings to be ready
-      if (Settings.ready) {
-        createMatugenJsonFile()
-      } else {
-        // If settings not ready, wait for them
-        Settings.settingsLoaded.connect(function() {
-          createMatugenJsonFile()
-        })
-      }
-    })
-  }
+  
+  // Private property để lưu theme hiện tại
+  property var _currentTheme: null
 }
