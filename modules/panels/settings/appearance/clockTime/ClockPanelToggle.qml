@@ -3,11 +3,11 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import qs.services
+import qs.commons
 
 Item{
     property var theme : ThemeService.theme
     property var lang: currentLanguage
-    property var panelConfig
     implicitHeight: clockPanelToggle.implicitHeight
 RowLayout {
     id: clockPanelToggle
@@ -27,9 +27,9 @@ RowLayout {
 
     Switch {
         id: autoStartSwitch
-        checked: currentConfig.clockPanelVisible || false
+        checked: Settings.clock.enableWidget || false
         onToggled: {
-            panelConfig.set("clockPanelVisible", checked)
+            Settings.clock.enableWidget = checked
         }
         Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
 

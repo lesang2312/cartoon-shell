@@ -11,7 +11,6 @@ Item {
     id: rootAppearance
     property var theme : ThemeService.theme
     property var lang: currentLanguage
-    property var panelConfig
     property int currentTab: 0
 
     ListSettingsService {
@@ -51,7 +50,6 @@ Item {
 
                     // Tab 0: Theme
                     Com.Theme {
-                        panelConfig: rootAppearance.panelConfig
                         Layout.fillWidth: true
                         Layout.fillHeight: true
                     }
@@ -95,7 +93,6 @@ Item {
 
                     // Tab 2: Clock
                     Com.ClockTime {
-                        panelConfig: rootAppearance.panelConfig
                         Layout.fillWidth: true
                         Layout.fillHeight: true
                     }
@@ -218,7 +215,6 @@ Item {
 
                     // Tab 7: Wallpaper
                     Com.Wallpapers {
-                        panelConfig: rootAppearance.panelConfig
                         Layout.fillWidth: true
                         Layout.fillHeight: true
                     }

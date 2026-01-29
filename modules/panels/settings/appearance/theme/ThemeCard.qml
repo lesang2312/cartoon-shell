@@ -1,6 +1,7 @@
 // components/Settings/ThemeCard.qml
 import QtQuick
 import qs.services
+import qs.commons
 
 Rectangle {
     id: themeCard
@@ -13,7 +14,7 @@ Rectangle {
 
 
     // 👇 chỉ active khi matugen
-    property bool isEnabled: currentConfig.theme === "matugen"
+    property bool isEnabled: Settings.appearance.theme === "matugen"
 
     signal clicked
 

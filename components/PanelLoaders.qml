@@ -3,6 +3,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import qs.modules.panels
+import qs.commons
 
 Item {
     id: root
@@ -26,15 +27,15 @@ Item {
       }
 
       
-    property bool anchorsTop: currentConfig.clockPanelPosition === "top" || currentConfig.clockPanelPosition === "topLeft" || currentConfig.clockPanelPosition === "topRight"
-    property bool anchorsBottom: currentConfig.clockPanelPosition === "bottom" || currentConfig.clockPanelPosition === "bottomLeft" || currentConfig.clockPanelPosition === "bottomRight"
-    property bool anchorsRight: currentConfig.clockPanelPosition === "right" || currentConfig.clockPanelPosition === "topRight" || currentConfig.clockPanelPosition === "bottomRight"
-    property bool anchorsLeft: currentConfig.clockPanelPosition === "left" || currentConfig.clockPanelPosition === "topLeft" || currentConfig.clockPanelPosition === "bottomLeft"
+    property bool anchorsTop: Settings.clock.positionWidget === "top" || Settings.clock.positionWidget === "topLeft" || Settings.clock.positionWidget === "topRight"
+    property bool anchorsBottom: Settings.clock.positionWidget === "bottom" || Settings.clock.positionWidget === "bottomLeft" || Settings.clock.positionWidget === "bottomRight"
+    property bool anchorsRight: Settings.clock.positionWidget === "right" || Settings.clock.positionWidget === "topRight" || Settings.clock.positionWidget === "bottomRight"
+    property bool anchorsLeft: Settings.clock.positionWidget === "left" || Settings.clock.positionWidget === "topLeft" || Settings.clock.positionWidget === "bottomLeft"
 
 
       ClockPanel {
         id: clockPanel
-        visible: currentConfig.clockPanelVisible
+        visible: Settings.clock.enableWidget
         anchors {
         top: anchorsTop
         bottom: anchorsBottom

@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Layouts
 import qs.services
 import "." as Com
+import qs.commons
 
 Item {
     id: clockPositionSelector
@@ -11,7 +12,6 @@ Item {
     property var lang: currentLanguage
     property var panelConfig
     
-    signal positionSelected(string position)
     
     implicitHeight: content.implicitHeight
     
@@ -59,12 +59,11 @@ Item {
                     width: 80
                     height: 80
                     position: "topLeft"
-                    isSelected: currentConfig.clockPanelPosition === "topLeft"
+                    isSelected: Settings.clock.positionWidget === "topLeft"
                     theme: clockPositionSelector.theme
                     anchorConfig: ({ top: true, left: true })
                     onClicked: {
-                        panelConfig.set("clockPanelPosition", "topLeft")
-                        positionSelected("topLeft")
+                        Settings.clock.positionWidget = "topLeft"
                     }
                 }
                 
@@ -72,12 +71,11 @@ Item {
                     width: 80
                     height: 80
                     position: "top"
-                    isSelected: currentConfig.clockPanelPosition === "top"
+                    isSelected: Settings.clock.positionWidget === "top"
                     theme: clockPositionSelector.theme
                     anchorConfig: ({ top: true, hCenter: true })
                     onClicked: {
-                        panelConfig.set("clockPanelPosition", "top")
-                        positionSelected("top")
+                        Settings.clock.positionWidget = "top"
                     }
                 }
                 
@@ -85,12 +83,11 @@ Item {
                     width: 80
                     height: 80
                     position: "topRight"
-                    isSelected: currentConfig.clockPanelPosition === "topRight"
+                    isSelected: Settings.clock.positionWidget === "topRight"
                     theme: clockPositionSelector.theme
                     anchorConfig: ({ top: true, right: true })
                     onClicked: {
-                        panelConfig.set("clockPanelPosition", "topRight")
-                        positionSelected("topRight")
+                        Settings.clock.positionWidget = "topRight"
                     }
                 }
                 
@@ -99,12 +96,11 @@ Item {
                     width: 80
                     height: 80
                     position: "left"
-                    isSelected: currentConfig.clockPanelPosition === "left"
+                    isSelected: Settings.clock.positionWidget === "left"
                     theme: clockPositionSelector.theme
                     anchorConfig: ({ left: true, vCenter: true })
                     onClicked: {
-                        panelConfig.set("clockPanelPosition", "left")
-                        positionSelected("left")
+                        Settings.clock.positionWidget = "left"
                     }
                 }
                 
@@ -112,12 +108,11 @@ Item {
                     width: 80
                     height: 80
                     position: "center"
-                    isSelected: currentConfig.clockPanelPosition === "center"
+                    isSelected: Settings.clock.positionWidget === "center"
                     theme: clockPositionSelector.theme
                     anchorConfig: ({ hCenter: true, vCenter: true })
                     onClicked: {
-                        panelConfig.set("clockPanelPosition", "center")
-                        positionSelected("center")
+                        Settings.clock.positionWidget = "center"
                     }
                 }
                 
@@ -125,12 +120,11 @@ Item {
                     width: 80
                     height: 80
                     position: "right"
-                    isSelected: currentConfig.clockPanelPosition === "right"
+                    isSelected: Settings.clock.positionWidget === "right"
                     theme: clockPositionSelector.theme
                     anchorConfig: ({ right: true, vCenter: true })
                     onClicked: {
-                        panelConfig.set("clockPanelPosition", "right")
-                        positionSelected("right")
+                        Settings.clock.positionWidget = "right"
                     }
                 }
                 
@@ -139,12 +133,11 @@ Item {
                     width: 80
                     height: 80
                     position: "bottomLeft"
-                    isSelected: currentConfig.clockPanelPosition === "bottomLeft"
+                    isSelected: Settings.clock.positionWidget === "bottomLeft"
                     theme: clockPositionSelector.theme
                     anchorConfig: ({ bottom: true, left: true })
                     onClicked: {
-                        panelConfig.set("clockPanelPosition", "bottomLeft")
-                        positionSelected("bottomLeft")
+                        Settings.clock.positionWidget = "bottomLeft"
                     }
                 }
                 
@@ -152,12 +145,11 @@ Item {
                     width: 80
                     height: 80
                     position: "bottom"
-                    isSelected: currentConfig.clockPanelPosition === "bottom"
+                    isSelected: Settings.clock.positionWidget === "bottom"
                     theme: clockPositionSelector.theme
                     anchorConfig: ({ bottom: true, hCenter: true })
                     onClicked: {
-                        panelConfig.set("clockPanelPosition", "bottom")
-                        positionSelected("bottom")
+                        Settings.clock.positionWidget = "bottom"
                     }
                 }
                 
@@ -165,12 +157,11 @@ Item {
                     width: 80
                     height: 80
                     position: "bottomRight"
-                    isSelected: currentConfig.clockPanelPosition === "bottomRight"
+                    isSelected: Settings.clock.positionWidget === "bottomRight"
                     theme: clockPositionSelector.theme
                     anchorConfig: ({ bottom: true, right: true })
                     onClicked: {
-                        panelConfig.set("clockPanelPosition", "bottomRight")
-                        positionSelected("bottomRight")
+                        Settings.clock.positionWidget = "bottomRight"
                     }
                 }
             }

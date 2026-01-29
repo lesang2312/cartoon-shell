@@ -19,14 +19,7 @@ Rectangle {
     // Shadow effect
     layer.enabled: true
 
-    // Shared JsonEditor for all Settings
-    JsonEditor {
-        id: sharedPanelConfig
-        filePath: Qt.resolvedUrl("../../../config/configs/" + currentConfigProfile + ".json")
-        Component.onCompleted: {
-            sharedPanelConfig.load(sharedPanelConfig.filePath)
-        }
-    }
+
     
     ListSettingsService {
         id: listSettingService
@@ -74,7 +67,6 @@ Rectangle {
                     onLoaded: {
                         item.visible = Qt.binding(function() { return settingsStack.currentIndex === 0 })
                         item.currentTab = rootSettings.currentTab
-                        item.panelConfig = sharedPanelConfig
                     }
                   }
                   Loader {
@@ -86,7 +78,6 @@ Rectangle {
                     onLoaded: {
                         item.visible = Qt.binding(function() { return settingsStack.currentIndex === 1 })
                         item.currentTab = rootSettings.currentTab
-                        item.panelConfig = sharedPanelConfig
                     }
                 }
 

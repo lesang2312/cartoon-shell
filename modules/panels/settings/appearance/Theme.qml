@@ -11,10 +11,6 @@ Item {
     property var lang: currentLanguage
     property var panelConfig
 
-    Matugen {
-        id: matugenHandler
-    }
-
     ScrollView {
         id: scrollView
         anchors.fill: parent
@@ -68,8 +64,6 @@ Item {
                     Com.ThemeSelection {
                         id: themeSelection
                         width: parent.width
-                        panelConfig: root.panelConfig
-                        matugenHandler: matugenHandler
                         Layout.fillWidth: true
                     }
                     Com.ListTheme{

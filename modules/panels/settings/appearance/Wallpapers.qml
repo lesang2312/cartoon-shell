@@ -11,20 +11,14 @@ Item {
     id: systemSettings
     property var theme : ThemeService.theme
     property var lang: currentLanguage
-    property var panelConfig  // Received from parent SettingsPanel
 
     property string homePath: ""
     property string wallpapersPath: ""
     property string wallpaperPath: ""
     property string currentWallpaper: ""
-    property string pendingMatugenPath: ""
     property int currentScreenIndex: 0
     property var currentScreen: Quickshell.screens[currentScreenIndex] || null
 
-
-    Matugen {
-        id: matugenHandler
-    }
 
 
     // Process để lấy home directory
@@ -82,10 +76,8 @@ Item {
     id: thumbnailProcess
 
     onRunningChanged: {
-        if (!running && pendingMatugenPath !== "") {
-            console.log("Thumbnail ready:", pendingMatugenPath)
-            matugenHandler.triggerMatugenOnWallpaperChange(pendingMatugenPath)
-            pendingMatugenPath = ""
+        if (!running ) {
+            console.log("Thumbnail ready:")
         }
     }
 }

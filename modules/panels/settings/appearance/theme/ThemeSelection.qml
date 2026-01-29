@@ -8,8 +8,6 @@ RowLayout {
     id: themeSelection
     property var theme : ThemeService.theme
     property var lang: currentLanguage
-    property var panelConfig
-    property var matugenHandler
     
     spacing: 12
 
@@ -34,7 +32,7 @@ RowLayout {
             label: lang.appearance?.theme_light || "Sáng"
             theme: themeSelection.theme
             onClicked: {
-                Qt.callLater(matugenHandler.triggerMatugenOnThemeChange("light"))
+              Matugen.triggerMatugenOnThemeChange("light")
             }
         }
 
@@ -45,7 +43,7 @@ RowLayout {
             label: lang.appearance?.theme_dark || "Tối"
             theme: themeSelection.theme
             onClicked: {
-                Qt.callLater(matugenHandler.triggerMatugenOnThemeChange("dark"))
+              Matugen.triggerMatugenOnThemeChange("dark")
             }
         }
     }

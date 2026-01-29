@@ -10,7 +10,6 @@ Item {
   property var theme : ThemeService.theme
 
   property var lang: currentLanguage
-  property var panelConfig
   
   ScrollView {
     id: scrollView
@@ -50,12 +49,10 @@ Item {
       
       Com.ClockPanelToggle {
         Layout.fillWidth: true
-        panelConfig: root.panelConfig
       }
       
       Com.ClockPositionSelector {
         Layout.fillWidth: true
-        panelConfig: root.panelConfig
       }
       
       Item {

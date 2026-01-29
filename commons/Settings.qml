@@ -84,6 +84,8 @@ Singleton {
 
   component Clock: JsonObject {
     property string timeFormat: "24h"
+    property bool enableWidget: true
+    property string positionWidget: "top"
   }
 
   component Weather: JsonObject{
