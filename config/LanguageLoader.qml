@@ -14,7 +14,7 @@ QtObject {
 
     // --- Hàm tải ngôn ngữ ---
     function loadLanguage() {
-        var filePath = Qt.resolvedUrl("languages/" + currentLanguage + ".json")
+        var filePath = Qt.resolvedUrl("../assets/languages/" + currentLanguage + ".json")
         var xhr = new XMLHttpRequest()
         xhr.open("GET", filePath, false)  // đồng bộ như ThemeLoader
         xhr.send()

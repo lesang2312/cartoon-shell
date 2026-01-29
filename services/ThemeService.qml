@@ -32,7 +32,7 @@ Singleton {
   function loadTheme() {
     if (!isInitialized) return;
     
-    var filePath = Qt.resolvedUrl("../config/themes/" + currentTheme + ".json")
+    var filePath = Qt.resolvedUrl("../assets/themes/" + currentTheme + ".json")
     var xhr = new XMLHttpRequest()
     xhr.open("GET", filePath, false)
     xhr.send()

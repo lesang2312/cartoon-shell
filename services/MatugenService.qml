@@ -43,7 +43,10 @@ Singleton {
         interval: 200
         repeat: false
         onTriggered: {
+            if (typeof ThemeService !== 'undefined' && ThemeService.loadTheme) {
                 ThemeService.loadTheme()
+                console.log("Triggered ThemeService.loadTheme()")
+            }
         }
     }
 
@@ -110,29 +113,65 @@ Singleton {
     // Function to save theme to JSON file
     function saveThemeToFile(theme) {
         var themeJson = JSON.stringify(theme, null, 2)
-        var filePath = Directories.shellConfigPath + "/themes/matugen.json"
+        // Sử dụng cùng đường dẫn với ThemeService
+        var filePath = Directories.assetsPath + "/themes/matugen.json"
         
         console.log("Saving theme to:", filePath)
         
-        var file = Qt.createQmlObject('import QtQuick; import Quickshell.Io; File { }', root)
-        file.path = filePath
-        file.text = themeJson
-        
-        if (file.write()) {
-            console.log("Theme saved successfully")
+        try {
+            var file = Qt.createQmlObject('import QtQuick; import Quickshell.Io; File { }', root)
+            file.path = filePath
+            file.text = themeJson
             
-            // Update current theme to matugen if not already set
-            if (settings && settings.appearance.theme !== "matugen") {
-                settings.appearance.theme = "matugen"
+            if (file.write()) {
+                console.log("Theme saved successfully")
+                
+                // Update current theme to matugen if not already set
+                if (settings && settings.appearance.theme !== "matugen") {
+                    settings.appearance.theme = "matugen"
+                }
+                
+                // Trigger theme reload
+                reloadTimer.restart()
+            } else {
+                console.error("Failed to save theme file")
+                // Thử cách khác
+                saveThemeAlternative(themeJson, filePath)
             }
             
-            // Trigger theme reload
-            reloadTimer.restart()
-        } else {
-            console.error("Failed to save theme file")
+            file.destroy()
+        } catch (e) {
+            console.error("Error creating File object:", e)
+            saveThemeAlternative(themeJson, filePath)
         }
+    }
+    
+    function saveThemeAlternative(content, filePath) {
+        var command = "mkdir -p $(dirname '" + filePath + "') && echo '" + content.replace(/'/g, "'\"'\"'").replace(/\n/g, '\\n') + "' > '" + filePath + "'"
+        console.log("Using alternative method to save theme")
         
-        file.destroy()
+        var process = Qt.createQmlObject(`
+            import QtQuick
+            import Quickshell.Io
+            Process {
+                id: saveProcess
+                command: ["bash", "-c", "${command}"]
+                onExited: {
+                    if (exitCode === 0) {
+                        console.log("Theme saved successfully via alternative method")
+                        if (settings && settings.appearance.theme !== "matugen") {
+                            settings.appearance.theme = "matugen"
+                        }
+                        reloadTimer.restart()
+                    } else {
+                        console.error("Failed to save theme via alternative method")
+                    }
+                    saveProcess.destroy()
+                }
+            }
+        `, root, "SaveThemeProcess")
+        
+        process.running = true
     }
 
     // Function run matugen with JSON output
@@ -147,7 +186,6 @@ Singleton {
         console.log("Running matugen command:", command)
         matugenProcess.command = ["bash", "-c", command]
         matugenProcess.running = true
-        reloadTimer.restart()
     }
 
     function triggerMatugenOnThemeChange(themeMode) {
@@ -193,7 +231,6 @@ Singleton {
         
         if (currentWallpaper && currentWallpaper !== "") {
             runMatugen(currentWallpaper, themeMode)
-            ThemeService.loadTheme()
         } else {
             console.log("No wallpaper set, skipping matugen")
         }
@@ -212,6 +249,7 @@ Singleton {
         }
         
         var themeMode = settings.appearance.mode || "dark"
+        console.log("Running matugen for wallpaper change, mode:", themeMode)
         runMatugen(currentWallpaper, themeMode)
     }
 
@@ -235,6 +273,14 @@ Singleton {
             // Kết nối signal nếu Settings có sẵn
             if (settings) {
                 settings.settingsLoaded.connect(init)
+            } else {
+                // Nếu settings chưa có, thử lại sau
+                Qt.callLater(function() {
+                    if (Settings && Settings.ready) {
+                        settings = Settings
+                        init()
+                    }
+                })
             }
         }
     }
