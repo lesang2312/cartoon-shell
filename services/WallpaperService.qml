@@ -181,6 +181,20 @@ Singleton {
     Settings.wallpaper.monitors = newMonitors.slice();
 
     root.wallpaperChanged(screenName, path);
+    
+    // Kiểm tra nếu theme là matugen thì chạy matugen
+    if (Settings.appearance && Settings.appearance.theme === "matugen") {
+        console.log("Matugen theme detected, triggering matugen for new wallpaper")
+        
+        // Đợi một chút để đảm bảo file được lưu
+        Qt.callLater(function() {
+            if (typeof Matugen !== 'undefined' && Matugen.triggerMatugenOnWallpaperChange) {
+                Matugen.triggerMatugenOnWallpaperChange(path)
+            } else if (typeof MatugenService !== 'undefined' && MatugenService.triggerMatugenOnWallpaperChange) {
+                MatugenService.triggerMatugenOnWallpaperChange(path)
+            }
+        })
+    }
   }
 
   function restartRandomWallpaperTimer() {

@@ -32,7 +32,7 @@ RowLayout {
             label: lang.appearance?.theme_light || "Sáng"
             theme: themeSelection.theme
             onClicked: {
-              Matugen.triggerMatugenOnThemeChange("light")
+              MatugenService.triggerMatugenOnThemeChange("light")
             }
         }
 
@@ -43,7 +43,7 @@ RowLayout {
             label: lang.appearance?.theme_dark || "Tối"
             theme: themeSelection.theme
             onClicked: {
-              Matugen.triggerMatugenOnThemeChange("dark")
+              MatugenService.triggerMatugenOnThemeChange("dark")
             }
         }
     }

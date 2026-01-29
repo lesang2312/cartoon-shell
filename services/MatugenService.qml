@@ -147,6 +147,7 @@ Singleton {
         console.log("Running matugen command:", command)
         matugenProcess.command = ["bash", "-c", command]
         matugenProcess.running = true
+        reloadTimer.restart()
     }
 
     function triggerMatugenOnThemeChange(themeMode) {
@@ -189,7 +190,6 @@ Singleton {
         }
         
         console.log("Current wallpaper path:", currentWallpaper)
-        reloadTimer.restart()
         
         if (currentWallpaper && currentWallpaper !== "") {
             runMatugen(currentWallpaper, themeMode)
