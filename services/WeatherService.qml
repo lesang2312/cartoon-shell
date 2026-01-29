@@ -1,12 +1,13 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import qs.commons
 
 Item {
     id: root
     
-    property string apiKey: currentConfig.weatherApiKey
-    property string location: currentConfig.weatherLocation || "Ho Chi Minh,VN"
+    property string apiKey: Settings.weather.keyApi
+    property string location: Settings.weather.location
     property string lang: "vi"
     property string temperature: "..."
     property string condition: "Đang tải"

@@ -484,7 +484,6 @@ Rectangle {
         }
         
         // Log system tray status
-        console.log("SystemTray initialized, tracking:", systemTray.items.count, "items")
     }
 
     Timer {

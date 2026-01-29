@@ -6,7 +6,6 @@ import Quickshell.Wayland
 import Quickshell.Io
 import qs.services
 import qs.commons
-import "../../../services" as Services
 import "." as Com
 
 PanelWindow {
@@ -14,25 +13,13 @@ PanelWindow {
 
     property var theme : ThemeService.theme
     property var lang: currentLanguage
-    Services.JsonEditor {
-        id: panelConfig
-        filePath: Qt.resolvedUrl("../../../config/configs/" + currentConfigProfile + ".json")
-        Component.onCompleted: {
-            panelConfig.load(panelConfig.filePath)
-            weatherPanel.apiKey = panelConfig.get("weatherApiKey", "")
-            weatherPanel.location = panelConfig.get("weatherLocation", "Ho Chi Minh,VN")
-            if (weatherPanel.apiKey !== "") {
-                weatherPanel.updateWeather()
-            }
-        }
-    }
 
     implicitWidth: 1000
     implicitHeight: 550
     focusable: true
 
-    property string apiKey: ""
-    property string location: currentConfig.weatherLocation
+    property string apiKey: Settings.weather.keyApi
+    property string location: Settings.weather.location
     property string temperature: ""
     property string condition: ""
     property string icon: "⛅"
@@ -55,7 +42,7 @@ PanelWindow {
         interval: 500
         repeat: false
         onTriggered: {
-            if (weatherPanel.apiKey !== panelConfig.get("weatherApiKey", "")) {
+            if (weatherPanel.apiKey !== Settings.weather.keyApi) {
                 saveAndValidateApiKey(weatherPanel.apiKey)
             }
         }
@@ -251,7 +238,7 @@ PanelWindow {
             errorMessage = "Vui lòng nhập API key"
             return
         }
-        panelConfig.set("weatherApiKey", key)
+        Settings.weather.keyApi = key
         weatherPanel.apiKey = key
         updateWeather()
     }
@@ -270,7 +257,7 @@ PanelWindow {
     }
 
     function selectLocation(locationName) {
-        panelConfig.set("weatherLocation", locationName)
+        Settings.weather.location = locationName
         location = locationName
         locationSearchResults = []
         currentLocationIndex = 0
@@ -285,7 +272,7 @@ PanelWindow {
         }
         isLoading = true
         errorMessage = ""
-        const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${encodeURIComponent(location)}&days=3&lang=${currentConfig.lang}`
+        const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${encodeURIComponent(location)}&days=3&lang=${Settings.general.lang}`
         weatherProcess.command = ["curl", "-s", url]
         weatherProcess.running = true
     }
@@ -422,6 +409,11 @@ PanelWindow {
         onActivated: {
             var item = locationSearchResults[currentLocationIndex]
             if (item) selectLocation(`${item.name},${item.country}`)
+        }
+    }
+        Component.onCompleted: {
+        if (apiKey && location) {
+            updateWeather()
         }
     }
 }

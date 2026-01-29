@@ -1,9 +1,10 @@
 import QtQuick
 import QtQuick.Layouts
+import qs.services
 
 Item {
 
-    property var theme: currentTheme
+    property var theme: ThemeService.theme
     
     RowLayout {
         anchors.fill: parent

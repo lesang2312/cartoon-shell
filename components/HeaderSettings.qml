@@ -2,11 +2,12 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import qs.components
+import qs.services
 
 RowLayout{
   visible: !panelManager.fullsetting
   property var name: ""
-  property var theme: currentTheme
+  property var theme: ThemeService.theme
 
       Layout.fillWidth: true
   Text {

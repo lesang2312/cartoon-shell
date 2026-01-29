@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 import qs.services
+import qs.commons
 
 Rectangle {
     id: root
@@ -16,7 +17,7 @@ Rectangle {
     property bool panelVisible: false
     property bool flagPanelVisible: false
     property bool weatherPanelVisible: false
-    property string selectedFlag: currentConfig.countryFlag
+    property string selectedFlag: Settings.appearance.countryFlag
     property var theme : ThemeService.theme
 
     WeatherService{

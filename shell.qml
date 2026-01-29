@@ -21,9 +21,6 @@ ShellRoot {
     LanguageLoader { id: languageLoader }
     PanelManager { id: panelManager }
     PanelLoaders{ id: panelLoaders}
-    VolumeOsd { }
-    NotificationPopup{}
-    ConfirmDialog { id: confirmDialog }
 
 
     // Function để hiển thị confirm dialog từ bất kỳ đâu
@@ -31,42 +28,8 @@ ShellRoot {
         confirmDialog.show(action, actionLabel)
     }
 
-
-
     property var currentLanguage: languageLoader.translations
     property bool settingsLoaded: false
-
-
-    property string hyprInstance: Quickshell.env("HYPRLAND_INSTANCE_SIGNATURE") || ""
-
-    // Property để điều khiển Lockscreen
-    property bool lockscreenVisible: false
-
-    // Function để show lockscreen
-
-    // Global wallpaper setter - chạy độc lập với Settings panel
-    Process {
-        id: globalWallpaperProcess
-        command: ["true"]  // dummy command
-        running: false
-
-        stdout: StdioCollector {
-            onTextChanged: {
-                if (text) {
-                }
-            }
-        }
-
-        stderr: StdioCollector {
-            onTextChanged: {
-                if (text) {
-                }
-            }
-        }
-
-        onRunningChanged: {
-        }
-    }
 
 
 PanelWindow {
@@ -92,12 +55,15 @@ PanelWindow {
     active: root.settingsLoaded && Directories.ready
     sourceComponent: Item {
       Component.onCompleted: {
-        WallpaperService.init();
         ThemeService.init()
+        WallpaperService.init();
       }
 
       Background {}
       Bar{}
+      ConfirmDialog {}
+      NotificationPopup{}
+      VolumeOsd { }
     }
   }
 }

@@ -1,5 +1,6 @@
 // components/PanelManager.qml
 import QtQuick 2.15
+import qs.commons
 
 QtObject {
     id: panelManager
@@ -34,7 +35,7 @@ QtObject {
 
     property bool hasPanel : wifi || mixer || music || launcher || dashboard || battery || ram || cpu || calendar || weather || bluetooth
 
-    property bool clock: currentConfig.clockPanelVisible  // Giữ nguyên từ config
+    property bool clock: Settings.clock.enableWidget // Giữ nguyên từ config
 
     // Signal khi có panel thay đổi trạng thái
     signal panelChanged(string panelName, bool visible)

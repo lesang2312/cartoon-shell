@@ -1,9 +1,10 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import qs.services
 
 Button {
- property var theme: currentTheme
+property var theme: ThemeService.theme
  property var lang: currentLanguage
     id: advancedButton
     visible: !panelManager.fullsetting

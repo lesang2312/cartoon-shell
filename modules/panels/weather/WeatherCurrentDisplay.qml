@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import qs.services
 import "." as Com
+import qs.commons
 
 RowLayout {
     id: currentDisplay
@@ -92,7 +93,7 @@ RowLayout {
         Com.WeatherDetailCard {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            image: currentConfig.theme === "light"
+            image: Settings.appearance.mode === "light"
         ? "../../../assets/weather/wind_light.png"
         : "../../../assets/weather/wind_dark.png"
             value: currentDisplay.windSpeed
@@ -118,7 +119,7 @@ RowLayout {
         Com.WeatherDetailCard {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            image: currentConfig.theme === "light"
+            image: Settings.appearance.mode === "light"
         ? "../../../assets/weather/uv_light.png"
         : "../../../assets/weather/uv_dark.png"
             value: currentDisplay.uvIndex
@@ -128,7 +129,7 @@ RowLayout {
         Com.WeatherDetailCard {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            image: currentConfig.theme === "light"
+            image: Settings.appearance.mode === "light"
         ? "../../../assets/weather/feels_like_light.png"
         : "../../../assets/weather/feels_like_dark.png"
             value: currentDisplay.feelsLike

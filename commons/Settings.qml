@@ -96,6 +96,7 @@ Singleton {
   component Appearance: JsonObject {
     property string theme: "matugen"
     property string mode: "dark"
+    property string countryFlag: "vietnam"
     property string fonts: ""
     property int radius: 16
   }

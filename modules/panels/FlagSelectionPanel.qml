@@ -12,15 +12,9 @@ PanelWindow {
 
     property var theme : ThemeService.theme
 
-    property string selectedFlag: currentConfig.selectedFlag
+    property string selectedFlag: Settings.appearance.countryFlag
 
-    JsonEditor {
-        id: panelConfig
-        filePath: Qt.resolvedUrl("../../config/configs/" + currentConfigProfile + ".json")
-        Component.onCompleted: {
-            panelConfig.load(panelConfig.filePath)
-        }
-    }
+
 
     implicitWidth: 600
     implicitHeight: 420
@@ -71,10 +65,6 @@ PanelWindow {
 
     exclusiveZone: 0
     color: "transparent"
-
-    function setFlag(name) {
-        panelConfig.set("countryFlag", name)
-    }
 
 
     Rectangle {
@@ -172,7 +162,7 @@ PanelWindow {
                                 cursorShape: Qt.PointingHandCursor
 
                                 onClicked: {
-                                    setFlag(modelData.name)
+                                    Settings.appearance.countryFlag = modelData.name
                                 }
 
                                 onEntered: {

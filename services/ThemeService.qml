@@ -26,7 +26,7 @@ Singleton {
     console.log("Initializing ThemeService...");
     theme = {};
     isInitialized = true;
-    Qt.callLater(loadTheme);
+    loadTheme();
   }
 
   function loadTheme() {
@@ -69,16 +69,4 @@ Singleton {
     }
   }
 
-  Component.onCompleted: {
-    if (Settings && Settings.ready) {
-      init();
-    } else {
-      // Lắng nghe signal khi Settings sẵn sàng
-      if (Settings) {
-        Settings.settingsLoaded.connect(function() {
-          themeService.init();
-        });
-      }
-    }
-  }
 }
