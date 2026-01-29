@@ -6,20 +6,21 @@ import Quickshell
 import Quickshell.Bluetooth
 import qs.services
 import "." as Components
+import qs.commons
 
 PanelWindow {
     id: root
     implicitWidth: 450
     implicitHeight: 600
     anchors {
-        top: currentConfig.mainPanelPos === "top"
-        bottom: currentConfig.mainPanelPos === "bottom"
+        top: Settings.bar.position === "top"
+        bottom: Settings.bar.position === "bottom"
         right: true
     }
     margins {
-        top: currentConfig.mainPanelPos === "top" ? 10 : 0
+        top: Settings.bar.position === "top" ? 10 : 0
         right: 10
-        bottom: currentConfig.mainPanelPos === "bottom" ? 10 : 0
+        bottom: Settings.bar.position === "bottom" ? 10 : 0
     }
     color: "transparent"
     focusable: true

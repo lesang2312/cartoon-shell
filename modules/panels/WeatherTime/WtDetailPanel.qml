@@ -4,6 +4,7 @@ import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
 import qs.services
+import qs.commons
 import "./" as Components
 
 PanelWindow {
@@ -16,13 +17,13 @@ PanelWindow {
     implicitHeight: 500
 
     anchors {
-        top: currentConfig.mainPanelPos === "top"
-        bottom: currentConfig.mainPanelPos === "bottom"
+        top: Settings.bar.position === "top"
+        bottom: Settings.bar.position === "bottom"
     }
 
     margins {
-        top: currentConfig.mainPanelPos === "top" ? 10 : 0
-        bottom: currentConfig.mainPanelPos === "bottom" ? 10 : 0
+        top: Settings.bar.position === "top" ? 10 : 0
+        bottom: Settings.bar.position === "bottom" ? 10 : 0
         left: 800
     }
     exclusiveZone: 0

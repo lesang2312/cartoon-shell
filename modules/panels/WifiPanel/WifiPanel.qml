@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
 import qs.services
+import qs.commons
 import "." as Com
 
 PanelWindow {
@@ -12,13 +13,13 @@ PanelWindow {
     implicitHeight: 800
 
     anchors {
-        top: currentConfig.mainPanelPos === "top"
-        bottom: currentConfig.mainPanelPos === "bottom"
+        top: Settings.bar.position === "top"
+        bottom: Settings.bar.position === "bottom"
         right: true
       }
       margins {
-        top: currentConfig.mainPanelPos === "top" ? 10 : 0
-        bottom: currentConfig.mainPanelPos === "bottom" ? 10 : 0
+        top: Settings.bar.position === "top" ? 10 : 0
+        bottom: Settings.bar.position === "bottom" ? 10 : 0
         right: 10
     }
     

@@ -4,9 +4,9 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
 import qs.services
+import qs.commons
 
 // Import các thành phần phụ trong cùng thư mục
-import "../settings" as Settings
 import "../../../components/" as Components
 import "./" as LauncherComponents
 
@@ -57,13 +57,13 @@ PanelWindow {
             if (panelManager.fullsetting && panelManager.setting) {
                 return false // Không cố định ở bottom khi full screen
             }
-            return currentConfig.mainPanelPos === "bottom"
+            return Settings.bar.position === "bottom"
         }
         top: {
             if (panelManager.fullsetting && panelManager.setting) {
                 return false // Không cố định ở top khi full screen
             }
-            return currentConfig.mainPanelPos === "top"
+            return Settings.bar.position === "top"
         }
         left: {
             if (panelManager.fullsetting && panelManager.setting) {
@@ -79,13 +79,13 @@ PanelWindow {
             if (panelManager.fullsetting && settingsPanelVisible) {
                 return 0 // Không margin khi full screen
             }
-            return currentConfig.mainPanelPos === "top" ? 10 : 0
+            return Settings.bar.position === "top" ? 10 : 0
         }
         bottom: {
             if (panelManager.fullsetting && settingsPanelVisible) {
                 return 0 // Không margin khi full screen
             }
-            return currentConfig.mainPanelPos === "bottom" ? 10 : 0
+            return Settings.bar.position === "bottom" ? 10 : 0
         }
         left: {
             if (panelManager.fullsetting && settingsPanelVisible) {

@@ -7,6 +7,7 @@ import Quickshell.Io
 import Quickshell.Widgets
 import Quickshell.Services.Mpris
 import qs.services
+import qs.commons
 
 PanelWindow {
     id: musicPanel
@@ -28,14 +29,14 @@ PanelWindow {
     focusable: true
 
     anchors {
-        top: currentConfig.mainPanelPos === "top"
-        bottom: currentConfig.mainPanelPos === "bottom"
+        top: Settings.bar.position === "top"
+        bottom: Settings.bar.position === "bottom"
         left: true
     }
 
     margins {
-        top: currentConfig.mainPanelPos === "top" ? 10 : 0
-        bottom: currentConfig.mainPanelPos === "bottom" ? 10 : 0
+        top: Settings.bar.position === "top" ? 10 : 0
+        bottom: Settings.bar.position === "bottom" ? 10 : 0
         left: 400
     }
 

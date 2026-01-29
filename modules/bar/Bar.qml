@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import qs.modules.bar
+import qs.commons
 
 PanelWindow {
   id: panel
@@ -11,15 +12,15 @@ PanelWindow {
   anchors {
       left: true
       right: true
-      top: currentConfig.mainPanelPos === "top"
-      bottom: currentConfig.mainPanelPos === "bottom"
+      top: Settings.bar.position === "top"
+      bottom: Settings.bar.position === "bottom"
   }
 
   margins {
-      top: currentConfig.mainPanelPos === "top" ? 10 : 0
+      top: Settings.bar.position === "top" ? 10 : 0
       left: 10
       right: 10
-      bottom: currentConfig.mainPanelPos === "bottom" ? 10 : 0
+      bottom: Settings.bar.position === "bottom" ? 10 : 0
   }
 
   RowLayout {

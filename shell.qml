@@ -19,7 +19,6 @@ ShellRoot {
     id: root
 
     LanguageLoader { id: languageLoader }
-    ConfigLoader { id: configLoader }
     PanelManager { id: panelManager }
     PanelLoaders{ id: panelLoaders}
     VolumeOsd { }
@@ -35,8 +34,6 @@ ShellRoot {
 
 
     property var currentLanguage: languageLoader.translations
-    property var currentConfig: configLoader.config
-    property string currentConfigProfile: configLoader.currentConfigProfile
     property bool settingsLoaded: false
 
 
@@ -85,9 +82,6 @@ PanelWindow {
         onClicked: panelManager.closeAllPanels()
     }
 }
-      Bar{
-        id: bar
-      }
       Connections {
     target: Settings ? Settings : null
     function onSettingsLoaded() {
@@ -103,6 +97,7 @@ PanelWindow {
       }
 
       Background {}
+      Bar{}
     }
   }
 }

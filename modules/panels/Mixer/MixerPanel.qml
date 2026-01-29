@@ -5,6 +5,8 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Services.Pipewire
 import "./" as Components
+import qs.commons
+import qs.services
 
 PanelWindow {
     id: root
@@ -15,18 +17,18 @@ PanelWindow {
     property var lang : currentLanguage
 
     anchors {
-            top: currentConfig.mainPanelPos === "top"
-            bottom: currentConfig.mainPanelPos === "bottom"
+            top: Settings.bar.position === "top"
+            bottom: Settings.bar.position === "bottom"
             right: true
         }
         margins {
-            top: currentConfig.mainPanelPos === "top" ? 10 : 0
+            top: Settings.bar.position === "top" ? 10 : 0
             right: 10
-            bottom: currentConfig.mainPanelPos === "bottom" ? 10 : 0
+            bottom: Settings.bar.position === "bottom" ? 10 : 0
         }
     color: "transparent"
 
-    property var theme: currentTheme
+    property var theme: ThemeService.theme
 
     Rectangle {
         anchors.fill: parent
