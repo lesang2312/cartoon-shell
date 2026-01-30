@@ -17,15 +17,19 @@ PanelWindow {
     property var lang : currentLanguage
 
     anchors {
-            top: Settings.bar.position === "top"
-            bottom: Settings.bar.position === "bottom"
-            right: true
-        }
-        margins {
-            top: Settings.bar.position === "top" ? 10 : 0
-            right: 10
-            bottom: Settings.bar.position === "bottom" ? 10 : 0
-        }
+    // Anchor theo vị trí của bar
+    left: Settings.bar.position === "left"
+    right: Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom"
+    top: Settings.bar.position === "top"
+    bottom: Settings.bar.position === "left" || Settings.bar.position === "right" || Settings.bar.position === "bottom"
+}
+
+margins {
+    top: Settings.bar.position === "top" ? 10 : 0
+    bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? 10 : 0
+    left: Settings.bar.position === "left" ? 10 : 0
+    right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? (sizes.anchorMargin || 10) : 0
+}
     color: "transparent"
 
     property var theme: ThemeService.theme

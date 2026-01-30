@@ -7,6 +7,8 @@ Item {
     property var lang: currentLanguage
     property string currentDate: ""
     property string currentTime: ""
+    property string currentHour: ""
+    property string currentMinus: ""
     
     SystemClock {
         id: clock
@@ -45,6 +47,8 @@ Item {
 
         root.currentDate = `${weekdays[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`
         root.currentTime = Qt.formatTime(now, "HH:mm")
+        root.currentHour = Qt.formatTime(now,"HH")
+        root.currentMinus = Qt.formatTime(now,"mm")
     }
     
     Component.onCompleted: {

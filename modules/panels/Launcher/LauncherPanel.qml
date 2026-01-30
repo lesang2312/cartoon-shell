@@ -53,25 +53,31 @@ PanelWindow {
     }
 
     anchors {
-        bottom: {
+        // Xác định vị trí anchor dựa trên position của bar
+        left: {
             if (panelManager.fullsetting && panelManager.setting) {
-                return false // Không cố định ở bottom khi full screen
+                return false // Không cố định khi full screen
             }
-            return Settings.bar.position === "bottom"
+            return (Settings.bar.position === "left" || Settings.bar.position === "top" || Settings.bar.position === "bottom")
+        }
+        right: {
+            if (panelManager.fullsetting && panelManager.setting) {
+                return false // Không cố định khi full screen
+            }
+            return Settings.bar.position === "right"
         }
         top: {
             if (panelManager.fullsetting && panelManager.setting) {
-                return false // Không cố định ở top khi full screen
+                return false // Không cố định khi full screen
             }
-            return Settings.bar.position === "top"
+            return (Settings.bar.position === "top" || Settings.bar.position === "left" || Settings.bar.position === "right")
         }
-        left: {
+        bottom: {
             if (panelManager.fullsetting && panelManager.setting) {
-                return false // Không cố định ở left khi full screen
+                return false // Không cố định khi full screen
             }
-            return true
+            return Settings.bar.position === "bottom"
         }
-
     }
 
     margins {
@@ -91,8 +97,14 @@ PanelWindow {
             if (panelManager.fullsetting && settingsPanelVisible) {
                 return 0 // Không margin khi full screen
             }
-            return 10
-          }
+            return (Settings.bar.position === "left" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? 10 : 0
+        }
+        right: {
+            if (panelManager.fullsetting && settingsPanelVisible) {
+                return 0 // Không margin khi full screen
+            }
+            return Settings.bar.position === "right" ? 10 : 0
+        }
     }
 
     // Focus scope để quản lý focus

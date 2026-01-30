@@ -156,54 +156,6 @@ echo "exec-once = export QML_XHR_ALLOW_FILE_READ=1 && quickshell --path ~/.confi
 
 ### Available Languages (30)
 
-**Asia-Pacific:**
-- `vi` - Tiếng Việt (Vietnamese)
-- `zh` - 中文 (Chinese)
-- `ja` - 日本語 (Japanese)
-- `kr` - 한국어 (Korean)
-- `hi` - हिन्दी (Hindi)
-- `th` - ไทย (Thai)
-- `id` - Bahasa Indonesia (Indonesian)
-
-**Europe:**
-- `en` - English
-- `de` - Deutsch (German)
-- `fr` - Français (French)
-- `es` - Español (Spanish)
-- `it` - Italiano (Italian)
-- `pt` - Português (Portuguese)
-- `ru` - Русский (Russian)
-- `uk` - Українська (Ukrainian)
-- `pl` - Polski (Polish)
-- `nl` - Nederlands (Dutch)
-- `sv` - Svenska (Swedish)
-- `no` - Norsk (Norwegian)
-- `da` - Dansk (Danish)
-- `fi` - Suomi (Finnish)
-- `cs` - Čeština (Czech)
-- `sk` - Slovenčina (Slovak)
-- `hu` - Magyar (Hungarian)
-- `ro` - Română (Romanian)
-- `bg` - Български (Bulgarian)
-- `el` - Ελληνικά (Greek)
-
-**Middle East:**
-- `ar` - العربية (Arabic)
-- `tr` - Türkçe (Turkish)
-- `he` - עברית (Hebrew)
-
-### Available Display Sizes
-- **1280** - HD (1280×720)
-- **1366** - WXGA (1366×768)
-- **1440** - WXGA+ (1440×900)
-- **1600** - HD+ (1600×900)
-- **1680** - WSXGA+ (1680×1050)
-- **1920** - Full HD (1920×1080) *default*
-- **2560** - 2K/QHD (2560×1440)
-- **2880** - 3K (2880×1620)
-- **3440** - UW-QHD (3440×1440)
-- **3840** - 4K/UHD (3840×2160)
-
 ---
 
 

@@ -55,41 +55,11 @@ Item {
                     }
 
                     // Tab 1: Panel
-                    ColumnLayout {
-                        width: parent.width
-                        spacing: 20
-
-                        RowLayout {
-                            Layout.fillWidth: true
-                            
-                            Text {
-                                text: lang?.appearance?.panel || "Panel"
-                                color: theme.primary.foreground
-                                font {
-                                    family: "ComicShannsMono Nerd Font"
-                                    pixelSize: 24
-                                    bold: true
-                                }
-                            }
-                            
-                            Item {
-                                Layout.fillWidth: true
-                            }
-                        }
-
-                        Rectangle {
-                            Layout.fillWidth: true
-                            height: 1
-                            color: theme.primary.foreground
-                            opacity: 0.3
-                        }
-
-                        // Panel settings content
-                        Text {
-                            text: "Panel settings content"
-                            color: theme.primary.foreground
-                        }
+                    Com.Panel{
+                      Layout.fillWidth: true
+                      Layout.fillHeight: true
                     }
+                    
 
                     // Tab 2: Clock
                     Com.ClockTime {

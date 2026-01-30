@@ -4,6 +4,7 @@ import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Io
 import qs.services
+import qs.commons
 
 Rectangle {
     id: root
@@ -12,6 +13,7 @@ Rectangle {
     border.width: 3
 
     property var theme : ThemeService.theme
+    property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
     color: theme.primary.background
 
     // Hyprland service facade
@@ -336,9 +338,17 @@ Rectangle {
     }
 
     // UI Layout
+    
+Loader {
+    anchors.centerIn: parent
+    sourceComponent: isVertical ? verticalLayout : horizontalLayout
+}
+
+Component {
+    id: horizontalLayout
+    
     RowLayout {
         id: workspaceRow
-        anchors.centerIn: parent
         spacing: 4
 
         Repeater {
@@ -375,6 +385,50 @@ Rectangle {
             }
         }
     }
+}
+
+Component {
+    id: verticalLayout
+    
+    ColumnLayout {
+        id: workspaceColumn
+        spacing: 2
+
+        Repeater {
+            model: root.uiWorkspaces
+            Rectangle {
+                property string wsId: modelData.id
+                Layout.preferredWidth: 24
+                Layout.preferredHeight: 24
+                radius: 6
+                color: "transparent"
+
+                Image {
+                    anchors.centerIn: parent
+                    width: 24
+                    height: 24
+                    fillMode: Image.PreserveAspectFit
+                    source: modelData.isActive
+                        ? "../../assets/workspace/pacman.png"
+                        : modelData.exists
+                            ? "../../assets/workspace/ghost.png"
+                            : "../../assets/workspace/empty.png"
+                    opacity: 1
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: root.switchWs(modelData.id)
+                    onEntered: if (wsId !== root.activeWorkspace) parent.scale = 1.1
+                    onExited: if (wsId !== root.activeWorkspace) parent.scale = 1.0
+                }
+
+                Behavior on scale { NumberAnimation { duration: 100 } }
+            }
+        }
+    }
+}
 
     Component.onCompleted: {
         initialize();

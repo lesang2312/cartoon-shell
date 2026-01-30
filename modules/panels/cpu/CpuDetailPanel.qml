@@ -16,13 +16,15 @@ PanelWindow {
     anchors {
         top: Settings.bar.position === "top"
         bottom: Settings.bar.position === "bottom"
-        left: true
+        left: Settings.bar.position === "top" || Settings.bar.position === "bottom" || Settings.bar.position === "left"
+        right: Settings.bar.position === "right"
     }
 
     margins {
         top: Settings.bar.position === "top" ? 10 : 0
         bottom: Settings.bar.position === "bottom" ? 10 : 0
-        left: Math.round((Quickshell.screens.primary?.width ?? 1920) / 2 - implicitWidth / 2)
+        left: (Settings.bar.position === "top" || Settings.bar.position === "bottom") ? 400 : 10
+        right: Settings.bar.position === "right" ? 10 : 0
     }
 
     exclusiveZone: 0

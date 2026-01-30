@@ -36,8 +36,8 @@ PanelWindow {
     visible: panelManager.hasPanel
     color: "transparent"
 
-    implicitWidth: Screen.width
-    implicitHeight: Screen.height - 50
+    implicitWidth: (Settings.bar.position === "left" || Settings.bar.position === "right") ? Screen.width - 40 : Screen.width
+    implicitHeight: (Settings.bar.position === "top" || Settings.bar.position === "bottom") ? Screen.height - 50 : Screen.height
 
     MouseArea {
         anchors.fill: parent
