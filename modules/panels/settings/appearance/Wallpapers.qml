@@ -155,7 +155,8 @@ Item {
                         Layout.preferredWidth: 100
                         Layout.preferredHeight: 30
                         radius: 6
-                        color: selectorRoot.currentScreenIndex === index ? 
+                        // SỬA Ở ĐÂY: thay selectorRoot.currentScreenIndex bằng systemSettings.currentScreenIndex
+                        color: systemSettings.currentScreenIndex === index ? 
                                theme.normal.blue : theme.button.background
                         border.color: theme.button.border
                         border.width: 1
@@ -163,7 +164,8 @@ Item {
                         Text {
                             anchors.centerIn: parent
                             text: modelData.name || `Screen ${index + 1}`
-                            color: selectorRoot.currentScreenIndex === index ? 
+                            // SỬA Ở ĐÂY: thay selectorRoot.currentScreenIndex bằng systemSettings.currentScreenIndex
+                            color: systemSettings.currentScreenIndex === index ? 
                                    theme.primary.background : theme.primary.foreground
                             font.pixelSize: 12
                             font.family: "ComicShannsMono Nerd Font"
@@ -577,7 +579,8 @@ Item {
             }
         } else {
             // Set cho màn hình hiện tại trong selector
-            var screen = wallpaperSelector.currentScreen
+            // SỬA Ở ĐÂY: thay wallpaperSelector.currentScreen bằng systemSettings.currentScreen
+            var screen = systemSettings.currentScreen
             if (screen) {
                 WallpaperService.changeWallpaper(cleanPath, screen.name)
             } else if (Quickshell.screens.length > 0) {
