@@ -253,15 +253,13 @@ Item {
                         Repeater {
                             model: listSettingService.listCategories[1]?.items || []
                             
-                            delegate: Rectangle {
+                            delegate: Item {
                                 id: minimalDelegate
                                 Layout.fillHeight: true
                                 Layout.preferredWidth: 42
-                                radius: 8
                                 
                                 property bool selected: rootAppearance.currentTab === index
                                 
-                                color: theme.primary.background
                                 
                                 // Hiệu ứng scale
                                 scale: mouseArea.containsPress ? 0.95 : 1.0
