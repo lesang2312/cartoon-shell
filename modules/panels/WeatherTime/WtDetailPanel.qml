@@ -26,7 +26,7 @@ PanelWindow {
     margins {
         top: Settings.bar.position === "top" ? 10 : 0
         bottom: Settings.bar.position === "bottom" ? 10 : 0
-        left: (Settings.bar.position === "top" || Settings.bar.position === "bottom") ? 400 : 10
+        left: (Settings.bar.position === "top" || Settings.bar.position === "bottom") ? 800 : 10
         right: Settings.bar.position === "right" ? 10 : 0
     }
     exclusiveZone: 0
