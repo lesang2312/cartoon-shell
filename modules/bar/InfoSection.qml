@@ -39,13 +39,12 @@ Rectangle {
             anchors {
                 leftMargin: 10
                 rightMargin: 10
-                topMargin: 5
-                bottomMargin: 5
             }
             spacing: 5
 
             // Phần datetime - căn trái
             Item {
+              
                 id: timeContainer
                 Layout.preferredWidth: textCurrentDate.implicitWidth + 20
                 Layout.fillHeight: true
