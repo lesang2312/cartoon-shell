@@ -21,7 +21,7 @@ ShellRoot {
     PanelManager { id: panelManager }
     PanelLoaders{ id: panelLoaders}
 
-      ConfirmDialog {id: confirmDialog}
+    ConfirmDialog {id: confirmDialog}
 
     // Function để hiển thị confirm dialog từ bất kỳ đâu
     function showConfirmDialog(action, actionLabel) {
