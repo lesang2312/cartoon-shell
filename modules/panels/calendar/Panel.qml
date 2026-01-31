@@ -5,7 +5,7 @@ import Quickshell.Wayland
 import Quickshell.Io
 import qs.services
 import qs.commons
-import "./" as Components
+import "." as Com
 
 PanelWindow {
     id: wtDetailPanel
@@ -44,12 +44,12 @@ PanelWindow {
             anchors.margins: 16
             spacing: 16
 
-            Components.WtDetailHeader {
+            Com.Header {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 70
             }
 
-            Components.WtDetailCalendar {
+            Com.Dislay {
                 Layout.alignment: Qt.AlignHCenter
             }
         }

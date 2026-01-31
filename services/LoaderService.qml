@@ -9,7 +9,7 @@ Item {
     id: root
 
     Loader {
-        source: "../modules/panels/WeatherTime/WtDetailPanel.qml"
+        source: "../modules/panels/calendar/Panel.qml"
         active: VisibleService.calendar
         onLoaded: {
             item.visible = Qt.binding(function() { return VisibleService.calendar })
@@ -74,7 +74,7 @@ Item {
         }
       }
             Loader {
-        source: "../modules/panels/WifiPanel/WifiPanel.qml"
+        source: "../modules/panels/wifi/WifiPanel.qml"
         active: VisibleService.wifi
         onLoaded: {
           item.visible = Qt.binding(function() { return VisibleService.wifi})
@@ -84,7 +84,7 @@ Item {
 
 
       Loader {
-        source: "../modules/panels/Bluetooth/BluetoothPanel.qml"
+        source: "../modules/panels/bluetooth/BluetoothPanel.qml"
         active: VisibleService.bluetooth
         onLoaded: {
           item.visible = Qt.binding(function() { return VisibleService.bluetooth})
@@ -92,14 +92,14 @@ Item {
       }
 
       Loader {
-        source: "../modules/panels/Mixer/MixerPanel.qml"
+        source: "../modules/panels/mixer/MixerPanel.qml"
         active: VisibleService.mixer
         onLoaded: {
             item.visible = Qt.binding(function() { return VisibleService.mixer })
         }
       }
       Loader {
-        source: "../modules/panels/Battery/BatteryDetailPanel.qml"
+        source: "../modules/panels/battery/BatteryDetailPanel.qml"
         active: VisibleService.battery
         onLoaded: {
             item.visible = Qt.binding(function() { return VisibleService.battery })
@@ -115,7 +115,7 @@ Item {
       }
       Loader {
         id: launcherPanelLoader
-        source: "../modules/panels/Launcher/LauncherPanel.qml"
+        source: "../modules/panels/launcher/LauncherPanel.qml"
         active: VisibleService.launcher
         onLoaded: {
             item.visible = VisibleService.launcher
