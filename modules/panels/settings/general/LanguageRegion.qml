@@ -9,7 +9,7 @@ import qs.components
 Item {
   id: root
     property var theme : ThemeService.theme
-    property var lang: currentLanguage
+    property var lang : LanguageService.translations
     
     property Timer reloadTimer: Timer {
         interval: 30

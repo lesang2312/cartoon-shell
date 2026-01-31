@@ -14,7 +14,7 @@ Rectangle {
     border.width: 2
 
     property var theme : ThemeService.theme
-    property var lang : currentLanguage
+    property var lang : LanguageService.translations
 
 
     signal confirmRequested(string action, string actionLabel)

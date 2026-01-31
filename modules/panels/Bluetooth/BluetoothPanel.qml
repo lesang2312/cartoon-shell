@@ -32,7 +32,7 @@ margins {
     objectName: "BluetoothPanel"
 
     property var theme : ThemeService.theme
-    property var lang: currentLanguage
+    property var lang : LanguageService.translations
     property var adapter: Bluetooth.defaultAdapter
     property int connectedCount: {
         let count = 0

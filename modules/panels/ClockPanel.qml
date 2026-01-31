@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import QtQuick.Controls
+import qs.services
 
 PanelWindow {
     id: root
@@ -12,7 +13,8 @@ PanelWindow {
     property string currentMin: ""
     property string currentDay: ""
     property string currentDate: ""
-    property var lang: currentLanguage
+    property var lang : LanguageService.translations
+
 
     anchors {
         top: true

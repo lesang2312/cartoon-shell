@@ -6,7 +6,8 @@ Item {
     id: headerCard
 
     property var theme : ThemeService.theme
-    property var lang: currentLanguage
+    property var lang : LanguageService.translations
+
 
     Layout.fillWidth: true
     height: 70

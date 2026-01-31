@@ -8,7 +8,7 @@ import qs.commons
 RowLayout {
     id: themeSelection
     property var theme : ThemeService.theme
-    property var lang: currentLanguage
+    property var lang : LanguageService.translations
     
     spacing: 12
 

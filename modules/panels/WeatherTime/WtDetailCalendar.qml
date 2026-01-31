@@ -7,7 +7,7 @@ Rectangle {
     id: calendar
 
     property var theme : ThemeService.theme
-    property var lang: currentLanguage
+    property var lang : LanguageService.translations
 
     property date currentDate: new Date()
     property int currentMonth: currentDate.getMonth()

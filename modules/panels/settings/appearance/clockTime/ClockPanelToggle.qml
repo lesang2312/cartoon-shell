@@ -7,7 +7,7 @@ import qs.commons
 
 Item{
     property var theme : ThemeService.theme
-    property var lang: currentLanguage
+    property var lang : LanguageService.translations
     implicitHeight: clockPanelToggle.implicitHeight
 RowLayout {
     id: clockPanelToggle

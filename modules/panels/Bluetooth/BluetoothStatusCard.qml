@@ -8,7 +8,7 @@ Rectangle {
     required property var adapter
     property var theme : ThemeService.theme
 
-    required property var lang
+    property var lang : LanguageService.translations
     required property int connectedCount
 
     Layout.fillWidth: true

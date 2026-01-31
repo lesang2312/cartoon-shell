@@ -5,7 +5,8 @@ import qs.services
 Rectangle {
     id: sidebarSettings
     property var theme : ThemeService.theme
-    property var lang : currentLanguage
+    property var lang : LanguageService.translations
+
     property int currentIndex: 0
     property bool anyItemHovered: false
     property bool isExpanded: !panelManager.fullsetting ? true : anyItemHovered

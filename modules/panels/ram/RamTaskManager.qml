@@ -9,6 +9,7 @@ Item {
     id: ramTaskManager
 
   property var theme : ThemeService.theme
+    property var lang : LanguageService.translations
 
 
     property color headerColor: theme.normal.blue

@@ -10,7 +10,7 @@ Rectangle {
     id: deviceListRoot
     required property var adapter
     property var theme : ThemeService.theme
-    required property var lang
+    property var lang : LanguageService.translations
     required property int connectedCount
 
     signal pairError(string message)

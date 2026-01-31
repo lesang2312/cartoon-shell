@@ -9,7 +9,7 @@ Rectangle {
     required property int index
     required property var adapter
     property var theme : ThemeService.theme
-    required property var lang
+    property var lang : LanguageService.translations
 
     signal pairError(string message)
 

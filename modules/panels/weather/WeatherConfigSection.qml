@@ -7,7 +7,8 @@ Rectangle {
     id: configSection
 
     property var theme : ThemeService.theme
-    property var lang: currentLanguage
+    property var lang : LanguageService.translations
+
     required property string apiKey
     required property string location
     required property bool isSearchingLocation

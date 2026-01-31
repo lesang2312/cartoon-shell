@@ -13,7 +13,8 @@ PanelWindow {
     id: musicPanel
 
     property var theme : ThemeService.theme
-    property var lang: currentLanguage
+    property var lang : LanguageService.translations
+
 
     // Music data
     property var mprisPlayer: Mpris.players.values.length > 0 ? Mpris.players.values[0] : null

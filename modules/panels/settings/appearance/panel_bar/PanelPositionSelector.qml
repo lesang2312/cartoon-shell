@@ -6,7 +6,7 @@ import qs.services
 RowLayout {
     id: panelPositionSelector
     property var theme : ThemeService.theme
-    property var lang
+    property var lang : LanguageService.translations
     property var panelConfig
     
     Text {

@@ -18,7 +18,6 @@ import qs.commons
 ShellRoot {
     id: root
 
-    LanguageLoader { id: languageLoader }
     PanelManager { id: panelManager }
     PanelLoaders{ id: panelLoaders}
 
@@ -28,7 +27,6 @@ ShellRoot {
         confirmDialog.show(action, actionLabel)
     }
 
-    property var currentLanguage: languageLoader.translations
     property bool settingsLoaded: false
 
 
@@ -58,6 +56,7 @@ PanelWindow {
         ThemeService.init()
         WallpaperService.init();
         ProgramCheckerService.init();
+        LanguageService.init();
       }
 
       Background {}

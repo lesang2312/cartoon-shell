@@ -7,7 +7,7 @@ Rectangle {
     id: header
     required property var adapter
     property var theme : ThemeService.theme
-    required property var lang
+    property var lang : LanguageService.translations
     required property bool isDiscovering
 
     signal scanClicked()

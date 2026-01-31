@@ -8,7 +8,7 @@ import qs.services
 
 Item {
     id: ramDisplay
-    property var lang: currentLanguage
+    property var lang : LanguageService.translations
     property var theme : ThemeService.theme
 
     property color usedRamColor: theme.normal.green

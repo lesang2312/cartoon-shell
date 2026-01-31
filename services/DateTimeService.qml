@@ -1,10 +1,11 @@
 import QtQuick
 import Quickshell
+import qs.services
 
 Item {
     id: root
     
-    property var lang: currentLanguage
+    property var lang : LanguageService.translations
     property string currentDate: ""
     property string currentTime: ""
     property string currentHour: ""

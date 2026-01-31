@@ -5,7 +5,7 @@ import qs.services
 Rectangle {
     id: wifiStatus
     property var theme : ThemeService.theme
-    property var lang
+    property var lang : LanguageService.translations
     property var wifiManager
     
     height: 80

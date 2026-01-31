@@ -8,7 +8,7 @@ ColumnLayout {
     id: networkList
     property var theme : ThemeService.theme
 
-    property var lang
+    property var lang : LanguageService.translations
     property var wifiManager
     
     Rectangle {

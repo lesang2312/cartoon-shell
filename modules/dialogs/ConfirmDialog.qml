@@ -7,7 +7,7 @@ import qs.services
 PanelWindow {
     id: root
 
-    property var lang: currentLanguage
+    property var lang : LanguageService.translations
     property var theme : ThemeService.theme
 
     property string pendingAction: ""

@@ -14,7 +14,7 @@ PanelWindow {
 
     implicitWidth: 450
     implicitHeight: 600
-    property var lang : currentLanguage
+    property var lang : LanguageService.translations
 
     anchors {
     // Anchor theo vị trí của bar

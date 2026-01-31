@@ -12,7 +12,8 @@ PanelWindow {
     id: weatherPanel
 
     property var theme : ThemeService.theme
-    property var lang: currentLanguage
+    property var lang : LanguageService.translations
+
 
     implicitWidth: 1000
     implicitHeight: 550

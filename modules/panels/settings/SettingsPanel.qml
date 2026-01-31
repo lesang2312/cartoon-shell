@@ -8,7 +8,7 @@ import qs.services
 Rectangle {
     id: rootSettings
     property var theme : ThemeService.theme
-    property var lang: currentLanguage
+    property var lang : LanguageService.translations
     property var launcherPanel: null  // Reference to LauncherPanel
     property int currentTab: 0
     signal backRequested()
@@ -84,8 +84,6 @@ Rectangle {
 
                 // Lockscreen Settings
                 Com.Dashboard {
-                    panelConfig: sharedPanelConfig
-                    launcherPanel: rootSettings.launcherPanel
                 }
 
                 // Network Settings

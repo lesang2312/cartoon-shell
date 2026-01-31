@@ -36,7 +36,7 @@ PanelWindow {
 
     property var theme : ThemeService.theme
     property bool settingsPanelVisible: false
-    property var lang : currentLanguage
+    property var lang : LanguageService.translations
     property bool launcherPanelVisible: true
 
     // Sửa hàm closePanel

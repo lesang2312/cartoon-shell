@@ -5,8 +5,7 @@ import qs.services
 Rectangle {
     id: emptyState
     property var theme : ThemeService.theme
-
-    property var lang
+    property var lang : LanguageService.translations
     
     color: "transparent"
     

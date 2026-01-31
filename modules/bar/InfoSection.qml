@@ -12,7 +12,7 @@ Rectangle {
     border.color: theme.button.border
     border.width: 3
 
-    property var lang: currentLanguage
+    property var lang : LanguageService.translations
     property string selectedFlag: Settings.appearance.countryFlag
     property var theme : ThemeService.theme
     property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"

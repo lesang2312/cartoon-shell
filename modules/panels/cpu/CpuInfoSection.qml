@@ -15,7 +15,7 @@ Column {
     property string cpuVendor: lang.infoSection.loading
     property string cpuArch: lang.infoSection.loading
     property string cpuSocket: lang.infoSection.loading
-    property var lang : currentLanguage
+    property var lang : LanguageService.translations
     property bool infoLoaded: false
 
     // Process để lấy thông tin CPU

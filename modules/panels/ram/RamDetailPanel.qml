@@ -31,7 +31,7 @@ PanelWindow {
     color: "transparent"
 
     property var theme : ThemeService.theme
-    property var lang : currentLanguage
+    property var lang : LanguageService.translations
     
     Rectangle {
         anchors.fill: parent
