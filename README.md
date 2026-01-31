@@ -149,7 +149,7 @@ nano config/configs/default.json
 quickshell --path ~/.config/quickshell/cartoon-shell
 
 # Or add to Hyprland config
-echo "exec-once = export QML_XHR_ALLOW_FILE_READ=1 && quickshell --path ~/.config/quickshell/cartoon-shell" \
+echo "quickshell --path ~/.config/quickshell/cartoon-shell" \
     >> ~/.config/hypr/hyprland.conf
 ```
 
@@ -172,44 +172,6 @@ The wallpaper settings support both **images** and **videos**:
 - **mpvpaper**: Used for video wallpapers with hardware acceleration
 - **ffmpeg**: Generates thumbnails from video files automatically
 
-
----
-
-## ⌨️ Shortcuts
-
-### Hyprland Keybindings (`$mainMod = SUPER`)
-
-#### Basic
-| Key | Action |
-|-----|--------|
-| `SUPER + RETURN` | Open terminal |
-| `SUPER + Q` | Close current window |
-| `SUPER + M` | Exit Hyprland |
-| `SUPER + E` | Open file manager |
-| `SUPER + SPACE` | Open app launcher |
-| `SUPER + V` | Toggle floating window |
-| `SUPER + P` | Toggle pseudotiling |
-| `SUPER + J` | Toggle split layout |
-
-#### Window movement
-| Key | Action |
-|-----|--------|
-| `SUPER + ← ↑ → ↓` | Move focus |
-| `SUPER + [1-0]` | Switch workspace 1-10 |
-| `SUPER + SHIFT + [1-0]` | Move window to workspace |
-
-#### Special workspace
-| Key | Action |
-|-----|--------|
-| `SUPER + S` | Toggle workspace `magic` |
-| `SUPER + SHIFT + S` | Move to `special:magic` |
-
-#### Mouse
-| Action | Description |
-|--------|-------------|
-| `SUPER + Drag Left` | Move window |
-| `SUPER + Drag Right` | Resize window |
-| `SUPER + Scroll` | Switch workspace |
 
 ---
 
