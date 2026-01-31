@@ -29,7 +29,7 @@ Rectangle {
         anchors.fill: parent
         spacing: 20
 
-        // Sidebar - chỉ hiển thị khi không ở chế độ fullsetting
+        // Sidebar
         Com.Sidebar {
             theme: rootSettings.theme
             onCategoryChanged: function(index) {

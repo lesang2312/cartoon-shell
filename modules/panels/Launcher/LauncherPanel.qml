@@ -13,18 +13,14 @@ import "./" as LauncherComponents
 PanelWindow {
     id: launcherPanel
     implicitWidth: {
-        if (panelManager.fullsetting && panelManager.setting) {
-            return 1500
-        } else if (panelManager.setting) {
+         if (panelManager.setting) {
             return 1000
         } else {
             return 600
         }
     }
     implicitHeight: {
-        if (panelManager.fullsetting && panelManager.setting) {
-            return 900
-        } else if (panelManager.setting) {
+         if (panelManager.setting) {
             return 700
         } else {
             return 640
@@ -54,57 +50,17 @@ PanelWindow {
 
     anchors {
         // Xác định vị trí anchor dựa trên position của bar
-        left: {
-            if (panelManager.fullsetting && panelManager.setting) {
-                return false // Không cố định khi full screen
-            }
-            return (Settings.bar.position === "left" || Settings.bar.position === "top" || Settings.bar.position === "bottom")
-        }
-        right: {
-            if (panelManager.fullsetting && panelManager.setting) {
-                return false // Không cố định khi full screen
-            }
-            return Settings.bar.position === "right"
-        }
-        top: {
-            if (panelManager.fullsetting && panelManager.setting) {
-                return false // Không cố định khi full screen
-            }
-            return (Settings.bar.position === "top" || Settings.bar.position === "left" || Settings.bar.position === "right")
-        }
-        bottom: {
-            if (panelManager.fullsetting && panelManager.setting) {
-                return false // Không cố định khi full screen
-            }
-            return Settings.bar.position === "bottom"
-        }
+        left: (Settings.bar.position === "left" || Settings.bar.position === "top" || Settings.bar.position === "bottom")
+        right: Settings.bar.position === "right"
+        top: (Settings.bar.position === "top" || Settings.bar.position === "left" || Settings.bar.position === "right")
+        bottom: Settings.bar.position === "bottom"
     }
 
     margins {
-        top: {
-            if (panelManager.fullsetting && settingsPanelVisible) {
-                return 0 // Không margin khi full screen
-            }
-            return Settings.bar.position === "top" ? 10 : 0
-        }
-        bottom: {
-            if (panelManager.fullsetting && settingsPanelVisible) {
-                return 0 // Không margin khi full screen
-            }
-            return Settings.bar.position === "bottom" ? 10 : 0
-        }
-        left: {
-            if (panelManager.fullsetting && settingsPanelVisible) {
-                return 0 // Không margin khi full screen
-            }
-            return (Settings.bar.position === "left" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? 10 : 0
-        }
-        right: {
-            if (panelManager.fullsetting && settingsPanelVisible) {
-                return 0 // Không margin khi full screen
-            }
-            return Settings.bar.position === "right" ? 10 : 0
-        }
+        top: Settings.bar.position === "top" ? 10 : 0
+        bottom: Settings.bar.position === "bottom" ? 10 : 0
+        left: (Settings.bar.position === "left" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? 10 : 0
+        right: Settings.bar.position === "right" ? 10 : 0
     }
 
     // Focus scope để quản lý focus
@@ -121,11 +77,6 @@ PanelWindow {
             border.width: 3
             ColumnLayout{
                 anchors.fill: parent
-                Components.BarFullSettings{
-                  visible: panelManager.fullsetting
-                  implicitHeight: 20
-                  Layout.fillWidth: true
-                }
                 Item {
                   Layout.fillWidth: true
                   Layout.fillHeight: true
