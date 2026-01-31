@@ -77,7 +77,7 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        panelManager.togglePanel("calendar")
+                        VisibleService.togglePanel("calendar")
                     }
                     
                     // Hiệu ứng hover
@@ -149,7 +149,7 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        panelManager.togglePanel("weather")
+                        VisibleService.togglePanel("weather")
                     }
                     
                     onEntered: {
@@ -189,7 +189,7 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        panelManager.togglePanel("flag")
+                        VisibleService.togglePanel("flag")
                     }
 
                     onEntered: {
@@ -255,7 +255,7 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        panelManager.togglePanel("calendar")
+                        VisibleService.togglePanel("calendar")
                     }
                     
                     // Hiệu ứng hover
@@ -319,7 +319,7 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        panelManager.togglePanel("weather")
+                        VisibleService.togglePanel("weather")
                     }
                     
                     onEntered: {
@@ -356,7 +356,7 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        panelManager.togglePanel("flag")
+                        VisibleService.togglePanel("flag")
                     }
 
                     onEntered: {

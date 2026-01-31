@@ -96,7 +96,7 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        panelManager.togglePanel("cpu")
+                        VisibleService.togglePanel("cpu")
                     }
                     onEntered: cpuContainer.opacity = 0.8
                     onExited: cpuContainer.opacity = 1.0
@@ -160,7 +160,7 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        panelManager.togglePanel("ram")
+                        VisibleService.togglePanel("ram")
                     }
                     onEntered: memoryContainer.opacity = 0.8
                     onExited: memoryContainer.opacity = 1.0
@@ -232,7 +232,7 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        panelManager.togglePanel("cpu")
+                        VisibleService.togglePanel("cpu")
                     }
                     onEntered: cpuContainerVertical.opacity = 0.8
                     onExited: cpuContainerVertical.opacity = 1.0
@@ -297,7 +297,7 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        panelManager.togglePanel("ram")
+                        VisibleService.togglePanel("ram")
                     }
                     onEntered: memoryContainerVertical.opacity = 0.8
                     onExited: memoryContainerVertical.opacity = 1.0

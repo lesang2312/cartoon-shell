@@ -82,9 +82,7 @@ Rectangle {
                 }
 
 
-                // Lockscreen Settings
-                Com.Dashboard {
-                }
+
 
                 // Network Settings
                 Com.Network {

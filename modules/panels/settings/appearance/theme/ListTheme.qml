@@ -8,7 +8,6 @@ import qs.services
 ColumnLayout {
     id: presetThemesContainer
     property var theme : ThemeService.theme
-    property var panelConfig
     
     width: parent.width
     spacing: 15
@@ -26,9 +25,9 @@ ColumnLayout {
     
     GridLayout {
         Layout.fillWidth: true
-        columns: panelManager.fullsetting ? 5 : 3
-        columnSpacing: panelManager.fullsetting ? 15 : 10
-        rowSpacing: panelManager.fullsetting ? 15 : 10
+        columns: 3  // Đã sửa từ: panelManager.fullsetting ? 5 : 3
+        columnSpacing: 10  // Đã sửa từ: panelManager.fullsetting ? 15 : 10
+        rowSpacing: 10  // Đã sửa từ: panelManager.fullsetting ? 15 : 10
         
         Repeater {
             model: [
@@ -117,7 +116,7 @@ ColumnLayout {
                         horizontalAlignment: Text.AlignLeft
                         font {
                             family: "ComicShannsMono Nerd Font"
-                            pixelSize: panelManager.fullsetting ? 16 : 12
+                            pixelSize: 12  // Đã sửa từ: panelManager.fullsetting ? 16 : 12
                             bold: true
                         }
                     }

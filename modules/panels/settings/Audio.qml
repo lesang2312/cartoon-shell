@@ -22,32 +22,7 @@ Item {
                 spacing: 10
                 
                 // Button Nâng cao ở góc trái
-                Button {
-                    id: advancedButton
-                    text: "Nâng cao"
-                    font.family: "ComicShannsMono Nerd Font"
-                    font.pixelSize: 14
-                    
-                    background: Rectangle {
-                        color: advancedButton.hovered ? theme.button.hover : theme.button.background
-                        border.color: theme.button.border
-                        border.width: 1
-                        radius: 8
-                    }
-                    
-                    contentItem: Text {
-                        text: advancedButton.text
-                        font: advancedButton.font
-                        color: theme.primary.foreground
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                    
-                    onClicked: {
-                        panelManager.togglePanel("fullsetting")
-                        // Thêm xử lý khi click vào đây
-                    }
-                }
+
                 
                 Item {
                     Layout.fillWidth: true

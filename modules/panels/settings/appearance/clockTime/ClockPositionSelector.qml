@@ -175,7 +175,7 @@ Item {
             Text {
                 anchors.centerIn: parent
                 text: {
-                    var pos = currentConfig.clockPanelPosition;
+                    var pos = Settings.clock.positionWidget;
                     var descriptions = {
                         "topLeft": "Trên cùng bên trái",
                         "top": "Trên cùng giữa",

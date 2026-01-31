@@ -225,7 +225,7 @@ Rectangle {
                     onExited: bluetoothContainer.scale = 1.0
                     onPressed: bluetoothContainer.scale = 0.95
                     onReleased: bluetoothContainer.scale = containsMouse ? 1.1 : 1.0
-                    onClicked: panelManager.togglePanel("bluetooth")
+                    onClicked: VisibleService.togglePanel("bluetooth")
                 }
 
                 Behavior on scale {
@@ -284,7 +284,7 @@ Rectangle {
                     onExited: networkContainer.scale = 1.0
                     onPressed: networkContainer.scale = 0.95
                     onReleased: networkContainer.scale = containsMouse ? 1.1 : 1.0
-                    onClicked: panelManager.togglePanel("wifi")
+                    onClicked: VisibleService.togglePanel("wifi")
                 }
 
                 Behavior on scale {
@@ -338,7 +338,7 @@ Rectangle {
                     onExited: volumeContainer.scale = 1.0
                     onPressed: volumeContainer.scale = 0.95
                     onReleased: volumeContainer.scale = containsMouse ? 1.1 : 1.0
-                    onClicked: panelManager.togglePanel("mixer")
+                    onClicked: VisibleService.togglePanel("mixer")
                     onWheel: {
                         var delta = wheel.angleDelta.y / 120
                         if (delta > 0) {
@@ -399,7 +399,7 @@ Rectangle {
                     onExited: batteryContainer.scale = 1.0
                     onPressed: batteryContainer.scale = 0.95
                     onReleased: batteryContainer.scale = 1.1
-                    onClicked: panelManager.togglePanel("battery")
+                    onClicked: VisibleService.togglePanel("battery")
                 }
                 Behavior on scale { NumberAnimation { duration: 100 } }
             }
@@ -434,7 +434,7 @@ Rectangle {
                     onPressed: powerContainer.scale = 0.9
                     onReleased: powerContainer.scale = 1.2
                     
-                    onClicked: panelManager.togglePanel("dashboard")
+                    onClicked: VisibleService.togglePanel("dashboard")
                 }
                 
                 Behavior on scale { NumberAnimation { duration: 100 } }
@@ -532,7 +532,7 @@ Rectangle {
                     anchors.fill: parent
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: panelManager.togglePanel("bluetooth")
+                    onClicked: VisibleService.togglePanel("bluetooth")
                     onEntered: parent.opacity = 0.8
                     onExited: parent.opacity = 1.0
                 }
@@ -572,7 +572,7 @@ Rectangle {
                     anchors.fill: parent
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: panelManager.togglePanel("wifi")
+                    onClicked: VisibleService.togglePanel("wifi")
                     onEntered: parent.opacity = 0.8
                     onExited: parent.opacity = 1.0
                 }
@@ -611,7 +611,7 @@ Rectangle {
                     anchors.fill: parent
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: panelManager.togglePanel("mixer")
+                    onClicked: VisibleService.togglePanel("mixer")
                     onEntered: parent.opacity = 0.8
                     onExited: parent.opacity = 1.0
                     onWheel: {
@@ -658,7 +658,7 @@ Rectangle {
                     anchors.fill: parent
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: panelManager.togglePanel("battery")
+                    onClicked: VisibleService.togglePanel("battery")
                     onEntered: parent.opacity = 0.8
                     onExited: parent.opacity = 1.0
                 }
@@ -691,7 +691,7 @@ Rectangle {
                     anchors.fill: parent
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: panelManager.togglePanel("dashboard")
+                    onClicked: VisibleService.togglePanel("dashboard")
                     onEntered: parent.opacity = 0.8
                     onExited: parent.opacity = 1.0
                 }

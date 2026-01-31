@@ -120,7 +120,7 @@ Rectangle {
                     onClicked: {
                         if (modelData && modelData.entry) {
                             modelData.entry.execute()
-                            panelManager.closeAllPanels()
+                            VisibleService.closeAllPanels()
                         }
 
                     }
@@ -223,7 +223,7 @@ Rectangle {
                 var item = container.apps[container.currentIndex]
                 if (item && item.entry) {
                     item.entry.execute()
-                    panelManager.closeAllPanels()
+                    VisibleService.closeAllPanels()
                 }
             }
         }

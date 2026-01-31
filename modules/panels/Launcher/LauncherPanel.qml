@@ -13,14 +13,14 @@ import "./" as LauncherComponents
 PanelWindow {
     id: launcherPanel
     implicitWidth: {
-         if (panelManager.setting) {
+         if (VisibleService.setting) {
             return 1000
         } else {
             return 600
         }
     }
     implicitHeight: {
-         if (panelManager.setting) {
+         if (VisibleService.setting) {
             return 700
         } else {
             return 640
@@ -67,7 +67,7 @@ PanelWindow {
         Rectangle {
             anchors.fill: parent
             radius: {
-                if (panelManager.fullsetting && panelManager.setting) {
+                if (VisibleService.fullsetting && VisibleService.setting) {
                     return 10 // Radius nhỏ hơn khi full screen
                 }
                 return 20
@@ -83,7 +83,7 @@ PanelWindow {
                     RowLayout {
                       anchors.fill: parent
                       anchors.margins: {
-                        if (panelManager.fullsetting && settingsPanelVisible) {
+                        if (VisibleService.fullsetting && settingsPanelVisible) {
                           return 20 // Margin lớn hơn khi full screen
                         }
                         return 16
@@ -92,7 +92,7 @@ PanelWindow {
 
                 LauncherComponents.Sidebar {
                     id: sidebar
-                    visible: !(panelManager.fullsetting && panelManager.setting)
+                    visible: !(VisibleService.fullsetting && VisibleService.setting)
                     onConfirmRequested: (action, actionLabel) => {
                         launcherPanel.confirmRequested(action, actionLabel)
                     }
@@ -102,16 +102,16 @@ PanelWindow {
                     id: settingsPanelLoader
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    active: panelManager.setting
+                    active: VisibleService.setting
                     source: "../settings/SettingsPanel.qml"
                     onLoaded: {
                         item.launcherPanel = launcherPanel
-                        item.visible = Qt.binding(function() { return panelManager.setting })
+                        item.visible = Qt.binding(function() { return VisibleService.setting })
                     }
                 }
 
                 ColumnLayout {
-                    visible: !panelManager.setting
+                    visible: !VisibleService.setting
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     spacing: 10
@@ -156,7 +156,7 @@ PanelWindow {
 
     Shortcut {
         sequence: "Escape"
-        onActivated: panelManager.togglePanel("launcher")
+        onActivated: VisibleService.togglePanel("launcher")
     }
 
     Component.onCompleted: {

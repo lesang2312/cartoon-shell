@@ -99,7 +99,7 @@ Rectangle {
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
                 onClicked: {
-                    panelManager.togglePanel("listLauncher")
+                    VisibleService.togglePanel("listLauncher")
                 }
             }
         }
@@ -174,7 +174,7 @@ Rectangle {
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
                 onClicked: {
-                    panelManager.togglePanel("setting")
+                    VisibleService.togglePanel("setting")
                 }
             }
         }

@@ -1,8 +1,12 @@
 // components/PanelManager.qml
+pragma Singleton
+pragma ComponentBehavior: Bound
+
 import QtQuick 2.15
+import Quickshell
 import qs.commons
 
-QtObject {
+Singleton {
     id: panelManager
 
     // Properties cho từng panel

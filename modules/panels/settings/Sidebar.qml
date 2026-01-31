@@ -9,7 +9,7 @@ Rectangle {
 
     property int currentIndex: 0
     property bool anyItemHovered: false
-    property bool isExpanded: !panelManager.fullsetting ? true : anyItemHovered
+    property bool isExpanded: true  // Đã xóa tham chiếu đến panelManager.fullsetting
     
     signal categoryChanged(int index)
     signal backRequested()
@@ -77,7 +77,6 @@ Rectangle {
             model: [
                 { name: lang.settings.general, icon: "../../../assets/settings/home.png", category: "general" },
                 { name: lang.settings.appearance, icon: "../../../assets/settings/paint-brush.png", category: "appearance" },
-                { name: "dashboard" , icon: "../../../assets/settings/lockscreen.png", category: "dashboard" },
                 { name: lang.settings.network, icon: "../../../assets/settings/network.png", category: "network" },
                 { name: lang.settings.audio, icon: "../../../assets/settings/volume.png", category: "audio" },
                 { name: lang.settings.performance, icon: "../../../assets/settings/speedometer.png", category: "performance" },

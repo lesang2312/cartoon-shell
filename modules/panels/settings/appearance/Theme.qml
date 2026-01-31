@@ -9,7 +9,6 @@ Item {
     id: root
     property var theme : ThemeService.theme
     property var lang : LanguageService.translations
-    property var panelConfig
 
     ScrollView {
         id: scrollView
@@ -67,8 +66,6 @@ Item {
                         Layout.fillWidth: true
                     }
                     Com.ListTheme{
-                        panelConfig: root.panelConfig
-
                     }
 
                     // Thêm phần cài đặt theme khác nếu cần

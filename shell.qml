@@ -6,7 +6,6 @@ import Quickshell.Io
 import Quickshell.Wayland
 import QtQuick.Effects
 
-import qs.config
 import qs.components
 import qs.modules.dialogs
 import qs.modules.panels
@@ -18,10 +17,9 @@ import qs.commons
 ShellRoot {
     id: root
 
-    PanelManager { id: panelManager }
-    PanelLoaders{ id: panelLoaders}
 
     ConfirmDialog {id: confirmDialog}
+    LoaderService{id: loaderService}
 
     // Function để hiển thị confirm dialog từ bất kỳ đâu
     function showConfirmDialog(action, actionLabel) {
@@ -32,7 +30,7 @@ ShellRoot {
 
 
 PanelWindow {
-    visible: panelManager.hasPanel
+    visible: VisibleService.hasPanel
     color: "transparent"
 
     implicitWidth: (Settings.bar.position === "left" || Settings.bar.position === "right") ? Screen.width - 40 : Screen.width
@@ -41,7 +39,7 @@ PanelWindow {
     MouseArea {
         anchors.fill: parent
         z: -1
-        onClicked: panelManager.closeAllPanels()
+        onClicked: VisibleService.closeAllPanels()
     }
 }
       Connections {

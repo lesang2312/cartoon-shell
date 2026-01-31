@@ -134,7 +134,7 @@ PanelWindow {
                         anchors.fill: parent
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: panelManager.togglePanel("music")
+                        onClicked: VisibleService.togglePanel("music")
                     }
                 }
             }

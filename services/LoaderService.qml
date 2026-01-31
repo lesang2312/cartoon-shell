@@ -1,27 +1,27 @@
-// components/PanelLoaders.qml
 import QtQuick
 import Quickshell
 import Quickshell.Io
 import qs.modules.panels
 import qs.commons
+import qs.services
 
 Item {
     id: root
 
     Loader {
         source: "../modules/panels/WeatherTime/WtDetailPanel.qml"
-        active: panelManager.calendar
+        active: VisibleService.calendar
         onLoaded: {
-            item.visible = Qt.binding(function() { return panelManager.calendar })
+            item.visible = Qt.binding(function() { return VisibleService.calendar })
         }
       }
 
     // Flag Selection Panel
     Loader {
         source: "../modules/panels/FlagSelectionPanel.qml"
-        active: panelManager.flag
+        active: VisibleService.flag
         onLoaded: {
-            item.visible = Qt.binding(function() { return panelManager.flag })
+            item.visible = Qt.binding(function() { return VisibleService.flag })
             item.selectedFlag = Qt.binding(function() { return root.selectedFlag })
         }
       }
@@ -47,37 +47,37 @@ Item {
     // Weather Panel
     Loader {
         source: "../modules/panels/weather/WeatherPanel.qml"
-        active: panelManager.weather
+        active: VisibleService.weather
         onLoaded: {
-            item.visible = Qt.binding(function() { return panelManager.weather })
+            item.visible = Qt.binding(function() { return VisibleService.weather })
         }
       }
           Loader {
         source: "../modules/panels/cpu/CpuDetailPanel.qml"
-        active: panelManager.cpu
+        active: VisibleService.cpu
         onLoaded: {
-            item.visible = Qt.binding(function() { return panelManager.cpu })
+            item.visible = Qt.binding(function() { return VisibleService.cpu })
         }
       }
       Loader {
         source: "../modules/panels/ram/RamDetailPanel.qml"
-        active: panelManager.ram
+        active: VisibleService.ram
         onLoaded: {
-            item.visible = Qt.binding(function() { return panelManager.ram })
+            item.visible = Qt.binding(function() { return VisibleService.ram })
         }
       }
           Loader {
-        active: panelManager.music
+        active: VisibleService.music
         source: "../modules/panels/MusicPanel.qml"
         onLoaded: {
-            item.visible = panelManager.music
+            item.visible = VisibleService.music
         }
       }
             Loader {
         source: "../modules/panels/WifiPanel/WifiPanel.qml"
-        active: panelManager.wifi
+        active: VisibleService.wifi
         onLoaded: {
-          item.visible = Qt.binding(function() { return panelManager.wifi})
+          item.visible = Qt.binding(function() { return VisibleService.wifi})
         }
       }
 
@@ -85,40 +85,40 @@ Item {
 
       Loader {
         source: "../modules/panels/Bluetooth/BluetoothPanel.qml"
-        active: panelManager.bluetooth
+        active: VisibleService.bluetooth
         onLoaded: {
-          item.visible = Qt.binding(function() { return panelManager.bluetooth})
+          item.visible = Qt.binding(function() { return VisibleService.bluetooth})
         }
       }
 
       Loader {
         source: "../modules/panels/Mixer/MixerPanel.qml"
-        active: panelManager.mixer
+        active: VisibleService.mixer
         onLoaded: {
-            item.visible = Qt.binding(function() { return panelManager.mixer })
+            item.visible = Qt.binding(function() { return VisibleService.mixer })
         }
       }
       Loader {
         source: "../modules/panels/Battery/BatteryDetailPanel.qml"
-        active: panelManager.battery
+        active: VisibleService.battery
         onLoaded: {
-            item.visible = Qt.binding(function() { return panelManager.battery })
+            item.visible = Qt.binding(function() { return VisibleService.battery })
         }
       }
 
       Loader {
         source: "../modules/panels/dashboard/DashboardPanel.qml"
-        active: panelManager.dashboard
+        active: VisibleService.dashboard
         onLoaded: {
-            item.visible = Qt.binding(function() { return panelManager.dashboard })
+            item.visible = Qt.binding(function() { return VisibleService.dashboard })
         }
       }
       Loader {
         id: launcherPanelLoader
         source: "../modules/panels/Launcher/LauncherPanel.qml"
-        active: panelManager.launcher
+        active: VisibleService.launcher
         onLoaded: {
-            item.visible = panelManager.launcher
+            item.visible = VisibleService.launcher
             item.confirmRequested.connect(function(action, actionLabel) {
                 confirmDialog.show(action, actionLabel)
             })
@@ -129,13 +129,13 @@ Item {
         target: "rect"
         function getToggle() {
             if (launcherPanelLoader.status == Loader.Ready) {
-                panelManager.launcher = !panelManager.launcher
-                if (panelManager.launcher && launcherPanelLoader.item) {
+                VisibleService.launcher = !VisibleService.launcher
+                if (VisibleService.launcher && launcherPanelLoader.item) {
                     launcherPanelLoader.item.forceActiveFocus()
                     launcherPanelLoader.item.openLauncher()
                 }
             } else {
-                panelManager.launcher = true
+                VisibleService.launcher = true
             }
             return 0
         }

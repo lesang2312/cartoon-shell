@@ -19,8 +19,6 @@ Item {
     property int currentScreenIndex: 0
     property var currentScreen: Quickshell.screens[currentScreenIndex] || null
 
-
-
     // Process để lấy home directory
     Process {
         id: getHomeProcess
@@ -73,15 +71,14 @@ Item {
 
     // Process để tạo thumbnail cho video
     Process {
-    id: thumbnailProcess
+        id: thumbnailProcess
 
-    onRunningChanged: {
-        if (!running ) {
-            console.log("Thumbnail ready:")
+        onRunningChanged: {
+            if (!running) {
+                console.log("Thumbnail ready:")
+            }
         }
     }
-}
-
 
     ScrollView {
         id: scrollView
@@ -111,40 +108,17 @@ Item {
                     Layout.fillWidth: true
                 }
                 
-                Button {
-                    id: advancedButton
-                    visible: !panelManager.fullsetting
-                    text: "Nâng cao"
-                    font.family: "ComicShannsMono Nerd Font"
-                    font.pixelSize: 14
-                    
-                    background: Rectangle {
-                        color: advancedButton.hovered ? theme.button.hover : theme.button.background
-                        border.color: theme.button.border
-                        border.width: 1
-                        radius: 8
-                    }
-                    
-                    contentItem: Text {
-                        text: advancedButton.text
-                        font: advancedButton.font
-                        color: theme.primary.foreground
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                    
-                    onClicked: {
-                        panelManager.togglePanel("fullsetting")
-                    }
-                }
+                // Đã xóa nút "Nâng cao" vì nó có tham chiếu đến panelManager.fullsetting
             }
             
             Rectangle {
                 Layout.fillWidth: true
                 height: 1
                 color: theme.primary.foreground
-              }
-              RowLayout {
+            }
+            
+            // Screen selector
+            RowLayout {
                 Layout.fillWidth: true
                 spacing: 5
 
@@ -155,7 +129,6 @@ Item {
                         Layout.preferredWidth: 100
                         Layout.preferredHeight: 30
                         radius: 6
-                        // SỬA Ở ĐÂY: thay selectorRoot.currentScreenIndex bằng systemSettings.currentScreenIndex
                         color: systemSettings.currentScreenIndex === index ? 
                                theme.normal.blue : theme.button.background
                         border.color: theme.button.border
@@ -164,7 +137,6 @@ Item {
                         Text {
                             anchors.centerIn: parent
                             text: modelData.name || `Screen ${index + 1}`
-                            // SỬA Ở ĐÂY: thay selectorRoot.currentScreenIndex bằng systemSettings.currentScreenIndex
                             color: systemSettings.currentScreenIndex === index ? 
                                    theme.primary.background : theme.primary.foreground
                             font.pixelSize: 12
@@ -246,9 +218,9 @@ Item {
                 Grid {
                     id: wallpapersGrid
                     Layout.fillWidth: true
-                    columns: !panelManager.fullsetting ? 3 : 6
-                    columnSpacing: !panelManager.fullsetting ? 8 : 10
-                    rowSpacing: !panelManager.fullsetting ? 8 : 10
+                    columns: 3  // Đã sửa từ: !panelManager.fullsetting ? 3 : 6
+                    columnSpacing: 10  // Đã sửa từ: !panelManager.fullsetting ? 8 : 10
+                    rowSpacing: 10  // Đã sửa từ: !panelManager.fullsetting ? 8 : 10
                     
                     Repeater {
                         model: FolderListModel {
@@ -260,8 +232,8 @@ Item {
                         }
                         
                         delegate: Rectangle {
-                            width: !panelManager.fullsetting ? systemSettings.width/4 : systemSettings.width/7
-                            height: !panelManager.fullsetting ? systemSettings.width/4 : systemSettings.width/7
+                            width: systemSettings.width / 4  // Đã sửa từ: !panelManager.fullsetting ? systemSettings.width/4 : systemSettings.width/7
+                            height: systemSettings.width / 4  // Đã sửa từ: !panelManager.fullsetting ? systemSettings.width/4 : systemSettings.width/7
                             radius: 12
                             color: theme.button.background
                             border.color: theme.button.border
@@ -327,7 +299,7 @@ Item {
 
                                     // Current Wallpaper Indicator
                                     Rectangle {
-                                      visible: isCurrentWallpaper(filePath) ? true : false
+                                        visible: isCurrentWallpaper(filePath)
                                         anchors.top: parent.top
                                         anchors.right: parent.right
                                         anchors.margins: 5
@@ -567,7 +539,7 @@ Item {
             interval: 3000;
             onTriggered: successNotification.visible = false
         }
-      }
+    }
 
     function setWallpaper(filePath) {
         var cleanPath = filePath.toString().replace("file://", "")
@@ -579,7 +551,6 @@ Item {
             }
         } else {
             // Set cho màn hình hiện tại trong selector
-            // SỬA Ở ĐÂY: thay wallpaperSelector.currentScreen bằng systemSettings.currentScreen
             var screen = systemSettings.currentScreen
             if (screen) {
                 WallpaperService.changeWallpaper(cleanPath, screen.name)
@@ -590,7 +561,6 @@ Item {
         
         showNotification(lang?.wallpapers?.success_set || "Đã đặt hình nền thành công!")
     }
-
 
     function generateThumbnail(filePath) {
         if (!homePath) return
@@ -642,17 +612,17 @@ Item {
     }
 
     function isCurrentWallpaper(filePath) {
-    if (!currentScreen) return false
-    
-    // Lấy hình nền hiện tại của màn hình từ WallpaperService
-    var currentWallpaper = WallpaperService.getWallpaper(currentScreen.name)
-    
-    // Chuẩn hóa đường dẫn để so sánh
-    var cleanFilePath = filePath.toString().replace("file://", "")
-    var cleanCurrentWallpaper = currentWallpaper.toString().replace("file://", "")
-    
-    return cleanFilePath === cleanCurrentWallpaper
-}
+        if (!currentScreen) return false
+        
+        // Lấy hình nền hiện tại của màn hình từ WallpaperService
+        var currentWallpaper = WallpaperService.getWallpaper(currentScreen.name)
+        
+        // Chuẩn hóa đường dẫn để so sánh
+        var cleanFilePath = filePath.toString().replace("file://", "")
+        var cleanCurrentWallpaper = currentWallpaper.toString().replace("file://", "")
+        
+        return cleanFilePath === cleanCurrentWallpaper
+    }
 
     Component.onCompleted: {
     }

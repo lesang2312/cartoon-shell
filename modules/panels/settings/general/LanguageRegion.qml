@@ -1,4 +1,3 @@
-// components/Settings/general/LanguageRegion.qml
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -7,11 +6,10 @@ import qs.services
 import qs.components
 
 Item {
-  id: root
+    id: root
     property var theme : ThemeService.theme
     property var lang : LanguageService.translations
     
-
     function setLanguageEditor(name) {
         Settings.general.lang = name
     }
@@ -31,8 +29,8 @@ Item {
                 spacing: 10
                 
                 // Tiêu đề
-                HeaderSettings{
-                  name: "Langeuage Region"
+                HeaderSettings {
+                    name: "Language Region"
                 }
             }
             
@@ -58,9 +56,9 @@ Item {
                 
                 Grid {
                     Layout.fillWidth: true
-                    columns: !panelManager.fullsetting ? 5 : 10
-                    columnSpacing: !panelManager.fullsetting ? 8 : 10
-                    rowSpacing: !panelManager.fullsetting ? 8 : 10
+                    columns: 6  // Đã sửa từ !panelManager.fullsetting ? 5 : 10
+                    columnSpacing: 6  // Đã sửa từ !panelManager.fullsetting ? 8 : 10
+                    rowSpacing: 6  // Đã sửa từ !panelManager.fullsetting ? 8 : 10
                     
                     Repeater {
                         model: [
@@ -97,8 +95,8 @@ Item {
                         ]
                         
                         delegate: Rectangle {
-                          width: !panelManager.fullsetting ? root.width/6 : root.width/12
-                            height: !panelManager.fullsetting ? root.width/6 : root.width/12
+                            width: root.width / 7  // Đã sửa từ !panelManager.fullsetting ? root.width/6 : root.width/12
+                            height: root.width / 7  // Đã sửa từ !panelManager.fullsetting ? root.width/6 : root.width/12
                             radius: 10
                             color: Settings.general.lang === modelData.code ? theme.normal.blue : (langMouseArea.containsMouse ? theme.button.background_select : theme.button.background)
                             border.color: Settings.general.lang === modelData.code ? theme.normal.blue : (langMouseArea.containsPress ? theme.button.border_select : theme.button.border)
@@ -110,8 +108,8 @@ Item {
                                 
                                 Image {
                                     source: `../../../../assets/flags/${modelData.flagImg}.png`
-                                    width: !panelManager.fullsetting ? root.width/6 * 0.6 : root.width/12 * 0.6
-                                    height: !panelManager.fullsetting ? root.width/6 * 0.4 : root.width/12 * 0.4
+                                    width: root.width / 7 * 0.6  // Đã sửa từ !panelManager.fullsetting ? root.width/6 * 0.6 : root.width/12 * 0.6
+                                    height: root.width / 7 * 0.4  // Đã sửa từ !panelManager.fullsetting ? root.width/6 * 0.4 : root.width/12 * 0.4
                                     fillMode: Image.PreserveAspectFit
                                     smooth: true
                                     anchors.horizontalCenter: parent.horizontalCenter

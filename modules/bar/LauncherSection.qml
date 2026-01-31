@@ -31,7 +31,7 @@ Rectangle {
                 cursorShape: Qt.PointingHandCursor
                 hoverEnabled: true
                 onClicked: {
-                    panelManager.togglePanel("launcher")
+                    VisibleService.togglePanel("launcher")
                 }
             }
         }
