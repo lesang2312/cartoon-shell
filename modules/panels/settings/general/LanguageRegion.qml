@@ -11,15 +11,9 @@ Item {
     property var theme : ThemeService.theme
     property var lang : LanguageService.translations
     
-    property Timer reloadTimer: Timer {
-        interval: 30
-        repeat: false
-        onTriggered: languageLoader.loadLanguage()
-    }
-    
+
     function setLanguageEditor(name) {
         Settings.general.lang = name
-        reloadTimer.restart()
     }
     
     ScrollView {
