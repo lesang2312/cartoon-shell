@@ -18,19 +18,6 @@
 
 **Cartoon Shell** is a modern Wayland panel built entirely with **QuickShell** (QML) specifically for **Hyprland window manager**. The panel provides a smooth user experience with highly customizable interface, multi-language support, and multi-resolution display compatibility.
 
-### ✨ Highlights
-
-- 🎨 **2 Themes**: Dark (Catppuccin Mocha) and Light (Catppuccin Latte)
-- 🌍 **30 Languages**: Full multi-language support across the globe
-- 📐 **10 Size Profiles**: Support from HD (1280px) to 4K (3840px)
-- 🎥 **Video Wallpaper**: Support both image and video wallpapers (mp4, mkv, webm, gif)
-- ⚡ **Real-time Updates**: Workspace tracking, Music player, Weather, System stats
-- 🔧 **Settings Panel**: Complete configuration interface without file editing
-- 🎵 **Media Control**: Integrated playerctl for Spotify/MPD
-- 🌦️ **Weather Widget**: Real-time weather API
-- 💻 **System Monitor**: CPU, RAM, Network, Battery tracking
-
----
 
 ## 💻 System Requirements
 
@@ -59,12 +46,10 @@ hyprland              # Wayland compositor
 hyprctl               # Hyprland control (bundled with hyprland)
 
 # Wallpaper (Required)
-hyprpaper             # Image wallpaper (bundled with hyprland)
 mpvpaper              # Video wallpaper support
 ffmpeg                # Video thumbnail generation
 
 # Media player (Required)
-playerctl             # MPRIS media control
 cava                  # Audio visualizer for Music Panel
 
 # Network (Required)
@@ -154,39 +139,7 @@ echo "quickshell --path ~/.config/quickshell/cartoon-shell" \
 ```
 
 
-### Available Languages (30)
-
 ---
-
-
-### Wallpaper Management
-
-The wallpaper settings support both **images** and **videos**:
-
-#### Supported Formats
-- **Images**: `.jpg`, `.jpeg`, `.png`, `.bmp`, `.webp`, `.gif`
-- **Videos**: `.mp4`, `.webm`, `.mkv`, `.avi`, `.mov`, `.flv`, `.wmv`, `.m4v`, `.mpg`, `.mpeg`
-
-#### Wallpaper Tools
-- **hyprpaper**: Used for image wallpapers (via hyprctl commands)
-- **mpvpaper**: Used for video wallpapers with hardware acceleration
-- **ffmpeg**: Generates thumbnails from video files automatically
-
-
----
-
-
-### Font icons not displaying
-```bash
-# Install Nerd Font
-yay -S ttf-comicshannsmono-nerd
-
-# Rebuild font cache
-fc-cache -fv
-
-# Check font
-fc-list | grep -i comic
-```
 
 ## Star History
 
