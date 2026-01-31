@@ -8,9 +8,10 @@ import qs.commons
 Item {
     id: root
     property var theme: ThemeService.theme
-    property var lang : LanguageService.translations
+    property var lang: LanguageService.translations
     
     ScrollView {
+        id: scrollView
         anchors.fill: parent
         clip: true
         anchors.margins: 20
@@ -270,66 +271,63 @@ Item {
                     
                     // Preview container
                     Rectangle {
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 120
+                        id: previewContainer
+                        Layout.preferredWidth: 256
+                        Layout.preferredHeight: 144
                         radius: 10
                         color: theme.primary.dim_background
-                        
-                        // Preview bar based on position
-                        Rectangle {
-                            id: previewBar
-                            color: theme.normal.blue
-                            opacity: 0.7
-                            
-                            Component.onCompleted: updatePosition()
-                            
-                            function updatePosition() {
-                                switch(Settings.bar.position) {
-                                    case "top":
-                                        anchors.top = parent.top
-                                        anchors.left = parent.left
-                                        anchors.right = parent.right
-                                        anchors.topMargin = 10
-                                        anchors.leftMargin = 20
-                                        anchors.rightMargin = 20
-                                        height = 8
-                                        break
-                                    case "bottom":
-                                        anchors.bottom = parent.bottom
-                                        anchors.left = parent.left
-                                        anchors.right = parent.right
-                                        anchors.bottomMargin = 10
-                                        anchors.leftMargin = 20
-                                        anchors.rightMargin = 20
-                                        height = 8
-                                        break
-                                    case "left":
-                                        anchors.left = parent.left
-                                        anchors.top = parent.top
-                                        anchors.bottom = parent.bottom
-                                        anchors.leftMargin = 10
-                                        anchors.topMargin = 20
-                                        anchors.bottomMargin = 20
-                                        width = 8
-                                        break
-                                    case "right":
-                                        anchors.right = parent.right
-                                        anchors.top = parent.top
-                                        anchors.bottom = parent.bottom
-                                        anchors.rightMargin = 10
-                                        anchors.topMargin = 20
-                                        anchors.bottomMargin = 20
-                                        width = 8
-                                        break
-                                }
-                            }
+                        border {
+                            width: 2
+                            color: theme.button.border
                         }
                         
-                        // Update preview when position changes
-                        Connections {
-                            target: Settings.bar
-                            function onPositionChanged() {
-                                previewBar.updatePosition()
+                        // Preview panel
+                        Rectangle {
+                            id: previewPanel
+                            color: theme.normal.blue
+                            radius: 3
+                            
+                            // Position logic
+                            property int panelThickness: Settings.bar.thickness || 15
+                            property string panelPosition: Settings.bar.position || "top"
+                            
+                            // Update preview when settings change
+                            onPanelPositionChanged: updatePreview()
+                            onPanelThicknessChanged: updatePreview()
+                            Component.onCompleted: updatePreview()
+                            
+                            function updatePreview() {
+                                // Reset all anchors
+                                anchors.top = undefined
+                                anchors.bottom = undefined
+                                anchors.left = undefined
+                                anchors.right = undefined
+                                anchors.horizontalCenter = undefined
+                                anchors.verticalCenter = undefined
+                                anchors.margins = 10
+                                
+                                // Set position and size based on settings
+                                if (panelPosition === "top") {
+                                    width = parent.width - 20
+                                    height = Math.min(panelThickness, parent.height - 20)
+                                    anchors.top = parent.top
+                                    anchors.horizontalCenter = parent.horizontalCenter
+                                } else if (panelPosition === "bottom") {
+                                    width = parent.width - 20
+                                    height = Math.min(panelThickness, parent.height - 20)
+                                    anchors.bottom = parent.bottom
+                                    anchors.horizontalCenter = parent.horizontalCenter
+                                } else if (panelPosition === "left") {
+                                    width = Math.min(panelThickness, parent.width - 20)
+                                    height = parent.height - 20
+                                    anchors.left = parent.left
+                                    anchors.verticalCenter = parent.verticalCenter
+                                } else if (panelPosition === "right") {
+                                    width = Math.min(panelThickness, parent.width - 20)
+                                    height = parent.height - 20
+                                    anchors.right = parent.right
+                                    anchors.verticalCenter = parent.verticalCenter
+                                }
                             }
                         }
                     }

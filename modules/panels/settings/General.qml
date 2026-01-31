@@ -11,7 +11,7 @@ import "./appearance/" as AppCom
 Item {
     id: root
     property var theme: ThemeService.theme
-    property var lang: currentLanguage
+    property var lang : LanguageService.translations
     property int currentTab: 0
     
     // Timer để reload ngôn ngữ

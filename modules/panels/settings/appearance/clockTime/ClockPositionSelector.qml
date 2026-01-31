@@ -10,7 +10,6 @@ Item {
     property var theme : ThemeService.theme
 
     property var lang : LanguageService.translations
-    property var panelConfig
     
     
     implicitHeight: content.implicitHeight
