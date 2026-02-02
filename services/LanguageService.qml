@@ -12,7 +12,7 @@ Singleton {
     // ===============================
     // Paths
     // ===============================
-    readonly property string languagesDir: Quickshell.shellDir + "/assets/languages"
+    readonly property string languagesDir: Quickshell.shellDir + "/assets/i18n"
     readonly property string fallbackLang: "en"
 
     // ===============================

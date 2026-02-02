@@ -16,6 +16,7 @@ Singleton {
   readonly property alias clock: adapter.clock
   readonly property alias weather: adapter.weather
   readonly property alias bar: adapter.bar
+  readonly property alias dashboard: adapter.dashboard
 
   signal settingsLoaded
   signal settingsSaved
@@ -73,6 +74,12 @@ Singleton {
     property Clock clock: Clock{}
     property Weather weather: Weather{}
     property Bar bar: Bar{}
+    property Dashboard dashboard: Dashboard{}
+  }
+
+  component Dashboard: JsonObject {
+    property string name: ""
+    property string urlAvatar: ""
   }
 
   component Bar: JsonObject {

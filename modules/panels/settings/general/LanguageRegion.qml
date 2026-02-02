@@ -107,7 +107,7 @@ Item {
                                 spacing: 4
                                 
                                 Image {
-                                    source: `../../../../assets/flags/${modelData.flagImg}.png`
+                                    source: Directories.assetsPath + `/flags/${modelData.flagImg}.png`
                                     width: root.width / 7 * 0.6  // Đã sửa từ !panelManager.fullsetting ? root.width/6 * 0.6 : root.width/12 * 0.6
                                     height: root.width / 7 * 0.4  // Đã sửa từ !panelManager.fullsetting ? root.width/6 * 0.4 : root.width/12 * 0.4
                                     fillMode: Image.PreserveAspectFit

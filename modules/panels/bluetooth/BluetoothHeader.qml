@@ -2,6 +2,7 @@
 import QtQuick
 import QtQuick.Layouts
 import qs.services
+import qs.commons
 
 Rectangle {
     id: header
@@ -30,7 +31,7 @@ Rectangle {
             color: theme.primary.background
 
             Image {
-                source: "../../../assets/settings/bluetooth.png"
+                source: Directories.assetsPath + "/settings/bluetooth.png"
                 width: 64
                 height: 64
                 sourceSize: Qt.size(64, 64)
@@ -72,7 +73,7 @@ Rectangle {
             Behavior on color { ColorAnimation { duration: 200 } }
 
             Image {
-                source: "../../../assets/launcher/search.png"
+                source: Directories.assetsPath + "/launcher/search.png"
                 width: 40
                 height: 40
                 sourceSize: Qt.size(40, 40)

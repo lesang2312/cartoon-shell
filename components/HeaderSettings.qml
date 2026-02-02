@@ -5,7 +5,6 @@ import qs.components
 import qs.services
 
 RowLayout{
-  visible: !panelManager.fullsetting
   property var name: ""
   property var theme: ThemeService.theme
 

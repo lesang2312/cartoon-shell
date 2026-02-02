@@ -58,7 +58,7 @@ margins {
 
                     Image {
                         anchors.centerIn: parent
-                        source: "../../../assets/system/mixer.png"
+                        source: Directories.assetsPath +  "/system/mixer.png"
                         width: 50
                         height: 50
                         fillMode: Image.PreserveAspectFit

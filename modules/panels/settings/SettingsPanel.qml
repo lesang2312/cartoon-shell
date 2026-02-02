@@ -74,7 +74,7 @@ Rectangle {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     active: settingsStack.currentIndex === 1
-                    source: "./Appearance.qml"
+                    source: "./appearance/Appearance.qml"
                     onLoaded: {
                         item.visible = Qt.binding(function() { return settingsStack.currentIndex === 1 })
                         item.currentTab = rootSettings.currentTab

@@ -15,7 +15,7 @@ Rectangle {
     radius: 10
     color: theme.primary.background
 
-    property string bluetooth_icon: "../../assets/settings/bluetooth.png"
+    property string bluetooth_icon: Directories.assetsPath + "/settings/bluetooth.png"
     property string status_battery: "Unknown"
     property string capacity_battery: "..."
     property bool shouldShowOsd: false
@@ -92,15 +92,15 @@ Rectangle {
         var status = root.status_battery
         
         if (status === "Charging") {
-            batteryIcon.source = '../../assets/battery/battery-1.png'
+            batteryIcon.source = Directories.assetsPath + '/battery/battery-1.png'
         } else if (capacity <= 20) {
-            batteryIcon.source = '../../assets/battery/battery-2.png'
+            batteryIcon.source = Directories.assetsPath + '/battery/battery-2.png'
         } else if (capacity <= 50) {
-            batteryIcon.source = '../../assets/battery/battery-2.png'
+            batteryIcon.source = Directories.assetsPath + '/battery/battery-2.png'
         } else if (capacity <= 80) {
-            batteryIcon.source = '../../assets/battery/battery-3.png'
+            batteryIcon.source = Directories.assetsPath + '/battery/battery-3.png'
         } else {
-            batteryIcon.source = '../../assets/battery/full.png'
+            batteryIcon.source = Directories.assetsPath + '/battery/full.png'
         }
     }
 
@@ -312,7 +312,7 @@ Rectangle {
 
                     Image {
                         id: volumeIcon
-                        source: isMuted || currentVolume === 0 ? "../../assets/volume/mute.png" : "../../assets/volume/volume.png"
+                        source: isMuted || currentVolume === 0 ? Directories.assetsPath + "/volume/mute.png" : Directories.assetsPath + "/volume/volume.png"
                         width: 35
                         height: 35
                         sourceSize: Qt.size(35, 35)
@@ -375,7 +375,7 @@ Rectangle {
 
                     Image {
                         id: batteryIcon
-                        source: '../../assets/battery/full.png'
+                        source: Directories.assetsPath + '/battery/full.png'
                         width: 30
                         height: 30
                         sourceSize: Qt.size(30, 30)
@@ -417,7 +417,7 @@ Rectangle {
 
                 Image {
                     id: powerIcon
-                    source: '../../assets/system/poweroff.png'
+                    source: Directories.assetsPath + '/system/poweroff.png'
                     width: 30
                     height: 30
                     sourceSize: Qt.size(30, 30)
@@ -597,7 +597,7 @@ Rectangle {
                         
                         Image {
                             id: volumeIconVertical
-                            source: isMuted || currentVolume === 0 ? "../../assets/volume/mute.png" : "../../assets/volume/volume.png"
+                            source: isMuted || currentVolume === 0 ? Directories.assetsPath + "/volume/mute.png" : Directories.assetsPath + "/volume/volume.png"
                             width: 25
                             height: 25
                             sourceSize: Qt.size(25, 25)
@@ -644,7 +644,7 @@ Rectangle {
                         
                         Image {
                             id: batteryIconVertical
-                            source: '../../assets/battery/full.png'
+                            source: Directories.assetsPath + '/battery/full.png'
                             width: 25
                             height: 25
                             sourceSize: Qt.size(25, 25)
@@ -680,7 +680,7 @@ Rectangle {
                     Image {
                         id: powerIconVertical
                         anchors.centerIn: parent
-                        source: '../../assets/system/poweroff.png'
+                        source: Directories.assetsPath + '/system/poweroff.png'
                         width: 25
                         height: 25
                         sourceSize: Qt.size(25, 25)

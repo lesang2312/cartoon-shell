@@ -4,8 +4,8 @@ import QtQuick.Layouts
 import Quickshell
 import qs.services
 import qs.components
-import "./appearance/" as Com
-import "." as BarList
+import "." as Com
+import "../" as BarList
 
 Item {
     id: rootAppearance
@@ -202,7 +202,7 @@ Item {
                     }
                 }
 
-                // Tab 6: Layout
+                // Tab 6: Dashboard
                 ColumnLayout {
                     width: parent.width
                     spacing: 20

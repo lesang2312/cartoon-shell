@@ -82,7 +82,7 @@ Rectangle {
                     
                     Image {
                         id: cpuIcon
-                        source: "../../assets/cpu/cpu.png"
+                        source: Directories.assetsPath + "/cpu/cpu.png"
                         Layout.preferredWidth: 36
                         Layout.preferredHeight: 36
                         fillMode: Image.PreserveAspectFit
@@ -146,7 +146,7 @@ Rectangle {
 
                     Image {
                         id: memoryIcon
-                        source: "../../assets/panel/memory.png"
+                        source: Directories.assetsPath + "/panel/memory.png"
                         Layout.preferredWidth: 30
                         Layout.preferredHeight: 30
                         fillMode: Image.PreserveAspectFit

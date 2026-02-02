@@ -55,7 +55,7 @@ Item {
     function getWeatherIcon(code, isDay) {
         code = Number(code)
 
-        const basePath = "../../assets/weather/icon_weather_status"
+        const basePath = Directories.assetsPath + "/weather/icon_weather_status"
 
         // ☀️ Clear / Sunny
         if (code === 1000)
