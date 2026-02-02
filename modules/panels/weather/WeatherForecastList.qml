@@ -5,7 +5,7 @@ import qs.services
 Rectangle {
     id: forecastSection
 
-    property var theme : ThemeService.theme
+    property var theme: ThemeService.theme
     required property var forecastDays
 
     visible: forecastDays.length > 0
@@ -68,17 +68,17 @@ Rectangle {
                         }
 
                         // Weather icon
-                          Image {
-                    source: modelData.icon
+                        Image {
+                            source: modelData.icon
                             Layout.alignment: Qt.AlignHCenter
-                    Layout.preferredWidth: 40
-                    Layout.preferredHeight: 40
-                    fillMode: Image.PreserveAspectFit
-                    asynchronous: true
-                    cache: false
-                    smooth: true
-                    mipmap: true
-                }
+                            Layout.preferredWidth: 40
+                            Layout.preferredHeight: 40
+                            fillMode: Image.PreserveAspectFit
+                            asynchronous: true
+                            cache: false
+                            smooth: true
+                            mipmap: true
+                        }
 
                         // Temperature range
                         RowLayout {
@@ -111,7 +111,9 @@ Rectangle {
                             }
                         }
 
-                        Item { Layout.fillHeight: true }
+                        Item {
+                            Layout.fillHeight: true
+                        }
                     }
                 }
             }

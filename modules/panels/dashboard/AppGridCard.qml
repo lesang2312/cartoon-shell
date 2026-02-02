@@ -7,7 +7,7 @@ import qs.services
 Rectangle {
     id: root
 
-    property var theme : ThemeService.theme
+    property var theme: ThemeService.theme
 
     Layout.preferredWidth: 220
     Layout.preferredHeight: 220
@@ -26,10 +26,10 @@ Rectangle {
 
         Repeater {
             model: 9
-            
-            Com.AppIcon { 
-                iconSource: "" 
-                bgColor: theme.button.background 
+
+            Com.AppIcon {
+                iconSource: ""
+                bgColor: theme.button.background
             }
         }
     }

@@ -16,12 +16,12 @@ Rectangle {
     property string memoryUsage: "0%"
     property var theme: ThemeService.theme
     property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
-    
+
     CpuService {
         id: cpuService
         enableCpuHistory: true
     }
-    
+
     RamService {
         id: ramService
         useSimpleCalculation: true
@@ -36,7 +36,7 @@ Rectangle {
 
     Component {
         id: horizontalLayout
-        
+
         RowLayout {
             anchors.fill: parent
             spacing: 4
@@ -79,7 +79,7 @@ Rectangle {
                             Layout.alignment: Qt.AlignHCenter
                         }
                     }
-                    
+
                     Image {
                         id: cpuIcon
                         source: Directories.assetsPath + "/cpu/cpu.png"
@@ -96,13 +96,17 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        VisibleService.togglePanel("cpu")
+                        VisibleService.togglePanel("cpu");
                     }
                     onEntered: cpuContainer.opacity = 0.8
                     onExited: cpuContainer.opacity = 1.0
                 }
 
-                Behavior on opacity { NumberAnimation { duration: 100 } }
+                Behavior on opacity {
+                    NumberAnimation {
+                        duration: 100
+                    }
+                }
             }
 
             // Memory Container
@@ -160,20 +164,24 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        VisibleService.togglePanel("ram")
+                        VisibleService.togglePanel("ram");
                     }
                     onEntered: memoryContainer.opacity = 0.8
                     onExited: memoryContainer.opacity = 1.0
                 }
 
-                Behavior on opacity { NumberAnimation { duration: 100 } }
+                Behavior on opacity {
+                    NumberAnimation {
+                        duration: 100
+                    }
+                }
             }
         }
     }
 
     Component {
         id: verticalLayout
-        
+
         ColumnLayout {
             anchors.fill: parent
             spacing: 8
@@ -192,13 +200,12 @@ Rectangle {
                     width: parent.height  // Đảo width và height
                     height: parent.width
                     transformOrigin: Item.Center
-                    
+
                     ColumnLayout {
                         anchors.centerIn: parent
                         spacing: 4
 
-
-                          ColumnLayout {
+                        ColumnLayout {
                             Layout.alignment: Qt.AlignVCenter
                             spacing: 0
                             Text {
@@ -222,7 +229,6 @@ Rectangle {
                                 }
                                 Layout.alignment: Qt.AlignHCenter
                             }
-                            
                         }
                     }
                 }
@@ -232,13 +238,17 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        VisibleService.togglePanel("cpu")
+                        VisibleService.togglePanel("cpu");
                     }
                     onEntered: cpuContainerVertical.opacity = 0.8
                     onExited: cpuContainerVertical.opacity = 1.0
                 }
 
-                Behavior on opacity { NumberAnimation { duration: 100 } }
+                Behavior on opacity {
+                    NumberAnimation {
+                        duration: 100
+                    }
+                }
             }
 
             // Memory Container (vertical)
@@ -255,18 +265,15 @@ Rectangle {
                     width: parent.height  // Đảo width và height
                     height: parent.width
                     transformOrigin: Item.Center
-                    
+
                     ColumnLayout {
                         anchors.centerIn: parent
                         spacing: 4
 
-
-
-
-                                                  ColumnLayout {
+                        ColumnLayout {
                             Layout.alignment: Qt.AlignVCenter
                             spacing: 0
-                            
+
                             Text {
                                 id: memoryLabelVertical
                                 text: "RAM"
@@ -276,8 +283,8 @@ Rectangle {
                                     pixelSize: 14
                                 }
                                 Layout.alignment: Qt.AlignHCenter
-                              }
-                              Text {
+                            }
+                            Text {
                                 id: memoryTextVertical
                                 text: ramService.memPercent + "%"
                                 color: theme.primary.foreground
@@ -297,13 +304,17 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        VisibleService.togglePanel("ram")
+                        VisibleService.togglePanel("ram");
                     }
                     onEntered: memoryContainerVertical.opacity = 0.8
                     onExited: memoryContainerVertical.opacity = 1.0
                 }
 
-                Behavior on opacity { NumberAnimation { duration: 100 } }
+                Behavior on opacity {
+                    NumberAnimation {
+                        duration: 100
+                    }
+                }
             }
         }
     }

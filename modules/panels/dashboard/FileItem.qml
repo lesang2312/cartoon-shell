@@ -9,17 +9,18 @@ Rectangle {
     property string iconLight: ""
     property string label: ""
     property color iconColor: "white"
-    property var theme : ThemeService.theme
-
+    property var theme: ThemeService.theme
 
     Layout.fillWidth: true
     Layout.preferredHeight: 35
     radius: 12
     color: mouseArea.containsMouse ? Qt.rgba(iconColor.r, iconColor.g, iconColor.b, 0.1) : "transparent"
 
-
     Behavior on color {
-        ColorAnimation { duration: 150; easing.type: Easing.OutCubic }
+        ColorAnimation {
+            duration: 150
+            easing.type: Easing.OutCubic
+        }
     }
 
     RowLayout {
@@ -37,7 +38,10 @@ Rectangle {
             scale: mouseArea.containsMouse ? 1.1 : 1.0
 
             Behavior on scale {
-                NumberAnimation { duration: 150; easing.type: Easing.OutCubic }
+                NumberAnimation {
+                    duration: 150
+                    easing.type: Easing.OutCubic
+                }
             }
         }
 
@@ -50,11 +54,15 @@ Rectangle {
             font.bold: mouseArea.containsMouse
 
             Behavior on font.bold {
-                PropertyAnimation { duration: 150 }
+                PropertyAnimation {
+                    duration: 150
+                }
             }
         }
 
-        Item { Layout.fillWidth: true }
+        Item {
+            Layout.fillWidth: true
+        }
     }
 
     MouseArea {
@@ -65,7 +73,7 @@ Rectangle {
 
         onClicked: {
             // Add click action here
-            console.log("Clicked:", root.label)
+            console.log("Clicked:", root.label);
         }
     }
 }

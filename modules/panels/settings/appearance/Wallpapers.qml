@@ -9,8 +9,8 @@ import qs.commons
 
 Item {
     id: systemSettings
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
 
     property string homePath: ""
     property string wallpapersPath: ""
@@ -28,9 +28,9 @@ Item {
             id: homeOutput
             onTextChanged: {
                 if (text) {
-                    var path = text.trim()
-                    systemSettings.homePath = path
-                    systemSettings.wallpapersPath = "file://" + path + "/Pictures/Wallpapers/"
+                    var path = text.trim();
+                    systemSettings.homePath = path;
+                    systemSettings.wallpapersPath = "file://" + path + "/Pictures/Wallpapers/";
                 }
             }
         }
@@ -41,14 +41,14 @@ Item {
         id: wallpaperProcess
 
         stdout: StdioCollector {
-            onTextChanged: { }
+            onTextChanged: {}
         }
 
         onRunningChanged: {
             if (!running) {
-                currentWallpaper = wallpaperPath
-                showNotification(lang?.wallpapers?.success_set || "Đã đặt hình nền thành công!")
-                folderModel.update()
+                currentWallpaper = wallpaperPath;
+                showNotification(lang?.wallpapers?.success_set || "Đã đặt hình nền thành công!");
+                folderModel.update();
             }
         }
     }
@@ -59,12 +59,12 @@ Item {
         command: ["rm", ""]
 
         stdout: StdioCollector {
-            onTextChanged: { }
+            onTextChanged: {}
         }
 
         onRunningChanged: {
             if (!running) {
-                showNotification(lang?.wallpapers?.success_delete || "Đã xóa ảnh thành công!")
+                showNotification(lang?.wallpapers?.success_delete || "Đã xóa ảnh thành công!");
             }
         }
     }
@@ -75,7 +75,7 @@ Item {
 
         onRunningChanged: {
             if (!running) {
-                console.log("Thumbnail ready:")
+                console.log("Thumbnail ready:");
             }
         }
     }
@@ -86,16 +86,16 @@ Item {
         anchors.margins: 20
         clip: true
         ScrollBar.vertical.policy: ScrollBar.AsNeeded
-        
+
         ColumnLayout {
             width: parent.width
             spacing: 15
-            
+
             // Header
             RowLayout {
                 Layout.fillWidth: true
                 spacing: 10
-                
+
                 Text {
                     text: lang?.wallpapers?.title || "Quản lý hình ảnh"
                     color: theme.primary.foreground
@@ -103,20 +103,20 @@ Item {
                     font.bold: true
                     font.family: "ComicShannsMono Nerd Font"
                 }
-                
+
                 Item {
                     Layout.fillWidth: true
                 }
-                
+
                 // Đã xóa nút "Nâng cao" vì nó có tham chiếu đến panelManager.fullsetting
             }
-            
+
             Rectangle {
                 Layout.fillWidth: true
                 height: 1
                 color: theme.primary.foreground
             }
-            
+
             // Screen selector
             RowLayout {
                 Layout.fillWidth: true
@@ -124,21 +124,19 @@ Item {
 
                 Repeater {
                     model: Quickshell.screens
-                    
+
                     delegate: Rectangle {
                         Layout.preferredWidth: 100
                         Layout.preferredHeight: 30
                         radius: 6
-                        color: systemSettings.currentScreenIndex === index ? 
-                               theme.normal.blue : theme.button.background
+                        color: systemSettings.currentScreenIndex === index ? theme.normal.blue : theme.button.background
                         border.color: theme.button.border
                         border.width: 1
 
                         Text {
                             anchors.centerIn: parent
                             text: modelData.name || `Screen ${index + 1}`
-                            color: systemSettings.currentScreenIndex === index ? 
-                                   theme.primary.background : theme.primary.foreground
+                            color: systemSettings.currentScreenIndex === index ? theme.primary.background : theme.primary.foreground
                             font.pixelSize: 12
                             font.family: "ComicShannsMono Nerd Font"
                         }
@@ -150,12 +148,12 @@ Item {
                     }
                 }
             }
-            
+
             // Statistics
             RowLayout {
                 Layout.fillWidth: true
                 spacing: 20
-                
+
                 Rectangle {
                     Layout.preferredHeight: 40
                     Layout.fillWidth: true
@@ -182,13 +180,13 @@ Item {
                             font.pixelSize: 18
                             font.bold: true
                         }
-                        
+
                         Text {
                             text: "|"
                             color: theme.primary.dim_foreground
                             font.pixelSize: 15
                         }
-                        
+
                         Text {
                             text: homePath ? (lang?.wallpapers?.path || "Đường dẫn:") + " ~/Pictures/Wallpapers/" : (lang?.wallpapers?.loading || "Đang tải...")
                             font.family: "ComicShannsMono Nerd Font"
@@ -199,12 +197,12 @@ Item {
                     }
                 }
             }
-            
+
             // Wallpapers Section
             ColumnLayout {
                 Layout.fillWidth: true
                 spacing: 10
-                
+
                 Text {
                     text: lang?.wallpapers?.wallpapers_label || "Hình nền:"
                     color: theme.primary.foreground
@@ -213,7 +211,7 @@ Item {
                         pixelSize: 16
                     }
                 }
-                
+
                 // Wallpapers Grid
                 Grid {
                     id: wallpapersGrid
@@ -221,16 +219,16 @@ Item {
                     columns: 3  // Đã sửa từ: !panelManager.fullsetting ? 3 : 6
                     columnSpacing: 10  // Đã sửa từ: !panelManager.fullsetting ? 8 : 10
                     rowSpacing: 10  // Đã sửa từ: !panelManager.fullsetting ? 8 : 10
-                    
+
                     Repeater {
                         model: FolderListModel {
                             id: folderModel
                             folder: wallpapersPath
-                            nameFilters: ["*.jpg","*.jpeg","*.png","*.bmp","*.webp","*.gif","*.mp4","*.webm","*.mkv","*.avi","*.mov","*.flv","*.wmv","*.m4v","*.mpg","*.mpeg"]
+                            nameFilters: ["*.jpg", "*.jpeg", "*.png", "*.bmp", "*.webp", "*.gif", "*.mp4", "*.webm", "*.mkv", "*.avi", "*.mov", "*.flv", "*.wmv", "*.m4v", "*.mpg", "*.mpeg"]
                             showDirs: false
                             sortField: FolderListModel.Name
                         }
-                        
+
                         delegate: Rectangle {
                             width: systemSettings.width / 4  // Đã sửa từ: !panelManager.fullsetting ? systemSettings.width/4 : systemSettings.width/7
                             height: systemSettings.width / 4  // Đã sửa từ: !panelManager.fullsetting ? systemSettings.width/4 : systemSettings.width/7
@@ -254,7 +252,7 @@ Item {
 
                                     Component.onCompleted: {
                                         if (isVideoFile(fileName)) {
-                                            generateThumbnail(filePath)
+                                            generateThumbnail(filePath);
                                         }
                                     }
 
@@ -271,8 +269,8 @@ Item {
                                         onStatusChanged: {
                                             if (status === Image.Error && isVideoFile(fileName)) {
                                                 // Nếu thumbnail chưa có, thử tạo lại
-                                                thumbnailImage.source = ""
-                                                generateThumbnail(filePath)
+                                                thumbnailImage.source = "";
+                                                generateThumbnail(filePath);
                                             }
                                         }
                                     }
@@ -399,7 +397,7 @@ Item {
                         }
                     }
                 }
-                
+
                 // No images message
                 Text {
                     visible: folderModel.count === 0 && homePath
@@ -418,8 +416,10 @@ Item {
                     Layout.alignment: Qt.AlignCenter
                 }
             }
-            
-            Item { Layout.fillHeight: true } // Spacer
+
+            Item {
+                Layout.fillHeight: true
+            } // Spacer
         }
     }
 
@@ -465,14 +465,14 @@ Item {
                     border.color: theme.button.border
 
                     Text {
-                        anchors.centerIn: parent;
-                        text: lang?.wallpapers?.cancel || "Hủy";
+                        anchors.centerIn: parent
+                        text: lang?.wallpapers?.cancel || "Hủy"
                         color: theme.primary.foreground
                         font.pixelSize: 14
                     }
 
                     MouseArea {
-                        anchors.fill: parent;
+                        anchors.fill: parent
                         onClicked: deleteDialog.visible = false
                     }
                 }
@@ -485,8 +485,8 @@ Item {
                     color: theme.normal.red
 
                     Text {
-                        anchors.centerIn: parent;
-                        text: lang?.wallpapers?.delete || "Xóa";
+                        anchors.centerIn: parent
+                        text: lang?.wallpapers?.delete || "Xóa"
                         color: theme.primary.background
                         font.pixelSize: 14
                     }
@@ -494,8 +494,8 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            deleteWallpaper(deleteDialog.filePathToDelete)
-                            deleteDialog.visible = false
+                            deleteWallpaper(deleteDialog.filePathToDelete);
+                            deleteDialog.visible = false;
                         }
                     }
                 }
@@ -517,113 +517,110 @@ Item {
         z: 1001
 
         Row {
-            anchors.centerIn: parent;
+            anchors.centerIn: parent
             spacing: 10
             Text {
-                text: "✓";
-                color: theme.primary.background;
-                font.bold: true;
+                text: "✓"
+                color: theme.primary.background
+                font.bold: true
                 font.pixelSize: 16
             }
             Text {
-                id: notificationText;
-                color: theme.primary.background;
-                text: "";
-                font.bold: true;
+                id: notificationText
+                color: theme.primary.background
+                text: ""
+                font.bold: true
                 font.pixelSize: 16
             }
         }
 
         Timer {
-            id: notificationTimer;
-            interval: 3000;
+            id: notificationTimer
+            interval: 3000
             onTriggered: successNotification.visible = false
         }
     }
 
     function setWallpaper(filePath) {
-        var cleanPath = filePath.toString().replace("file://", "")
-        
+        var cleanPath = filePath.toString().replace("file://", "");
+
         // Set cho tất cả màn hình
         if (Settings.wallpaper.setWallpaperOnAllMonitors) {
             for (var i = 0; i < Quickshell.screens.length; i++) {
-                WallpaperService.changeWallpaper(cleanPath, Quickshell.screens[i].name)
+                WallpaperService.changeWallpaper(cleanPath, Quickshell.screens[i].name);
             }
         } else {
             // Set cho màn hình hiện tại trong selector
-            var screen = systemSettings.currentScreen
+            var screen = systemSettings.currentScreen;
             if (screen) {
-                WallpaperService.changeWallpaper(cleanPath, screen.name)
+                WallpaperService.changeWallpaper(cleanPath, screen.name);
             } else if (Quickshell.screens.length > 0) {
-                WallpaperService.changeWallpaper(cleanPath, Quickshell.screens[0].name)
+                WallpaperService.changeWallpaper(cleanPath, Quickshell.screens[0].name);
             }
         }
-        
-        showNotification(lang?.wallpapers?.success_set || "Đã đặt hình nền thành công!")
+
+        showNotification(lang?.wallpapers?.success_set || "Đã đặt hình nền thành công!");
     }
 
     function generateThumbnail(filePath) {
-        if (!homePath) return
-        var actualPath = filePath.toString().replace("file://", "")
-        var thumbnailDir = homePath + "/.config/hypr/custom/scripts/mpvpaper_thumbnails"
-        var fileName = actualPath.split('/').pop()
-        var thumbnailPath = thumbnailDir + "/" + fileName + ".jpg"
-        var scriptPath = homePath + "/.config/quickshell/cartoon-shell/scripts/generate-video-thumbnail.sh"
+        if (!homePath)
+            return;
+        var actualPath = filePath.toString().replace("file://", "");
+        var thumbnailDir = homePath + "/.config/hypr/custom/scripts/mpvpaper_thumbnails";
+        var fileName = actualPath.split('/').pop();
+        var thumbnailPath = thumbnailDir + "/" + fileName + ".jpg";
+        var scriptPath = homePath + "/.config/quickshell/cartoon-shell/scripts/generate-video-thumbnail.sh";
 
-        thumbnailProcess.command = [
-            "bash",
-            scriptPath,
-            actualPath,
-            thumbnailPath
-        ]
-        thumbnailProcess.running = true
+        thumbnailProcess.command = ["bash", scriptPath, actualPath, thumbnailPath];
+        thumbnailProcess.running = true;
     }
 
     function isVideoFile(fileName) {
-        var ext = fileName.toLowerCase().split('.').pop()
-        return ["mp4", "webm", "mkv", "avi", "mov", "flv", "wmv", "m4v", "mpg", "mpeg"].includes(ext)
+        var ext = fileName.toLowerCase().split('.').pop();
+        return ["mp4", "webm", "mkv", "avi", "mov", "flv", "wmv", "m4v", "mpg", "mpeg"].includes(ext);
     }
 
     function getThumbnailPath(filePath) {
-        if (!homePath) return ""
-        var actualPath = filePath.toString().replace("file://", "")
-        var thumbnailDir = homePath + "/.config/hypr/custom/scripts/mpvpaper_thumbnails"
-        var fileName = actualPath.split('/').pop()
-        return "file://" + thumbnailDir + "/" + fileName + ".jpg"
+        if (!homePath)
+            return "";
+        var actualPath = filePath.toString().replace("file://", "");
+        var thumbnailDir = homePath + "/.config/hypr/custom/scripts/mpvpaper_thumbnails";
+        var fileName = actualPath.split('/').pop();
+        return "file://" + thumbnailDir + "/" + fileName + ".jpg";
     }
 
     function deleteWallpaper(filePath) {
-        var actualPath = filePath.toString().replace("file://", "")
+        var actualPath = filePath.toString().replace("file://", "");
 
-        deleteProcess.command = ["rm", actualPath]
-        deleteProcess.running = true
+        deleteProcess.command = ["rm", actualPath];
+        deleteProcess.running = true;
     }
 
     function showDeleteDialog(fileName, filePath) {
-        deleteDialog.fileNameToDelete = fileName
-        deleteDialog.filePathToDelete = filePath
-        deleteDialog.visible = true
+        deleteDialog.fileNameToDelete = fileName;
+        deleteDialog.filePathToDelete = filePath;
+        deleteDialog.visible = true;
     }
 
     function showNotification(message) {
-        notificationText.text = message
-        successNotification.visible = true
-        notificationTimer.start()
+        notificationText.text = message;
+        successNotification.visible = true;
+        notificationTimer.start();
     }
 
     function isCurrentWallpaper(filePath) {
-        if (!currentScreen) return false
-        
+        if (!currentScreen)
+            return false;
+
         // Lấy hình nền hiện tại của màn hình từ WallpaperService
-        var currentWallpaper = WallpaperService.getWallpaper(currentScreen.name)
-        
+        var currentWallpaper = WallpaperService.getWallpaper(currentScreen.name);
+
         // Chuẩn hóa đường dẫn để so sánh
-        var cleanFilePath = filePath.toString().replace("file://", "")
-        var cleanCurrentWallpaper = currentWallpaper.toString().replace("file://", "")
-        
-        return cleanFilePath === cleanCurrentWallpaper
+        var cleanFilePath = filePath.toString().replace("file://", "");
+        var cleanCurrentWallpaper = currentWallpaper.toString().replace("file://", "");
+
+        return cleanFilePath === cleanCurrentWallpaper;
     }
 
-    Component.onCompleted: {
-    }
+    Component.onCompleted: {}
 }

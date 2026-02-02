@@ -4,15 +4,15 @@ import qs.services
 
 Rectangle {
     id: sidebarSettings
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
 
     property int currentIndex: 0
     property bool anyItemHovered: false
     property bool isExpanded: true  // Đã xóa tham chiếu đến panelManager.fullsetting
-    
+
     signal categoryChanged(int index)
-    signal backRequested()
+    signal backRequested
 
     Layout.preferredWidth: isExpanded ? 200 : 90
     Layout.fillHeight: true
@@ -23,9 +23,9 @@ Rectangle {
 
     // Behavior cho animation width
     Behavior on Layout.preferredWidth {
-        NumberAnimation { 
+        NumberAnimation {
             duration: 250
-            easing.type: Easing.OutCubic 
+            easing.type: Easing.OutCubic
         }
     }
 
@@ -36,13 +36,13 @@ Rectangle {
         hoverEnabled: true
         acceptedButtons: Qt.NoButton // Chỉ theo dõi hover, không xử lý click
         propagateComposedEvents: true // Cho phép sự kiện truyền xuống các MouseArea con
-        
+
         onEntered: {
-            sidebarSettings.anyItemHovered = true
+            sidebarSettings.anyItemHovered = true;
         }
-        
+
         onExited: {
-            sidebarSettings.anyItemHovered = false
+            sidebarSettings.anyItemHovered = false;
         }
     }
 
@@ -65,9 +65,11 @@ Rectangle {
             Layout.bottomMargin: isExpanded ? 25 : 8
             opacity: isExpanded ? 1 : 0
             visible: isExpanded
-            
+
             Behavior on opacity {
-                NumberAnimation { duration: 200 }
+                NumberAnimation {
+                    duration: 200
+                }
             }
         }
 
@@ -75,13 +77,41 @@ Rectangle {
         Repeater {
             id: categoryRepeater
             model: [
-                { name: lang.settings.general, icon: "../../../assets/settings/home.png", category: "general" },
-                { name: lang.settings.appearance, icon: "../../../assets/settings/paint-brush.png", category: "appearance" },
-                { name: lang.settings.network, icon: "../../../assets/settings/network.png", category: "network" },
-                { name: lang.settings.audio, icon: "../../../assets/settings/volume.png", category: "audio" },
-                { name: lang.settings.performance, icon: "../../../assets/settings/speedometer.png", category: "performance" },
-                { name: lang.settings.shortcuts, icon: "../../../assets/settings/keyboard.png", category: "shortcuts" },
-                { name: lang.settings.system, icon: "../../../assets/settings/mark.png", category: "system" }
+                {
+                    name: lang.settings.general,
+                    icon: "../../../assets/settings/home.png",
+                    category: "general"
+                },
+                {
+                    name: lang.settings.appearance,
+                    icon: "../../../assets/settings/paint-brush.png",
+                    category: "appearance"
+                },
+                {
+                    name: lang.settings.network,
+                    icon: "../../../assets/settings/network.png",
+                    category: "network"
+                },
+                {
+                    name: lang.settings.audio,
+                    icon: "../../../assets/settings/volume.png",
+                    category: "audio"
+                },
+                {
+                    name: lang.settings.performance,
+                    icon: "../../../assets/settings/speedometer.png",
+                    category: "performance"
+                },
+                {
+                    name: lang.settings.shortcuts,
+                    icon: "../../../assets/settings/keyboard.png",
+                    category: "shortcuts"
+                },
+                {
+                    name: lang.settings.system,
+                    icon: "../../../assets/settings/mark.png",
+                    category: "system"
+                }
             ]
 
             delegate: Rectangle {
@@ -89,30 +119,40 @@ Rectangle {
                 Layout.fillWidth: true
                 Layout.preferredHeight: isExpanded ? 50 : 40
                 radius: 8
-                
+
                 property bool hovered: false
                 property bool selected: sidebarSettings.currentIndex === index
 
-                color: mouseArea.containsPress ? theme.button.background_select : 
-                       selected ? theme.button.background_select : theme.button.background
-                
-                border.color: mouseArea.containsPress ? theme.button.border_select : 
-                             selected ? theme.button.border_select : theme.button.border
+                color: mouseArea.containsPress ? theme.button.background_select : selected ? theme.button.background_select : theme.button.background
+
+                border.color: mouseArea.containsPress ? theme.button.border_select : selected ? theme.button.border_select : theme.button.border
                 border.width: 2
-                
+
                 // Hiệu ứng scale
                 scale: mouseArea.containsPress ? 0.98 : 1.0
-                Behavior on scale { NumberAnimation { duration: 100 } }
-                
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 100
+                    }
+                }
+
                 // Hiệu ứng màu
-                Behavior on color { ColorAnimation { duration: 200 } }
-                Behavior on border.color { ColorAnimation { duration: 100 } }
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 200
+                    }
+                }
+                Behavior on border.color {
+                    ColorAnimation {
+                        duration: 100
+                    }
+                }
 
                 RowLayout {
                     anchors.fill: parent
                     anchors.margins: isExpanded ? 8 : 4
                     spacing: isExpanded ? 12 : 0
-                    
+
                     Image {
                         source: modelData.icon
                         Layout.preferredHeight: isExpanded ? 28 : 24
@@ -120,21 +160,21 @@ Rectangle {
                         fillMode: Image.PreserveAspectFit
                         smooth: true
                         Layout.alignment: Qt.AlignHCenter
-                        
+
                         // Hiệu ứng xoay icon khi hover
-                        Behavior on rotation { 
-                            NumberAnimation { 
-                                duration: 300; 
-                                easing.type: Easing.OutBack 
-                            } 
+                        Behavior on rotation {
+                            NumberAnimation {
+                                duration: 300
+                                easing.type: Easing.OutBack
+                            }
                         }
-                        
+
                         // Hiệu ứng scale icon khi hover
-                        Behavior on scale { 
-                            NumberAnimation { 
-                                duration: 200; 
-                                easing.type: Easing.OutCubic 
-                            } 
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 200
+                                easing.type: Easing.OutCubic
+                            }
                         }
                     }
 
@@ -150,18 +190,26 @@ Rectangle {
                         }
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignVCenter
-                        
+
                         // Hiệu ứng scale text khi hover
-                        Behavior on scale { 
-                            NumberAnimation { 
-                                duration: 200; 
-                                easing.type: Easing.OutCubic 
-                            } 
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 200
+                                easing.type: Easing.OutCubic
+                            }
                         }
-                        Behavior on color { ColorAnimation { duration: 200 } }
-                        Behavior on opacity { NumberAnimation { duration: 200 } }
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 200
+                            }
+                        }
+                        Behavior on opacity {
+                            NumberAnimation {
+                                duration: 200
+                            }
+                        }
                     }
-                    
+
                     // Indicator khi selected - chỉ hiển thị khi expanded
                     Rectangle {
                         Layout.preferredWidth: 4
@@ -169,16 +217,20 @@ Rectangle {
                         radius: 2
                         color: theme.normal.blue
                         visible: selected && isExpanded
-                        
+
                         // Hiệu ứng xuất hiện
                         scale: selected ? 1.0 : 0.0
-                        Behavior on scale { 
-                            NumberAnimation { 
-                                duration: 300; 
-                                easing.type: Easing.OutBack 
-                            } 
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 300
+                                easing.type: Easing.OutBack
+                            }
                         }
-                        Behavior on opacity { NumberAnimation { duration: 200 } }
+                        Behavior on opacity {
+                            NumberAnimation {
+                                duration: 200
+                            }
+                        }
                     }
                 }
 
@@ -189,21 +241,23 @@ Rectangle {
                     propagateComposedEvents: true
 
                     onClicked: {
-                        sidebarSettings.currentIndex = index
-                        sidebarSettings.categoryChanged(index)
+                        sidebarSettings.currentIndex = index;
+                        sidebarSettings.categoryChanged(index);
                     }
 
                     onEntered: {
-                        categoryDelegate.hovered = true
+                        categoryDelegate.hovered = true;
                     }
-                    
+
                     onExited: {
-                        categoryDelegate.hovered = false
+                        categoryDelegate.hovered = false;
                     }
                 }
             }
         }
 
-        Item { Layout.fillHeight: true } // Spacer
+        Item {
+            Layout.fillHeight: true
+        } // Spacer
     }
 }

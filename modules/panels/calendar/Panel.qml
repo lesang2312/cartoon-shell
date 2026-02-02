@@ -10,8 +10,7 @@ import "." as Com
 PanelWindow {
     id: wtDetailPanel
 
-    property var theme : ThemeService.theme
-
+    property var theme: ThemeService.theme
 
     implicitWidth: 500
     implicitHeight: 500

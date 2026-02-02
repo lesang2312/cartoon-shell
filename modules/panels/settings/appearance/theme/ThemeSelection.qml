@@ -7,9 +7,9 @@ import qs.commons
 
 RowLayout {
     id: themeSelection
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
-    
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
+
     spacing: 12
 
     Text {
@@ -33,10 +33,10 @@ RowLayout {
             label: lang.appearance?.theme_light || "Sáng"
             theme: themeSelection.theme
             onClicked: {
-              // Set theme to matugen and mode to light
-              Settings.appearance.theme = "matugen"
-              Settings.appearance.dynamic = true
-              Settings.appearance.mode = "light"
+                // Set theme to matugen and mode to light
+                Settings.appearance.theme = "matugen";
+                Settings.appearance.dynamic = true;
+                Settings.appearance.mode = "light";
             }
         }
 
@@ -47,10 +47,10 @@ RowLayout {
             label: lang.appearance?.theme_dark || "Tối"
             theme: themeSelection.theme
             onClicked: {
-              // Set theme to matugen and mode to dark
-              Settings.appearance.theme = "matugen"
-              Settings.appearance.dynamic = true
-              Settings.appearance.mode = "dark"
+                // Set theme to matugen and mode to dark
+                Settings.appearance.theme = "matugen";
+                Settings.appearance.dynamic = true;
+                Settings.appearance.mode = "dark";
             }
         }
     }

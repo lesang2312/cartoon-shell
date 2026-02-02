@@ -12,36 +12,40 @@ Item {
         source: "../modules/panels/calendar/Panel.qml"
         active: VisibleService.calendar
         onLoaded: {
-            item.visible = Qt.binding(function() { return VisibleService.calendar })
+            item.visible = Qt.binding(function () {
+                return VisibleService.calendar;
+            });
         }
-      }
+    }
 
     // Flag Selection Panel
     Loader {
         source: "../modules/panels/FlagSelectionPanel.qml"
         active: VisibleService.flag
         onLoaded: {
-            item.visible = Qt.binding(function() { return VisibleService.flag })
-            item.selectedFlag = Qt.binding(function() { return root.selectedFlag })
+            item.visible = Qt.binding(function () {
+                return VisibleService.flag;
+            });
+            item.selectedFlag = Qt.binding(function () {
+                return root.selectedFlag;
+            });
         }
-      }
+    }
 
-      
     property bool anchorsTop: Settings.clock.positionWidget === "top" || Settings.clock.positionWidget === "topLeft" || Settings.clock.positionWidget === "topRight"
     property bool anchorsBottom: Settings.clock.positionWidget === "bottom" || Settings.clock.positionWidget === "bottomLeft" || Settings.clock.positionWidget === "bottomRight"
     property bool anchorsRight: Settings.clock.positionWidget === "right" || Settings.clock.positionWidget === "topRight" || Settings.clock.positionWidget === "bottomRight"
     property bool anchorsLeft: Settings.clock.positionWidget === "left" || Settings.clock.positionWidget === "topLeft" || Settings.clock.positionWidget === "bottomLeft"
 
-
-      ClockPanel {
+    ClockPanel {
         id: clockPanel
         visible: Settings.clock.enableWidget
         anchors {
-        top: anchorsTop
-        bottom: anchorsBottom
-        left: anchorsLeft
-        right: anchorsRight
-    }
+            top: anchorsTop
+            bottom: anchorsBottom
+            left: anchorsLeft
+            right: anchorsRight
+        }
     }
 
     // Weather Panel
@@ -49,96 +53,109 @@ Item {
         source: "../modules/panels/weather/WeatherPanel.qml"
         active: VisibleService.weather
         onLoaded: {
-            item.visible = Qt.binding(function() { return VisibleService.weather })
+            item.visible = Qt.binding(function () {
+                return VisibleService.weather;
+            });
         }
-      }
-          Loader {
+    }
+    Loader {
         source: "../modules/panels/cpu/CpuDetailPanel.qml"
         active: VisibleService.cpu
         onLoaded: {
-            item.visible = Qt.binding(function() { return VisibleService.cpu })
+            item.visible = Qt.binding(function () {
+                return VisibleService.cpu;
+            });
         }
-      }
-      Loader {
+    }
+    Loader {
         source: "../modules/panels/ram/RamDetailPanel.qml"
         active: VisibleService.ram
         onLoaded: {
-            item.visible = Qt.binding(function() { return VisibleService.ram })
+            item.visible = Qt.binding(function () {
+                return VisibleService.ram;
+            });
         }
-      }
-          Loader {
+    }
+    Loader {
         active: VisibleService.music
         source: "../modules/panels/MusicPanel.qml"
         onLoaded: {
-            item.visible = VisibleService.music
+            item.visible = VisibleService.music;
         }
-      }
-            Loader {
+    }
+    Loader {
         source: "../modules/panels/wifi/WifiPanel.qml"
         active: VisibleService.wifi
         onLoaded: {
-          item.visible = Qt.binding(function() { return VisibleService.wifi})
+            item.visible = Qt.binding(function () {
+                return VisibleService.wifi;
+            });
         }
-      }
+    }
 
-
-
-      Loader {
+    Loader {
         source: "../modules/panels/bluetooth/BluetoothPanel.qml"
         active: VisibleService.bluetooth
         onLoaded: {
-          item.visible = Qt.binding(function() { return VisibleService.bluetooth})
+            item.visible = Qt.binding(function () {
+                return VisibleService.bluetooth;
+            });
         }
-      }
+    }
 
-      Loader {
+    Loader {
         source: "../modules/panels/mixer/MixerPanel.qml"
         active: VisibleService.mixer
         onLoaded: {
-            item.visible = Qt.binding(function() { return VisibleService.mixer })
+            item.visible = Qt.binding(function () {
+                return VisibleService.mixer;
+            });
         }
-      }
-      Loader {
+    }
+    Loader {
         source: "../modules/panels/battery/BatteryDetailPanel.qml"
         active: VisibleService.battery
         onLoaded: {
-            item.visible = Qt.binding(function() { return VisibleService.battery })
+            item.visible = Qt.binding(function () {
+                return VisibleService.battery;
+            });
         }
-      }
+    }
 
-      Loader {
+    Loader {
         source: "../modules/panels/dashboard/DashboardPanel.qml"
         active: VisibleService.dashboard
         onLoaded: {
-            item.visible = Qt.binding(function() { return VisibleService.dashboard })
+            item.visible = Qt.binding(function () {
+                return VisibleService.dashboard;
+            });
         }
-      }
-      Loader {
+    }
+    Loader {
         id: launcherPanelLoader
         source: "../modules/panels/launcher/LauncherPanel.qml"
         active: VisibleService.launcher
         onLoaded: {
-            item.visible = VisibleService.launcher
-            item.confirmRequested.connect(function(action, actionLabel) {
-                confirmDialog.show(action, actionLabel)
-            })
+            item.visible = VisibleService.launcher;
+            item.confirmRequested.connect(function (action, actionLabel) {
+                confirmDialog.show(action, actionLabel);
+            });
         }
-      }
-      IpcHandler {
+    }
+    IpcHandler {
         id: ipc
         target: "rect"
         function getToggle() {
             if (launcherPanelLoader.status == Loader.Ready) {
-                VisibleService.launcher = !VisibleService.launcher
+                VisibleService.launcher = !VisibleService.launcher;
                 if (VisibleService.launcher && launcherPanelLoader.item) {
-                    launcherPanelLoader.item.forceActiveFocus()
-                    launcherPanelLoader.item.openLauncher()
+                    launcherPanelLoader.item.forceActiveFocus();
+                    launcherPanelLoader.item.openLauncher();
                 }
             } else {
-                VisibleService.launcher = true
+                VisibleService.launcher = true;
             }
-            return 0
+            return 0;
         }
     }
 }
-

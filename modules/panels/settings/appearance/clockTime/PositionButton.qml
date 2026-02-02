@@ -7,11 +7,10 @@ Rectangle {
     property string label: ""
     property string position: ""
     property bool isSelected: false
-    property var theme : ThemeService.theme
+    property var theme: ThemeService.theme
 
-    
     signal clicked
-    
+
     width: 80
     height: 40
     radius: 8

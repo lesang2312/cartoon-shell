@@ -12,9 +12,8 @@ import qs.commons
 PanelWindow {
     id: musicPanel
 
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
-
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
 
     // Music data
     property var mprisPlayer: Mpris.players.values.length > 0 ? Mpris.players.values[0] : null
@@ -47,26 +46,27 @@ PanelWindow {
     color: "transparent"
 
     // CavaService instance
-    CavaService { id: cavaService }
+    CavaService {
+        id: cavaService
+    }
 
     // Process get metadata
 
     // Process check playing status
 
     function formatTime(microseconds) {
-        var totalSeconds = Math.floor(microseconds / 1000000)
-        var minutes = Math.floor(totalSeconds / 60)
-        var seconds = totalSeconds % 60
-        return minutes + ":" + (seconds < 10 ? "0" : "") + seconds
+        var totalSeconds = Math.floor(microseconds / 1000000);
+        var minutes = Math.floor(totalSeconds / 60);
+        var seconds = totalSeconds % 60;
+        return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
     }
-
 
     // Start cava when panel opens
     onVisibleChanged: {
         if (visible) {
-            cavaService.open()
+            cavaService.open();
         } else {
-            cavaService.close()
+            cavaService.close();
         }
     }
 
@@ -195,14 +195,15 @@ PanelWindow {
                     }
                 }
 
-
                 // Song info
                 ColumnLayout {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     spacing: 8
 
-                    Item { Layout.fillHeight: true }
+                    Item {
+                        Layout.fillHeight: true
+                    }
 
                     // Song title with marquee effect
                     Item {
@@ -228,7 +229,9 @@ PanelWindow {
                                 loops: Animation.Infinite
 
                                 // Pause at start
-                                PauseAnimation { duration: 2000 }
+                                PauseAnimation {
+                                    duration: 2000
+                                }
 
                                 // Scroll left
                                 NumberAnimation {
@@ -238,7 +241,9 @@ PanelWindow {
                                 }
 
                                 // Pause at end
-                                PauseAnimation { duration: 2000 }
+                                PauseAnimation {
+                                    duration: 2000
+                                }
 
                                 // Scroll back
                                 NumberAnimation {
@@ -278,7 +283,9 @@ PanelWindow {
                                 color: theme.normal.blue
 
                                 Behavior on width {
-                                    NumberAnimation { duration: 200 }
+                                    NumberAnimation {
+                                        duration: 200
+                                    }
                                 }
                             }
                         }
@@ -293,7 +300,9 @@ PanelWindow {
                                 color: theme.primary.dim_foreground
                             }
 
-                            Item { Layout.fillWidth: true }
+                            Item {
+                                Layout.fillWidth: true
+                            }
 
                             Text {
                                 text: formatTime(duration)
@@ -304,7 +313,9 @@ PanelWindow {
                         }
                     }
 
-                    Item { Layout.fillHeight: true }
+                    Item {
+                        Layout.fillHeight: true
+                    }
                 }
             }
 
@@ -314,7 +325,9 @@ PanelWindow {
                 Layout.preferredHeight: 60
                 spacing: 24
 
-                Item { Layout.fillWidth: true }
+                Item {
+                    Layout.fillWidth: true
+                }
 
                 // Previous
                 Rectangle {
@@ -339,7 +352,11 @@ PanelWindow {
                         onClicked: musicPanel.mprisPlayer?.previous()
                     }
 
-                    Behavior on color { ColorAnimation { duration: 150 } }
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 150
+                        }
+                    }
                 }
 
                 // Play/Pause
@@ -352,8 +369,8 @@ PanelWindow {
                     Image {
                         anchors.centerIn: parent
                         source: {
-                            var suffix = theme.type === "dark" ? "_dark" : ""
-                            return isPlaying ? "../../assets/music/pause" + suffix + ".png" : "../../assets/music/play" + suffix + ".png"
+                            var suffix = theme.type === "dark" ? "_dark" : "";
+                            return isPlaying ? "../../assets/music/pause" + suffix + ".png" : "../../assets/music/play" + suffix + ".png";
                         }
                         width: 32
                         height: 32
@@ -368,7 +385,11 @@ PanelWindow {
                         onClicked: musicPanel.mprisPlayer?.togglePlaying()
                     }
 
-                    Behavior on color { ColorAnimation { duration: 150 } }
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 150
+                        }
+                    }
                 }
 
                 // Next
@@ -394,10 +415,16 @@ PanelWindow {
                         onClicked: musicPanel.mprisPlayer?.next()
                     }
 
-                    Behavior on color { ColorAnimation { duration: 150 } }
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 150
+                        }
+                    }
                 }
 
-                Item { Layout.fillWidth: true }
+                Item {
+                    Layout.fillWidth: true
+                }
             }
 
             // Cava Visualizer
@@ -422,23 +449,31 @@ PanelWindow {
                             width: (cavaRow.width - (cavaService.values.length - 1) * 2) / cavaService.values.length
                             height: Math.max(4, (cavaService.values[index] / 100) * cavaRow.height)
                             anchors.bottom: parent.bottom
-                            radius:  2
+                            radius: 2
                             color: {
                                 // Gradient based on height using theme colors
-                                var ratio = cavaService.values[index] / 100
-                                if (ratio < 0.3) return theme.normal.blue
-                                if (ratio < 0.5) return theme.normal.cyan
-                                if (ratio < 0.7) return theme.normal.green
-                                if (ratio < 0.85) return theme.normal.yellow
-                                return theme.normal.red
+                                var ratio = cavaService.values[index] / 100;
+                                if (ratio < 0.3)
+                                    return theme.normal.blue;
+                                if (ratio < 0.5)
+                                    return theme.normal.cyan;
+                                if (ratio < 0.7)
+                                    return theme.normal.green;
+                                if (ratio < 0.85)
+                                    return theme.normal.yellow;
+                                return theme.normal.red;
                             }
 
                             Behavior on height {
-                                NumberAnimation { duration: 50 }
+                                NumberAnimation {
+                                    duration: 50
+                                }
                             }
 
                             Behavior on color {
-                                ColorAnimation { duration: 100 }
+                                ColorAnimation {
+                                    duration: 100
+                                }
                             }
                         }
                     }

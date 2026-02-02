@@ -13,8 +13,7 @@ PanelWindow {
     property string currentMin: ""
     property string currentDay: ""
     property string currentDate: ""
-    property var lang : LanguageService.translations
-
+    property var lang: LanguageService.translations
 
     anchors {
         top: true
@@ -24,15 +23,14 @@ PanelWindow {
     }
 
     margins {
-        top:  10
-        bottom:  10
-        left:  10
+        top: 10
+        bottom: 10
+        left: 10
         right: 10
     }
 
-
-    implicitWidth:  content.implicitWidth
-    implicitHeight:  content.implicitHeight
+    implicitWidth: content.implicitWidth
+    implicitHeight: content.implicitHeight
 
     WlrLayershell.layer: WlrLayer.Bottom
 
@@ -40,47 +38,26 @@ PanelWindow {
         id: clock
         precision: SystemClock.Seconds
         onDateChanged: {
-            updateDateTime()
+            updateDateTime();
         }
     }
-    
+
     function updateDateTime() {
-        const now = new Date()
-        const dayData = lang?.dateFormat?.day
-        const weekdays = dayData ? [
-            dayData.sunday || "CN",
-            dayData.monday || "T2",
-            dayData.tuesday || "T3",
-            dayData.wednesday || "T4",
-            dayData.thursday || "T5",
-            dayData.friday || "T6",
-            dayData.saturday || "T7"
-        ] : ["CN", "T2", "T3", "T4", "T5", "T6", "T7"]
+        const now = new Date();
+        const dayData = lang?.dateFormat?.day;
+        const weekdays = dayData ? [dayData.sunday || "CN", dayData.monday || "T2", dayData.tuesday || "T3", dayData.wednesday || "T4", dayData.thursday || "T5", dayData.friday || "T6", dayData.saturday || "T7"] : ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
 
-        const monthData = lang?.dateFormat?.month
-        const months = monthData ? [
-            monthData.january || "Th1",
-            monthData.february || "Th2",
-            monthData.march || "Th3",
-            monthData.april || "Th4",
-            monthData.may || "Th5",
-            monthData.june || "Th6",
-            monthData.july || "Th7",
-            monthData.august || "Th8",
-            monthData.september || "Th9",
-            monthData.october || "Th10",
-            monthData.november || "Th11",
-            monthData.december || "Th12"
-        ] : ["Th1", "Th2", "Th3", "Th4", "Th5", "Th6", "Th7", "Th8", "Th9", "Th10", "Th11", "Th12"]
+        const monthData = lang?.dateFormat?.month;
+        const months = monthData ? [monthData.january || "Th1", monthData.february || "Th2", monthData.march || "Th3", monthData.april || "Th4", monthData.may || "Th5", monthData.june || "Th6", monthData.july || "Th7", monthData.august || "Th8", monthData.september || "Th9", monthData.october || "Th10", monthData.november || "Th11", monthData.december || "Th12"] : ["Th1", "Th2", "Th3", "Th4", "Th5", "Th6", "Th7", "Th8", "Th9", "Th10", "Th11", "Th12"];
 
-        root.currentDay = `${weekdays[now.getDay()]}`
-        root.currentHour = Qt.formatTime(now, "HH")
-        root.currentMin = Qt.formatTime(now, "mm")
-        root.currentDate = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`
+        root.currentDay = `${weekdays[now.getDay()]}`;
+        root.currentHour = Qt.formatTime(now, "HH");
+        root.currentMin = Qt.formatTime(now, "mm");
+        root.currentDate = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
     }
-    
+
     color: "transparent"
-    
+
     Rectangle {
         id: clockContainer
         anchors.fill: parent
@@ -151,8 +128,8 @@ PanelWindow {
             }
         }
     }
-    
+
     Component.onCompleted: {
-        root.updateDateTime() // Khởi tạo thời gian ban đầu
+        root.updateDateTime(); // Khởi tạo thời gian ban đầu
     }
 }

@@ -12,7 +12,7 @@ Rectangle {
     border.color: theme.button.border
     border.width: 3
 
-    property var theme : ThemeService.theme
+    property var theme: ThemeService.theme
     property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
     color: theme.primary.background
 
@@ -22,10 +22,10 @@ Rectangle {
     property int focusedWindowIndex: -1
     property string activeWorkspace: "1"
     property bool initialized: false
-    
+
     // Workspace UI data - lưu 10 workspace đầu (1-10)
     property var uiWorkspaces: []
-    
+
     // Debounce timer for updates
     Timer {
         id: updateTimer
@@ -36,8 +36,9 @@ Rectangle {
 
     // Khởi tạo Hyprland service
     function initialize() {
-        if (initialized) return;
-        
+        if (initialized)
+            return;
+
         try {
             Hyprland.refreshWorkspaces();
             Hyprland.refreshToplevels();
@@ -68,7 +69,8 @@ Rectangle {
 
     // Cập nhật UI workspaces từ dữ liệu Hyprland
     function updateUIWorkspaces() {
-        if (!initialized || workspaces.count === 0) return;
+        if (!initialized || workspaces.count === 0)
+            return;
 
         // Tạo map để tra cứu nhanh workspace
         var workspaceMap = {};
@@ -82,7 +84,7 @@ Rectangle {
             var uiWs = uiWorkspaces[j];
             var wsId = uiWs.id;
             var wsData = workspaceMap[wsId];
-            
+
             if (wsData) {
                 uiWs.exists = wsData.isOccupied || false;
                 uiWs.isActive = (wsData.id.toString() === activeWorkspace);
@@ -91,7 +93,7 @@ Rectangle {
                 uiWs.isActive = false;
             }
         }
-        
+
         // Force UI update
         root.uiWorkspaces = uiWorkspaces.slice();
     }
@@ -122,7 +124,7 @@ Rectangle {
     function safeUpdateWorkspaces() {
         try {
             workspaces.clear();
-            
+
             if (!Hyprland.workspaces || !Hyprland.workspaces.values) {
                 return;
             }
@@ -132,8 +134,9 @@ Rectangle {
 
             for (var i = 0; i < hlWorkspaces.length; i++) {
                 const ws = hlWorkspaces[i];
-                if (!ws || ws.id < 1) continue;
-                
+                if (!ws || ws.id < 1)
+                    continue;
+
                 const wsData = {
                     "id": ws.id,
                     "idx": ws.id,
@@ -151,7 +154,7 @@ Rectangle {
                     root.activeWorkspace = wsData.id.toString();
                 }
             }
-            
+
             updateTimer.restart();
         } catch (e) {
             console.log("Error updating workspaces:", e);
@@ -170,8 +173,9 @@ Rectangle {
             const hlToplevels = Hyprland.toplevels.values;
             for (var i = 0; i < hlToplevels.length; i++) {
                 const toplevel = hlToplevels[i];
-                if (!toplevel) continue;
-                
+                if (!toplevel)
+                    continue;
+
                 try {
                     const wsId = toplevel.workspace ? toplevel.workspace.id : null;
                     if (wsId !== null && wsId !== undefined) {
@@ -204,8 +208,9 @@ Rectangle {
 
             for (var i = 0; i < hlToplevels.length; i++) {
                 const toplevel = hlToplevels[i];
-                if (!toplevel) continue;
-                
+                if (!toplevel)
+                    continue;
+
                 const windowData = extractWindowData(toplevel);
                 if (windowData) {
                     windowsList.push(windowData);
@@ -228,11 +233,13 @@ Rectangle {
 
     // Extract window data safely from a toplevel
     function extractWindowData(toplevel) {
-        if (!toplevel) return null;
+        if (!toplevel)
+            return null;
 
         try {
             const windowId = safeGetProperty(toplevel, "address", "");
-            if (!windowId) return null;
+            if (!windowId)
+                return null;
 
             const appId = getAppId(toplevel);
             const title = getAppTitle(toplevel);
@@ -256,30 +263,36 @@ Rectangle {
     function getAppTitle(toplevel) {
         try {
             var title = toplevel.wayland.title;
-            if (title) return title;
+            if (title)
+                return title;
         } catch (e) {}
 
         return safeGetProperty(toplevel, "title", "");
     }
 
     function getAppId(toplevel) {
-        if (!toplevel) return "";
+        if (!toplevel)
+            return "";
 
         var appId = "";
 
         try {
             appId = toplevel.wayland.appId;
-            if (appId) return appId;
+            if (appId)
+                return appId;
         } catch (e) {}
 
         appId = safeGetProperty(toplevel, "class", "");
-        if (appId) return appId;
+        if (appId)
+            return appId;
 
         appId = safeGetProperty(toplevel, "initialClass", "");
-        if (appId) return appId;
+        if (appId)
+            return appId;
 
         appId = safeGetProperty(toplevel, "appId", "");
-        if (appId) return appId;
+        if (appId)
+            return appId;
 
         try {
             const ipcData = toplevel.lastIpcObject;
@@ -329,7 +342,7 @@ Rectangle {
         function onRawEvent(event) {
             Hyprland.refreshWorkspaces();
             root.safeUpdateWorkspaces();
-            
+
             const workspaceEvents = ["workspace", "createworkspace", "destroyworkspace", "focusedmon"];
             if (workspaceEvents.includes(event.name)) {
                 updateTimer.restart();
@@ -338,97 +351,101 @@ Rectangle {
     }
 
     // UI Layout
-    
-Loader {
-    anchors.centerIn: parent
-    sourceComponent: isVertical ? verticalLayout : horizontalLayout
-}
 
-Component {
-    id: horizontalLayout
-    
-    RowLayout {
-        id: workspaceRow
-        spacing: 4
+    Loader {
+        anchors.centerIn: parent
+        sourceComponent: isVertical ? verticalLayout : horizontalLayout
+    }
 
-        Repeater {
-            model: root.uiWorkspaces
-            Rectangle {
-                property string wsId: modelData.id
-                Layout.preferredWidth: 32
-                Layout.preferredHeight: 32
-                radius: 6
-                color: "transparent"
+    Component {
+        id: horizontalLayout
 
-                Image {
-                    anchors.centerIn: parent
-                    width: 32
-                    height: 32
-                    fillMode: Image.PreserveAspectFit
-                    source: modelData.isActive
-                        ? "../../assets/workspace/pacman.png"
-                        : modelData.exists
-                            ? "../../assets/workspace/ghost.png"
-                            : "../../assets/workspace/empty.png"
-                    opacity: 1
+        RowLayout {
+            id: workspaceRow
+            spacing: 4
+
+            Repeater {
+                model: root.uiWorkspaces
+                Rectangle {
+                    property string wsId: modelData.id
+                    Layout.preferredWidth: 32
+                    Layout.preferredHeight: 32
+                    radius: 6
+                    color: "transparent"
+
+                    Image {
+                        anchors.centerIn: parent
+                        width: 32
+                        height: 32
+                        fillMode: Image.PreserveAspectFit
+                        source: modelData.isActive ? "../../assets/workspace/pacman.png" : modelData.exists ? "../../assets/workspace/ghost.png" : "../../assets/workspace/empty.png"
+                        opacity: 1
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: root.switchWs(modelData.id)
+                        onEntered: if (wsId !== root.activeWorkspace)
+                            parent.scale = 1.1
+                        onExited: if (wsId !== root.activeWorkspace)
+                            parent.scale = 1.0
+                    }
+
+                    Behavior on scale {
+                        NumberAnimation {
+                            duration: 100
+                        }
+                    }
                 }
-                MouseArea {
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: root.switchWs(modelData.id)
-                    onEntered: if (wsId !== root.activeWorkspace) parent.scale = 1.1
-                    onExited: if (wsId !== root.activeWorkspace) parent.scale = 1.0
-                }
-
-                Behavior on scale { NumberAnimation { duration: 100 } }
             }
         }
     }
-}
 
-Component {
-    id: verticalLayout
-    
-    ColumnLayout {
-        id: workspaceColumn
-        spacing: 2
+    Component {
+        id: verticalLayout
 
-        Repeater {
-            model: root.uiWorkspaces
-            Rectangle {
-                property string wsId: modelData.id
-                Layout.preferredWidth: 24
-                Layout.preferredHeight: 24
-                radius: 6
-                color: "transparent"
+        ColumnLayout {
+            id: workspaceColumn
+            spacing: 2
 
-                Image {
-                    anchors.centerIn: parent
-                    width: 24
-                    height: 24
-                    fillMode: Image.PreserveAspectFit
-                    source: modelData.isActive
-                        ? "../../assets/workspace/pacman.png"
-                        : modelData.exists
-                            ? "../../assets/workspace/ghost.png"
-                            : "../../assets/workspace/empty.png"
-                    opacity: 1
+            Repeater {
+                model: root.uiWorkspaces
+                Rectangle {
+                    property string wsId: modelData.id
+                    Layout.preferredWidth: 24
+                    Layout.preferredHeight: 24
+                    radius: 6
+                    color: "transparent"
+
+                    Image {
+                        anchors.centerIn: parent
+                        width: 24
+                        height: 24
+                        fillMode: Image.PreserveAspectFit
+                        source: modelData.isActive ? "../../assets/workspace/pacman.png" : modelData.exists ? "../../assets/workspace/ghost.png" : "../../assets/workspace/empty.png"
+                        opacity: 1
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: root.switchWs(modelData.id)
+                        onEntered: if (wsId !== root.activeWorkspace)
+                            parent.scale = 1.1
+                        onExited: if (wsId !== root.activeWorkspace)
+                            parent.scale = 1.0
+                    }
+
+                    Behavior on scale {
+                        NumberAnimation {
+                            duration: 100
+                        }
+                    }
                 }
-                MouseArea {
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: root.switchWs(modelData.id)
-                    onEntered: if (wsId !== root.activeWorkspace) parent.scale = 1.1
-                    onExited: if (wsId !== root.activeWorkspace) parent.scale = 1.0
-                }
-
-                Behavior on scale { NumberAnimation { duration: 100 } }
             }
         }
     }
-}
 
     Component.onCompleted: {
         initialize();

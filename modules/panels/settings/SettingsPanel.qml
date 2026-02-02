@@ -7,11 +7,11 @@ import qs.services
 
 Rectangle {
     id: rootSettings
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
     property var launcherPanel: null  // Reference to LauncherPanel
     property int currentTab: 0
-    signal backRequested()
+    signal backRequested
 
     radius: 12
     color: theme.primary.background
@@ -19,8 +19,6 @@ Rectangle {
     // Shadow effect
     layer.enabled: true
 
-
-    
     ListSettingsService {
         id: listSettingService
     }
@@ -32,12 +30,12 @@ Rectangle {
         // Sidebar
         Com.Sidebar {
             theme: rootSettings.theme
-            onCategoryChanged: function(index) {
-                rootSettings.currentTab = 0
-                settingsStack.currentIndex = index
+            onCategoryChanged: function (index) {
+                rootSettings.currentTab = 0;
+                settingsStack.currentIndex = index;
             }
-            onBackRequested: function() {
-                rootSettings.backRequested()
+            onBackRequested: function () {
+                rootSettings.backRequested();
             }
             Layout.fillHeight: true
         }
@@ -52,7 +50,7 @@ Rectangle {
                 color: theme.button.border
                 width: 2
             }
-            
+
             StackLayout {
                 id: settingsStack
                 anchors.fill: parent
@@ -65,44 +63,40 @@ Rectangle {
                     active: settingsStack.currentIndex === 0
                     source: "./General.qml"
                     onLoaded: {
-                        item.visible = Qt.binding(function() { return settingsStack.currentIndex === 0 })
-                        item.currentTab = rootSettings.currentTab
+                        item.visible = Qt.binding(function () {
+                            return settingsStack.currentIndex === 0;
+                        });
+                        item.currentTab = rootSettings.currentTab;
                     }
-                  }
-                  Loader {
+                }
+                Loader {
                     id: settingsAppearance
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     active: settingsStack.currentIndex === 1
                     source: "./appearance/Appearance.qml"
                     onLoaded: {
-                        item.visible = Qt.binding(function() { return settingsStack.currentIndex === 1 })
-                        item.currentTab = rootSettings.currentTab
+                        item.visible = Qt.binding(function () {
+                            return settingsStack.currentIndex === 1;
+                        });
+                        item.currentTab = rootSettings.currentTab;
                     }
                 }
 
-
-
-
                 // Network Settings
-                Com.Network {
-                }
-                
+                Com.Network {}
+
                 // Audio Settings
-                Com.Audio {
-                }
-                
+                Com.Audio {}
+
                 // Performance Settings
-                Com.Performance {
-                }
-                
+                Com.Performance {}
+
                 // Shortcuts Settings
-                Com.Shortcuts {
-                }
-                
+                Com.Shortcuts {}
+
                 // System Settings
-                Com.System {
-                }
+                Com.System {}
             }
         }
     }

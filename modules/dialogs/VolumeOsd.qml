@@ -8,14 +8,14 @@ import qs.services
 Scope {
     id: root
 
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
     property bool shouldShowOsd: false
     property real currentVolume: Pipewire.defaultAudioSink?.audio.volume ?? 0
     property bool isMuted: Pipewire.defaultAudioSink?.audio.mute ?? false
 
     PwObjectTracker {
-        objects: [ Pipewire.defaultAudioSink ]
+        objects: [Pipewire.defaultAudioSink]
     }
 
     Connections {
@@ -41,7 +41,7 @@ Scope {
                 bottom: true
             }
             margins {
-              bottom: 120
+                bottom: 120
             }
             exclusiveZone: 0
             implicitWidth: 280
@@ -67,38 +67,36 @@ Scope {
 
                     RowLayout {
                         Image {
-                          Layout.preferredWidth: 40
-                          Layout.preferredHeight: 40
-                          source: root.getVolumeIcon()
-                          fillMode: Image.PreserveAspectFit
-                          smooth: true
+                            Layout.preferredWidth: 40
+                            Layout.preferredHeight: 40
+                            source: root.getVolumeIcon()
+                            fillMode: Image.PreserveAspectFit
+                            smooth: true
                         }
-                    Text {
-                          text: isMuted ? (lang?.volume?.muted || "Muted") : Math.round(currentVolume * 100) + "%"
-                          color: theme.primary.foreground
-                          font.family: "ComicShannsMono Nerd Font"
-                          font.pixelSize: 30
-                          font.bold: true
+                        Text {
+                            text: isMuted ? (lang?.volume?.muted || "Muted") : Math.round(currentVolume * 100) + "%"
+                            color: theme.primary.foreground
+                            font.family: "ComicShannsMono Nerd Font"
+                            font.pixelSize: 30
+                            font.bold: true
                         }
                         Rectangle {
-                                      color: "transparent"
+                            color: "transparent"
 
-                          Layout.fillWidth: true
-                        Layout.fillHeight: true
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
                             Text {
-                          text: " " + (lang?.volume?.title || "Âm thanh")
-                          anchors.margins: 10
-                          anchors.top: parent.top
-                            anchors.right: parent.right
-                          color: theme.primary.foreground
-                          font.family: "ComicShannsMono Nerd Font"
-                          font.pixelSize: 20
-                          font.bold: true
-                      }
+                                text: " " + (lang?.volume?.title || "Âm thanh")
+                                anchors.margins: 10
+                                anchors.top: parent.top
+                                anchors.right: parent.right
+                                color: theme.primary.foreground
+                                font.family: "ComicShannsMono Nerd Font"
+                                font.pixelSize: 20
+                                font.bold: true
+                            }
                         }
-
                     }
-
 
                     // Thanh volume
                     ColumnLayout {
@@ -130,11 +128,16 @@ Scope {
     }
 
     function getVolumeIcon() {
-        if (isMuted || currentVolume == 0) return "../../assets/volume/volume_0.png"
-        if (currentVolume <= 0.25) return "../../assets/volume/volume_1.png"
-        if (currentVolume <= 0.50) return "../../assets/volume/volume_2.png"
-        if (currentVolume <= 0.75) return "../../assets/volume/volume_3.png"
-        if (currentVolume <= 1) return "../../assets/volume/volume_4.png"
-        return "../../assets/volume/volume_5.png"
+        if (isMuted || currentVolume == 0)
+            return "../../assets/volume/volume_0.png";
+        if (currentVolume <= 0.25)
+            return "../../assets/volume/volume_1.png";
+        if (currentVolume <= 0.50)
+            return "../../assets/volume/volume_2.png";
+        if (currentVolume <= 0.75)
+            return "../../assets/volume/volume_3.png";
+        if (currentVolume <= 1)
+            return "../../assets/volume/volume_4.png";
+        return "../../assets/volume/volume_5.png";
     }
 }

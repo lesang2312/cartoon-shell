@@ -6,12 +6,12 @@ Rectangle {
     id: clockPositionButton
     property string position: ""
     property bool isSelected: false
-    property var theme : ThemeService.theme
+    property var theme: ThemeService.theme
 
     property var anchorConfig: ({})
-    
+
     signal clicked
-    
+
     width: 60
     height: 60
     radius: 12

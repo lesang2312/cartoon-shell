@@ -12,9 +12,9 @@ Rectangle {
     border.color: theme.button.border
     border.width: 3
 
-    property var lang : LanguageService.translations
+    property var lang: LanguageService.translations
     property string selectedFlag: Settings.appearance.countryFlag
-    property var theme : ThemeService.theme
+    property var theme: ThemeService.theme
     property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
 
     WeatherService {
@@ -33,7 +33,7 @@ Rectangle {
 
     Component {
         id: horizontalLayout
-        
+
         RowLayout {
             anchors.fill: parent
             anchors {
@@ -44,7 +44,6 @@ Rectangle {
 
             // Phần datetime - căn trái
             Item {
-              
                 id: timeContainer
                 Layout.preferredWidth: textCurrentDate.implicitWidth + 20
                 Layout.fillHeight: true
@@ -77,19 +76,23 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        VisibleService.togglePanel("calendar")
+                        VisibleService.togglePanel("calendar");
                     }
-                    
+
                     // Hiệu ứng hover
                     onEntered: {
-                        timeContainer.scale = 1.04
+                        timeContainer.scale = 1.04;
                     }
                     onExited: {
-                        timeContainer.scale = 1.0
+                        timeContainer.scale = 1.0;
                     }
                 }
-                
-                Behavior on scale { NumberAnimation { duration: 100 } }
+
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 100
+                    }
+                }
             }
 
             // Spacer để đẩy phần giữa ra chính giữa
@@ -129,7 +132,7 @@ Rectangle {
                                 family: "ComicShannsMono Nerd Font"
                             }
                         }
-                        
+
                         Text {
                             id: textCondition
                             text: weatherService.condition || "..."
@@ -149,18 +152,22 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        VisibleService.togglePanel("weather")
+                        VisibleService.togglePanel("weather");
                     }
-                    
+
                     onEntered: {
-                        weatherContainer.scale = 1.04
+                        weatherContainer.scale = 1.04;
                     }
                     onExited: {
-                        weatherContainer.scale = 1.0
+                        weatherContainer.scale = 1.0;
                     }
                 }
-                
-                Behavior on scale { NumberAnimation { duration: 100 } }
+
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 100
+                    }
+                }
             }
 
             // Spacer để đẩy phần flag sang bên phải
@@ -189,25 +196,29 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        VisibleService.togglePanel("flag")
+                        VisibleService.togglePanel("flag");
                     }
 
                     onEntered: {
-                        flagContainer.scale = 1.1
+                        flagContainer.scale = 1.1;
                     }
                     onExited: {
-                        flagContainer.scale = 1.0
+                        flagContainer.scale = 1.0;
                     }
                 }
 
-                Behavior on scale { NumberAnimation { duration: 100 } }
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 100
+                    }
+                }
             }
         }
     }
 
     Component {
         id: verticalLayout
-        
+
         ColumnLayout {
             anchors.fill: parent
             spacing: 8
@@ -223,11 +234,11 @@ Rectangle {
                     width: parent.height  // Đảo width và height
                     height: parent.width
                     transformOrigin: Item.Center
-                    
+
                     ColumnLayout {
                         anchors.centerIn: parent
                         spacing: 2
-                        
+
                         Text {
                             text: dateTimeService.currentHour
                             color: root.theme.primary.foreground
@@ -236,8 +247,8 @@ Rectangle {
                                 bold: true
                                 family: "ComicShannsMono Nerd Font"
                             }
-                          }
-                          Text {
+                        }
+                        Text {
                             text: dateTimeService.currentMinus
                             color: root.theme.primary.foreground
                             font {
@@ -246,7 +257,6 @@ Rectangle {
                                 family: "ComicShannsMono Nerd Font"
                             }
                         }
-
                     }
                 }
 
@@ -255,23 +265,25 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        VisibleService.togglePanel("calendar")
+                        VisibleService.togglePanel("calendar");
                     }
-                    
+
                     // Hiệu ứng hover
                     onEntered: {
-                        timeContainerVertical.opacity = 0.8
+                        timeContainerVertical.opacity = 0.8;
                     }
                     onExited: {
-                        timeContainerVertical.opacity = 1.0
+                        timeContainerVertical.opacity = 1.0;
                     }
                 }
-                
+
                 Behavior on opacity {
-                    NumberAnimation { duration: 100 }
+                    NumberAnimation {
+                        duration: 100
+                    }
                 }
-              }
-              Item {
+            }
+            Item {
                 id: weatherContainerVertical
                 Layout.fillWidth: true
                 Layout.fillHeight: true
@@ -282,11 +294,11 @@ Rectangle {
                     width: parent.height  // Đảo width và height
                     height: parent.width
                     transformOrigin: Item.Center
-                    
+
                     ColumnLayout {
                         anchors.centerIn: parent
                         spacing: 8
-                        
+
                         Image {
                             source: weatherService.icon
                             Layout.preferredWidth: 25
@@ -319,19 +331,21 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        VisibleService.togglePanel("weather")
+                        VisibleService.togglePanel("weather");
                     }
-                    
+
                     onEntered: {
-                        weatherContainerVertical.opacity = 0.8
+                        weatherContainerVertical.opacity = 0.8;
                     }
                     onExited: {
-                        weatherContainerVertical.opacity = 1.0
+                        weatherContainerVertical.opacity = 1.0;
                     }
                 }
-                
+
                 Behavior on opacity {
-                    NumberAnimation { duration: 100 }
+                    NumberAnimation {
+                        duration: 100
+                    }
                 }
             }
 
@@ -356,21 +370,23 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        VisibleService.togglePanel("flag")
+                        VisibleService.togglePanel("flag");
                     }
 
                     onEntered: {
-                        flagContainerVertical.scale = 1.1
+                        flagContainerVertical.scale = 1.1;
                     }
                     onExited: {
-                        flagContainerVertical.scale = 1.0
+                        flagContainerVertical.scale = 1.0;
                     }
                 }
 
-                Behavior on scale { NumberAnimation { duration: 100 } }
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 100
+                    }
+                }
             }
-
-
         }
     }
 }

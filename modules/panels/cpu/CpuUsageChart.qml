@@ -3,7 +3,7 @@ import QtQuick.Layouts
 import qs.services
 
 Rectangle {
-    property var theme : ThemeService.theme
+    property var theme: ThemeService.theme
 
     property var cpuHistory: []
 
@@ -29,24 +29,25 @@ Rectangle {
                 Layout.preferredHeight: 32
                 spacing: 8
                 Item {
-                  Layout.fillWidth: true
+                    Layout.fillWidth: true
                 }
                 Text {
-        text: "CPU Usage History"
-        color: theme.primary.foreground
-        font.pixelSize: 32
-        font.bold: true
-        font.family: "ComicShannsMono Nerd Font"
-    }Item {
-        Layout.fillWidth: true
-    }
+                    text: "CPU Usage History"
+                    color: theme.primary.foreground
+                    font.pixelSize: 32
+                    font.bold: true
+                    font.family: "ComicShannsMono Nerd Font"
+                }
+                Item {
+                    Layout.fillWidth: true
+                }
             }
 
             // Chart area
             Item {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                
+
                 Canvas {
                     id: cpuChart
                     anchors.fill: parent
@@ -55,8 +56,9 @@ Rectangle {
                     onPaint: {
                         var ctx = getContext("2d");
                         ctx.reset();
-                        
-                        if (cpuHistory.length < 2) return;
+
+                        if (cpuHistory.length < 2)
+                            return;
 
                         var width = cpuChart.width;
                         var height = cpuChart.height;
@@ -85,7 +87,7 @@ Rectangle {
                         for (var i = 0; i <= 10; i++) {
                             var percentage = i * 10;
                             var y = paddingTop + chartHeight - (chartHeight * percentage / 100);
-                            
+
                             // Draw grid line
                             ctx.beginPath();
                             ctx.moveTo(paddingLeft, y);
@@ -103,52 +105,54 @@ Rectangle {
                             var gradient = ctx.createLinearGradient(paddingLeft, paddingTop, paddingLeft, height - paddingBottom);
                             gradient.addColorStop(0, theme.normal.blue);
                             gradient.addColorStop(1, theme.normal.blue);
-                            
+
                             // Calculate all points first
                             var points = [];
                             for (var j = 0; j < cpuHistory.length; j++) {
                                 var x = paddingLeft + (chartWidth * j / (cpuHistory.length - 1));
                                 var usage = cpuHistory[j].usage;
                                 var y = paddingTop + chartHeight - (chartHeight * usage / 100);
-                                points.push({x: x, y: y});
+                                points.push({
+                                    x: x,
+                                    y: y
+                                });
                             }
-                            
+
                             // Fill area under smooth curve
                             ctx.fillStyle = gradient;
                             ctx.beginPath();
-                            
+
                             // Start from bottom left
                             ctx.moveTo(paddingLeft, paddingTop + chartHeight);
-                            
+
                             // Draw smooth curve to first point
                             ctx.lineTo(points[0].x, paddingTop + chartHeight);
                             ctx.lineTo(points[0].x, points[0].y);
-                            
+
                             // Draw smooth curve through all points
                             for (var j = 0; j < points.length - 1; j++) {
                                 var xc = (points[j].x + points[j + 1].x) / 2;
                                 var yc = (points[j].y + points[j + 1].y) / 2;
-                                
+
                                 if (j === 0) {
                                     ctx.quadraticCurveTo(points[j].x, points[j].y, xc, yc);
                                 } else {
-                                    var prevXc = (points[j-1].x + points[j].x) / 2;
-                                    var prevYc = (points[j-1].y + points[j].y) / 2;
+                                    var prevXc = (points[j - 1].x + points[j].x) / 2;
+                                    var prevYc = (points[j - 1].y + points[j].y) / 2;
                                     ctx.bezierCurveTo(prevXc, prevYc, points[j].x, points[j].y, xc, yc);
                                 }
                             }
-                            
+
                             // Draw last segment
                             if (points.length > 1) {
                                 var lastIndex = points.length - 1;
-                                var prevXc = (points[lastIndex-1].x + points[lastIndex].x) / 2;
-                                var prevYc = (points[lastIndex-1].y + points[lastIndex].y) / 2;
-                                ctx.bezierCurveTo(prevXc, prevYc, points[lastIndex].x, points[lastIndex].y, 
-                                                points[lastIndex].x, points[lastIndex].y);
+                                var prevXc = (points[lastIndex - 1].x + points[lastIndex].x) / 2;
+                                var prevYc = (points[lastIndex - 1].y + points[lastIndex].y) / 2;
+                                ctx.bezierCurveTo(prevXc, prevYc, points[lastIndex].x, points[lastIndex].y, points[lastIndex].x, points[lastIndex].y);
                             }
-                            
+
                             // Close the path to fill area
-                            ctx.lineTo(points[points.length-1].x, paddingTop + chartHeight);
+                            ctx.lineTo(points[points.length - 1].x, paddingTop + chartHeight);
                             ctx.lineTo(paddingLeft, paddingTop + chartHeight);
                             ctx.closePath();
                             ctx.fill();
@@ -159,33 +163,32 @@ Rectangle {
                             ctx.lineJoin = "round";
                             ctx.lineCap = "round";
                             ctx.beginPath();
-                            
+
                             // Move to first point
                             ctx.moveTo(points[0].x, points[0].y);
-                            
+
                             // Draw smooth curve through all points
                             for (var j = 0; j < points.length - 1; j++) {
                                 var xc = (points[j].x + points[j + 1].x) / 2;
                                 var yc = (points[j].y + points[j + 1].y) / 2;
-                                
+
                                 if (j === 0) {
                                     ctx.quadraticCurveTo(points[j].x, points[j].y, xc, yc);
                                 } else {
-                                    var prevXc = (points[j-1].x + points[j].x) / 2;
-                                    var prevYc = (points[j-1].y + points[j].y) / 2;
+                                    var prevXc = (points[j - 1].x + points[j].x) / 2;
+                                    var prevYc = (points[j - 1].y + points[j].y) / 2;
                                     ctx.bezierCurveTo(prevXc, prevYc, points[j].x, points[j].y, xc, yc);
                                 }
                             }
-                            
+
                             // Draw last segment
                             if (points.length > 1) {
                                 var lastIndex = points.length - 1;
-                                var prevXc = (points[lastIndex-1].x + points[lastIndex].x) / 2;
-                                var prevYc = (points[lastIndex-1].y + points[lastIndex].y) / 2;
-                                ctx.bezierCurveTo(prevXc, prevYc, points[lastIndex].x, points[lastIndex].y, 
-                                                points[lastIndex].x, points[lastIndex].y);
+                                var prevXc = (points[lastIndex - 1].x + points[lastIndex].x) / 2;
+                                var prevYc = (points[lastIndex - 1].y + points[lastIndex].y) / 2;
+                                ctx.bezierCurveTo(prevXc, prevYc, points[lastIndex].x, points[lastIndex].y, points[lastIndex].x, points[lastIndex].y);
                             }
-                            
+
                             ctx.stroke();
 
                             // Draw current usage value
@@ -193,7 +196,7 @@ Rectangle {
                                 var currentUsage = cpuHistory[cpuHistory.length - 1].usage;
                                 var currentX = paddingLeft + chartWidth;
                                 var currentY = points[points.length - 1].y;
-                                
+
                                 ctx.font = "15px 'ComicShannsMono Nerd Font'";
                                 ctx.fillText(currentUsage.toFixed(1) + "%", currentX + 5, currentY - 8);
                             }
@@ -214,7 +217,7 @@ Rectangle {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 30
                 spacing: 20
-                
+
                 Layout.alignment: Qt.AlignHCenter
 
                 RowLayout {
@@ -269,7 +272,6 @@ Rectangle {
                 }
             }
         }
-
     }
 
     onCpuHistoryChanged: {

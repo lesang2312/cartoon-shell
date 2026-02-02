@@ -6,8 +6,7 @@ import qs.services
 Rectangle {
     id: root
     property int emailCount: 230
-    property var theme : ThemeService.theme
-
+    property var theme: ThemeService.theme
 
     Layout.fillWidth: true
     Layout.fillHeight: true

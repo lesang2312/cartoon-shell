@@ -5,11 +5,11 @@ import qs.services
 
 Column {
     id: networkItem
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
     property var wifiManager
     property var networkData
-    
+
     width: parent.width
     spacing: 4
 
@@ -18,16 +18,14 @@ Column {
         width: parent.width
         height: 70
         radius: 12
-        color: mouseArea.containsMouse ?
-               theme.button.background_select :
-               (networkData.isConnected ? theme.normal.blue : theme.primary.dim_background)
+        color: mouseArea.containsMouse ? theme.button.background_select : (networkData.isConnected ? theme.normal.blue : theme.primary.dim_background)
         border.width: 2
         border.color: networkData.isConnected ? theme.normal.blue : theme.normal.black
 
         RowLayout {
             anchors.margins: 8
             anchors.fill: parent
-            
+
             Column {
                 Layout.fillWidth: true
                 Text {
@@ -44,14 +42,12 @@ Column {
                     font.family: "ComicShannsMono Nerd Font"
                 }
             }
-            
+
             Item {
                 width: 40
                 height: 40
                 Image {
-                    source: networkData.isConnected ?
-                           "../../../assets/wifi/check-mark.png" :
-                           "../../../assets/wifi/padlock.png"
+                    source: networkData.isConnected ? "../../../assets/wifi/check-mark.png" : "../../../assets/wifi/padlock.png"
                     width: parent.width - 12
                     height: parent.height - 12
                     anchors.centerIn: parent
@@ -67,9 +63,9 @@ Column {
             cursorShape: Qt.PointingHandCursor
             onClicked: {
                 if (wifiManager.openSsid === networkData.ssid) {
-                    wifiManager.openSsid = ""
+                    wifiManager.openSsid = "";
                 } else {
-                    wifiManager.openSsid = networkData.ssid
+                    wifiManager.openSsid = networkData.ssid;
                 }
             }
         }

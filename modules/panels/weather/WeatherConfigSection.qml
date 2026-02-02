@@ -6,8 +6,8 @@ import qs.services
 Rectangle {
     id: configSection
 
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
 
     required property string apiKey
     required property string location
@@ -26,7 +26,7 @@ Rectangle {
     Layout.fillWidth: true
     Layout.fillHeight: true
     Layout.preferredWidth: parent.width * 0.4
-    
+
     radius: 16
     color: Qt.rgba(theme.normal.black.r, theme.normal.black.g, theme.normal.black.b, 0.05)
     border.color: Qt.rgba(theme.normal.black.r, theme.normal.black.g, theme.normal.black.b, 0.1)
@@ -85,7 +85,7 @@ Rectangle {
                         palette.placeholderText: theme.primary.dim_foreground
 
                         onTextChanged: {
-                            configSection.apiKeyEdited(text)
+                            configSection.apiKeyEdited(text);
                         }
                     }
                 }
@@ -151,11 +151,11 @@ Rectangle {
                             palette.placeholderText: theme.primary.dim_foreground
 
                             onActiveFocusChanged: {
-                                configSection.locationFocusStatusChanged(activeFocus)
+                                configSection.locationFocusStatusChanged(activeFocus);
                             }
 
                             onTextChanged: {
-                                configSection.locationTextEdited(text)
+                                configSection.locationTextEdited(text);
                             }
                         }
                     }
@@ -166,19 +166,21 @@ Rectangle {
                         radius: 10
 
                         gradient: Gradient {
-                            GradientStop { position: 0.0; color: saveLocMouseArea.containsMouse ?
-                                                         Qt.lighter(theme.normal.green, 1.1) : theme.normal.green }
-                            GradientStop { position: 1.0; color: saveLocMouseArea.containsMouse ?
-                                                         theme.normal.green : Qt.darker(theme.normal.green, 1.1) }
+                            GradientStop {
+                                position: 0.0
+                                color: saveLocMouseArea.containsMouse ? Qt.lighter(theme.normal.green, 1.1) : theme.normal.green
+                            }
+                            GradientStop {
+                                position: 1.0
+                                color: saveLocMouseArea.containsMouse ? theme.normal.green : Qt.darker(theme.normal.green, 1.1)
+                            }
                         }
 
                         border.color: Qt.darker(theme.normal.green, 1.2)
                         border.width: 1
 
                         Text {
-                            text: configSection.isSearchingLocation ?
-                                  (lang?.weather?.searchingButton || "⏳") :
-                                  (lang?.weather?.searchButton || "🔍")
+                            text: configSection.isSearchingLocation ? (lang?.weather?.searchingButton || "⏳") : (lang?.weather?.searchButton || "🔍")
                             color: theme.primary.background
                             font {
                                 pixelSize: 14
@@ -217,29 +219,22 @@ Rectangle {
 
                         gradient: Gradient {
                             GradientStop {
-                                position: 0.0;
-                                color: (ListView.isCurrentItem || locationResultMouseArea.containsMouse) ?
-                                       Qt.rgba(theme.normal.blue.r, theme.normal.blue.g, theme.normal.blue.b, 0.15) :
-                                       "transparent"
+                                position: 0.0
+                                color: (ListView.isCurrentItem || locationResultMouseArea.containsMouse) ? Qt.rgba(theme.normal.blue.r, theme.normal.blue.g, theme.normal.blue.b, 0.15) : "transparent"
                             }
                             GradientStop {
-                                position: 1.0;
-                                color: (ListView.isCurrentItem || locationResultMouseArea.containsMouse) ?
-                                       Qt.rgba(theme.normal.blue.r, theme.normal.blue.g, theme.normal.blue.b, 0.05) :
-                                       "transparent"
+                                position: 1.0
+                                color: (ListView.isCurrentItem || locationResultMouseArea.containsMouse) ? Qt.rgba(theme.normal.blue.r, theme.normal.blue.g, theme.normal.blue.b, 0.05) : "transparent"
                             }
                         }
 
-                        border.color: (ListView.isCurrentItem || locationResultMouseArea.containsMouse) ?
-                                      Qt.rgba(theme.normal.blue.r, theme.normal.blue.g, theme.normal.blue.b, 0.3) :
-                                      "transparent"
+                        border.color: (ListView.isCurrentItem || locationResultMouseArea.containsMouse) ? Qt.rgba(theme.normal.blue.r, theme.normal.blue.g, theme.normal.blue.b, 0.3) : "transparent"
                         border.width: 1
 
                         RowLayout {
                             anchors.fill: parent
                             anchors.margins: 12
                             spacing: 12
-
 
                             Column {
                                 Layout.fillWidth: true
@@ -278,11 +273,11 @@ Rectangle {
                             cursorShape: Qt.PointingHandCursor
                             onPressed: {
                                 // Stop hide timer khi user click vào result
-                                hideResultsTimer.stop()
+                                hideResultsTimer.stop();
                             }
                             onClicked: {
-                                locationInput.text = `${modelData.name},${modelData.country}`
-                                configSection.locationSelected(locationInput.text)
+                                locationInput.text = `${modelData.name},${modelData.country}`;
+                                configSection.locationSelected(locationInput.text);
                             }
                         }
                     }
@@ -297,8 +292,14 @@ Rectangle {
                 radius: 12
 
                 gradient: Gradient {
-                    GradientStop { position: 0.0; color: Qt.rgba(theme.normal.red.r, theme.normal.red.g, theme.normal.red.b, 0.1) }
-                    GradientStop { position: 1.0; color: Qt.rgba(theme.normal.red.r, theme.normal.red.g, theme.normal.red.b, 0.05) }
+                    GradientStop {
+                        position: 0.0
+                        color: Qt.rgba(theme.normal.red.r, theme.normal.red.g, theme.normal.red.b, 0.1)
+                    }
+                    GradientStop {
+                        position: 1.0
+                        color: Qt.rgba(theme.normal.red.r, theme.normal.red.g, theme.normal.red.b, 0.05)
+                    }
                 }
 
                 border.color: Qt.rgba(theme.normal.red.r, theme.normal.red.g, theme.normal.red.b, 0.3)

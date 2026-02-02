@@ -4,10 +4,10 @@ import qs.services
 Item {
     id: header
 
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
 
-    signal closeClicked()
+    signal closeClicked
 
     Row {
         anchors.centerIn: parent

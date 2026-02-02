@@ -8,8 +8,8 @@ import qs.services
 
 Item {
     id: ramDisplay
-    property var lang : LanguageService.translations
-    property var theme : ThemeService.theme
+    property var lang: LanguageService.translations
+    property var theme: ThemeService.theme
 
     property color usedRamColor: theme.normal.green
     property color freeRamColor: theme.normal.black
@@ -19,10 +19,10 @@ Item {
     property color dimTextColor: theme.primary.dim_foreground
     property color borderColor: theme.button.border
     property color separatorColor: theme.normal.black
-    
-    RamService{
-      id: ramService
-      useSimpleCalculation: false
+
+    RamService {
+        id: ramService
+        useSimpleCalculation: false
     }
 
     property bool dataLoaded: true
@@ -33,31 +33,31 @@ Item {
         radius: 12
         border.color: borderColor
         border.width: 2
-        
+
         Rectangle {
             anchors.fill: parent
             color: "transparent"
             opacity: 0.1
             radius: 12
-            
+
             Canvas {
                 anchors.fill: parent
                 onPaint: {
-                    var ctx = getContext("2d")
-                    ctx.strokeStyle = theme.primary.foreground
-                    ctx.lineWidth = 0.5
-                    
+                    var ctx = getContext("2d");
+                    ctx.strokeStyle = theme.primary.foreground;
+                    ctx.lineWidth = 0.5;
+
                     for (var x = 0; x < width; x += 15) {
-                        ctx.beginPath()
-                        ctx.moveTo(x, 0)
-                        ctx.lineTo(x, height)
-                        ctx.stroke()
+                        ctx.beginPath();
+                        ctx.moveTo(x, 0);
+                        ctx.lineTo(x, height);
+                        ctx.stroke();
                     }
                     for (var y = 0; y < height; y += 15) {
-                        ctx.beginPath()
-                        ctx.moveTo(0, y)
-                        ctx.lineTo(width, y)
-                        ctx.stroke()
+                        ctx.beginPath();
+                        ctx.moveTo(0, y);
+                        ctx.lineTo(width, y);
+                        ctx.stroke();
                     }
                 }
             }
@@ -71,7 +71,7 @@ Item {
 
         RowLayout {
             Layout.fillWidth: true
-            
+
             Text {
                 text: lang?.ram?.memory_monitor || "Memory Monitor"
                 font.family: "ComicShannsMono Nerd Font"
@@ -79,15 +79,16 @@ Item {
                 font.bold: true
                 font.pixelSize: 30
             }
-            
-            Item { Layout.fillWidth: true }
-            
+
+            Item {
+                Layout.fillWidth: true
+            }
+
             Rectangle {
                 width: 8
                 height: 8
                 radius: 4
-                color: ramService.memPercent > 80 ? theme.normal.red : 
-                       ramService.memPercent > 60 ? theme.normal.yellow : theme.normal.green
+                color: ramService.memPercent > 80 ? theme.normal.red : ramService.memPercent > 60 ? theme.normal.yellow : theme.normal.green
             }
         }
 
@@ -101,7 +102,7 @@ Item {
 
                 RowLayout {
                     Layout.fillWidth: true
-                    
+
                     Text {
                         text: "RAM"
                         color: textColor
@@ -109,9 +110,11 @@ Item {
                         font.family: "ComicShannsMono Nerd Font"
                         font.pixelSize: 24
                     }
-                    
-                    Item { Layout.fillWidth: true }
-                    
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
+
                     Text {
                         text: ramService.memPercent + "%"
                         color: getUsageColor(ramService.memPercent)
@@ -132,20 +135,26 @@ Item {
                         height: parent.height
                         radius: 10
                         gradient: Gradient {
-                            GradientStop { position: 0.0; color: Qt.lighter(usedRamColor, 1.2) }
-                            GradientStop { position: 1.0; color: usedRamColor }
+                            GradientStop {
+                                position: 0.0
+                                color: Qt.lighter(usedRamColor, 1.2)
+                            }
+                            GradientStop {
+                                position: 1.0
+                                color: usedRamColor
+                            }
                         }
-                        Behavior on width { 
-                            NumberAnimation { 
-                                duration: 800; 
-                                easing.type: Easing.OutCubic 
-                            } 
+                        Behavior on width {
+                            NumberAnimation {
+                                duration: 800
+                                easing.type: Easing.OutCubic
+                            }
                         }
                     }
 
                     Text {
                         anchors.centerIn: parent
-                        text: ramService.memUsed + " / " + ramService.memTotal+ " MB"
+                        text: ramService.memUsed + " / " + ramService.memTotal + " MB"
                         color: theme.primary.background
                         font.bold: true
                         font.pixelSize: 20
@@ -175,9 +184,10 @@ Item {
                         font.family: "ComicShannsMono Nerd Font"
                         font.bold: true
                     }
-                  }
-                Item { Layout.preferredWidth: 20 }
-
+                }
+                Item {
+                    Layout.preferredWidth: 20
+                }
 
                 Column {
                     Layout.alignment: Qt.AlignHCenter
@@ -195,7 +205,6 @@ Item {
                         font.bold: true
                     }
                 }
-
             }
         }
 
@@ -203,16 +212,28 @@ Item {
             Layout.fillWidth: true
             height: 1
             color: "transparent"
-            
+
             Rectangle {
                 anchors.centerIn: parent
                 width: parent.width * 0.8
                 height: 1
                 gradient: Gradient {
-                    GradientStop { position: 0.0; color: "transparent" }
-                    GradientStop { position: 0.2; color: separatorColor }
-                    GradientStop { position: 0.8; color: separatorColor }
-                    GradientStop { position: 1.0; color: "transparent" }
+                    GradientStop {
+                        position: 0.0
+                        color: "transparent"
+                    }
+                    GradientStop {
+                        position: 0.2
+                        color: separatorColor
+                    }
+                    GradientStop {
+                        position: 0.8
+                        color: separatorColor
+                    }
+                    GradientStop {
+                        position: 1.0
+                        color: "transparent"
+                    }
                 }
             }
         }
@@ -227,7 +248,7 @@ Item {
 
                 RowLayout {
                     Layout.fillWidth: true
-                    
+
                     Text {
                         text: "SWAP"
                         color: textColor
@@ -235,9 +256,11 @@ Item {
                         font.family: "ComicShannsMono Nerd Font"
                         font.pixelSize: 24
                     }
-                    
-                    Item { Layout.fillWidth: true }
-                    
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
+
                     Text {
                         text: ramService.swapPercent + "%"
                         color: getUsageColor(ramService.swapPercent)
@@ -260,14 +283,20 @@ Item {
                         height: parent.height
                         radius: 7
                         gradient: Gradient {
-                            GradientStop { position: 0.0; color: Qt.lighter(usedSwapColor, 1.2) }
-                            GradientStop { position: 1.0; color: usedSwapColor }
+                            GradientStop {
+                                position: 0.0
+                                color: Qt.lighter(usedSwapColor, 1.2)
+                            }
+                            GradientStop {
+                                position: 1.0
+                                color: usedSwapColor
+                            }
                         }
-                        Behavior on width { 
-                            NumberAnimation { 
-                                duration: 800; 
-                                easing.type: Easing.OutCubic 
-                            } 
+                        Behavior on width {
+                            NumberAnimation {
+                                duration: 800
+                                easing.type: Easing.OutCubic
+                            }
                         }
                     }
 
@@ -331,20 +360,24 @@ Item {
         radius: 12
         opacity: dataLoaded ? 0 : 1
         visible: opacity > 0
-        
-        Behavior on opacity { NumberAnimation { duration: 300 } }
-        
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 300
+            }
+        }
+
         Column {
             anchors.centerIn: parent
             spacing: 12
-            
+
             Text {
                 text: "⏳"
                 font.pixelSize: 20
                 color: dimTextColor
                 anchors.horizontalCenter: parent.horizontalCenter
             }
-            
+
             Text {
                 text: lang?.ram?.loading_memory || "Loading memory data..."
                 color: dimTextColor
@@ -355,10 +388,12 @@ Item {
     }
 
     function getUsageColor(percent) {
-        if (percent > 90) return theme.normal.red
-        if (percent > 70) return theme.normal.yellow
-        if (percent > 50) return theme.normal.green
-        return theme.normal.cyan
+        if (percent > 90)
+            return theme.normal.red;
+        if (percent > 70)
+            return theme.normal.yellow;
+        if (percent > 50)
+            return theme.normal.green;
+        return theme.normal.cyan;
     }
-
 }

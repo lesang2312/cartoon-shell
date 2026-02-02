@@ -30,9 +30,9 @@ PanelWindow {
     exclusiveZone: 0
     color: "transparent"
 
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
-    
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
+
     Rectangle {
         anchors.fill: parent
         color: theme.primary.background
@@ -59,7 +59,6 @@ PanelWindow {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 500
             }
-
         }
     }
 }

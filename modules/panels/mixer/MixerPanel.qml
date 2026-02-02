@@ -11,25 +11,24 @@ import qs.services
 PanelWindow {
     id: root
 
-
     implicitWidth: 450
     implicitHeight: 600
-    property var lang : LanguageService.translations
+    property var lang: LanguageService.translations
 
     anchors {
-    // Anchor theo vị trí của bar
-    left: Settings.bar.position === "left"
-    right: Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom"
-    top: Settings.bar.position === "top"
-    bottom: Settings.bar.position === "left" || Settings.bar.position === "right" || Settings.bar.position === "bottom"
-}
+        // Anchor theo vị trí của bar
+        left: Settings.bar.position === "left"
+        right: Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom"
+        top: Settings.bar.position === "top"
+        bottom: Settings.bar.position === "left" || Settings.bar.position === "right" || Settings.bar.position === "bottom"
+    }
 
-margins {
-    top: Settings.bar.position === "top" ? 10 : 0
-    bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? 10 : 0
-    left: Settings.bar.position === "left" ? 10 : 0
-    right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? (sizes.anchorMargin || 10) : 0
-}
+    margins {
+        top: Settings.bar.position === "top" ? 10 : 0
+        bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? 10 : 0
+        left: Settings.bar.position === "left" ? 10 : 0
+        right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? (sizes.anchorMargin || 10) : 0
+    }
     color: "transparent"
 
     property var theme: ThemeService.theme
@@ -58,13 +57,12 @@ margins {
 
                     Image {
                         anchors.centerIn: parent
-                        source: Directories.assetsPath +  "/system/mixer.png"
+                        source: Directories.assetsPath + "/system/mixer.png"
                         width: 50
                         height: 50
                         fillMode: Image.PreserveAspectFit
                     }
                 }
-
 
                 ColumnLayout {
                     Layout.fillWidth: true

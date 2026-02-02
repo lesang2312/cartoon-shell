@@ -6,9 +6,9 @@ import qs.services
 Rectangle {
     id: statusCard
     required property var adapter
-    property var theme : ThemeService.theme
+    property var theme: ThemeService.theme
 
-    property var lang : LanguageService.translations
+    property var lang: LanguageService.translations
     required property int connectedCount
 
     Layout.fillWidth: true
@@ -35,7 +35,11 @@ Rectangle {
                 font.family: "ComicShannsMono Nerd Font"
                 font.bold: true
 
-                Behavior on color { ColorAnimation { duration: 200 } }
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 200
+                    }
+                }
             }
 
             Text {
@@ -47,7 +51,9 @@ Rectangle {
             }
         }
 
-        Item { Layout.fillWidth: true }
+        Item {
+            Layout.fillWidth: true
+        }
 
         // Toggle button
         Rectangle {
@@ -58,8 +64,17 @@ Rectangle {
             opacity: adapter ? 1 : 0.5
 
             scale: toggleMouseArea.containsPress ? 0.95 : (toggleMouseArea.containsMouse ? 1.05 : 1.0)
-            Behavior on scale { NumberAnimation { duration: 150; easing.type: Easing.OutBack } }
-            Behavior on color { ColorAnimation { duration: 300 } }
+            Behavior on scale {
+                NumberAnimation {
+                    duration: 150
+                    easing.type: Easing.OutBack
+                }
+            }
+            Behavior on color {
+                ColorAnimation {
+                    duration: 300
+                }
+            }
 
             Rectangle {
                 x: adapter?.enabled ? parent.width - width - 4 : 4
@@ -69,7 +84,12 @@ Rectangle {
                 radius: 12
                 color: theme.primary.dim_background
 
-                Behavior on x { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
+                Behavior on x {
+                    NumberAnimation {
+                        duration: 200
+                        easing.type: Easing.OutCubic
+                    }
+                }
             }
 
             MouseArea {
@@ -80,11 +100,11 @@ Rectangle {
                 cursorShape: Qt.PointingHandCursor
                 onClicked: {
                     if (adapter) {
-                        adapter.enabled = !adapter.enabled
+                        adapter.enabled = !adapter.enabled;
                         if (adapter.enabled) {
                             // When enabling Bluetooth, set necessary modes
-                            adapter.pairable = true
-                            adapter.discoverable = true
+                            adapter.pairable = true;
+                            adapter.discoverable = true;
                         }
                     }
                 }

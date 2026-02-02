@@ -7,24 +7,24 @@ import qs.components
 
 Item {
     id: root
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
 
     ScrollView {
         id: scrollView
         anchors.fill: parent
         clip: true
         anchors.margins: 20
-        
+
         // Cấu hình scrollbar
         ScrollBar.vertical.policy: ScrollBar.AsNeeded
         ScrollBar.horizontal.policy: ScrollBar.AsNeeded
         ScrollBar.vertical.interactive: true
-        
+
         // Content area
         contentWidth: contentLayout.width
         contentHeight: contentLayout.height
-        
+
         // Nền cho scrollview
         background: Rectangle {
             color: "transparent"
@@ -35,10 +35,9 @@ Item {
             width: scrollView.availableWidth
             spacing: 25
             // Tiêu đề chính
-            HeaderSettings{
-              name: "Theme"
+            HeaderSettings {
+                name: "Theme"
             }
-            
 
             // Đường phân cách
             Rectangle {
@@ -54,19 +53,18 @@ Item {
                 id: contentContainer
                 Layout.fillWidth: true
                 color: "transparent"
-                
+
                 ColumnLayout {
                     width: parent.width
                     spacing: 25
-                    
+
                     // Phần chọn theme
                     Com.ThemeSelection {
                         id: themeSelection
                         width: parent.width
                         Layout.fillWidth: true
                     }
-                    Com.ListTheme{
-                    }
+                    Com.ListTheme {}
 
                     // Thêm phần cài đặt theme khác nếu cần
                     // Ví dụ: chế độ tối/sáng tự động
@@ -84,18 +82,20 @@ Item {
     // Tùy chọn: Hiển thị thanh scrollbar custom nếu muốn
     Component {
         id: customScrollBar
-        
+
         Rectangle {
             id: scrollBar
             width: 8
             radius: 4
             color: theme.normal.blue
             opacity: 0.5
-            
+
             Behavior on opacity {
-                NumberAnimation { duration: 200 }
+                NumberAnimation {
+                    duration: 200
+                }
             }
-            
+
             states: State {
                 name: "hovered"
                 when: scrollBar.MouseArea.containsMouse
@@ -115,7 +115,7 @@ Item {
         color: "transparent"
         border.color: "red"
         border.width: 1
-        
+
         Text {
             anchors.centerIn: parent
             text: `SV: ${scrollView.width}x${scrollView.height}\nContent: ${scrollView.contentWidth}x${scrollView.contentHeight}`

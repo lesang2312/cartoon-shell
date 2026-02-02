@@ -8,9 +8,8 @@ import Quickshell.Io
 Item {
     id: ramTaskManager
 
-  property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
-
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
 
     property color headerColor: theme.normal.blue
     property color rowEvenColor: theme.primary.background
@@ -18,15 +17,15 @@ Item {
     property color textColor: theme.primary.foreground
     property color dimTextColor: theme.primary.dim_foreground
     property color highlightColor: theme.normal.green
-    
+
     property color criticalColor: theme.normal.red
     property color warningColor: theme.normal.yellow
     property color normalColor: theme.normal.green
     property color lowColor: theme.normal.cyan
-    
+
     property color borderColor: theme.button.border
     property color progressBgColor: theme.bright.black
-    
+
     property int updateInterval: 3000
 
     property var processList: []
@@ -46,26 +45,27 @@ Item {
         running: true
         repeat: true
         onTriggered: {
-            ramTaskManager.lastUpdateTime = Qt.formatTime(new Date(), "hh:mm:ss")
+            ramTaskManager.lastUpdateTime = Qt.formatTime(new Date(), "hh:mm:ss");
         }
     }
 
     Process {
         id: processFetcher
         running: false
-        stdout: StdioCollector { id: processOutput }
+        stdout: StdioCollector {
+            id: processOutput
+        }
 
         command: [Qt.resolvedUrl("../../../scripts/task-manager-ram.py")]
 
         onExited: {
             try {
-                var txt = processOutput.text ? processOutput.text.trim() : ""
+                var txt = processOutput.text ? processOutput.text.trim() : "";
                 if (txt !== "") {
-                    const data = JSON.parse(txt)
-                    ramTaskManager.processList = data
+                    const data = JSON.parse(txt);
+                    ramTaskManager.processList = data;
                 }
-            } catch (e) {
-            }
+            } catch (e) {}
         }
     }
 
@@ -78,7 +78,7 @@ Item {
 
         ColumnLayout {
             anchors.fill: parent
-            anchors.margins:16
+            anchors.margins: 16
             spacing: 12
 
             Rectangle {
@@ -93,17 +93,19 @@ Item {
 
                     Row {
                         spacing: 8
- 
+
                         Text {
                             text: lang.ram.title
                             font.family: "ComicShannsMono Nerd Font"
                             color: textColor
-                font.bold: true
-                font.pixelSize: 30
+                            font.bold: true
+                            font.pixelSize: 30
                         }
                     }
 
-                    Item { Layout.fillWidth: true }
+                    Item {
+                        Layout.fillWidth: true
+                    }
 
                     Column {
                         spacing: 2
@@ -135,40 +137,40 @@ Item {
                     anchors.margins: 8
                     spacing: 8
 
-                    Text { 
+                    Text {
                         text: lang.ram.headers.pid
                         color: theme.primary.dim_foreground
                         font.family: "ComicShannsMono Nerd Font"
-                        font.bold: true 
+                        font.bold: true
                         font.pixelSize: 14
-                        Layout.preferredWidth: 70 
+                        Layout.preferredWidth: 70
                     }
-                    
-                    Text { 
+
+                    Text {
                         text: lang.ram.headers.name
                         font.family: "ComicShannsMono Nerd Font"
                         color: theme.primary.dim_foreground
-                        font.bold: true 
+                        font.bold: true
                         font.pixelSize: 14
-                        Layout.fillWidth: true 
+                        Layout.fillWidth: true
                     }
-                    
-                    Text { 
+
+                    Text {
                         text: lang.ram.headers.ram_percent
                         color: theme.primary.dim_foreground
-                        font.bold: true 
+                        font.bold: true
                         font.pixelSize: 14
-                        Layout.preferredWidth: 80 
+                        Layout.preferredWidth: 80
                         horizontalAlignment: Text.AlignRight
                     }
-                    
-                    Text { 
+
+                    Text {
                         text: lang.ram.headers.memory
                         color: theme.primary.dim_foreground
                         font.family: "ComicShannsMono Nerd Font"
-                        font.bold: true 
+                        font.bold: true
                         font.pixelSize: 14
-                        Layout.preferredWidth: 100 
+                        Layout.preferredWidth: 100
                         horizontalAlignment: Text.AlignRight
                     }
                 }
@@ -195,23 +197,23 @@ Item {
                         anchors.margins: 10
                         spacing: 10
 
-                        Text { 
+                        Text {
                             text: modelData.pid
                             color: theme.normal.blue
                             font.family: "ComicShannsMono Nerd Font"
                             font.pixelSize: 14
                             font.bold: true
-                            Layout.preferredWidth: 70 
+                            Layout.preferredWidth: 70
                         }
-                        
-                        Text { 
+
+                        Text {
                             text: modelData.name
                             color: textColor
                             font.pixelSize: 14
                             elide: Text.ElideRight
                             Layout.fillWidth: true
                         }
-                        
+
                         Text {
                             text: modelData.percent.toFixed(1) + "%"
                             color: getPercentageColor(modelData.percent)
@@ -221,7 +223,7 @@ Item {
                             Layout.preferredWidth: 80
                             horizontalAlignment: Text.AlignRight
                         }
-                        
+
                         Text {
                             text: modelData.rss_mb.toFixed(1) + " MB"
                             color: textColor
@@ -233,7 +235,7 @@ Item {
                     }
 
                     Rectangle {
-                        anchors { 
+                        anchors {
                             left: parent.left
                             right: parent.right
                             bottom: parent.bottom
@@ -249,7 +251,10 @@ Item {
                             radius: 1.5
                             color: getPercentageColor(modelData.percent)
                             Behavior on width {
-                                NumberAnimation { duration: 500; easing.type: Easing.OutCubic }
+                                NumberAnimation {
+                                    duration: 500
+                                    easing.type: Easing.OutCubic
+                                }
                             }
                         }
                     }
@@ -263,12 +268,12 @@ Item {
                     Column {
                         anchors.centerIn: parent
                         spacing: 12
-                        Text { 
+                        Text {
                             text: "⏳"
                             font.pixelSize: 30
                             color: dimTextColor
                         }
-                        Text { 
+                        Text {
                             text: lang.ram.loading.message
                             font.family: "ComicShannsMono Nerd Font"
                             color: dimTextColor
@@ -307,7 +312,9 @@ Item {
                         }
                     }
 
-                    Item { Layout.fillWidth: true }
+                    Item {
+                        Layout.fillWidth: true
+                    }
 
                     Column {
                         spacing: 2
@@ -326,7 +333,9 @@ Item {
                         }
                     }
 
-                    Item { Layout.preferredWidth: 20 }
+                    Item {
+                        Layout.preferredWidth: 20
+                    }
 
                     Column {
                         spacing: 2
@@ -350,26 +359,30 @@ Item {
     }
 
     function calculateTotalRAM() {
-        var total = 0
+        var total = 0;
         for (var i = 0; i < processList.length; i++) {
-            total += processList[i].rss_mb
+            total += processList[i].rss_mb;
         }
-        return total
+        return total;
     }
 
     function getPercentageColor(percent) {
-        if (percent > 10) return criticalColor
-        if (percent > 5) return warningColor  
-        if (percent > 2) return normalColor
-        return lowColor
+        if (percent > 10)
+            return criticalColor;
+        if (percent > 5)
+            return warningColor;
+        if (percent > 2)
+            return normalColor;
+        return lowColor;
     }
 
     function getMemoryDistribution() {
-        if (processList.length === 0) return "N/A"
-        
-        var topProcess = processList[0]
-        var topPercentage = ((topProcess.rss_mb / calculateTotalRAM()) * 100).toFixed(1)
-        return topProcess.name.split('/').pop() + " (" + topPercentage + "%)"
+        if (processList.length === 0)
+            return "N/A";
+
+        var topProcess = processList[0];
+        var topPercentage = ((topProcess.rss_mb / calculateTotalRAM()) * 100).toFixed(1);
+        return topProcess.name.split('/').pop() + " (" + topPercentage + "%)";
     }
 
     Component.onCompleted: processFetcher.running = true

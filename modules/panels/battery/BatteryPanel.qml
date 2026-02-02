@@ -11,7 +11,7 @@ Item {
     width: 320
     height: 400
 
-    property var theme : ThemeService.theme
+    property var theme: ThemeService.theme
 
     // Catppuccin Mocha color scheme
     property color batteryHighColor: theme.normal.green       // "#a6da95"
@@ -22,11 +22,11 @@ Item {
     property color dimTextColor: theme.primary.dim_foreground // "#8087a2"
     property color borderColor: theme.bright.black            // "#5b6078"
     property color separatorColor: theme.normal.black         // "#494d64"
-    
+
     property int batteryPercent: 0
     property string batteryStatus: "Discharging"
     property int updateInterval: 2000
-    
+
     // Thông tin chi tiết từ script
     property int capacity: 0
     property int energy_mWh: 0
@@ -48,31 +48,31 @@ Item {
     Process {
         id: batteryFetcher
         running: false
-        stdout: StdioCollector { id: outputCollector }
+        stdout: StdioCollector {
+            id: outputCollector
+        }
 
         command: [Qt.resolvedUrl("../../../scripts/battery_monitor.sh")]
 
         onExited: {
             try {
-                var txt = outputCollector.text ? outputCollector.text.trim() : ""
+                var txt = outputCollector.text ? outputCollector.text.trim() : "";
                 if (txt !== "") {
-                    const data = JSON.parse(txt)
-                    batteryDisplay.batteryPercent = data.capacity
-                    batteryDisplay.batteryStatus = data.status
-                    
+                    const data = JSON.parse(txt);
+                    batteryDisplay.batteryPercent = data.capacity;
+                    batteryDisplay.batteryStatus = data.status;
+
                     // Lấy thông tin chi tiết
-                    batteryDisplay.capacity = data.capacity
-                    batteryDisplay.energy_mWh = data.energy_mWh
-                    batteryDisplay.energy_full_mWh = data.energy_full_mWh
-                    batteryDisplay.power_mW = data.power_mW
-                    batteryDisplay.voltage_V = data.voltage_V
-                    batteryDisplay.current_mA = data.current_mA
-                    
-                    batteryDisplay.dataLoaded = true
-                } else {
-                }
-            } catch (e) {
-            }
+                    batteryDisplay.capacity = data.capacity;
+                    batteryDisplay.energy_mWh = data.energy_mWh;
+                    batteryDisplay.energy_full_mWh = data.energy_full_mWh;
+                    batteryDisplay.power_mW = data.power_mW;
+                    batteryDisplay.voltage_V = data.voltage_V;
+                    batteryDisplay.current_mA = data.current_mA;
+
+                    batteryDisplay.dataLoaded = true;
+                } else {}
+            } catch (e) {}
         }
     }
 
@@ -82,33 +82,33 @@ Item {
         radius: 12
         border.color: borderColor
         border.width: 2
-        
+
         // Background pattern nhẹ
         Rectangle {
             anchors.fill: parent
             color: "transparent"
             opacity: 0.1
             radius: 12
-            
+
             Canvas {
                 anchors.fill: parent
                 onPaint: {
-                    var ctx = getContext("2d")
-                    ctx.strokeStyle = theme.primary.foreground
-                    ctx.lineWidth = 0.5
-                    
+                    var ctx = getContext("2d");
+                    ctx.strokeStyle = theme.primary.foreground;
+                    ctx.lineWidth = 0.5;
+
                     // Vẽ grid pattern nhẹ
                     for (var x = 0; x < width; x += 15) {
-                        ctx.beginPath()
-                        ctx.moveTo(x, 0)
-                        ctx.lineTo(x, height)
-                        ctx.stroke()
+                        ctx.beginPath();
+                        ctx.moveTo(x, 0);
+                        ctx.lineTo(x, height);
+                        ctx.stroke();
                     }
                     for (var y = 0; y < height; y += 15) {
-                        ctx.beginPath()
-                        ctx.moveTo(0, y)
-                        ctx.lineTo(width, y)
-                        ctx.stroke()
+                        ctx.beginPath();
+                        ctx.moveTo(0, y);
+                        ctx.lineTo(width, y);
+                        ctx.stroke();
                     }
                 }
             }
@@ -123,7 +123,7 @@ Item {
         // Header với icon
         RowLayout {
             Layout.fillWidth: true
-            
+
             Text {
                 text: "🔋 Battery Monitor"
                 font.family: "ComicShannsMono Nerd Font"
@@ -131,9 +131,11 @@ Item {
                 font.bold: true
                 font.pointSize: 14
             }
-            
-            Item { Layout.fillWidth: true }
-            
+
+            Item {
+                Layout.fillWidth: true
+            }
+
             // Status indicator
             Rectangle {
                 width: 8
@@ -183,11 +185,11 @@ Item {
                         width: (parent.width - 4) * (batteryPercent / 100)
                         radius: 1
                         color: getBatteryColor()
-                        Behavior on width { 
-                            NumberAnimation { 
-                                duration: 800; 
-                                easing.type: Easing.OutCubic 
-                            } 
+                        Behavior on width {
+                            NumberAnimation {
+                                duration: 800
+                                easing.type: Easing.OutCubic
+                            }
                         }
                     }
 
@@ -219,7 +221,9 @@ Item {
                     }
                 }
 
-                Item { Layout.fillWidth: true }
+                Item {
+                    Layout.fillWidth: true
+                }
 
                 // Time estimate
                 Text {
@@ -242,14 +246,20 @@ Item {
                     height: parent.height
                     radius: 6
                     gradient: Gradient {
-                        GradientStop { position: 0.0; color: Qt.lighter(getBatteryColor(), 1.3) }
-                        GradientStop { position: 1.0; color: getBatteryColor() }
+                        GradientStop {
+                            position: 0.0
+                            color: Qt.lighter(getBatteryColor(), 1.3)
+                        }
+                        GradientStop {
+                            position: 1.0
+                            color: getBatteryColor()
+                        }
                     }
-                    Behavior on width { 
-                        NumberAnimation { 
-                            duration: 800; 
-                            easing.type: Easing.OutCubic 
-                        } 
+                    Behavior on width {
+                        NumberAnimation {
+                            duration: 800
+                            easing.type: Easing.OutCubic
+                        }
                     }
                 }
             }
@@ -260,16 +270,28 @@ Item {
             Layout.fillWidth: true
             height: 1
             color: "transparent"
-            
+
             Rectangle {
                 anchors.centerIn: parent
                 width: parent.width * 0.8
                 height: 1
                 gradient: Gradient {
-                    GradientStop { position: 0.0; color: "transparent" }
-                    GradientStop { position: 0.2; color: separatorColor }
-                    GradientStop { position: 0.8; color: separatorColor }
-                    GradientStop { position: 1.0; color: "transparent" }
+                    GradientStop {
+                        position: 0.0
+                        color: "transparent"
+                    }
+                    GradientStop {
+                        position: 0.2
+                        color: separatorColor
+                    }
+                    GradientStop {
+                        position: 0.8
+                        color: separatorColor
+                    }
+                    GradientStop {
+                        position: 1.0
+                        color: "transparent"
+                    }
                 }
             }
         }
@@ -354,20 +376,24 @@ Item {
         radius: 12
         opacity: dataLoaded ? 0 : 1
         visible: opacity > 0
-        
-        Behavior on opacity { NumberAnimation { duration: 300 } }
-        
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 300
+            }
+        }
+
         Column {
             anchors.centerIn: parent
             spacing: 12
-            
+
             Text {
                 text: "🔋"
                 font.pointSize: 20
                 color: dimTextColor
                 anchors.horizontalCenter: parent.horizontalCenter
             }
-            
+
             Text {
                 text: "Loading battery data..."
                 color: dimTextColor
@@ -379,39 +405,49 @@ Item {
 
     // Helper functions
     function getBatteryColor() {
-        if (batteryPercent > 60) return batteryHighColor
-        if (batteryPercent > 20) return batteryMediumColor
-        return batteryLowColor
+        if (batteryPercent > 60)
+            return batteryHighColor;
+        if (batteryPercent > 20)
+            return batteryMediumColor;
+        return batteryLowColor;
     }
 
     function getBatteryStatusColor() {
-        switch(batteryStatus) {
-            case "Charging": return theme.normal.green
-            case "Discharging": return getBatteryColor()
-            case "Full": return theme.normal.cyan
-            default: return theme.normal.white
+        switch (batteryStatus) {
+        case "Charging":
+            return theme.normal.green;
+        case "Discharging":
+            return getBatteryColor();
+        case "Full":
+            return theme.normal.cyan;
+        default:
+            return theme.normal.white;
         }
     }
 
     function getStatusText() {
-        switch(batteryStatus) {
-            case "Charging": return "Charging"
-            case "Discharging": return "Discharging"
-            case "Full": return "Full"
-            default: return batteryStatus
+        switch (batteryStatus) {
+        case "Charging":
+            return "Charging";
+        case "Discharging":
+            return "Discharging";
+        case "Full":
+            return "Full";
+        default:
+            return batteryStatus;
         }
     }
 
     function getTimeEstimate() {
         if (batteryStatus === "Charging" && power_mW > 0) {
-            var remainingEnergy = (energy_full_mWh - energy_mWh) / 1000 // Wh
-            var hours = remainingEnergy / (power_mW / 1000)
-            return "~" + Math.ceil(hours) + "h to full"
+            var remainingEnergy = (energy_full_mWh - energy_mWh) / 1000; // Wh
+            var hours = remainingEnergy / (power_mW / 1000);
+            return "~" + Math.ceil(hours) + "h to full";
         } else if (batteryStatus === "Discharging" && power_mW > 0) {
-            var remainingHours = (energy_mWh / 1000) / (power_mW / 1000)
-            return "~" + Math.ceil(remainingHours) + "h remaining"
+            var remainingHours = (energy_mWh / 1000) / (power_mW / 1000);
+            return "~" + Math.ceil(remainingHours) + "h remaining";
         }
-        return ""
+        return "";
     }
 
     Component.onCompleted: batteryFetcher.running = true

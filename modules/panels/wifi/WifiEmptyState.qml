@@ -4,15 +4,15 @@ import qs.services
 
 Rectangle {
     id: emptyState
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
-    
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
+
     color: "transparent"
-    
+
     Column {
         anchors.centerIn: parent
         spacing: 16
-        
+
         Rectangle {
             width: 80
             height: 80
@@ -25,14 +25,14 @@ Rectangle {
                 anchors.centerIn: parent
             }
         }
-        
+
         Text {
             text: lang?.wifi?.disabled || "WiFi đang tắt"
             font.pixelSize: 18
             color: theme.primary.foreground
             font.family: "ComicShannsMono Nerd Font"
         }
-        
+
         Text {
             text: lang?.wifi?.turn_on || "Bật WiFi để xem mạng khả dụng"
             font.pixelSize: 14

@@ -9,8 +9,8 @@ import "../" as BarList
 
 Item {
     id: rootAppearance
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
 
     property int currentTab: 0
 
@@ -28,34 +28,38 @@ Item {
             id: minimalNav
             Layout.fillWidth: true
             Layout.preferredHeight: 50
-            
+
             color: theme.primary.dim_background
             radius: 12
             border.color: theme.button.border
             border.width: 2
-            
+
             RowLayout {
                 anchors.fill: parent
                 anchors.margins: 8
-                spacing:16
-                
-                Item { Layout.fillWidth: true } // Spacer
+                spacing: 16
+
+                Item {
+                    Layout.fillWidth: true
+                } // Spacer
                 Repeater {
                     model: listSettingService.listCategories[1]?.items || []
-                    
+
                     delegate: Item {
                         id: minimalDelegate
                         Layout.fillHeight: true
                         Layout.preferredWidth: 42
-                        
+
                         property bool selected: rootAppearance.currentTab === index
-                        
-                        
+
                         // Hiệu ứng scale
                         scale: mouseArea.containsPress ? 0.95 : 1.0
-                        Behavior on scale { NumberAnimation { duration: 100 } }
-                        
-                        
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 100
+                            }
+                        }
+
                         // Icon
                         Image {
                             anchors.centerIn: parent
@@ -65,22 +69,23 @@ Item {
                             fillMode: Image.PreserveAspectFit
                             smooth: true
                         }
-                        
-                        
+
                         MouseArea {
                             id: mouseArea
                             anchors.fill: parent
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
-                            
+
                             onClicked: {
-                                rootAppearance.currentTab = index
+                                rootAppearance.currentTab = index;
                             }
                         }
                     }
                 }
-                
-                Item { Layout.fillWidth: true } // Spacer
+
+                Item {
+                    Layout.fillWidth: true
+                } // Spacer
             }
         }
 
@@ -104,7 +109,7 @@ Item {
                 }
 
                 // Tab 1: Panel
-                Com.Panel{
+                Com.Panel {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                 }
@@ -268,5 +273,4 @@ Item {
             }
         }
     }
-
 }

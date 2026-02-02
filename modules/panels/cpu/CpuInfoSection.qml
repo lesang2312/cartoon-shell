@@ -5,8 +5,7 @@ import Quickshell.Io
 import qs.services
 
 Column {
-    property var theme : ThemeService.theme
-
+    property var theme: ThemeService.theme
 
     spacing: 6
 
@@ -15,7 +14,7 @@ Column {
     property string cpuVendor: lang.infoSection.loading
     property string cpuArch: lang.infoSection.loading
     property string cpuSocket: lang.infoSection.loading
-    property var lang : LanguageService.translations
+    property var lang: LanguageService.translations
     property bool infoLoaded: false
 
     // Process để lấy thông tin CPU
@@ -58,7 +57,7 @@ Column {
             }
         }
     }
-    
+
     // Hiển thị thông tin CPU
     Text {
         width: parent.width
@@ -67,7 +66,7 @@ Column {
         font.pixelSize: 18
         font.family: "ComicShannsMono Nerd Font"
     }
-    
+
     Text {
         width: parent.width
         color: theme.primary.foreground
@@ -75,7 +74,7 @@ Column {
         font.pixelSize: 18
         font.family: "ComicShannsMono Nerd Font"
     }
-    
+
     Text {
         width: parent.width
         color: theme.primary.foreground
@@ -83,7 +82,7 @@ Column {
         font.pixelSize: 18
         font.family: "ComicShannsMono Nerd Font"
     }
-    
+
     Text {
         width: parent.width
         color: theme.primary.foreground

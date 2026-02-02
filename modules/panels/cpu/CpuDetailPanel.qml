@@ -31,17 +31,15 @@ PanelWindow {
 
     color: "transparent"
 
-    signal closeRequested()
+    signal closeRequested
 
-    property var theme : ThemeService.theme
+    property var theme: ThemeService.theme
 
     // Process để lấy CPU usage tổng
     CpuService {
-    id: cpuService
-    enableCpuHistory: true
-}
-
-
+        id: cpuService
+        enableCpuHistory: true
+    }
 
     Rectangle {
         anchors.fill: parent
@@ -75,5 +73,4 @@ PanelWindow {
             }
         }
     }
-
 }

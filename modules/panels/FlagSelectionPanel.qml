@@ -10,46 +10,134 @@ import qs.commons
 PanelWindow {
     id: flagSelectionPanel
 
-    property var theme : ThemeService.theme
+    property var theme: ThemeService.theme
 
     property string selectedFlag: Settings.appearance.countryFlag
-
-
 
     implicitWidth: 600
     implicitHeight: 420
 
     property var flagList: [
-        { name: "britain", displayName: "Britain" },
-        { name: "bulgaria", displayName: "Bulgaria" },
-        { name: "china", displayName: "China" },
-        { name: "czech", displayName: "Czech" },
-        { name: "denmark", displayName: "Denmark" },
-        { name: "finland", displayName: "Finland" },
-        { name: "france", displayName: "France" },
-        { name: "german", displayName: "Germany" },
-        { name: "greece", displayName: "Greece" },
-        { name: "hungary", displayName: "Hungary" },
-        { name: "india", displayName: "India" },
-        { name: "indonesia", displayName: "Indonesia" },
-        { name: "israel", displayName: "Israel" },
-        { name: "italy", displayName: "Italy" },
-        { name: "japan", displayName: "Japan" },
-        { name: "korea", displayName: "Korea" },
-        { name: "netherlands", displayName: "Netherlands" },
-        { name: "norway", displayName: "Norway" },
-        { name: "poland", displayName: "Poland" },
-        { name: "portugal", displayName: "Portugal" },
-        { name: "romania", displayName: "Romania" },
-        { name: "russia", displayName: "Russia" },
-        { name: "saudi_arabia", displayName: "Saudi Arabia" },
-        { name: "slovakia", displayName: "Slovakia" },
-        { name: "spain", displayName: "Spain" },
-        { name: "sweden", displayName: "Sweden" },
-        { name: "thailand", displayName: "Thailand" },
-        { name: "turkey", displayName: "Turkey" },
-        { name: "ukraine", displayName: "Ukraine" },
-        { name: "vietnam", displayName: "Vietnam" }
+        {
+            name: "britain",
+            displayName: "Britain"
+        },
+        {
+            name: "bulgaria",
+            displayName: "Bulgaria"
+        },
+        {
+            name: "china",
+            displayName: "China"
+        },
+        {
+            name: "czech",
+            displayName: "Czech"
+        },
+        {
+            name: "denmark",
+            displayName: "Denmark"
+        },
+        {
+            name: "finland",
+            displayName: "Finland"
+        },
+        {
+            name: "france",
+            displayName: "France"
+        },
+        {
+            name: "german",
+            displayName: "Germany"
+        },
+        {
+            name: "greece",
+            displayName: "Greece"
+        },
+        {
+            name: "hungary",
+            displayName: "Hungary"
+        },
+        {
+            name: "india",
+            displayName: "India"
+        },
+        {
+            name: "indonesia",
+            displayName: "Indonesia"
+        },
+        {
+            name: "israel",
+            displayName: "Israel"
+        },
+        {
+            name: "italy",
+            displayName: "Italy"
+        },
+        {
+            name: "japan",
+            displayName: "Japan"
+        },
+        {
+            name: "korea",
+            displayName: "Korea"
+        },
+        {
+            name: "netherlands",
+            displayName: "Netherlands"
+        },
+        {
+            name: "norway",
+            displayName: "Norway"
+        },
+        {
+            name: "poland",
+            displayName: "Poland"
+        },
+        {
+            name: "portugal",
+            displayName: "Portugal"
+        },
+        {
+            name: "romania",
+            displayName: "Romania"
+        },
+        {
+            name: "russia",
+            displayName: "Russia"
+        },
+        {
+            name: "saudi_arabia",
+            displayName: "Saudi Arabia"
+        },
+        {
+            name: "slovakia",
+            displayName: "Slovakia"
+        },
+        {
+            name: "spain",
+            displayName: "Spain"
+        },
+        {
+            name: "sweden",
+            displayName: "Sweden"
+        },
+        {
+            name: "thailand",
+            displayName: "Thailand"
+        },
+        {
+            name: "turkey",
+            displayName: "Turkey"
+        },
+        {
+            name: "ukraine",
+            displayName: "Ukraine"
+        },
+        {
+            name: "vietnam",
+            displayName: "Vietnam"
+        }
     ]
 
     anchors {
@@ -68,7 +156,6 @@ PanelWindow {
 
     exclusiveZone: 0
     color: "transparent"
-
 
     Rectangle {
         anchors.fill: parent
@@ -108,7 +195,6 @@ PanelWindow {
             }
 
             // Divider
-
 
             // Flag Grid with Scroll
             ScrollView {
@@ -165,20 +251,28 @@ PanelWindow {
                                 cursorShape: Qt.PointingHandCursor
 
                                 onClicked: {
-                                    Settings.appearance.countryFlag = modelData.name
+                                    Settings.appearance.countryFlag = modelData.name;
                                 }
 
                                 onEntered: {
-                                    parent.scale = 1.05
+                                    parent.scale = 1.05;
                                 }
 
                                 onExited: {
-                                    parent.scale = 1.0
+                                    parent.scale = 1.0;
                                 }
                             }
 
-                            Behavior on scale { NumberAnimation { duration: 150 } }
-                            Behavior on border.width { NumberAnimation { duration: 150 } }
+                            Behavior on scale {
+                                NumberAnimation {
+                                    duration: 150
+                                }
+                            }
+                            Behavior on border.width {
+                                NumberAnimation {
+                                    duration: 150
+                                }
+                            }
                         }
                     }
                 }

@@ -6,8 +6,7 @@ import qs.services
 
 PanelWindow {
     id: root
-    property var theme : ThemeService.theme
-
+    property var theme: ThemeService.theme
 
     implicitWidth: 430
     anchors {
@@ -30,18 +29,20 @@ PanelWindow {
     implicitHeight: containerMargin * 2 + notificationList.contentHeight
 
     Behavior on implicitHeight {
-        NumberAnimation { duration: 10; easing.type: Easing.OutCubic }
+        NumberAnimation {
+            duration: 10
+            easing.type: Easing.OutCubic
+        }
     }
-    
+
     // Container chính cho popup
     Rectangle {
         anchors.fill: parent
         color: "transparent"
-        
+
         // Hiệu ứng shadow
         layer.enabled: true
 
-        
         // Danh sách notification
         ListView {
             id: notificationList
@@ -49,7 +50,9 @@ PanelWindow {
             anchors.margins: 10
             spacing: 10
             clip: true
-            model: ListModel { id: notificationModel }
+            model: ListModel {
+                id: notificationModel
+            }
             interactive: false
 
             // Giới hạn chiều cao tối đa
@@ -57,7 +60,10 @@ PanelWindow {
             height: Math.min(contentHeight, maxHeight)
 
             Behavior on height {
-                NumberAnimation { duration: 10; easing.type: Easing.OutCubic }
+                NumberAnimation {
+                    duration: 10
+                    easing.type: Easing.OutCubic
+                }
             }
 
             delegate: Rectangle {
@@ -66,11 +72,15 @@ PanelWindow {
                 height: isExpanded ? contentColumn.implicitHeight + 24 : notificationHeight
                 radius: 8
                 color: {
-                    switch(model.urgency) {
-                        case NotificationUrgency.Critical: return theme.primary.dim_background
-                        case NotificationUrgency.Normal: return theme.primary.dim_background
-                        case NotificationUrgency.Low: return theme.primary.dim_background
-                        default: return theme.button.background
+                    switch (model.urgency) {
+                    case NotificationUrgency.Critical:
+                        return theme.primary.dim_background;
+                    case NotificationUrgency.Normal:
+                        return theme.primary.dim_background;
+                    case NotificationUrgency.Low:
+                        return theme.primary.dim_background;
+                    default:
+                        return theme.button.background;
                     }
                 }
                 border.color: Qt.darker(color, 1.1)
@@ -80,13 +90,18 @@ PanelWindow {
                 property bool hasLongContent: false
 
                 Behavior on height {
-                    NumberAnimation { duration: 20; easing.type: Easing.OutCubic }
+                    NumberAnimation {
+                        duration: 20
+                        easing.type: Easing.OutCubic
+                    }
                 }
 
                 // Hiệu ứng mờ dần khi xóa
                 opacity: 1
                 Behavior on opacity {
-                    NumberAnimation { duration: 200 }
+                    NumberAnimation {
+                        duration: 200
+                    }
                 }
 
                 // Timer tự động xóa
@@ -113,11 +128,15 @@ PanelWindow {
                             height: 24
                             radius: 12
                             color: {
-                                switch(model.urgency) {
-                                    case NotificationUrgency.Critical: return theme.normal.red
-                                    case NotificationUrgency.Normal: return theme.normal.blue
-                                    case NotificationUrgency.Low: return theme.normal.green
-                                    default: return theme.button.background
+                                switch (model.urgency) {
+                                case NotificationUrgency.Critical:
+                                    return theme.normal.red;
+                                case NotificationUrgency.Normal:
+                                    return theme.normal.blue;
+                                case NotificationUrgency.Low:
+                                    return theme.normal.green;
+                                default:
+                                    return theme.button.background;
                                 }
                             }
 
@@ -215,16 +234,16 @@ PanelWindow {
 
                         onTruncatedChanged: {
                             if (!isExpanded) {
-                                hasLongContent = truncated
+                                hasLongContent = truncated;
                             }
                         }
 
                         Component.onCompleted: {
-                            Qt.callLater(function() {
+                            Qt.callLater(function () {
                                 if (!isExpanded) {
-                                    hasLongContent = truncated
+                                    hasLongContent = truncated;
                                 }
-                            })
+                            });
                         }
                     }
 
@@ -242,11 +261,15 @@ PanelWindow {
                                 width: Math.min(actionText.width + 16, 120)
                                 radius: 5
                                 color: {
-                                    switch(parent.parent.parent.model.urgency) {
-                                        case NotificationUrgency.Critical: return theme.normal.red
-                                        case NotificationUrgency.Normal: return theme.normal.blue
-                                        case NotificationUrgency.Low: return theme.normal.green
-                                        default: return theme.button.background
+                                    switch (parent.parent.parent.model.urgency) {
+                                    case NotificationUrgency.Critical:
+                                        return theme.normal.red;
+                                    case NotificationUrgency.Normal:
+                                        return theme.normal.blue;
+                                    case NotificationUrgency.Low:
+                                        return theme.normal.green;
+                                    default:
+                                        return theme.button.background;
                                     }
                                 }
 
@@ -264,8 +287,8 @@ PanelWindow {
                                     anchors.fill: parent
                                     cursorShape: Qt.PointingHandCursor
                                     onClicked: {
-                                        modelData.invoke()
-                                        removeNotification()
+                                        modelData.invoke();
+                                        removeNotification();
                                     }
                                 }
                             }
@@ -274,8 +297,8 @@ PanelWindow {
                 }
 
                 function removeNotification() {
-                    notificationDelegate.opacity = 0
-                    notificationTimer.start()
+                    notificationDelegate.opacity = 0;
+                    notificationTimer.start();
                 }
 
                 Timer {
@@ -285,19 +308,19 @@ PanelWindow {
                 }
 
                 Component.onCompleted: {
-                    autoDismiss.restart()
+                    autoDismiss.restart();
                 }
             }
         }
     }
-    
+
     NotificationServer {
         id: server
         actionsSupported: true
         imageSupported: true
         inlineReplySupported: true
-        
-        onNotification: function(notification) {
+
+        onNotification: function (notification) {
             notificationModel.insert(0, {
                 id: notification.id,
                 appName: notification.appName || "",
@@ -306,16 +329,16 @@ PanelWindow {
                 urgency: notification.urgency,
                 timeout: notification.expireTimeout,
                 actions: notification.actions
-            })
-            
+            });
+
             // Giữ tối đa 4 notification
             if (notificationModel.count > maxNotifications) {
                 // Xóa notification cũ nhất
-                notificationModel.remove(maxNotifications)
+                notificationModel.remove(maxNotifications);
             }
-            
+
             // Giữ thông báo
-            notification.tracked = true
+            notification.tracked = true;
         }
     }
 }

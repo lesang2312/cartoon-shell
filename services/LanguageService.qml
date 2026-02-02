@@ -28,8 +28,8 @@ Singleton {
     // Init
     // ===============================
     function init() {
-        console.log("LanguageService initialized")
-        loadLanguage(currentLanguage)
+        console.log("LanguageService initialized");
+        loadLanguage(currentLanguage);
     }
 
     // ===============================
@@ -37,15 +37,15 @@ Singleton {
     // ===============================
     function loadLanguage(lang) {
         if (!lang || lang === "")
-            lang = fallbackLang
+            lang = fallbackLang;
 
-        root.loading = true
-        root.currentLanguage = lang
+        root.loading = true;
+        root.currentLanguage = lang;
 
-        const path = languagesDir + "/" + lang + ".json"
-        languageReader.path = ""
-        languageReader.path = path
-        console.log(path)
+        const path = languagesDir + "/" + lang + ".json";
+        languageReader.path = "";
+        languageReader.path = path;
+        console.log(path);
     }
 
     // ===============================
@@ -53,11 +53,11 @@ Singleton {
     // ===============================
     function changeLanguage(newLang) {
         if (newLang === currentLanguage)
-            return translations
+            return translations;
 
-        Settings.general.lang = newLang
-        loadLanguage(newLang)
-        return translations
+        Settings.general.lang = newLang;
+        loadLanguage(newLang);
+        return translations;
     }
 
     // ===============================
@@ -65,8 +65,8 @@ Singleton {
     // ===============================
     function t(section, key) {
         if (translations?.[section]?.[key])
-            return translations[section][key]
-        return key
+            return translations[section][key];
+        return key;
     }
 
     // ===============================
@@ -84,7 +84,7 @@ Singleton {
                 "shortcuts": "Shortcuts",
                 "system": "System"
             }
-        }
+        };
     }
 
     // ===============================
@@ -96,28 +96,27 @@ Singleton {
 
         onLoaded: {
             try {
-                const jsonText = text()
+                const jsonText = text();
                 if (!jsonText || jsonText === "") {
-                    throw "Empty language file"
+                    throw "Empty language file";
                 }
 
-                root.translations = JSON.parse(jsonText)
-                console.log("Language loaded:", root.currentLanguage)
-
+                root.translations = JSON.parse(jsonText);
+                console.log("Language loaded:", root.currentLanguage);
             } catch (e) {
-                console.error("Language parse error:", e)
-                root.translations = getFallbackLanguage()
+                console.error("Language parse error:", e);
+                root.translations = getFallbackLanguage();
             }
 
-            root.loading = false
-            languageChanged(root.currentLanguage)
+            root.loading = false;
+            languageChanged(root.currentLanguage);
         }
 
         onLoadFailed: error => {
-            console.warn("Language file not found, fallback:", root.currentLanguage)
-            root.translations = getFallbackLanguage()
-            root.loading = false
-            languageChanged(root.currentLanguage)
+            console.warn("Language file not found, fallback:", root.currentLanguage);
+            root.translations = getFallbackLanguage();
+            root.loading = false;
+            languageChanged(root.currentLanguage);
         }
     }
 
@@ -128,12 +127,10 @@ Singleton {
         target: Settings.general
 
         function onLangChanged() {
-            console.log("Language changed to:", Settings.general.lang)
+            console.log("Language changed to:", Settings.general.lang);
             Qt.callLater(function () {
-                loadLanguage(Settings.general.lang)
-            })
+                loadLanguage(Settings.general.lang);
+            });
         }
     }
-
 }
-

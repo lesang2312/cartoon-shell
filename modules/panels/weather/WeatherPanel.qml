@@ -11,9 +11,8 @@ import "." as Com
 PanelWindow {
     id: weatherPanel
 
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
-
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
 
     implicitWidth: 1000
     implicitHeight: 550
@@ -44,7 +43,7 @@ PanelWindow {
         repeat: false
         onTriggered: {
             if (weatherPanel.apiKey !== Settings.weather.keyApi) {
-                saveAndValidateApiKey(weatherPanel.apiKey)
+                saveAndValidateApiKey(weatherPanel.apiKey);
             }
         }
     }
@@ -55,7 +54,7 @@ PanelWindow {
         repeat: false
         onTriggered: {
             if (weatherPanel.location.length >= 2 && weatherPanel.isUserSearching) {
-                searchLocation(weatherPanel.location)
+                searchLocation(weatherPanel.location);
             }
         }
     }
@@ -66,8 +65,8 @@ PanelWindow {
         interval: 200
         repeat: false
         onTriggered: {
-            weatherPanel.locationSearchResults = []
-            weatherPanel.isUserSearching = false
+            weatherPanel.locationSearchResults = [];
+            weatherPanel.isUserSearching = false;
         }
     }
 
@@ -94,18 +93,18 @@ PanelWindow {
         running: false
         stdout: StdioCollector {
             onStreamFinished: {
-                weatherPanel.isSearchingLocation = false
-                weatherPanel.locationSearchResults = []
+                weatherPanel.isSearchingLocation = false;
+                weatherPanel.locationSearchResults = [];
                 if (text && text.length > 0) {
                     try {
-                        const data = JSON.parse(text)
+                        const data = JSON.parse(text);
                         if (!data.error) {
-                            weatherPanel.locationSearchResults = data
+                            weatherPanel.locationSearchResults = data;
                             if (data.length > 0) {
-                                weatherPanel.currentLocationIndex = 0
+                                weatherPanel.currentLocationIndex = 0;
                             }
                         }
-                    } catch(e) {}
+                    } catch (e) {}
                 }
             }
         }
@@ -117,21 +116,21 @@ PanelWindow {
         running: false
         stdout: StdioCollector {
             onStreamFinished: {
-                weatherPanel.isLoading = false
+                weatherPanel.isLoading = false;
                 if (text && text.length > 0) {
                     try {
-                        const data = JSON.parse(text)
+                        const data = JSON.parse(text);
                         if (data.error) {
-                            weatherPanel.errorMessage = data.error.message
+                            weatherPanel.errorMessage = data.error.message;
                         } else {
-                            weatherPanel.processWeatherData(data)
-                            weatherPanel.errorMessage = ""
+                            weatherPanel.processWeatherData(data);
+                            weatherPanel.errorMessage = "";
                         }
-                    } catch(e) {
-                        weatherPanel.errorMessage = "Không thể phân tích dữ liệu thời tiết"
+                    } catch (e) {
+                        weatherPanel.errorMessage = "Không thể phân tích dữ liệu thời tiết";
                     }
                 } else if (weatherPanel.apiKey === "") {
-                    weatherPanel.errorMessage = "Vui lòng nhập API key"
+                    weatherPanel.errorMessage = "Vui lòng nhập API key";
                 }
             }
         }
@@ -139,21 +138,21 @@ PanelWindow {
 
     function processWeatherData(data) {
         if (data.current) {
-            temperature = `${Math.round(data.current.temp_c)}°C`
-            condition = data.current.condition.text
-            humidity = `${data.current.humidity}%`
-            feelsLike = `${Math.round(data.current.feelslike_c)}°C`
-            windSpeed = `${data.current.wind_kph} km/h`
-            pressure = `${data.current.pressure_mb} mb`
-            visibility = `${data.current.vis_km} km`
-            uvIndex = data.current.uv.toString()
-            icon = getWeatherIcon(data.current.condition.code, data.current.is_day,theme)
+            temperature = `${Math.round(data.current.temp_c)}°C`;
+            condition = data.current.condition.text;
+            humidity = `${data.current.humidity}%`;
+            feelsLike = `${Math.round(data.current.feelslike_c)}°C`;
+            windSpeed = `${data.current.wind_kph} km/h`;
+            pressure = `${data.current.pressure_mb} mb`;
+            visibility = `${data.current.vis_km} km`;
+            uvIndex = data.current.uv.toString();
+            icon = getWeatherIcon(data.current.condition.code, data.current.is_day, theme);
         }
 
         if (data.forecast && data.forecast.forecastday) {
-            const forecast = []
+            const forecast = [];
             for (let i = 0; i < data.forecast.forecastday.length; i++) {
-                const day = data.forecast.forecastday[i]
+                const day = data.forecast.forecastday[i];
                 forecast.push({
                     date: day.date,
                     dateText: formatDate(day.date),
@@ -163,122 +162,117 @@ PanelWindow {
                     condition: day.day.condition.text,
                     icon: getWeatherIcon(day.day.condition.code, true),
                     rainChance: day.day.daily_chance_of_rain
-                })
+                });
             }
-            forecastDays = forecast
+            forecastDays = forecast;
         }
     }
 
     function formatDate(dateStr) {
-        const date = new Date(dateStr)
-        return `${date.getDate()}/${date.getMonth() + 1}`
+        const date = new Date(dateStr);
+        return `${date.getDate()}/${date.getMonth() + 1}`;
     }
 
     function getDayName(dateStr) {
-        const date = new Date(dateStr)
-        const today = new Date()
-        const tomorrow = new Date(today)
-        tomorrow.setDate(tomorrow.getDate() + 1)
+        const date = new Date(dateStr);
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
 
-        if (date.toDateString() === today.toDateString()) return lang?.dateFormat?.today || "Hôm nay"
-        if (date.toDateString() === tomorrow.toDateString()) return lang?.dateFormat?.tomorrow || "Ngày mai"
+        if (date.toDateString() === today.toDateString())
+            return lang?.dateFormat?.today || "Hôm nay";
+        if (date.toDateString() === tomorrow.toDateString())
+            return lang?.dateFormat?.tomorrow || "Ngày mai";
 
-        const weekdays = lang?.dateFormat?.day
-        const days = weekdays ? [
-            weekdays.sunday || "CN", weekdays.monday || "T2", weekdays.tuesday || "T3",
-            weekdays.wednesday || "T4", weekdays.thursday || "T5",
-            weekdays.friday || "T6", weekdays.saturday || "T7"
-        ] : ["CN", "T2", "T3", "T4", "T5", "T6", "T7"]
-        return days[date.getDay()]
+        const weekdays = lang?.dateFormat?.day;
+        const days = weekdays ? [weekdays.sunday || "CN", weekdays.monday || "T2", weekdays.tuesday || "T3", weekdays.wednesday || "T4", weekdays.thursday || "T5", weekdays.friday || "T6", weekdays.saturday || "T7"] : ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
+        return days[date.getDay()];
     }
 
-      function getWeatherIcon(code, isDay) {
-    code = Number(code)
+    function getWeatherIcon(code, isDay) {
+        code = Number(code);
 
-    const basePath = "../../../assets/weather/icon_weather_status"
+        const basePath = "../../../assets/weather/icon_weather_status";
 
-    // ☀️ Clear / Sunny
-    if (code === 1000)
-        return isDay
-            ? `${basePath}/sun.png`
-            : `${basePath}/night.png`
+        // ☀️ Clear / Sunny
+        if (code === 1000)
+            return isDay ? `${basePath}/sun.png` : `${basePath}/night.png`;
 
-    // ⛅ Partly cloudy
-    if (code === 1003)
-        return isDay
-            ? `${basePath}/cloudy_sunny.png`
-            : `${basePath}/cloudy_night.png`
+        // ⛅ Partly cloudy
+        if (code === 1003)
+            return isDay ? `${basePath}/cloudy_sunny.png` : `${basePath}/cloudy_night.png`;
 
-    // ☁️ Cloudy / Overcast
-    if ([1006, 1009].includes(code))
-        return `${basePath}/cloudy.png`
+        // ☁️ Cloudy / Overcast
+        if ([1006, 1009].includes(code))
+            return `${basePath}/cloudy.png`;
 
-    // 🌫️ Mist / Fog
-    if ([1030].includes(code))
-        return `${basePath}/mist.png`
+        // 🌫️ Mist / Fog
+        if ([1030].includes(code))
+            return `${basePath}/mist.png`;
 
-    if ([1135, 1147].includes(code))
-        return `${basePath}/fog.png`
+        if ([1135, 1147].includes(code))
+            return `${basePath}/fog.png`;
 
-    // 🌧️ Rain / Drizzle / Freezing rain
-    if ((code >= 1063 && code <= 1195) || (code >= 1198 && code <= 1201))
-        return `${basePath}/rain.png`
+        // 🌧️ Rain / Drizzle / Freezing rain
+        if ((code >= 1063 && code <= 1195) || (code >= 1198 && code <= 1201))
+            return `${basePath}/rain.png`;
 
-    // 🌨️ Snow / Sleet / Ice pellets
-    if (code >= 1204 && code <= 1264)
-        return `${basePath}/snowy.png`
+        // 🌨️ Snow / Sleet / Ice pellets
+        if (code >= 1204 && code <= 1264)
+            return `${basePath}/snowy.png`;
 
-    // ⛈️ Thunderstorm
-    if (code >= 1273 && code <= 1282)
-        return `${basePath}/thunder.png`
+        // ⛈️ Thunderstorm
+        if (code >= 1273 && code <= 1282)
+            return `${basePath}/thunder.png`;
 
-    // 🌈 Fallback
-    return `${basePath}/rainbow.png`
-}
-
+        // 🌈 Fallback
+        return `${basePath}/rainbow.png`;
+    }
 
     function saveAndValidateApiKey(key) {
         if (key === "") {
-            errorMessage = "Vui lòng nhập API key"
-            return
+            errorMessage = "Vui lòng nhập API key";
+            return;
         }
-        Settings.weather.keyApi = key
-        weatherPanel.apiKey = key
-        updateWeather()
+        Settings.weather.keyApi = key;
+        weatherPanel.apiKey = key;
+        updateWeather();
     }
 
     function searchLocation(query) {
         if (query === "" || apiKey === "") {
-            locationSearchResults = []
-            isSearchingLocation = false
-            return
+            locationSearchResults = [];
+            isSearchingLocation = false;
+            return;
         }
-        try { searchLocationProcess.running = false } catch(e) {}
-        isSearchingLocation = true
-        const url = `https://api.weatherapi.com/v1/search.json?key=${apiKey}&q=${encodeURIComponent(query)}`
-        searchLocationProcess.command = ["curl", "-s", url]
-        searchLocationProcess.running = true
+        try {
+            searchLocationProcess.running = false;
+        } catch (e) {}
+        isSearchingLocation = true;
+        const url = `https://api.weatherapi.com/v1/search.json?key=${apiKey}&q=${encodeURIComponent(query)}`;
+        searchLocationProcess.command = ["curl", "-s", url];
+        searchLocationProcess.running = true;
     }
 
     function selectLocation(locationName) {
-        Settings.weather.location = locationName
-        location = locationName
-        locationSearchResults = []
-        currentLocationIndex = 0
-        isUserSearching = false
-        updateWeather()
+        Settings.weather.location = locationName;
+        location = locationName;
+        locationSearchResults = [];
+        currentLocationIndex = 0;
+        isUserSearching = false;
+        updateWeather();
     }
 
     function updateWeather() {
         if (apiKey === "") {
-            errorMessage = "Vui lòng nhập API key"
-            return
+            errorMessage = "Vui lòng nhập API key";
+            return;
         }
-        isLoading = true
-        errorMessage = ""
-        const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${encodeURIComponent(location)}&days=3&lang=${Settings.general.lang}`
-        weatherProcess.command = ["curl", "-s", url]
-        weatherProcess.running = true
+        isLoading = true;
+        errorMessage = "";
+        const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${encodeURIComponent(location)}&days=3&lang=${Settings.general.lang}`;
+        weatherProcess.command = ["curl", "-s", url];
+        weatherProcess.running = true;
     }
 
     // Main UI
@@ -314,36 +308,36 @@ PanelWindow {
                     isUserSearching: weatherPanel.isUserSearching
                     errorMessage: weatherPanel.errorMessage
 
-                    onApiKeyEdited: function(newKey) {
-                        weatherPanel.apiKey = newKey
-                        weatherPanel.apiKeyValidateTimer.restart()
+                    onApiKeyEdited: function (newKey) {
+                        weatherPanel.apiKey = newKey;
+                        weatherPanel.apiKeyValidateTimer.restart();
                     }
 
-                    onLocationTextEdited: function(newText) {
-                        weatherPanel.location = newText
-                        weatherPanel.searchDebounceTimer.stop()
+                    onLocationTextEdited: function (newText) {
+                        weatherPanel.location = newText;
+                        weatherPanel.searchDebounceTimer.stop();
                         if (newText.length >= 2) {
-                            weatherPanel.searchDebounceTimer.restart()
+                            weatherPanel.searchDebounceTimer.restart();
                         } else {
-                            weatherPanel.locationSearchResults = []
-                            weatherPanel.currentLocationIndex = 0
+                            weatherPanel.locationSearchResults = [];
+                            weatherPanel.currentLocationIndex = 0;
                         }
                     }
 
-                    onLocationFocusStatusChanged: function(hasFocus) {
+                    onLocationFocusStatusChanged: function (hasFocus) {
                         if (hasFocus) {
-                            weatherPanel.isUserSearching = true
+                            weatherPanel.isUserSearching = true;
                         } else {
-                            hideResultsTimer.restart()
+                            hideResultsTimer.restart();
                         }
                     }
 
-                    onSearchLocationRequested: function(query) {
-                        weatherPanel.searchLocation(query)
+                    onSearchLocationRequested: function (query) {
+                        weatherPanel.searchLocation(query);
                     }
 
-                    onLocationSelected: function(locationName) {
-                        weatherPanel.selectLocation(locationName)
+                    onLocationSelected: function (locationName) {
+                        weatherPanel.selectLocation(locationName);
                     }
                 }
 
@@ -363,7 +357,7 @@ PanelWindow {
                         // Current weather
                         Com.WeatherCurrentDisplay {
                             Layout.fillWidth: true
-                            Layout.preferredHeight: parent.height/2
+                            Layout.preferredHeight: parent.height / 2
                             temperature: weatherPanel.temperature
                             condition: weatherPanel.condition
                             icon: weatherPanel.icon
@@ -378,7 +372,7 @@ PanelWindow {
 
                         // 7-day forecast
                         Com.WeatherForecastList {
-                            Layout.preferredHeight: parent.height/2
+                            Layout.preferredHeight: parent.height / 2
                             theme: weatherPanel.theme
                             forecastDays: weatherPanel.forecastDays
                         }
@@ -393,8 +387,10 @@ PanelWindow {
         sequence: "Up"
         enabled: locationSearchResults.length > 0
         onActivated: {
-            if (currentLocationIndex > 0) currentLocationIndex--
-            else currentLocationIndex = locationSearchResults.length - 1
+            if (currentLocationIndex > 0)
+                currentLocationIndex--;
+            else
+                currentLocationIndex = locationSearchResults.length - 1;
         }
     }
 
@@ -402,8 +398,10 @@ PanelWindow {
         sequence: "Down"
         enabled: locationSearchResults.length > 0
         onActivated: {
-            if (currentLocationIndex < locationSearchResults.length - 1) currentLocationIndex++
-            else currentLocationIndex = 0
+            if (currentLocationIndex < locationSearchResults.length - 1)
+                currentLocationIndex++;
+            else
+                currentLocationIndex = 0;
         }
     }
 
@@ -411,13 +409,14 @@ PanelWindow {
         sequence: "Return"
         enabled: locationSearchResults.length > 0
         onActivated: {
-            var item = locationSearchResults[currentLocationIndex]
-            if (item) selectLocation(`${item.name},${item.country}`)
+            var item = locationSearchResults[currentLocationIndex];
+            if (item)
+                selectLocation(`${item.name},${item.country}`);
         }
     }
-        Component.onCompleted: {
+    Component.onCompleted: {
         if (apiKey && location) {
-            updateWeather()
+            updateWeather();
         }
     }
 }

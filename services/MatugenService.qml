@@ -1,13 +1,12 @@
+pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
 import qs.commons
 
-pragma Singleton
-
 Singleton {
     id: root
-    
+
     property var settings: Settings
     property var theme: settings ? settings.appearance : null
     property Process matugenProcess: Process {
@@ -15,12 +14,12 @@ Singleton {
         stdout: StdioCollector {
             onTextChanged: {
                 if (text && text.trim() !== "") {
-                    console.log("Matugen output received")
+                    console.log("Matugen output received");
                     try {
-                        var jsonData = JSON.parse(text)
-                        processMatugenOutput(jsonData)
+                        var jsonData = JSON.parse(text);
+                        processMatugenOutput(jsonData);
                     } catch (e) {
-                        console.error("Failed to parse matugen output:", e)
+                        console.error("Failed to parse matugen output:", e);
                     }
                 }
             }
@@ -28,13 +27,13 @@ Singleton {
         stderr: StdioCollector {
             onTextChanged: {
                 if (text) {
-                    console.log("Matugen error:", text)
+                    console.log("Matugen error:", text);
                 }
             }
         }
         onRunningChanged: {
             if (!running) {
-                console.log("Matugen completed")
+                console.log("Matugen completed");
             }
         }
     }
@@ -43,23 +42,23 @@ Singleton {
         interval: 200
         repeat: false
         onTriggered: {
-                ThemeService.loadTheme()
+            ThemeService.loadTheme();
         }
     }
 
     // Function to process matugen JSON output and create theme
     function processMatugenOutput(jsonData) {
-        console.log("Processing matugen output for theme generation")
-        
+        console.log("Processing matugen output for theme generation");
+
         if (!jsonData || !jsonData.colors) {
-            console.error("Invalid matugen output")
-            return
+            console.error("Invalid matugen output");
+            return;
         }
-        
-        var mode = jsonData.mode || "dark"
-        var colors = jsonData.colors
-        var palettes = jsonData.palettes || {}
-        
+
+        var mode = jsonData.mode || "dark";
+        var colors = jsonData.colors;
+        var palettes = jsonData.palettes || {};
+
         // Create theme structure based on template
         var theme = {
             "type": mode,
@@ -101,140 +100,140 @@ Singleton {
                 "cyan": colors.tertiary ? colors.tertiary.default : "#8bd5ca",
                 "white": colors.on_surface ? colors.on_surface.default : "#a5adcb"
             }
-        }
-        
+        };
+
         // Save theme to file
-        saveThemeToFile(theme)
+        saveThemeToFile(theme);
     }
-    
+
     // Function to save theme to JSON file
     function saveThemeToFile(theme) {
-        var themeJson = JSON.stringify(theme, null, 2)
-        var filePath = Directories.assetsPath + "/themes/matugen.json"
-        
-        console.log("Saving theme to:", filePath)
-        
-        var file = Qt.createQmlObject('import QtQuick; import Quickshell.Io; File { }', root)
-        file.path = filePath
-        file.text = themeJson
-        
+        var themeJson = JSON.stringify(theme, null, 2);
+        var filePath = Directories.assetsPath + "/themes/matugen.json";
+
+        console.log("Saving theme to:", filePath);
+
+        var file = Qt.createQmlObject('import QtQuick; import Quickshell.Io; File { }', root);
+        file.path = filePath;
+        file.text = themeJson;
+
         if (file.write()) {
-            console.log("Theme saved successfully")
-            
+            console.log("Theme saved successfully");
+
             // Update current theme to matugen if not already set
             if (settings && settings.appearance.theme !== "matugen") {
-                settings.appearance.theme = "matugen"
+                settings.appearance.theme = "matugen";
             }
-            
+
             // Trigger theme reload
-            reloadTimer.restart()
+            reloadTimer.restart();
         } else {
-            console.error("Failed to save theme file")
+            console.error("Failed to save theme file");
         }
-        
-        file.destroy()
+
+        file.destroy();
     }
 
     // Function run matugen with JSON output
     function runMatugen(currentWallpaper, themeMode) {
         if (!currentWallpaper || currentWallpaper === "") {
-            console.log("No wallpaper path provided")
-            return
+            console.log("No wallpaper path provided");
+            return;
         }
-        
+
         // Run matugen with JSON output format
-        var command = "matugen image '" + currentWallpaper + "' -j hex --mode " + themeMode
-        console.log("Running matugen command:", command)
-        matugenProcess.command = ["bash", "-c", command]
-        matugenProcess.running = true
-        reloadTimer.restart()
+        var command = "matugen image '" + currentWallpaper + "' -j hex --mode " + themeMode;
+        console.log("Running matugen command:", command);
+        matugenProcess.command = ["bash", "-c", command];
+        matugenProcess.running = true;
+        reloadTimer.restart();
     }
 
     function triggerMatugenOnThemeChange(themeMode) {
-        console.log("Theme changed to:", themeMode)
-        
+        console.log("Theme changed to:", themeMode);
+
         // Update Settings mode first
         if (settings && settings.appearance) {
-            settings.appearance.mode = themeMode
+            settings.appearance.mode = themeMode;
         }
-        
+
         // Only run matugen if theme is set to "matugen"
         if (!settings || settings.appearance.theme !== "matugen") {
-            console.log("Current theme is not matugen, skipping")
-            return
+            console.log("Current theme is not matugen, skipping");
+            return;
         }
-        
+
         // Lấy wallpaper từ màn hình chính hoặc màn hình đầu tiên
-        var currentWallpaper = ""
-        
+        var currentWallpaper = "";
+
         if (Quickshell.screens.length > 0) {
-            var primaryScreenName = ""
-            
+            var primaryScreenName = "";
+
             // Tìm màn hình chính
             for (let i = 0; i < Quickshell.screens.length; i++) {
                 if (Quickshell.screens[i].primary) {
-                    primaryScreenName = Quickshell.screens[i].name
-                    break
+                    primaryScreenName = Quickshell.screens[i].name;
+                    break;
                 }
             }
-            
+
             // Nếu không tìm thấy màn hình chính, lấy màn hình đầu tiên
             if (primaryScreenName === "" && Quickshell.screens.length > 0) {
-                primaryScreenName = Quickshell.screens[0].name
+                primaryScreenName = Quickshell.screens[0].name;
             }
-            
+
             // Lấy wallpaper từ WallpaperService
             if (primaryScreenName !== "" && typeof WallpaperService !== 'undefined') {
-                currentWallpaper = WallpaperService.getWallpaper(primaryScreenName)
+                currentWallpaper = WallpaperService.getWallpaper(primaryScreenName);
             }
         }
-        
-        console.log("Current wallpaper path:", currentWallpaper)
-        
+
+        console.log("Current wallpaper path:", currentWallpaper);
+
         if (currentWallpaper && currentWallpaper !== "") {
-            runMatugen(currentWallpaper, themeMode)
-            ThemeService.loadTheme()
+            runMatugen(currentWallpaper, themeMode);
+            ThemeService.loadTheme();
         } else {
-            console.log("No wallpaper set, skipping matugen")
+            console.log("No wallpaper set, skipping matugen");
         }
     }
 
     function triggerMatugenOnWallpaperChange(currentWallpaper) {
         if (!currentWallpaper || currentWallpaper === "") {
-            console.log("No wallpaper path provided")
-            return
+            console.log("No wallpaper path provided");
+            return;
         }
-        
+
         // Only run matugen if theme is set to "matugen"
         if (!settings || settings.appearance.theme !== "matugen") {
-            console.log("Current theme is not matugen, skipping")
-            return
+            console.log("Current theme is not matugen, skipping");
+            return;
         }
-        
-        var themeMode = settings.appearance.mode || "dark"
-        runMatugen(currentWallpaper, themeMode)
+
+        var themeMode = settings.appearance.mode || "dark";
+        runMatugen(currentWallpaper, themeMode);
     }
 
     // Hàm khởi tạo
     function init() {
-        console.log("MatugenService initialized")
-        
+        console.log("MatugenService initialized");
+
         // Chạy matugen lần đầu khi khởi động nếu theme là matugen
         if (settings && settings.appearance.theme === "matugen") {
-            Qt.callLater(function() {
-                triggerMatugenOnThemeChange(settings.appearance.mode)
-            })
+            Qt.callLater(function () {
+                triggerMatugenOnThemeChange(settings.appearance.mode);
+            });
         }
     }
 
     Component.onCompleted: {
         // Đợi Settings được load
         if (settings && settings.ready) {
-            init()
+            init();
         } else {
             // Kết nối signal nếu Settings có sẵn
             if (settings) {
-                settings.settingsLoaded.connect(init)
+                settings.settingsLoaded.connect(init);
             }
         }
     }

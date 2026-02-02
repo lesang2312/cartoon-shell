@@ -5,12 +5,12 @@ import qs.services
 
 Rectangle {
     id: barListSettings
-    property var theme : ThemeService.theme
-    property var lang : currentLanguage
+    property var theme: ThemeService.theme
+    property var lang: currentLanguage
     property int currentIndex: 0
     property var listModal
     property var title
-    
+
     signal categoryChanged(int index)
 
     Layout.preferredWidth: 260
@@ -48,30 +48,40 @@ Rectangle {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 50
                 radius: 8
-                
+
                 property bool hovered: false
                 property bool selected: barListSettings.currentIndex === index
 
-                color: mouseArea.containsPress ? theme.button.background_select : 
-                       selected ? theme.button.background_select : theme.button.background
-                
-                border.color: mouseArea.containsPress ? theme.button.border_select : 
-                             selected ? theme.button.border_select : theme.button.border
+                color: mouseArea.containsPress ? theme.button.background_select : selected ? theme.button.background_select : theme.button.background
+
+                border.color: mouseArea.containsPress ? theme.button.border_select : selected ? theme.button.border_select : theme.button.border
                 border.width: 2
-                
+
                 // Hiệu ứng scale
                 scale: mouseArea.containsPress ? 0.98 : 1.0
-                Behavior on scale { NumberAnimation { duration: 100 } }
-                
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 100
+                    }
+                }
+
                 // Hiệu ứng màu
-                Behavior on color { ColorAnimation { duration: 200 } }
-                Behavior on border.color { ColorAnimation { duration: 100 } }
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 200
+                    }
+                }
+                Behavior on border.color {
+                    ColorAnimation {
+                        duration: 100
+                    }
+                }
 
                 RowLayout {
                     anchors.fill: parent
                     anchors.margins: 8
                     spacing: 12
-                    
+
                     Image {
                         source: modelData.icon
                         Layout.preferredHeight: 28
@@ -90,9 +100,13 @@ Rectangle {
                         }
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignVCenter
-                        Behavior on color { ColorAnimation { duration: 200 } }
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 200
+                            }
+                        }
                     }
-                    
+
                     // Indicator khi selected
                     Rectangle {
                         Layout.preferredWidth: 4
@@ -100,14 +114,14 @@ Rectangle {
                         radius: 2
                         color: theme.normal.blue
                         visible: selected
-                        
+
                         // Hiệu ứng xuất hiện
                         scale: selected ? 1.0 : 0.0
-                        Behavior on scale { 
-                            NumberAnimation { 
-                                duration: 300; 
-                                easing.type: Easing.OutBack 
-                            } 
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 300
+                                easing.type: Easing.OutBack
+                            }
                         }
                     }
                 }
@@ -119,20 +133,22 @@ Rectangle {
                     cursorShape: Qt.PointingHandCursor
 
                     onClicked: {
-                        barListSettings.categoryChanged(index)
+                        barListSettings.categoryChanged(index);
                     }
 
                     onEntered: {
-                        categoryDelegate.hovered = true
+                        categoryDelegate.hovered = true;
                     }
-                    
+
                     onExited: {
-                        categoryDelegate.hovered = false
+                        categoryDelegate.hovered = false;
                     }
                 }
             }
         }
 
-        Item { Layout.fillHeight: true } // Spacer
+        Item {
+            Layout.fillHeight: true
+        } // Spacer
     }
 }

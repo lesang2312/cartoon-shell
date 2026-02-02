@@ -7,8 +7,7 @@ Rectangle {
     id: root
     property string iconSource: ""
     property color bgColor: "white"
-    property var theme : ThemeService.theme
-
+    property var theme: ThemeService.theme
 
     Layout.fillWidth: true
     Layout.fillHeight: true
@@ -44,19 +43,25 @@ Rectangle {
         cursorShape: Qt.PointingHandCursor
 
         onEntered: {
-            root.scale = 1.05
+            root.scale = 1.05;
         }
 
         onExited: {
-            root.scale = 1.0
+            root.scale = 1.0;
         }
 
         Behavior on scale {
-            NumberAnimation { duration: 150; easing.type: Easing.OutCubic }
+            NumberAnimation {
+                duration: 150
+                easing.type: Easing.OutCubic
+            }
         }
     }
 
     Behavior on scale {
-        NumberAnimation { duration: 150; easing.type: Easing.OutCubic }
+        NumberAnimation {
+            duration: 150
+            easing.type: Easing.OutCubic
+        }
     }
 }

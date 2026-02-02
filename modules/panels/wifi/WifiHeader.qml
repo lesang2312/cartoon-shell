@@ -4,12 +4,12 @@ import qs.services
 
 RowLayout {
     id: header
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
     property var wifiManager
-    
+
     spacing: 20
-    
+
     Rectangle {
         width: 70
         height: 70
@@ -24,7 +24,7 @@ RowLayout {
             anchors.centerIn: parent
         }
     }
-    
+
     Text {
         text: "WiFi"
         font.pixelSize: 50
@@ -32,33 +32,37 @@ RowLayout {
         font.bold: true
         color: theme.primary.foreground
     }
-    
-    Item { Layout.fillWidth: true }
-    
+
+    Item {
+        Layout.fillWidth: true
+    }
+
     // Nút refresh với icon search và hiệu ứng giống hệt Bluetooth
     Rectangle {
         id: scanButton
         Layout.preferredWidth: 55
-        Layout.preferredHeight:55
+        Layout.preferredHeight: 55
         radius: 28
         visible: wifiManager.wifiEnabled || false
         color: {
-            if (wifiManager.isScanning) return theme.normal.red
-            if (scanButtonMouse.containsMouse) return theme.normal.blue
-            return theme.primary.dim_background
+            if (wifiManager.isScanning)
+                return theme.normal.red;
+            if (scanButtonMouse.containsMouse)
+                return theme.normal.blue;
+            return theme.primary.dim_background;
         }
 
         scale: scanButtonMouse.containsPress ? 0.95 : (scanButtonMouse.containsMouse ? 1.1 : 1.0)
-        Behavior on scale { 
-            NumberAnimation { 
-                duration: 200; 
-                easing.type: Easing.OutCubic 
-            } 
+        Behavior on scale {
+            NumberAnimation {
+                duration: 200
+                easing.type: Easing.OutCubic
+            }
         }
-        Behavior on color { 
-            ColorAnimation { 
-                duration: 200 
-            } 
+        Behavior on color {
+            ColorAnimation {
+                duration: 200
+            }
         }
 
         // Sử dụng icon search giống Bluetooth
@@ -107,7 +111,7 @@ RowLayout {
             cursorShape: Qt.PointingHandCursor
             onClicked: {
                 if (wifiManager.wifiEnabled) {
-                    wifiManager.scanWifiNetworks()
+                    wifiManager.scanWifiNetworks();
                 }
             }
         }

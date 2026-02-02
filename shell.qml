@@ -17,51 +17,53 @@ import qs.commons
 ShellRoot {
     id: root
 
-
-    ConfirmDialog {id: confirmDialog}
-    LoaderService{id: loaderService}
+    ConfirmDialog {
+        id: confirmDialog
+    }
+    LoaderService {
+        id: loaderService
+    }
 
     // Function để hiển thị confirm dialog từ bất kỳ đâu
     function showConfirmDialog(action, actionLabel) {
-        confirmDialog.show(action, actionLabel)
+        confirmDialog.show(action, actionLabel);
     }
 
     property bool settingsLoaded: false
 
+    PanelWindow {
+        visible: VisibleService.hasPanel
+        color: "transparent"
 
-PanelWindow {
-    visible: VisibleService.hasPanel
-    color: "transparent"
+        implicitWidth: (Settings.bar.position === "left" || Settings.bar.position === "right") ? Screen.width - 40 : Screen.width
+        implicitHeight: (Settings.bar.position === "top" || Settings.bar.position === "bottom") ? Screen.height - 50 : Screen.height
 
-    implicitWidth: (Settings.bar.position === "left" || Settings.bar.position === "right") ? Screen.width - 40 : Screen.width
-    implicitHeight: (Settings.bar.position === "top" || Settings.bar.position === "bottom") ? Screen.height - 50 : Screen.height
-
-    MouseArea {
-        anchors.fill: parent
-        z: -1
-        onClicked: VisibleService.closeAllPanels()
+        MouseArea {
+            anchors.fill: parent
+            z: -1
+            onClicked: VisibleService.closeAllPanels()
+        }
     }
-}
-      Connections {
-    target: Settings ? Settings : null
-    function onSettingsLoaded() {
-      root.settingsLoaded = true;
+    Connections {
+        target: Settings ? Settings : null
+        function onSettingsLoaded() {
+            root.settingsLoaded = true;
+        }
     }
-  }
-        Loader {
-    active: root.settingsLoaded && Directories.ready
-    sourceComponent: Item {
-      Component.onCompleted: {
-        ThemeService.init()
-        WallpaperService.init();
-        ProgramCheckerService.init();
-        LanguageService.init();
-      }
+    Loader {
+        active: root.settingsLoaded && Directories.ready
+        sourceComponent: Item {
+            Component.onCompleted: {
+                ThemeService.init();
+                WallpaperService.init();
+                ProgramCheckerService.init();
+                LanguageService.init();
+            }
 
-      Background {}
-      Bar{}
-      NotificationPopup{}
-      VolumeOsd { }
+            Background {}
+            Bar {}
+            NotificationPopup {}
+            VolumeOsd {}
+        }
     }
-  }
 }

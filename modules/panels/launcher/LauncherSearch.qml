@@ -15,7 +15,7 @@ Rectangle {
     signal searchChanged(string text) // phát ra khi cần tìm (sau debounce)
     signal accepted(string text)      // khi nhấn Enter
 
-    property var theme : ThemeService.theme
+    property var theme: ThemeService.theme
     property alias searchField: searchField  // Expose searchField để có thể focus từ bên ngoài
 
     RowLayout {
@@ -39,31 +39,31 @@ Rectangle {
             palette.placeholderText: theme.primary.dim_foreground  // sửa thành dim_foreground
             font.pixelSize: 14
             font.family: "ComicShannsMono Nerd Font"
-            background: Rectangle { 
-                color: "transparent" 
+            background: Rectangle {
+                color: "transparent"
             }
             selectByMouse: true
 
             onTextChanged: {
                 // restart debounce timer mỗi khi gõ
-                debounce.running = false
-                debounce.start()
+                debounce.running = false;
+                debounce.start();
             }
 
             Keys.onReturnPressed: {
-                root.accepted(text)
+                root.accepted(text);
                 // gọi ngay (bỏ qua debounce) khi nhấn Enter
-                debounce.running = false
-                root.searchChanged(text)
+                debounce.running = false;
+                root.searchChanged(text);
             }
 
             Keys.onEscapePressed: {
                 // Khi nhấn Escape trong search field, đóng panel
                 if (typeof root.parent !== 'undefined' && root.parent.parent) {
                     // Tìm LauncherPanel để gọi closePanel
-                    var panel = findLauncherPanel(root)
+                    var panel = findLauncherPanel(root);
                     if (panel && typeof panel.closePanel === 'function') {
-                        panel.closePanel()
+                        panel.closePanel();
                     }
                 }
             }
@@ -71,10 +71,11 @@ Rectangle {
             // Helper function để tìm LauncherPanel
             function findLauncherPanel(item) {
                 while (item && item.objectName !== "launcherPanel") {
-                    item = item.parent
-                    if (!item) return null
+                    item = item.parent;
+                    if (!item)
+                        return null;
                 }
-                return item
+                return item;
             }
         }
 
@@ -89,7 +90,7 @@ Rectangle {
 
     // Function để clear search field
     function clear() {
-        searchField.text = ""
-        searchField.focus = true
+        searchField.text = "";
+        searchField.focus = true;
     }
 }

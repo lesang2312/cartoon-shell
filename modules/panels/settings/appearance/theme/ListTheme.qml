@@ -7,11 +7,11 @@ import qs.services
 
 ColumnLayout {
     id: presetThemesContainer
-    property var theme : ThemeService.theme
-    
+    property var theme: ThemeService.theme
+
     width: parent.width
     spacing: 15
-    
+
     Text {
         text: "Preset Themes"
         color: theme.primary ? theme.primary.foreground : "#d8dee9"
@@ -22,22 +22,42 @@ ColumnLayout {
         }
         Layout.alignment: Qt.AlignLeft
     }
-    
+
     GridLayout {
         Layout.fillWidth: true
         columns: 3  // Đã sửa từ: panelManager.fullsetting ? 5 : 3
         columnSpacing: 10  // Đã sửa từ: panelManager.fullsetting ? 15 : 10
         rowSpacing: 10  // Đã sửa từ: panelManager.fullsetting ? 15 : 10
-        
+
         Repeater {
             model: [
-                { name: "Auto", type: "matugen", accent: "black" },
-                { name: "Macchiato", type: "macchiato", accent: "#24273a" },
-                { name: "Gruvbox", type: "gruvbox", accent: "#f5eee6" },
-                { name: "Tokyonight Storm", type: "tokyonightStorm", accent: "#7aa2f7" },
-                { name: "Nord", type: "nord", accent: "#88c0d0" }
+                {
+                    name: "Auto",
+                    type: "matugen",
+                    accent: "black"
+                },
+                {
+                    name: "Macchiato",
+                    type: "macchiato",
+                    accent: "#24273a"
+                },
+                {
+                    name: "Gruvbox",
+                    type: "gruvbox",
+                    accent: "#f5eee6"
+                },
+                {
+                    name: "Tokyonight Storm",
+                    type: "tokyonightStorm",
+                    accent: "#7aa2f7"
+                },
+                {
+                    name: "Nord",
+                    type: "nord",
+                    accent: "#88c0d0"
+                }
             ]
-            
+
             delegate: Rectangle {
                 id: themeDelegate
                 Layout.fillWidth: true
@@ -50,10 +70,10 @@ ColumnLayout {
                 }
 
                 property var modal: ({
-                    name: modelData.name,
-                    type: modelData.type,
-                    accent: modelData.accent
-                })
+                        name: modelData.name,
+                        type: modelData.type,
+                        accent: modelData.accent
+                    })
 
                 MouseArea {
                     anchors.fill: parent
@@ -61,17 +81,17 @@ ColumnLayout {
                     onClicked: {
                         // Chỉ đổi theme nếu khác theme hiện tại
                         if (Settings.appearance.theme !== modal.type) {
-                            Settings.appearance.theme = modal.type
-                            
+                            Settings.appearance.theme = modal.type;
+
                             // Nếu theme là "matugen", bật dynamic, ngược lại tắt dynamic
                             if (modal.type === "matugen") {
-                                Settings.appearance.dynamic = true
+                                Settings.appearance.dynamic = true;
                             } else {
-                                Settings.appearance.dynamic = false
+                                Settings.appearance.dynamic = false;
                             }
-                            
+
                             // Không cần gọi reloadTimer vì ThemeService sẽ tự động load
-                            console.log("Theme changed to:", modal.type, "dynamic:", Settings.appearance.dynamic)
+                            console.log("Theme changed to:", modal.type, "dynamic:", Settings.appearance.dynamic);
                         }
                     }
                 }

@@ -5,18 +5,17 @@ import QtQuick.Layouts
 import qs.services
 
 Item {
-    property var theme : ThemeService.theme
+    property var theme: ThemeService.theme
 
-    
     ScrollView {
         anchors.fill: parent
         anchors.margins: 20
         clip: true
-        
+
         ColumnLayout {
             width: parent.width
             spacing: 15
-            
+
             Text {
                 text: "System Settings"
                 color: theme.primary.foreground
@@ -24,13 +23,13 @@ Item {
                 font.bold: true
                 Layout.topMargin: 10
             }
-            
+
             Rectangle {
                 Layout.fillWidth: true
                 height: 1
                 color: theme.primary.foreground
             }
-            
+
             // Nội dung cài đặt cụ thể sẽ được thêm ở đây
             Text {
                 text: "Cài đặt System Settings sẽ được hiển thị ở đây"

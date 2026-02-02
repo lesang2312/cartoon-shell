@@ -6,8 +6,8 @@ import qs.services
 Rectangle {
     id: calendar
 
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
 
     property date currentDate: new Date()
     property int currentMonth: currentDate.getMonth()
@@ -20,38 +20,17 @@ Rectangle {
     radius: 10
 
     property var weekdayLabels: {
-        const w = lang?.calendar?.weekdays
-        return w ? [
-            w.sunday || "CN",
-            w.monday || "T2",
-            w.tuesday || "T3",
-            w.wednesday || "T4",
-            w.thursday || "T5",
-            w.friday || "T6",
-            w.saturday || "T7"
-        ] : ["CN", "T2", "T3", "T4", "T5", "T6", "T7"]
+        const w = lang?.calendar?.weekdays;
+        return w ? [w.sunday || "CN", w.monday || "T2", w.tuesday || "T3", w.wednesday || "T4", w.thursday || "T5", w.friday || "T6", w.saturday || "T7"] : ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
     }
 
     property var monthLabels: {
-        const m = lang?.dateFormat?.month
-        return m ? [
-            m.january || "Tháng 1",
-            m.february || "Tháng 2",
-            m.march || "Tháng 3",
-            m.april || "Tháng 4",
-            m.may || "Tháng 5",
-            m.june || "Tháng 6",
-            m.july || "Tháng 7",
-            m.august || "Tháng 8",
-            m.september || "Tháng 9",
-            m.october || "Tháng 10",
-            m.november || "Tháng 11",
-            m.december || "Tháng 12"
-        ] : ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"]
+        const m = lang?.dateFormat?.month;
+        return m ? [m.january || "Tháng 1", m.february || "Tháng 2", m.march || "Tháng 3", m.april || "Tháng 4", m.may || "Tháng 5", m.june || "Tháng 6", m.july || "Tháng 7", m.august || "Tháng 8", m.september || "Tháng 9", m.october || "Tháng 10", m.november || "Tháng 11", m.december || "Tháng 12"] : ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
     }
 
     signal dateSelected(date selectedDate)
-    
+
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 10
@@ -148,11 +127,11 @@ Rectangle {
                         Layout.preferredHeight: 40
                         color: {
                             if (modelData.isToday && modelData.isCurrentMonth)
-                                return theme.button.background
+                                return theme.button.background;
                             else if (modelData.fullDate.toDateString() === selectedDate.toDateString())
-                                return theme.button.background_select
+                                return theme.button.background_select;
                             else
-                                return "transparent"
+                                return "transparent";
                         }
                         radius: 20
                         border.color: modelData.isCurrentMonth ? theme.button.border : "transparent"
@@ -162,11 +141,11 @@ Rectangle {
                             anchors.centerIn: parent
                             color: {
                                 if (!modelData.isCurrentMonth)
-                                    return theme.primary.dim_foreground
+                                    return theme.primary.dim_foreground;
                                 else if (modelData.isToday)
-                                    return "white"
+                                    return "white";
                                 else
-                                    return theme.primary.foreground
+                                    return theme.primary.foreground;
                             }
                             font {
                                 bold: modelData.isToday
@@ -179,8 +158,8 @@ Rectangle {
                             anchors.fill: parent
                             onClicked: {
                                 if (modelData.isCurrentMonth) {
-                                    selectedDate = modelData.fullDate
-                                    calendar.dateSelected(selectedDate)
+                                    selectedDate = modelData.fullDate;
+                                    calendar.dateSelected(selectedDate);
                                 }
                             }
                         }
@@ -189,77 +168,75 @@ Rectangle {
             }
         }
     }
-    
+
     function getDaysInMonth(month, year) {
-        var days = []
-        var firstDay = new Date(year, month, 1)
-        var lastDay = new Date(year, month + 1, 0)
-        var startingDay = firstDay.getDay()
-        
+        var days = [];
+        var firstDay = new Date(year, month, 1);
+        var lastDay = new Date(year, month + 1, 0);
+        var startingDay = firstDay.getDay();
+
         // Ngày từ tháng trước
-        var prevMonthLastDay = new Date(year, month, 0).getDate()
+        var prevMonthLastDay = new Date(year, month, 0).getDate();
         for (var i = 0; i < startingDay; i++) {
             days.push({
                 day: prevMonthLastDay - startingDay + i + 1,
                 isCurrentMonth: false,
                 isToday: false,
                 fullDate: new Date(year, month - 1, prevMonthLastDay - startingDay + i + 1)
-            })
+            });
         }
-        
+
         // Ngày của tháng hiện tại
-        var today = new Date()
+        var today = new Date();
         for (var j = 1; j <= lastDay.getDate(); j++) {
-            var isToday = today.getDate() === j && 
-                         today.getMonth() === month && 
-                         today.getFullYear() === year
+            var isToday = today.getDate() === j && today.getMonth() === month && today.getFullYear() === year;
             days.push({
                 day: j,
                 isCurrentMonth: true,
                 isToday: isToday,
                 fullDate: new Date(year, month, j)
-            })
+            });
         }
-        
+
         // Ngày từ tháng sau
-        var totalCells = 42
-        var nextMonthDay = 1
+        var totalCells = 42;
+        var nextMonthDay = 1;
         while (days.length < totalCells) {
             days.push({
                 day: nextMonthDay,
                 isCurrentMonth: false,
                 isToday: false,
                 fullDate: new Date(year, month + 1, nextMonthDay)
-            })
-            nextMonthDay++
+            });
+            nextMonthDay++;
         }
-        
-        return days
+
+        return days;
     }
-    
+
     function previousMonth() {
-        currentDate = new Date(currentYear, currentMonth - 1, 1)
-        currentMonth = currentDate.getMonth()
-        currentYear = currentDate.getFullYear()
-        daysRepeater.model = getDaysInMonth(currentMonth, currentYear)
+        currentDate = new Date(currentYear, currentMonth - 1, 1);
+        currentMonth = currentDate.getMonth();
+        currentYear = currentDate.getFullYear();
+        daysRepeater.model = getDaysInMonth(currentMonth, currentYear);
     }
-    
+
     function nextMonth() {
-        currentDate = new Date(currentYear, currentMonth + 1, 1)
-        currentMonth = currentDate.getMonth()
-        currentYear = currentDate.getFullYear()
-        daysRepeater.model = getDaysInMonth(currentMonth, currentYear)
+        currentDate = new Date(currentYear, currentMonth + 1, 1);
+        currentMonth = currentDate.getMonth();
+        currentYear = currentDate.getFullYear();
+        daysRepeater.model = getDaysInMonth(currentMonth, currentYear);
     }
-    
+
     function goToToday() {
-        currentDate = new Date()
-        currentMonth = currentDate.getMonth()
-        currentYear = currentDate.getFullYear()
-        selectedDate = new Date()
-        daysRepeater.model = getDaysInMonth(currentMonth, currentYear)
+        currentDate = new Date();
+        currentMonth = currentDate.getMonth();
+        currentYear = currentDate.getFullYear();
+        selectedDate = new Date();
+        daysRepeater.model = getDaysInMonth(currentMonth, currentYear);
     }
-    
+
     Component.onCompleted: {
-        daysRepeater.model = getDaysInMonth(currentMonth, currentYear)
+        daysRepeater.model = getDaysInMonth(currentMonth, currentYear);
     }
 }

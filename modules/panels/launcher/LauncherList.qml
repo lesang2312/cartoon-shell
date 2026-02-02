@@ -15,10 +15,10 @@ Rectangle {
     property var apps: []
     property var allApps: []
     property string lastQuery: ""
-    property var theme : ThemeService.theme
+    property var theme: ThemeService.theme
     property int currentIndex: 0
 
-    signal appLaunched()
+    signal appLaunched
 
     // Sử dụng Repeater để convert ObjectModel thành array
     Repeater {
@@ -33,19 +33,18 @@ Rectangle {
                     icon: modelData.icon || "",
                     exec: modelData.execString || "",
                     entry: modelData
-                })
+                });
             }
         }
     }
 
-
     Component.onCompleted: {
-        Qt.callLater(function() {
-            container.allApps.sort(function(a, b) {
-                return a.name.toLowerCase().localeCompare(b.name.toLowerCase())
-            })
-            container.apps = container.allApps
-        })
+        Qt.callLater(function () {
+            container.allApps.sort(function (a, b) {
+                return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+            });
+            container.apps = container.allApps;
+        });
     }
 
     ColumnLayout {
@@ -69,12 +68,8 @@ Rectangle {
                 width: ListView.view.width
                 height: 56
                 radius: 8
-                color: (ListView.isCurrentItem || mouseArea.containsMouse)
-                       ? theme.button.background_select
-                       : "transparent"
-                border.color: (ListView.isCurrentItem || mouseArea.containsMouse)
-                              ? theme.button.border_select
-                              : "transparent"
+                color: (ListView.isCurrentItem || mouseArea.containsMouse) ? theme.button.background_select : "transparent"
+                border.color: (ListView.isCurrentItem || mouseArea.containsMouse) ? theme.button.border_select : "transparent"
                 border.width: 1
 
                 RowLayout {
@@ -119,14 +114,13 @@ Rectangle {
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
                         if (modelData && modelData.entry) {
-                            modelData.entry.execute()
-                            VisibleService.closeAllPanels()
+                            modelData.entry.execute();
+                            VisibleService.closeAllPanels();
                         }
-
                     }
                     onEntered: {
                         if (ListView.view) {
-                            ListView.view.currentIndex = index
+                            ListView.view.currentIndex = index;
                         }
                     }
                 }
@@ -145,85 +139,84 @@ Rectangle {
     }
 
     function runSearch(query) {
-        if (query === undefined || query === null) query = ""
-        container.lastQuery = query
+        if (query === undefined || query === null)
+            query = "";
+        container.lastQuery = query;
 
         if (query.length === 0) {
-            container.apps = container.allApps
-            container.currentIndex = 0
-            return
+            container.apps = container.allApps;
+            container.currentIndex = 0;
+            return;
         }
 
-        var q = query.toLowerCase()
-        var filtered = []
+        var q = query.toLowerCase();
+        var filtered = [];
 
         for (var i = 0; i < container.allApps.length; i++) {
-            var app = container.allApps[i]
-            var name = (app.name || "").toLowerCase()
-            var comment = (app.comment || "").toLowerCase()
-            var exec = (app.exec || "").toLowerCase()
+            var app = container.allApps[i];
+            var name = (app.name || "").toLowerCase();
+            var comment = (app.comment || "").toLowerCase();
+            var exec = (app.exec || "").toLowerCase();
 
             // Tìm kiếm trong name, comment và exec
-            var match = name.indexOf(q) >= 0 || 
-                       comment.indexOf(q) >= 0 || 
-                       exec.indexOf(q) >= 0
-            
+            var match = name.indexOf(q) >= 0 || comment.indexOf(q) >= 0 || exec.indexOf(q) >= 0;
+
             // Thêm tìm kiếm theo tên file từ exec (ví dụ: "firefox" từ "firefox %u")
             if (!match && exec) {
                 // Tách exec để lấy tên file
-                var execParts = exec.split(' ')
+                var execParts = exec.split(' ');
                 if (execParts.length > 0) {
-                    var executableName = execParts[0]
+                    var executableName = execParts[0];
                     // Loại bỏ đường dẫn nếu có
-                    var lastSlash = executableName.lastIndexOf('/')
+                    var lastSlash = executableName.lastIndexOf('/');
                     if (lastSlash >= 0) {
-                        executableName = executableName.substring(lastSlash + 1)
+                        executableName = executableName.substring(lastSlash + 1);
                     }
-                    match = executableName.toLowerCase().indexOf(q) >= 0
+                    match = executableName.toLowerCase().indexOf(q) >= 0;
                 }
             }
 
             if (match) {
-                filtered.push(app)
+                filtered.push(app);
             }
         }
 
-        container.apps = filtered
-        container.currentIndex = 0
+        container.apps = filtered;
+        container.currentIndex = 0;
     }
 
     Shortcut {
         sequence: "Tab"
         onActivated: {
-            container.currentIndex = (container.currentIndex + 1) % container.apps.length
-            appList.currentIndex = container.currentIndex
+            container.currentIndex = (container.currentIndex + 1) % container.apps.length;
+            appList.currentIndex = container.currentIndex;
         }
     }
-    
+
     Shortcut {
         sequence: "Up"
         onActivated: {
-            container.currentIndex = Math.max(container.currentIndex - 1, 0)
-            appList.currentIndex = container.currentIndex
+            container.currentIndex = Math.max(container.currentIndex - 1, 0);
+            appList.currentIndex = container.currentIndex;
         }
     }
-    
+
     Shortcut {
         sequence: "Down"
         onActivated: {
-            container.currentIndex = (container.currentIndex + 1) % container.apps.length
-            appList.currentIndex = container.currentIndex
+            container.currentIndex = (container.currentIndex + 1) % container.apps.length;
+            appList.currentIndex = container.currentIndex;
         }
     }
-    
+
     Shortcut {
         sequence: "Return"
         onActivated: {
             if (container.apps.length > 0 && container.currentIndex < container.apps.length) {
-                var item = container.apps[container.currentIndex]
+                var item = container.apps[container.currentIndex];
                 if (item && item.entry) {
-                    item.entry.execute()
-                    VisibleService.closeAllPanels()
+                    item.entry.execute();
+                    VisibleService.closeAllPanels();
                 }
             }
         }

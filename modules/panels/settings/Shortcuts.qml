@@ -5,8 +5,8 @@ import QtQuick.Layouts
 import qs.services
 
 Item {
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
 
     ScrollView {
         anchors.fill: parent
@@ -41,15 +41,42 @@ Item {
             ShortcutCategory {
                 title: "🪟 Basic Window Management"
                 shortcuts: [
-                    { key: "SUPER + RETURN", action: "Open Terminal" },
-                    { key: "SUPER + Q", action: "Close Window" },
-                    { key: "SUPER + M", action: "Exit Hyprland" },
-                    { key: "SUPER + E", action: "File Manager" },
-                    { key: "SUPER + SPACE", action: "Toggle Launcher Panel" },
-                    { key: "SUPER + V", action: "Toggle Floating" },
-                    { key: "SUPER + F", action: "Fullscreen" },
-                    { key: "SUPER + P", action: "Pseudo Tiling" },
-                    { key: "SUPER + J", action: "Toggle Split" }
+                    {
+                        key: "SUPER + RETURN",
+                        action: "Open Terminal"
+                    },
+                    {
+                        key: "SUPER + Q",
+                        action: "Close Window"
+                    },
+                    {
+                        key: "SUPER + M",
+                        action: "Exit Hyprland"
+                    },
+                    {
+                        key: "SUPER + E",
+                        action: "File Manager"
+                    },
+                    {
+                        key: "SUPER + SPACE",
+                        action: "Toggle Launcher Panel"
+                    },
+                    {
+                        key: "SUPER + V",
+                        action: "Toggle Floating"
+                    },
+                    {
+                        key: "SUPER + F",
+                        action: "Fullscreen"
+                    },
+                    {
+                        key: "SUPER + P",
+                        action: "Pseudo Tiling"
+                    },
+                    {
+                        key: "SUPER + J",
+                        action: "Toggle Split"
+                    }
                 ]
             }
 
@@ -57,10 +84,22 @@ Item {
             ShortcutCategory {
                 title: "🎯 Window Focus"
                 shortcuts: [
-                    { key: "SUPER + ←", action: "Focus Left" },
-                    { key: "SUPER + →", action: "Focus Right" },
-                    { key: "SUPER + ↑", action: "Focus Up" },
-                    { key: "SUPER + ↓", action: "Focus Down" }
+                    {
+                        key: "SUPER + ←",
+                        action: "Focus Left"
+                    },
+                    {
+                        key: "SUPER + →",
+                        action: "Focus Right"
+                    },
+                    {
+                        key: "SUPER + ↑",
+                        action: "Focus Up"
+                    },
+                    {
+                        key: "SUPER + ↓",
+                        action: "Focus Down"
+                    }
                 ]
             }
 
@@ -68,10 +107,22 @@ Item {
             ShortcutCategory {
                 title: "🎨 Workspace Management"
                 shortcuts: [
-                    { key: "SUPER + 1-0", action: "Switch to Workspace 1-10" },
-                    { key: "SUPER + SHIFT + 1-0", action: "Move Window to Workspace" },
-                    { key: "SUPER + S", action: "Toggle Special Workspace" },
-                    { key: "SUPER + SHIFT + S", action: "Move to Special Workspace" }
+                    {
+                        key: "SUPER + 1-0",
+                        action: "Switch to Workspace 1-10"
+                    },
+                    {
+                        key: "SUPER + SHIFT + 1-0",
+                        action: "Move Window to Workspace"
+                    },
+                    {
+                        key: "SUPER + S",
+                        action: "Toggle Special Workspace"
+                    },
+                    {
+                        key: "SUPER + SHIFT + S",
+                        action: "Move to Special Workspace"
+                    }
                 ]
             }
 
@@ -79,10 +130,22 @@ Item {
             ShortcutCategory {
                 title: "🖱️ Mouse Actions"
                 shortcuts: [
-                    { key: "SUPER + Scroll Up", action: "Previous Workspace" },
-                    { key: "SUPER + Scroll Down", action: "Next Workspace" },
-                    { key: "SUPER + Left Drag", action: "Move Window" },
-                    { key: "SUPER + Right Drag", action: "Resize Window" }
+                    {
+                        key: "SUPER + Scroll Up",
+                        action: "Previous Workspace"
+                    },
+                    {
+                        key: "SUPER + Scroll Down",
+                        action: "Next Workspace"
+                    },
+                    {
+                        key: "SUPER + Left Drag",
+                        action: "Move Window"
+                    },
+                    {
+                        key: "SUPER + Right Drag",
+                        action: "Resize Window"
+                    }
                 ]
             }
 
@@ -90,14 +153,38 @@ Item {
             ShortcutCategory {
                 title: "🎵 Media Control"
                 shortcuts: [
-                    { key: "XF86AudioPlay", action: "Play/Pause" },
-                    { key: "XF86AudioPause", action: "Play/Pause" },
-                    { key: "XF86AudioNext", action: "Next Track" },
-                    { key: "XF86AudioPrev", action: "Previous Track" },
-                    { key: "XF86AudioRaiseVolume", action: "Volume Up +5%" },
-                    { key: "XF86AudioLowerVolume", action: "Volume Down -5%" },
-                    { key: "XF86AudioMute", action: "Toggle Mute" },
-                    { key: "XF86AudioMicMute", action: "Toggle Mic Mute" }
+                    {
+                        key: "XF86AudioPlay",
+                        action: "Play/Pause"
+                    },
+                    {
+                        key: "XF86AudioPause",
+                        action: "Play/Pause"
+                    },
+                    {
+                        key: "XF86AudioNext",
+                        action: "Next Track"
+                    },
+                    {
+                        key: "XF86AudioPrev",
+                        action: "Previous Track"
+                    },
+                    {
+                        key: "XF86AudioRaiseVolume",
+                        action: "Volume Up +5%"
+                    },
+                    {
+                        key: "XF86AudioLowerVolume",
+                        action: "Volume Down -5%"
+                    },
+                    {
+                        key: "XF86AudioMute",
+                        action: "Toggle Mute"
+                    },
+                    {
+                        key: "XF86AudioMicMute",
+                        action: "Toggle Mic Mute"
+                    }
                 ]
             }
 
@@ -105,8 +192,14 @@ Item {
             ShortcutCategory {
                 title: "💡 Display Brightness"
                 shortcuts: [
-                    { key: "XF86MonBrightnessUp", action: "Brightness Up +5%" },
-                    { key: "XF86MonBrightnessDown", action: "Brightness Down -5%" }
+                    {
+                        key: "XF86MonBrightnessUp",
+                        action: "Brightness Up +5%"
+                    },
+                    {
+                        key: "XF86MonBrightnessDown",
+                        action: "Brightness Down -5%"
+                    }
                 ]
             }
 
@@ -114,12 +207,20 @@ Item {
             ShortcutCategory {
                 title: "📸 Screenshots"
                 shortcuts: [
-                    { key: "PrintScreen", action: "Fullscreen Screenshot" },
-                    { key: "SUPER + PrintScreen", action: "Area Screenshot (Select region)" }
+                    {
+                        key: "PrintScreen",
+                        action: "Fullscreen Screenshot"
+                    },
+                    {
+                        key: "SUPER + PrintScreen",
+                        action: "Area Screenshot (Select region)"
+                    }
                 ]
             }
 
-            Item { Layout.fillHeight: true } // Spacer
+            Item {
+                Layout.fillHeight: true
+            } // Spacer
         }
     }
 

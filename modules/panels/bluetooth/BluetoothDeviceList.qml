@@ -9,8 +9,8 @@ import "." as Components
 Rectangle {
     id: deviceListRoot
     required property var adapter
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
     required property int connectedCount
 
     signal pairError(string message)
@@ -46,8 +46,8 @@ Rectangle {
                 delegate: Components.BluetoothDeviceItem {
                     adapter: deviceListRoot.adapter
                     lang: deviceListRoot.lang
-                    onPairError: function(message) {
-                        deviceListRoot.pairError(message)
+                    onPairError: function (message) {
+                        deviceListRoot.pairError(message);
                     }
                 }
 
@@ -55,10 +55,13 @@ Rectangle {
                 Text {
                     anchors.centerIn: parent
                     text: {
-                        if (!adapter?.enabled) return lang?.bluetooth?.disabled || "Bluetooth đã tắt"
-                        if (adapter?.discovering && deviceList.count === 0) return "🔍 " + (lang?.bluetooth?.searching || "Đang tìm kiếm thiết bị...")
-                        if (deviceList.count === 0) return lang?.bluetooth?.no_devices || "Không có thiết bị nào"
-                        return ""
+                        if (!adapter?.enabled)
+                            return lang?.bluetooth?.disabled || "Bluetooth đã tắt";
+                        if (adapter?.discovering && deviceList.count === 0)
+                            return "🔍 " + (lang?.bluetooth?.searching || "Đang tìm kiếm thiết bị...");
+                        if (deviceList.count === 0)
+                            return lang?.bluetooth?.no_devices || "Không có thiết bị nào";
+                        return "";
                     }
                     color: theme.primary.dim_foreground
                     font.pixelSize: 13

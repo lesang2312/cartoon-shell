@@ -5,18 +5,17 @@ import QtQuick.Layouts
 import qs.services
 
 Item {
-    property var theme : ThemeService.theme
+    property var theme: ThemeService.theme
 
-    
     ScrollView {
         anchors.fill: parent
         anchors.margins: 20
         clip: true
-        
+
         ColumnLayout {
             width: parent.width - 40
             spacing: 20
-            
+
             Text {
                 text: "Network Settings"
                 color: theme.primary.foreground
@@ -25,13 +24,13 @@ Item {
                 font.family: "ComicShannsMono Nerd Font"
                 Layout.topMargin: 10
             }
-            
+
             Rectangle {
                 Layout.fillWidth: true
                 height: 1
                 color: theme.primary.foreground
             }
-            
+
             // Thông báo phần đã bị xóa
             Rectangle {
                 Layout.fillWidth: true
@@ -40,11 +39,11 @@ Item {
                 color: theme.primary.background
                 border.color: theme.normal.black
                 border.width: 1
-                
+
                 Column {
                     anchors.centerIn: parent
                     spacing: 10
-                    
+
                     Text {
                         text: "Network Settings Content"
                         color: theme.primary.foreground
@@ -52,7 +51,7 @@ Item {
                         font.bold: true
                         font.family: "ComicShannsMono Nerd Font"
                     }
-                    
+
                     Text {
                         text: "Network information and controls have been removed."
                         color: theme.primary.dim_foreground

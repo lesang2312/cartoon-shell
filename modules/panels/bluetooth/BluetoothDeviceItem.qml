@@ -8,8 +8,8 @@ Rectangle {
     required property var modelData
     required property int index
     required property var adapter
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
 
     signal pairError(string message)
 
@@ -21,9 +21,21 @@ Rectangle {
     border.color: modelData?.connected ? theme.normal.blue : "transparent"
 
     scale: deviceMouseArea.containsPress ? 0.98 : 1.0
-    Behavior on scale { NumberAnimation { duration: 100 } }
-    Behavior on color { ColorAnimation { duration: 200 } }
-    Behavior on border.color { ColorAnimation { duration: 200 } }
+    Behavior on scale {
+        NumberAnimation {
+            duration: 100
+        }
+    }
+    Behavior on color {
+        ColorAnimation {
+            duration: 200
+        }
+    }
+    Behavior on border.color {
+        ColorAnimation {
+            duration: 200
+        }
+    }
 
     // Pairing indicator
     Rectangle {
@@ -82,16 +94,22 @@ Rectangle {
 
             Text {
                 text: {
-                    if (modelData?.connecting) return lang?.bluetooth?.connecting || "Đang kết nối..."
-                    if (modelData?.connected) return lang?.bluetooth?.connected || "Đã kết nối"
-                    if (modelData?.paired) return lang?.bluetooth?.paired || "Đã ghép nối"
-                    return lang?.bluetooth?.not_connected || "Chưa kết nối"
+                    if (modelData?.connecting)
+                        return lang?.bluetooth?.connecting || "Đang kết nối...";
+                    if (modelData?.connected)
+                        return lang?.bluetooth?.connected || "Đã kết nối";
+                    if (modelData?.paired)
+                        return lang?.bluetooth?.paired || "Đã ghép nối";
+                    return lang?.bluetooth?.not_connected || "Chưa kết nối";
                 }
                 color: {
-                    if (modelData?.connecting) return theme.normal.yellow
-                    if (modelData?.connected) return theme.normal.green
-                    if (modelData?.paired) return theme.normal.blue
-                    return theme.primary.dim_foreground
+                    if (modelData?.connecting)
+                        return theme.normal.yellow;
+                    if (modelData?.connected)
+                        return theme.normal.green;
+                    if (modelData?.paired)
+                        return theme.normal.blue;
+                    return theme.primary.dim_foreground;
                 }
                 font.pixelSize: 12
                 font.family: "ComicShannsMono Nerd Font"
@@ -107,19 +125,26 @@ Rectangle {
                 width: 32
                 height: 32
                 radius: 8
-                color: modelData?.connected ? theme.normal.red :
-                       modelData?.paired ? theme.normal.blue : theme.button.background
+                color: modelData?.connected ? theme.normal.red : modelData?.paired ? theme.normal.blue : theme.button.background
                 opacity: (modelData?.paired || modelData?.connecting) ? 1 : 0.5
                 enabled: !modelData?.pairing
 
                 scale: connectMouseArea.containsPress ? 0.9 : (connectMouseArea.containsMouse ? 1.1 : 1.0)
-                Behavior on scale { NumberAnimation { duration: 150; easing.type: Easing.OutBack } }
-                Behavior on color { ColorAnimation { duration: 200 } }
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 150
+                        easing.type: Easing.OutBack
+                    }
+                }
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 200
+                    }
+                }
 
                 Text {
                     anchors.centerIn: parent
-                    text: modelData?.connecting ? "🔄" :
-                          modelData?.connected ? "🔌" : "🔗"
+                    text: modelData?.connecting ? "🔄" : modelData?.connected ? "🔌" : "🔗"
                     color: theme.primary.foreground
                     font.pixelSize: 14
 
@@ -141,9 +166,9 @@ Rectangle {
                     cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
                     onClicked: {
                         if (modelData?.connected) {
-                            modelData.disconnect()
+                            modelData.disconnect();
                         } else if (modelData?.paired && !modelData?.connecting) {
-                            modelData.connect()
+                            modelData.connect();
                         }
                     }
                 }
@@ -154,24 +179,35 @@ Rectangle {
                 width: 32
                 height: 32
                 radius: 8
-                color: modelData?.pairing ? theme.normal.yellow :
-                       modelData?.paired ? theme.normal.red : theme.normal.blue
+                color: modelData?.pairing ? theme.normal.yellow : modelData?.paired ? theme.normal.red : theme.normal.blue
                 opacity: modelData?.pairing ? 0.8 : 1
                 enabled: !modelData?.pairing
 
                 scale: pairMouseArea.containsPress ? 0.9 : (pairMouseArea.containsMouse ? 1.1 : 1.0)
-                Behavior on scale { NumberAnimation { duration: 150; easing.type: Easing.OutBack } }
-                Behavior on color { ColorAnimation { duration: 200 } }
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 150
+                        easing.type: Easing.OutBack
+                    }
+                }
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 200
+                    }
+                }
 
                 Text {
                     anchors.centerIn: parent
-                    text: modelData?.pairing ? "⏳" :
-                          modelData?.paired ? "🗑️" : "👥"
+                    text: modelData?.pairing ? "⏳" : modelData?.paired ? "🗑️" : "👥"
                     color: theme.primary.foreground
                     font.pixelSize: 14
 
                     scale: pairMouseArea.containsMouse ? 1.2 : 1.0
-                    Behavior on scale { NumberAnimation { duration: 200 } }
+                    Behavior on scale {
+                        NumberAnimation {
+                            duration: 200
+                        }
+                    }
                 }
 
                 MouseArea {
@@ -182,19 +218,19 @@ Rectangle {
                     cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
                     onClicked: {
                         if (modelData?.paired) {
-                            modelData.forget()
+                            modelData.forget();
                         } else {
                             // Ensure adapter is pairable
                             if (adapter) {
-                                adapter.pairable = true
-                                adapter.discoverable = true
+                                adapter.pairable = true;
+                                adapter.discoverable = true;
                             }
 
                             // Try to pair
                             try {
-                                modelData.pair()
+                                modelData.pair();
                             } catch (error) {
-                                delegateRoot.pairError(lang?.bluetooth?.pair_error || "Không thể ghép nối với thiết bị")
+                                delegateRoot.pairError(lang?.bluetooth?.pair_error || "Không thể ghép nối với thiết bị");
                             }
                         }
                     }
@@ -208,24 +244,35 @@ Rectangle {
         anchors.fill: parent
         hoverEnabled: true
         propagateComposedEvents: true
-        onPressed: function(mouse) { mouse.accepted = false }
+        onPressed: function (mouse) {
+            mouse.accepted = false;
+        }
     }
 
     // Device state connections
     Connections {
         target: modelData
-        function onPairingChanged() {}
-        function onPairedChanged() {}
+        function onPairingChanged() {
+        }
+        function onPairedChanged() {
+        }
     }
 
     function getDeviceIcon(iconName) {
-        if (iconName.includes("audio")) return "🎧"
-        if (iconName.includes("phone")) return "📱"
-        if (iconName.includes("computer")) return "💻"
-        if (iconName.includes("input-mouse")) return "🖱"
-        if (iconName.includes("input-keyboard")) return "⌨"
-        if (iconName.includes("camera")) return "📷"
-        if (iconName.includes("printer")) return "🖨"
-        return "📡"
+        if (iconName.includes("audio"))
+            return "🎧";
+        if (iconName.includes("phone"))
+            return "📱";
+        if (iconName.includes("computer"))
+            return "💻";
+        if (iconName.includes("input-mouse"))
+            return "🖱";
+        if (iconName.includes("input-keyboard"))
+            return "⌨";
+        if (iconName.includes("camera"))
+            return "📷";
+        if (iconName.includes("printer"))
+            return "🖨";
+        return "📡";
     }
 }

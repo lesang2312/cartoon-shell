@@ -5,10 +5,10 @@ import qs.services
 
 RowLayout {
     id: panelPositionSelector
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
     property var panelConfig
-    
+
     Text {
         text: lang.appearance?.panel_position_label || "Vị trí panel:"
         color: theme.primary.foreground

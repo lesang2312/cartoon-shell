@@ -9,9 +9,7 @@ Rectangle {
     property string type: "light"
     property bool isSelected: false
     property string label: ""
-    property var theme : ThemeService.theme
-
-
+    property var theme: ThemeService.theme
 
     // 👇 chỉ active khi matugen
     property bool isEnabled: Settings.appearance.theme === "matugen"
@@ -51,9 +49,7 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         enabled: isEnabled
-        cursorShape: isEnabled
-            ? Qt.PointingHandCursor
-            : Qt.ForbiddenCursor
+        cursorShape: isEnabled ? Qt.PointingHandCursor : Qt.ForbiddenCursor
 
         onClicked: themeCard.clicked()
     }
@@ -91,4 +87,3 @@ Rectangle {
         }
     }
 }
-

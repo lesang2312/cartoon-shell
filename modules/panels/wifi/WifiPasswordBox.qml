@@ -5,36 +5,38 @@ import qs.services
 
 Rectangle {
     id: passwordBox
-    property var theme : ThemeService.theme
+    property var theme: ThemeService.theme
 
-    property var lang : LanguageService.translations
+    property var lang: LanguageService.translations
     property var wifiManager
     property var networkData
-    
+
     property bool showPassword: false
     property bool hasError: false
     property string errorMessage: ""
     property bool hasSavedPassword: networkData.isConnected
-    
+
     color: theme.primary.dim_background
     radius: 12
     height: visible ? (hasError ? 150 : 100) : 0
     border.width: 2
     border.color: theme.normal.blue
-    
+
     Behavior on height {
-        NumberAnimation { duration: 200 }
+        NumberAnimation {
+            duration: 200
+        }
     }
 
     Component.onCompleted: {
         if (visible && networkData.isConnected) {
-            wifiManager.getSavedPassword(networkData.ssid)
+            wifiManager.getSavedPassword(networkData.ssid);
         }
     }
 
     onVisibleChanged: {
         if (visible && networkData.isConnected) {
-            wifiManager.getSavedPassword(networkData.ssid)
+            wifiManager.getSavedPassword(networkData.ssid);
         }
     }
 
@@ -85,8 +87,7 @@ Rectangle {
                 height: 40
                 font.family: "ComicShannsMono Nerd Font"
                 background: Rectangle {
-                    color: parent.down ? theme.button.background_select :
-                           parent.hovered ? theme.button.background_select : theme.button.background
+                    color: parent.down ? theme.button.background_select : parent.hovered ? theme.button.background_select : theme.button.background
                     radius: 8
                 }
                 contentItem: Text {
@@ -96,7 +97,7 @@ Rectangle {
                     font.pixelSize: 18
                 }
                 onClicked: {
-                    passwordBox.showPassword = !passwordBox.showPassword
+                    passwordBox.showPassword = !passwordBox.showPassword;
                 }
             }
 
@@ -104,8 +105,7 @@ Rectangle {
                 text: lang?.wifi?.forget || "Quên"
                 font.family: "ComicShannsMono Nerd Font"
                 background: Rectangle {
-                    color: parent.down ? theme.normal.red :
-                           parent.hovered ? Qt.lighter(theme.normal.red, 1.2) : theme.normal.red
+                    color: parent.down ? theme.normal.red : parent.hovered ? Qt.lighter(theme.normal.red, 1.2) : theme.normal.red
                     radius: 8
                 }
                 contentItem: Text {
@@ -116,9 +116,9 @@ Rectangle {
                     verticalAlignment: Text.AlignVCenter
                 }
                 onClicked: {
-                    wifiManager.forgetPassword(networkData.ssid)
-                    passwordBox.hasSavedPassword = false
-                    wifiManager.openSsid = ""
+                    wifiManager.forgetPassword(networkData.ssid);
+                    passwordBox.hasSavedPassword = false;
+                    wifiManager.openSsid = "";
                 }
             }
         }
@@ -131,9 +131,7 @@ Rectangle {
             TextField {
                 id: wifiPassword
                 Layout.fillWidth: true
-                placeholderText: networkData.security === "Open" ? 
-                               (lang?.wifi?.no_password || "Không cần mật khẩu") : 
-                               (lang?.wifi?.enter_password || "Nhập mật khẩu")
+                placeholderText: networkData.security === "Open" ? (lang?.wifi?.no_password || "Không cần mật khẩu") : (lang?.wifi?.enter_password || "Nhập mật khẩu")
                 echoMode: passwordBox.showPassword ? TextInput.Normal : TextInput.Password
                 enabled: networkData.security !== "Open"
                 font.family: "ComicShannsMono Nerd Font"
@@ -146,7 +144,7 @@ Rectangle {
                 }
 
                 onActiveFocusChanged: {
-                    wifiManager.userTyping = activeFocus
+                    wifiManager.userTyping = activeFocus;
                 }
             }
 
@@ -156,8 +154,7 @@ Rectangle {
                 visible: networkData.security !== "Open"
                 font.family: "ComicShannsMono Nerd Font"
                 background: Rectangle {
-                    color: parent.down ? theme.button.background_select :
-                           parent.hovered ? theme.button.background_select : theme.button.background
+                    color: parent.down ? theme.button.background_select : parent.hovered ? theme.button.background_select : theme.button.background
                     radius: 8
                 }
                 contentItem: Text {
@@ -167,7 +164,7 @@ Rectangle {
                     font.pixelSize: 18
                 }
                 onClicked: {
-                    passwordBox.showPassword = !passwordBox.showPassword
+                    passwordBox.showPassword = !passwordBox.showPassword;
                 }
             }
 
@@ -175,8 +172,7 @@ Rectangle {
                 text: lang?.wifi?.connect || "Kết nối"
                 font.family: "ComicShannsMono Nerd Font"
                 background: Rectangle {
-                    color: parent.down ? theme.normal.blue :
-                           parent.hovered ? theme.bright.blue : theme.normal.blue
+                    color: parent.down ? theme.normal.blue : parent.hovered ? theme.bright.blue : theme.normal.blue
                     radius: 8
                 }
                 contentItem: Text {
@@ -188,27 +184,27 @@ Rectangle {
                 }
                 onClicked: {
                     if (wifiPassword.text.trim().length === 0 && networkData.security !== "Open") {
-                        passwordBox.hasError = true
-                        passwordBox.errorMessage = lang?.wifi?.password_required || "Vui lòng nhập mật khẩu"
-                        return
+                        passwordBox.hasError = true;
+                        passwordBox.errorMessage = lang?.wifi?.password_required || "Vui lòng nhập mật khẩu";
+                        return;
                     }
 
-                    passwordBox.hasError = false
-                    passwordBox.errorMessage = ""
+                    passwordBox.hasError = false;
+                    passwordBox.errorMessage = "";
 
-                    wifiManager.connectToWifi(networkData.ssid, wifiPassword.text)
+                    wifiManager.connectToWifi(networkData.ssid, wifiPassword.text);
 
-                    Qt.callLater(function() {
+                    Qt.callLater(function () {
                         if (wifiManager.connectionError) {
-                            passwordBox.hasError = true
-                            passwordBox.errorMessage = lang?.wifi?.wrong_password || "Mật khẩu không đúng"
+                            passwordBox.hasError = true;
+                            passwordBox.errorMessage = lang?.wifi?.wrong_password || "Mật khẩu không đúng";
                         } else {
-                            passwordBox.hasSavedPassword = true
-                            wifiManager.openSsid = ""
+                            passwordBox.hasSavedPassword = true;
+                            wifiManager.openSsid = "";
                         }
-                    })
+                    });
 
-                    wifiPassword.text = ""
+                    wifiPassword.text = "";
                 }
             }
         }

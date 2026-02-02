@@ -5,7 +5,7 @@ import qs.services
 Rectangle {
     id: root
 
-    property var theme : ThemeService.theme
+    property var theme: ThemeService.theme
     property string image: ""
     property string value: "Value"
 

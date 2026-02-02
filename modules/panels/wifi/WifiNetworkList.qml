@@ -6,11 +6,11 @@ import qs.services
 
 ColumnLayout {
     id: networkList
-    property var theme : ThemeService.theme
+    property var theme: ThemeService.theme
 
-    property var lang : LanguageService.translations
+    property var lang: LanguageService.translations
     property var wifiManager
-    
+
     Rectangle {
         height: 20
         Layout.fillWidth: true
@@ -21,8 +21,7 @@ ColumnLayout {
                 fill: parent
                 leftMargin: 10
             }
-            text: (lang?.wifi?.available_networks || "Mạng có sẵn") + 
-                  " (" + wifiManager.wifiList.length + ")"
+            text: (lang?.wifi?.available_networks || "Mạng có sẵn") + " (" + wifiManager.wifiList.length + ")"
             font.pixelSize: 17
             color: theme.primary.dim_foreground
             font.family: "ComicShannsMono Nerd Font"
@@ -32,7 +31,7 @@ ColumnLayout {
     ScrollView {
         Layout.fillWidth: true
         Layout.fillHeight: true
-        
+
         ScrollBar.vertical: ScrollBar {
             policy: ScrollBar.AsNeeded
             background: Rectangle {

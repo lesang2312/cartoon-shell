@@ -7,8 +7,8 @@ import qs.services
 PanelWindow {
     id: root
 
-    property var lang : LanguageService.translations
-    property var theme : ThemeService.theme
+    property var lang: LanguageService.translations
+    property var theme: ThemeService.theme
 
     property string pendingAction: ""
     property string pendingActionLabel: ""
@@ -29,48 +29,58 @@ PanelWindow {
     visible: false
     color: "transparent"
 
-    Process { id: sleepProcess }
-    Process { id: lockProcess }
-    Process { id: logoutProcess }
-    Process { id: restartProcess }
-    Process { id: shutdownProcess }
+    Process {
+        id: sleepProcess
+    }
+    Process {
+        id: lockProcess
+    }
+    Process {
+        id: logoutProcess
+    }
+    Process {
+        id: restartProcess
+    }
+    Process {
+        id: shutdownProcess
+    }
 
     function show(action, actionLabel) {
-        pendingAction = action
-        pendingActionLabel = actionLabel
-        visible = true
+        pendingAction = action;
+        pendingActionLabel = actionLabel;
+        visible = true;
     }
 
     function hide() {
-        visible = false
-        pendingAction = ""
-        pendingActionLabel = ""
+        visible = false;
+        pendingAction = "";
+        pendingActionLabel = "";
     }
 
     function executeAction() {
-        switch(pendingAction) {
-            case "sleep":
-                sleepProcess.command = ["systemctl", "suspend"]
-                sleepProcess.startDetached()
-                break
-            case "lock":
-                lockProcess.command = ["hyprlock"]
-                lockProcess.startDetached()
-                break
-            case "logout":
-                logoutProcess.command = ["hyprctl", "dispatch", "exit"]
-                logoutProcess.startDetached()
-                break
-            case "restart":
-                restartProcess.command = ["systemctl", "reboot"]
-                restartProcess.startDetached()
-                break
-            case "shutdown":
-                shutdownProcess.command = ["systemctl", "poweroff"]
-                shutdownProcess.startDetached()
-                break
+        switch (pendingAction) {
+        case "sleep":
+            sleepProcess.command = ["systemctl", "suspend"];
+            sleepProcess.startDetached();
+            break;
+        case "lock":
+            lockProcess.command = ["hyprlock"];
+            lockProcess.startDetached();
+            break;
+        case "logout":
+            logoutProcess.command = ["hyprctl", "dispatch", "exit"];
+            logoutProcess.startDetached();
+            break;
+        case "restart":
+            restartProcess.command = ["systemctl", "reboot"];
+            restartProcess.startDetached();
+            break;
+        case "shutdown":
+            shutdownProcess.command = ["systemctl", "poweroff"];
+            shutdownProcess.startDetached();
+            break;
         }
-        hide()
+        hide();
     }
 
     Rectangle {

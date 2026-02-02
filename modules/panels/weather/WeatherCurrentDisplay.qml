@@ -7,7 +7,7 @@ import qs.commons
 RowLayout {
     id: currentDisplay
 
-    property var theme : ThemeService.theme
+    property var theme: ThemeService.theme
     required property string temperature
     required property string condition
     required property string icon
@@ -35,16 +35,16 @@ RowLayout {
             anchors.margins: 20
             spacing: 15
 
-              Image {
-                    source: currentDisplay.icon
-                    Layout.preferredWidth: 60
-                    Layout.preferredHeight: 60
-                    fillMode: Image.PreserveAspectFit
-                    asynchronous: true
-                    cache: false
-                    smooth: true
-                    mipmap: true
-                }
+            Image {
+                source: currentDisplay.icon
+                Layout.preferredWidth: 60
+                Layout.preferredHeight: 60
+                fillMode: Image.PreserveAspectFit
+                asynchronous: true
+                cache: false
+                smooth: true
+                mipmap: true
+            }
 
             Text {
                 text: currentDisplay.temperature
@@ -68,7 +68,9 @@ RowLayout {
                 horizontalAlignment: Text.AlignHCenter
             }
 
-            Item { Layout.fillHeight: true }
+            Item {
+                Layout.fillHeight: true
+            }
         }
     }
 
@@ -93,9 +95,7 @@ RowLayout {
         Com.WeatherDetailCard {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            image: Settings.appearance.mode === "light"
-        ? "../../../assets/weather/wind_light.png"
-        : "../../../assets/weather/wind_dark.png"
+            image: Settings.appearance.mode === "light" ? "../../../assets/weather/wind_light.png" : "../../../assets/weather/wind_dark.png"
             value: currentDisplay.windSpeed
         }
 
@@ -119,9 +119,7 @@ RowLayout {
         Com.WeatherDetailCard {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            image: Settings.appearance.mode === "light"
-        ? "../../../assets/weather/uv_light.png"
-        : "../../../assets/weather/uv_dark.png"
+            image: Settings.appearance.mode === "light" ? "../../../assets/weather/uv_light.png" : "../../../assets/weather/uv_dark.png"
             value: currentDisplay.uvIndex
         }
 
@@ -129,9 +127,7 @@ RowLayout {
         Com.WeatherDetailCard {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            image: Settings.appearance.mode === "light"
-        ? "../../../assets/weather/feels_like_light.png"
-        : "../../../assets/weather/feels_like_dark.png"
+            image: Settings.appearance.mode === "light" ? "../../../assets/weather/feels_like_light.png" : "../../../assets/weather/feels_like_dark.png"
             value: currentDisplay.feelsLike
         }
     }

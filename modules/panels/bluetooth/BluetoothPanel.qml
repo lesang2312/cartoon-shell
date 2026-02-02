@@ -13,33 +13,34 @@ PanelWindow {
     implicitWidth: 450
     implicitHeight: 600
     anchors {
-    // Anchor theo vị trí của bar
-    left: Settings.bar.position === "left"
-    right: Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom"
-    top: Settings.bar.position === "top"
-    bottom: Settings.bar.position === "left" || Settings.bar.position === "right" || Settings.bar.position === "bottom"
-}
+        // Anchor theo vị trí của bar
+        left: Settings.bar.position === "left"
+        right: Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom"
+        top: Settings.bar.position === "top"
+        bottom: Settings.bar.position === "left" || Settings.bar.position === "right" || Settings.bar.position === "bottom"
+    }
 
-margins {
-    top: Settings.bar.position === "top" ? 10 : 0
-    bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? 10 : 0
-    left: Settings.bar.position === "left" ? 10 : 0
-    right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? (sizes.anchorMargin || 10) : 0
-}
+    margins {
+        top: Settings.bar.position === "top" ? 10 : 0
+        bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? 10 : 0
+        left: Settings.bar.position === "left" ? 10 : 0
+        right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? (sizes.anchorMargin || 10) : 0
+    }
     color: "transparent"
     focusable: true
     aboveWindows: true
     objectName: "BluetoothPanel"
 
-    property var theme : ThemeService.theme
-    property var lang : LanguageService.translations
+    property var theme: ThemeService.theme
+    property var lang: LanguageService.translations
     property var adapter: Bluetooth.defaultAdapter
     property int connectedCount: {
-        let count = 0
+        let count = 0;
         for (let i = 0; i < Bluetooth.devices.length; i++) {
-            if (Bluetooth.devices[i].connected) count++
+            if (Bluetooth.devices[i].connected)
+                count++;
         }
-        return count
+        return count;
     }
 
     property bool isDiscoverable: adapter ? adapter.discoverable : false
@@ -51,7 +52,7 @@ margins {
         interval: 30000
         onTriggered: {
             if (adapter && adapter.discovering) {
-                adapter.discovering = false
+                adapter.discovering = false;
             }
         }
     }
@@ -90,15 +91,15 @@ margins {
                     onScanClicked: {
                         if (adapter) {
                             if (adapter.discovering) {
-                                adapter.discovering = false
-                                scanTimer.stop()
+                                adapter.discovering = false;
+                                scanTimer.stop();
                             } else {
-                                adapter.discovering = true
-                                scanTimer.restart()
+                                adapter.discovering = true;
+                                scanTimer.restart();
 
                                 // Ensure adapter is discoverable
-                                adapter.discoverable = true
-                                adapter.pairable = true
+                                adapter.discoverable = true;
+                                adapter.pairable = true;
                             }
                         }
                     }
@@ -114,7 +115,10 @@ margins {
                     clip: true
 
                     Behavior on height {
-                        NumberAnimation { duration: 300; easing.type: Easing.OutCubic }
+                        NumberAnimation {
+                            duration: 300
+                            easing.type: Easing.OutCubic
+                        }
                     }
 
                     RowLayout {
@@ -153,9 +157,9 @@ margins {
                     lang: root.lang
                     connectedCount: root.connectedCount
 
-                    onPairError: function(message) {
-                        pairErrorMessage = message
-                        errorMessageTimer.restart()
+                    onPairError: function (message) {
+                        pairErrorMessage = message;
+                        errorMessageTimer.restart();
                     }
                 }
 
@@ -205,25 +209,29 @@ margins {
         function onEnabledChanged() {
             if (adapter?.enabled) {
                 // When enabling adapter, set default modes
-                adapter.pairable = true
-                adapter.discoverable = false // Default not discoverable
+                adapter.pairable = true;
+                adapter.discoverable = false; // Default not discoverable
             }
         }
-        function onDiscoveringChanged() {}
-        function onDiscoverableChanged() {}
-        function onPairableChanged() {}
+        function onDiscoveringChanged() {
+        }
+        function onDiscoverableChanged() {
+        }
+        function onPairableChanged() {
+        }
     }
 
     // Monitor device list changes
     Connections {
         target: Bluetooth
-        function onDevicesChanged() {}
+        function onDevicesChanged() {
+        }
     }
 
     Component.onCompleted: {
         // Ensure adapter is pairable on startup
         if (adapter && adapter.enabled) {
-            adapter.pairable = true
+            adapter.pairable = true;
         }
     }
 }
