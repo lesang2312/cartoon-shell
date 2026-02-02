@@ -86,10 +86,11 @@ Singleton {
             "bright.white": "mOnSurface"
         })
 
-    // Thêm các functions cho compatibility
     function init() {
-        console.log("ThemeService initialized");
+        console.log("ThemeService: Initializing theme system");
         root.loading = true;
+
+        // First find all theme files
         findProcess.running = true;
     }
 
@@ -214,16 +215,24 @@ Singleton {
         } else {
             // Load static theme
             var themeName = Settings.appearance.theme;
-            if (themeName) {
+            console.log("Loading theme:", themeName);
+
+            if (themeName && themeName !== "") {
                 loadThemeByName(themeName);
             } else {
-                root.loading = false;
+                // Use fallback theme based on mode
+                var fallbackTheme = Settings.appearance.mode === "light" ? (Settings.appearance.light || "gruvbox-light") : (Settings.appearance.dark || "gruvbox-dark");
+
+                console.log("No theme specified, using fallback:", fallbackTheme);
+                Settings.appearance.theme = fallbackTheme;
+                loadThemeByName(fallbackTheme);
             }
         }
     }
 
     function loadThemeByName(name) {
-        if (!name) {
+        if (!name || name === "") {
+            console.warn("Theme name is empty");
             root.loading = false;
             return;
         }
@@ -233,18 +242,22 @@ Singleton {
 
         // Check if file exists in themes directory
         for (var i = 0; i < themeFiles.length; i++) {
-            if (themeFiles[i].endsWith("/" + name + ".json")) {
+            var fileName = themeFiles[i].split("/").pop().replace(".json", "");
+            if (fileName === name) {
                 path = themeFiles[i];
                 break;
             }
         }
 
         if (path) {
+            console.log("Loading theme from:", path);
             themeReader.path = "";
             themeReader.path = path;
         } else {
             console.warn("Theme not found:", name);
-            root.loading = false;
+            // Try to load matugen.json as fallback
+            fallbackThemeReader.path = "";
+            fallbackThemeReader.path = matugenFilePath;
         }
     }
 
@@ -346,7 +359,7 @@ Singleton {
             console.warn("Matugen not available");
             root.loading = false;
             // Fall back to static theme
-            var fallbackTheme = Settings.appearance.mode === "light" ? Settings.appearance.light : Settings.appearance.dark;
+            var fallbackTheme = Settings.appearance.mode === "light" ? (Settings.appearance.light || "gruvbox-light") : (Settings.appearance.dark || "gruvbox-dark");
             loadThemeByName(fallbackTheme);
             return;
         }
@@ -368,7 +381,7 @@ Singleton {
             console.warn("No wallpaper found");
             root.loading = false;
             // Fall back to static theme
-            var fallbackTheme = Settings.appearance.mode === "light" ? Settings.appearance.light : Settings.appearance.dark;
+            var fallbackTheme = Settings.appearance.mode === "light" ? (Settings.appearance.light || "gruvbox-light") : (Settings.appearance.dark || "gruvbox-dark");
             loadThemeByName(fallbackTheme);
             return;
         }
@@ -468,6 +481,7 @@ Singleton {
 
         function onReadyChanged() {
             if (Settings.ready) {
+                console.log("Settings ready, refreshing theme");
                 // When settings are ready, refresh theme
                 Qt.callLater(function () {
                     root.refresh();
@@ -514,6 +528,7 @@ Singleton {
         target: WallpaperService
         function onWallpaperChanged() {
             if (Settings.appearance.dynamic || Settings.appearance.theme === "matugen") {
+                console.log("Wallpaper changed, refreshing theme");
                 Qt.callLater(function () {
                     root.refresh();
                 });
@@ -528,14 +543,38 @@ Singleton {
             if (exitCode === 0) {
                 themeFiles = stdout.text.trim().split("\n").filter(Boolean);
                 console.log("Found theme files:", themeFiles.length);
+
+                // Now refresh theme based on settings
+                if (Settings.ready) {
+                    console.log("Settings are ready, loading theme");
+                    root.refresh();
+                } else {
+                    console.log("Waiting for settings to be ready...");
+                    // Wait for settings to be ready
+                    settingsReadyTimer.start();
+                }
             } else {
                 console.error("Find Theme Error:", stderr.text);
+                root.loading = false;
             }
-            // Don't call refresh here - it will be called when settings are ready
-            root.loading = false;
         }
         stdout: StdioCollector {}
         stderr: StdioCollector {}
+    }
+
+    Timer {
+        id: settingsReadyTimer
+        interval: 100
+        repeat: true
+        onTriggered: {
+            if (Settings.ready) {
+                console.log("Settings ready, loading theme");
+                root.refresh();
+                settingsReadyTimer.stop();
+            } else {
+                console.log("Still waiting for settings...");
+            }
+        }
     }
 
     Process {
@@ -586,6 +625,26 @@ Singleton {
     }
 
     FileView {
+        id: fallbackThemeReader
+        onLoaded: {
+            try {
+                var jsonText = text();
+                if (jsonText) {
+                    root.updateColors(JSON.parse(jsonText));
+                } else {
+                    console.error("Fallback theme file is empty");
+                    // Load default fallback theme
+                    root.updateColors(root.getFallbackTheme());
+                }
+            } catch (e) {
+                console.error("Fallback Theme Load Error:", e);
+                // Load default fallback theme
+                root.updateColors(root.getFallbackTheme());
+            }
+        }
+    }
+
+    FileView {
         id: stateFileView
         path: root.stateFilePath
         watchChanges: true
@@ -629,4 +688,12 @@ Singleton {
 
     // Private property để lưu theme hiện tại
     property var _currentTheme: null
+
+    // Thêm Component.onCompleted để tự động gọi init()
+    Component.onCompleted: {
+        console.log("ThemeService component created");
+        Qt.callLater(function () {
+            init();
+        });
+    }
 }
