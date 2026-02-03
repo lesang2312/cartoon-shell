@@ -31,6 +31,7 @@ ShellRoot {
 
     property bool settingsLoaded: false
 
+    // lớp phủ
     PanelWindow {
         visible: VisibleService.hasPanel
         color: "transparent"

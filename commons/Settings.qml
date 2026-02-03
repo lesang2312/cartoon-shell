@@ -127,5 +127,9 @@ Singleton {
         property list<var> monitors: []
         property int transitionDuration: 500
         property real transitionEdgeSmoothness: 0.05
+        // Video-specific properties
+        property bool videoMuted: true
+        property bool videoLoop: true
+        property real videoPlaybackRate: 1.0
     }
 }

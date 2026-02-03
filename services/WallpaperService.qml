@@ -5,7 +5,7 @@ import Qt.labs.folderlistmodel
 import Quickshell
 import qs.commons
 import qs.utils
-import qs.services  // Thêm import này
+import qs.services
 
 Singleton {
     id: root
@@ -185,18 +185,36 @@ Singleton {
 
         // Kiểm tra nếu theme là matugen thì chạy matugen
         if (Settings.appearance && Settings.appearance.theme === "matugen") {
-            console.log("Matugen theme detected, triggering matugen for new wallpaper");
-
-            // Đợi một chút để đảm bảo file được lưu
-            Qt.callLater(function () {
-                // Gọi ThemeService thay vì MatugenService
-                if (typeof ThemeService !== 'undefined' && ThemeService.triggerMatugenOnWallpaperChange) {
-                    ThemeService.triggerMatugenOnWallpaperChange(path);
-                } else {
-                    console.warn("ThemeService not found or triggerMatugenOnWallpaperChange not available");
-                }
-            });
+            console.log("Matugen theme detected, checking wallpaper type...");
+            
+            // Kiểm tra xem file có phải là video không
+            const isVideo = isVideoFile(path);
+            
+            if (isVideo) {
+                console.log("Wallpaper is video file, skipping matugen:", path);
+            } else {
+                console.log("Wallpaper is image, running matugen for new wallpaper:", path);
+                
+                // Đợi một chút để đảm bảo file được lưu
+                Qt.callLater(function () {
+                    // Gọi ThemeService thay vì MatugenService
+                    if (typeof ThemeService !== 'undefined' && ThemeService.triggerMatugenOnWallpaperChange) {
+                        ThemeService.triggerMatugenOnWallpaperChange(path);
+                    } else {
+                        console.warn("ThemeService not found or triggerMatugenOnWallpaperChange not available");
+                    }
+                });
+            }
         }
+    }
+
+    // Hàm kiểm tra file có phải là video không
+    function isVideoFile(path) {
+        if (!path) return false;
+        const videoExtensions = ["mp4", "webm", "mkv", "avi", "mov", "flv", "wmv", "m4v", "mpg", "mpeg"];
+        const pathStr = path.toString();
+        const extension = pathStr.split('.').pop().toLowerCase();
+        return videoExtensions.includes(extension);
     }
 
     function restartRandomWallpaperTimer() {
@@ -249,6 +267,7 @@ Singleton {
 
         scanningCount++;
 
+        // Update the find command to include video files
         var processString = `
             import QtQuick
             import Quickshell.Io
@@ -257,7 +276,12 @@ Singleton {
                 command: ["find", "` + directory + `", "-type", "f",
                     "(", "-iname", "*.jpg", "-o", "-iname", "*.jpeg",
                     "-o", "-iname", "*.png", "-o", "-iname", "*.gif",
-                    "-o", "-iname", "*.pnm", "-o", "-iname", "*.bmp", ")"]
+                    "-o", "-iname", "*.pnm", "-o", "-iname", "*.bmp",
+                    "-o", "-iname", "*.mp4", "-o", "-iname", "*.webm",
+                    "-o", "-iname", "*.mkv", "-o", "-iname", "*.avi",
+                    "-o", "-iname", "*.mov", "-o", "-iname", "*.flv",
+                    "-o", "-iname", "*.wmv", "-o", "-iname", "*.m4v",
+                    "-o", "-iname", "*.mpg", "-o", "-iname", "*.mpeg", ")"]
                 stdout: StdioCollector {}
                 stderr: StdioCollector {}
             }
@@ -310,13 +334,16 @@ Singleton {
                     folderModel.destroy();
                 }
 
+                // Update nameFilters to include video files
                 var component = Qt.createQmlObject(`
                     import QtQuick
                     import Qt.labs.folderlistmodel
                     FolderListModel {
                         id: model
                         folder: "file://${targetDirectory}"
-                        nameFilters: ["*.jpg", "*.jpeg", "*.png", "*.gif", "*.pnm", "*.bmp"]
+                        nameFilters: ["*.jpg", "*.jpeg", "*.png", "*.gif", "*.pnm", "*.bmp",
+                                     "*.mp4", "*.webm", "*.mkv", "*.avi", "*.mov", "*.flv",
+                                     "*.wmv", "*.m4v", "*.mpg", "*.mpeg"]
                         showDirs: false
                         sortField: FolderListModel.Name
                     }
