@@ -39,13 +39,13 @@ Rectangle {
             ColumnLayout {
                 id: songInfoColumn
                 Layout.fillWidth: true
-                spacing: 2
+                spacing: 0
 
                 // Container for song title with marquee effect
                 Item {
                     id: songContainer
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 25
+                    Layout.preferredHeight: 23
                     clip: true
 
                     MouseArea {
@@ -120,86 +120,94 @@ Rectangle {
             }
 
             // Controls
-            RowLayout {
-                id: controlsRow
-                spacing: 12
+            Item {
                 Layout.fillHeight: true
                 Layout.preferredWidth: childrenRect.width
-                Layout.minimumWidth: childrenRect.width
-                Layout.maximumWidth: childrenRect.width
+                  Layout.minimumWidth: childrenRect.width
+                  Layout.maximumWidth: childrenRect.width
 
-                // Previous button
-                Image {
-                    id: preBtn
-                    source: theme.type === "dark" ? "../../assets/music/pre_dark.png" : "../../assets/music/pre.png"
-                    Layout.preferredWidth: 30
-                    Layout.preferredHeight: 30
-                    fillMode: Image.PreserveAspectFit
-                    smooth: true
 
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
+                RowLayout {
+                    id: controlsRow
+                    spacing: 12
+                    Layout.fillHeight: true
+                    Layout.preferredWidth: childrenRect.width
+                    Layout.minimumWidth: childrenRect.width
+                    Layout.maximumWidth: childrenRect.width
 
-                        onClicked: root.player?.previous()
-                        onEntered: parent.scale = 1.2
-                        onExited: parent.scale = 1.0
-                    }
+                    // Previous button
+                    Image {
+                        id: preBtn
+                        source: theme.type === "dark" ? "../../assets/music/pre_dark.png" : "../../assets/music/pre.png"
+                        Layout.preferredWidth: 30
+                        Layout.preferredHeight: 30
+                        fillMode: Image.PreserveAspectFit
+                        smooth: true
 
-                    Behavior on scale {
-                        NumberAnimation {
-                            duration: 100
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+
+                            onClicked: root.player?.previous()
+                            onEntered: parent.scale = 1.2
+                            onExited: parent.scale = 1.0
+                        }
+
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 100
+                            }
                         }
                     }
-                }
 
-                // Play/Pause button
-                Image {
-                    id: playPauseBtn
-                    source: {
-                        var suffix = theme.type === "dark" ? "_dark" : "";
-                        return isPlaying ? "../../assets/music/pause" + suffix + ".png" : "../../assets/music/play" + suffix + ".png";
-                    }
-                    Layout.preferredWidth: 30
-                    Layout.preferredHeight: 30
-                    fillMode: Image.PreserveAspectFit
-                    smooth: true
+                    // Play/Pause button
+                    Image {
+                        id: playPauseBtn
+                        source: {
+                            var suffix = theme.type === "dark" ? "_dark" : "";
+                            return isPlaying ? "../../assets/music/pause" + suffix + ".png" : "../../assets/music/play" + suffix + ".png";
+                        }
+                        Layout.preferredWidth: 30
+                        Layout.preferredHeight: 30
+                        fillMode: Image.PreserveAspectFit
+                        smooth: true
 
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: root.player?.togglePlaying()
-                        onEntered: parent.scale = 1.2
-                        onExited: parent.scale = 1.0
-                    }
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: root.player?.togglePlaying()
+                            onEntered: parent.scale = 1.2
+                            onExited: parent.scale = 1.0
+                        }
 
-                    Behavior on scale {
-                        NumberAnimation {
-                            duration: 100
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 100
+                            }
                         }
                     }
-                }
 
-                // Next button
-                Image {
-                    id: nextBtn
-                    source: theme.type === "dark" ? "../../assets/music/next_dark.png" : "../../assets/music/next.png"
-                    Layout.preferredWidth: 30
-                    Layout.preferredHeight: 30
-                    fillMode: Image.PreserveAspectFit
-                    smooth: true
+                    // Next button
+                    Image {
+                        id: nextBtn
+                        source: theme.type === "dark" ? "../../assets/music/next_dark.png" : "../../assets/music/next.png"
+                        Layout.preferredWidth: 30
+                        Layout.preferredHeight: 30
+                        fillMode: Image.PreserveAspectFit
+                        smooth: true
 
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: root.player?.next()
-                        onEntered: parent.scale = 1.2
-                        onExited: parent.scale = 1.0
-                    }
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: root.player?.next()
+                            onEntered: parent.scale = 1.2
+                            onExited: parent.scale = 1.0
+                        }
 
-                    Behavior on scale {
-                        NumberAnimation {
-                            duration: 100
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 100
+                            }
                         }
                     }
                 }
