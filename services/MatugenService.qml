@@ -142,7 +142,10 @@ Singleton {
         }
 
         // Run matugen with JSON output format
-        var command = "matugen image '" + currentWallpaper + "' -j hex --mode " + themeMode;
+        var command = "matugen image '" 
+    + currentWallpaper + 
+    "' -j hex --mode " + themeMode + 
+    " --prefer dark";
         console.log("Running matugen command:", command);
         matugenProcess.command = ["bash", "-c", command];
         matugenProcess.running = true;

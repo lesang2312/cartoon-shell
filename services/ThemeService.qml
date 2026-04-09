@@ -391,22 +391,34 @@ Singleton {
 
         console.log("Running matugen with wallpaper:", wallpaper, "mode:", targetMode, "type:", matugenType);
 
-        generateProcess.command = ["matugen", "image", wallpaper, "-j", "hex", "-m", targetMode, "-t", matugenType];
+        generateProcess.command = [
+    "matugen",
+    "image",
+    wallpaper,
+    "-j",
+    "hex",
+    "-m",
+    targetMode,
+    "--prefer=darkness"
+    ];
         generateProcess.running = true;
     }
 
     function parseMatugen(json) {
-        const result = {};
-        const colors = json.colors || {};
-        const mode = Settings.appearance.mode === "light" ? "light" : "dark";
+    const result = {};
+    const colors = json.colors || {};
+    const mode = Settings.appearance.mode === "light" ? "light" : "dark";
 
-        for (const key in matugenMap) {
-            const colorVal = colors[key]?.[mode];
-            if (colorVal)
-                result[matugenMap[key]] = colorVal;
+    for (const key in matugenMap) {
+        const colorObj = colors[key];
+        if (colorObj && colorObj[mode] && colorObj[mode].color) {
+            result[matugenMap[key]] = colorObj[mode].color;
+        } else {
+            console.warn("Missing color for key:", key);
         }
-        return result;
     }
+    return result;
+}
 
     function getDisplayName(path) {
         if (!path)
