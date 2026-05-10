@@ -73,42 +73,20 @@ Rectangle {
         }
       }
 
-      Button {
-        width: 40
-        height: 40
-        font.family: "ComicShannsMono Nerd Font"
-        background: Rectangle {
-          color: parent.down ? theme.button.background_select : parent.hovered ? theme.button.background_select : theme.button.background
-          radius: 8
-        }
-        contentItem: IconText{
-          name: passwordBox.showPassword ? "visibility" : "visibility_off"
-          horizontalAlignment: Text.AlignHCenter
-          verticalAlignment: Text.AlignVCenter
-          size: "small"
-        }
+      ButtonText {
+        name: passwordBox.showPassword ? "visibility" : "visibility_off"
+        size: "xs"
+        implicitHeight: 30
+        fontFamily: "Material Symbols Rounded"
         onClicked: {
           passwordBox.showPassword = !passwordBox.showPassword;
         }
       }
 
-      // Nút kết nối (hiển thị khi chưa kết nối)
-      Button {
-        height: 40
-        text: lang?.wifi?.connect || "Kết nối"
-        visible: !passwordBox.isConnected
-        font.family: "ComicShannsMono Nerd Font"
-        background: Rectangle {
-          color: parent.down ? theme.normal.blue : parent.hovered ? theme.bright.blue : theme.normal.blue
-          radius: 8
-        }
-        contentItem: Text {
-          text: parent.text
-          color: theme.primary.foreground
-          font: parent.font
-          horizontalAlignment: Text.AlignHCenter
-          verticalAlignment: Text.AlignVCenter
-        }
+      ButtonText {
+        name: lang?.wifi?.connect || "Kết nối"
+        size: "xs"
+        implicitHeight: 30
         onClicked: {
           // Kết nối với mật khẩu đã lưu
           wifiManager.connectToWifi(networkData.ssid, networkData.saved_password);
@@ -125,22 +103,10 @@ Rectangle {
         }
       }
 
-      // Nút quên mật khẩu
-      Button {
-        height: 40
-        text: lang?.wifi?.forget || "Quên"
-        font.family: "ComicShannsMono Nerd Font"
-        background: Rectangle {
-          color: parent.down ? theme.normal.red : parent.hovered ? Qt.lighter(theme.normal.red, 1.2) : theme.normal.red
-          radius: 8
-        }
-        contentItem: Text {
-          text: parent.text
-          color: theme.primary.foreground
-          font: parent.font
-          horizontalAlignment: Text.AlignHCenter
-          verticalAlignment: Text.AlignVCenter
-        }
+      ButtonText {
+        name: lang?.wifi?.forget || "Quên"
+        size: "xs"
+        implicitHeight: 30
         onClicked: {
           wifiManager.forgetPassword(networkData.ssid);
           passwordBox.hasSavedPassword = false;
@@ -177,41 +143,20 @@ Rectangle {
         }
       }
 
-      Button {
-        width: 40
-        height: 40
-        visible: networkData.security !== "Open"
-        font.family: "ComicShannsMono Nerd Font"
-        background: Rectangle {
-          color: parent.down ? theme.button.background_select : parent.hovered ? theme.button.background_select : theme.button.background
-          radius: 8
-        }
-        contentItem: IconText{
-          name: passwordBox.showPassword ? "visibility" : "visibility_off"
-          horizontalAlignment: Text.AlignHCenter
-          verticalAlignment: Text.AlignVCenter
-          size: "small"
-        }
+      ButtonText {
+        name: passwordBox.showPassword ? "visibility" : "visibility_off"
+        size: "xs"
+        implicitHeight: 30
+        fontFamily: "Material Symbols Rounded"
         onClicked: {
           passwordBox.showPassword = !passwordBox.showPassword;
         }
       }
 
-      Button {
-        height: 40
-        text: lang?.wifi?.connect || "Kết nối"
-        font.family: "ComicShannsMono Nerd Font"
-        background: Rectangle {
-          color: parent.down ? theme.normal.blue : parent.hovered ? theme.bright.blue : theme.normal.blue
-          radius: 8
-        }
-        contentItem: Text {
-          text: parent.text
-          color: theme.primary.foreground
-          font: parent.font
-          horizontalAlignment: Text.AlignHCenter
-          verticalAlignment: Text.AlignVCenter
-        }
+      ButtonText {
+        name: lang?.wifi?.connect || "Kết nối"
+        size: "xs"
+        implicitHeight: 30
         onClicked: {
           var password = wifiPassword.text.trim();
 
