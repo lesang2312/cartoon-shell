@@ -5,6 +5,7 @@ import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
 import qs.services
+import "./flag/" as Com
 import qs.commons
 
 PanelWindow {
@@ -170,31 +171,7 @@ PanelWindow {
       spacing: 15
 
       // Header
-      RowLayout {
-        Layout.fillWidth: true
-        spacing: 10
-
-        Image {
-          source: "../../assets/panel/earth.png"
-          width: 32
-          height: 32
-          fillMode: Image.PreserveAspectFit
-          smooth: true
-        }
-
-        Text {
-          text: "Select Your Country Flag"
-          color: theme.primary.foreground
-          font {
-            pixelSize: 32
-            bold: true
-            family: "ComicShannsMono Nerd Font"
-          }
-          Layout.fillWidth: true
-        }
-      }
-
-      // Divider
+      Com.FlagHeader{}
 
       // Flag Grid with Scroll
       ScrollView {
@@ -206,6 +183,7 @@ PanelWindow {
 
         Flow {
           height: 234
+          width: parent.width
           spacing: 12
           flow: Flow.TopToBottom
 

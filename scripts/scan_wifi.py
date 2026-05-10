@@ -4,17 +4,10 @@ import subprocess
 import sys
 
 class WiFiManager:
-    def __init__(self):
-        self.connected_ssid = None
-    
     def get_wifi_networks(self, rescan=True):
         """Lấy danh sách WiFi networks và lọc trùng"""
         try:
-            cmd = [
-                'nmcli', '-t', '-f', 
-                'SSID,SIGNAL,SECURITY,ACTIVE,IN-USE,BSSID', 
-                'dev', 'wifi', 'list'
-            ]
+            cmd = ['nmcli', '-t', '-f', 'SSID,SIGNAL,SECURITY', 'dev', 'wifi', 'list']
             
             if rescan:
                 cmd.extend(['--rescan', 'yes'])
@@ -25,48 +18,35 @@ class WiFiManager:
                 return {"error": f"nmcli failed: {result.stderr}"}
             
             wifi_networks = []
-            seen_networks = set()
-            self.connected_ssid = None
+            seen_ssids = set()
             
             for line in result.stdout.strip().split('\n'):
                 if not line:
                     continue
                     
                 parts = line.split(':')
-                if len(parts) >= 6:
-                    ssid, signal, security, active, in_use, bssid = parts[:6]
+                if len(parts) >= 3:
+                    ssid = parts[0].replace('\\:', ':') if parts[0] else "[Hidden]"
+                    signal = int(parts[1])
+                    security = parts[2]
                     
-                    # Xử lý SSID và BSSID
-                    ssid = ssid.replace('\\:', ':') if ssid else "[Hidden]"
-                    bssid = bssid.rstrip('\\')
-                    
-                    # Tạo key duy nhất và kiểm tra trùng lặp
-                    network_key = f"{ssid}_{bssid}"
-                    if network_key not in seen_networks:
-                        seen_networks.add(network_key)
+                    if ssid not in seen_ssids:
+                        seen_ssids.add(ssid)
+                        saved_password = self.get_saved_password(ssid)
                         
-                        network = {
+                        wifi_networks.append({
                             "ssid": ssid,
-                            "signal_strength": int(signal),
+                            "signal_strength": signal,
                             "security": security,
-                            "is_active": (active == "yes"),
-                            "is_connected": (in_use == "*"),
-                            "bssid": bssid,
-                            "signal_level": self.get_signal_level(int(signal))
-                        }
-                        
-                        if network["is_connected"]:
-                            self.connected_ssid = ssid
-                        
-                        wifi_networks.append(network)
+                            "saved_password": saved_password
+                        })
             
-            # Loại bỏ SSID trùng và sắp xếp
-            wifi_networks = self.remove_duplicate_ssids(wifi_networks)
+            # Sắp xếp theo signal mạnh nhất
+            wifi_networks.sort(key=lambda x: x["signal_strength"], reverse=True)
             
             return {
                 "success": True,
                 "count": len(wifi_networks),
-                "connected_ssid": self.connected_ssid,
                 "networks": wifi_networks
             }
             
@@ -75,37 +55,43 @@ class WiFiManager:
         except Exception as e:
             return {"error": f"Unexpected error: {str(e)}"}
     
-    def remove_duplicate_ssids(self, networks):
-        """Loại bỏ các SSID trùng lặp, giữ lại bản có signal mạnh nhất"""
-        unique_networks = {}
-        
-        for network in networks:
-            ssid = network["ssid"]
-            if ssid not in unique_networks or network["signal_strength"] > unique_networks[ssid]["signal_strength"]:
-                unique_networks[ssid] = network
-        
-        # Sắp xếp theo signal strength giảm dần
-        return sorted(unique_networks.values(), key=lambda x: x["signal_strength"], reverse=True)
+    def get_saved_password(self, ssid):
+        """Lấy mật khẩu đã lưu cho WiFi network"""
+        try:
+            cmd = ['nmcli', '-s', '-g', '802-11-wireless-security.psk', 'connection', 'show', ssid]
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=5)
+            
+            if result.returncode == 0 and result.stdout.strip():
+                return result.stdout.strip()
+            return None
+        except:
+            return None
     
-    def get_signal_level(self, signal_strength):
-        """Phân loại mức độ tín hiệu"""
-        if signal_strength >= 80:
-            return "excellent"
-        elif signal_strength >= 60:
-            return "good"
-        elif signal_strength >= 40:
-            return "fair"
-        elif signal_strength >= 20:
-            return "poor"
-        else:
-            return "very_poor"
+    def display_wifi_with_passwords(self):
+        """Hiển thị WiFi networks với mật khẩu đã lưu"""
+        result = self.get_wifi_networks()
+        
+        if not result.get("success"):
+            print(f"Error: {result.get('error')}")
+            return
+        
+        print("=== Nearby WiFi ===")
+        print()
+        
+        for network in result["networks"]:
+            print(f"SSID: {network['ssid']}")
+            password = network["saved_password"]
+            print(f"Saved Password: {password if password else '<none>'}")
+            print("------------------------")
 
 def main():
     wifi_manager = WiFiManager()
     
-    # Chỉ hỗ trợ scan WiFi với lọc trùng
-    result = wifi_manager.get_wifi_networks()
-    print(json.dumps(result, indent=2, ensure_ascii=False))
+    if len(sys.argv) > 1 and sys.argv[1] == "--display":
+        wifi_manager.display_wifi_with_passwords()
+    else:
+        result = wifi_manager.get_wifi_networks()
+        print(json.dumps(result, indent=2, ensure_ascii=False))
 
 if __name__ == "__main__":
     main()

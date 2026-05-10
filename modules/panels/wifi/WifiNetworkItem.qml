@@ -2,81 +2,86 @@ import QtQuick
 import QtQuick.Layouts
 import "." as Com
 import qs.services
+import qs.components
 
 Column {
-    id: networkItem
-    property var theme: ThemeService.theme
-    property var lang: LanguageService.translations
-    property var wifiManager
-    property var networkData
+  id: networkItem
+  property var theme: ThemeService.theme
+  property var lang: LanguageService.translations
+  property var wifiManager
+  property var networkData
 
+  width: parent.width
+  spacing: 4
+
+  Rectangle {
+    id: wifiItem
     width: parent.width
-    spacing: 4
+    height: 70
+    radius: 12
+    color: mouseArea.containsMouse ? theme.button.background_select : (networkData.isConnected ? theme.normal.blue : theme.primary.dim_background)
+    border.width: 2
+    border.color: networkData.isConnected ? theme.normal.blue : theme.normal.black
 
-    Rectangle {
-        id: wifiItem
-        width: parent.width
-        height: 70
-        radius: 12
-        color: mouseArea.containsMouse ? theme.button.background_select : (networkData.isConnected ? theme.normal.blue : theme.primary.dim_background)
-        border.width: 2
-        border.color: networkData.isConnected ? theme.normal.blue : theme.normal.black
+    RowLayout {
+      anchors.margins: 8
+      anchors.fill: parent
 
-        RowLayout {
-            anchors.margins: 8
-            anchors.fill: parent
+      Column {
+        Layout.fillWidth: true
+        Text {
+          text: networkData.ssid
+          font.pixelSize: 18
+          font.bold: true
+          color: networkData.isConnected ? theme.normal.black : theme.primary.foreground
+          font.family: "ComicShannsMono Nerd Font"
+        }
+        Text {
+          text: networkData.security + " • " + networkData.signal
+          font.pixelSize: 13
+          color: networkData.isConnected ? theme.normal.black : theme.primary.dim_foreground
+          font.family: "ComicShannsMono Nerd Font"
+        }
+      }
 
-            Column {
-                Layout.fillWidth: true
-                Text {
-                    text: networkData.ssid
-                    font.pixelSize: 18
-                    font.bold: true
-                    color: networkData.isConnected ? theme.normal.black : theme.primary.foreground
-                    font.family: "ComicShannsMono Nerd Font"
-                }
-                Text {
-                    text: networkData.security + " • " + networkData.signal
-                    font.pixelSize: 13
-                    color: networkData.isConnected ? theme.normal.black : theme.primary.dim_foreground
-                    font.family: "ComicShannsMono Nerd Font"
-                }
-            }
-
-            Item {
-                width: 40
-                height: 40
-                Image {
-                    source: networkData.isConnected ? "../../../assets/wifi/check-mark.png" : "../../../assets/wifi/padlock.png"
-                    width: parent.width - 12
-                    height: parent.height - 12
-                    anchors.centerIn: parent
-                    fillMode: Image.PreserveAspectFit
-                }
-            }
+      Rectangle {
+        color: networkData.isConnected ? theme.normal.green : theme.button.background
+        implicitWidth: iconItem.height
+        implicitHeight: iconItem.height
+        radius: 16
+        IconText{
+          anchors.centerIn: parent
+          id: iconItem
+          name: networkData.isConnected ? "check" : networkData.saved_password != "--" ? "lock_open" : "lock"
+          size: "small"
+          textColor: networkData.isConnected ? theme.primary.background : theme.primary.foreground
         }
 
-        MouseArea {
-            id: mouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
-            onClicked: {
-                if (wifiManager.openSsid === networkData.ssid) {
-                    wifiManager.openSsid = "";
-                } else {
-                    wifiManager.openSsid = networkData.ssid;
-                }
-            }
-        }
+      }
+
     }
 
-    Com.WifiPasswordBox {
-        visible: networkItem.networkData.ssid === wifiManager.openSsid
-        networkData: networkItem.networkData
-        theme: networkItem.theme
-        lang: networkItem.lang
-        wifiManager: networkItem.wifiManager
-        width: parent.width
+    MouseArea {
+      id: mouseArea
+      anchors.fill: parent
+      hoverEnabled: true
+      cursorShape: Qt.PointingHandCursor
+      onClicked: {
+        if (wifiManager.openSsid === networkData.ssid) {
+          wifiManager.openSsid = "";
+        } else {
+          wifiManager.openSsid = networkData.ssid;
+        }
+      }
     }
+  }
+
+  Com.WifiPasswordBox {
+    visible: networkItem.networkData.ssid === wifiManager.openSsid
+    networkData: networkItem.networkData
+    theme: networkItem.theme
+    lang: networkItem.lang
+    wifiManager: networkItem.wifiManager
+    width: parent.width
+  }
 }
