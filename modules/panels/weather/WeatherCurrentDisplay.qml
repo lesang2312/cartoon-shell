@@ -3,11 +3,11 @@ import QtQuick.Layouts
 import qs.services
 import "." as Com
 import qs.commons
+import qs.components
 
 RowLayout {
   id: currentDisplay
 
-  property var theme: ThemeService.theme
   required property string temperature
   required property string condition
   required property string icon
@@ -28,44 +28,33 @@ RowLayout {
     Layout.fillHeight: true
     radius: 16
 
-    color: Qt.rgba(theme.normal.black.r, theme.normal.black.g, theme.normal.black.b, 0.05)
+    color: theme.primary.dim_background
+    border.color: theme.primary.foreground
+    border.width: 1
 
     ColumnLayout {
       anchors.fill: parent
       anchors.margins: 20
-      spacing: 15
+      spacing: 12
 
-      Image {
-        source: currentDisplay.icon
-        Layout.preferredWidth: 60
-        Layout.preferredHeight: 60
-        fillMode: Image.PreserveAspectFit
-        asynchronous: true
-        cache: false
-        smooth: true
-        mipmap: true
+      IconImage{
+        path: currentDisplay.icon
+        size: "xl"
+        Layout.alignment: Qt.AlignHCenter
+
       }
 
-      Text {
-        text: currentDisplay.temperature
-        color: theme.primary.foreground
-        font {
-          pixelSize: 48
-          bold: true
-          family: "ComicShannsMono Nerd Font"
-        }
+      CustomText {
+        name : currentDisplay.temperature
+        size: "2xl"
+        isBold: true
         Layout.alignment: Qt.AlignHCenter
       }
 
-      Text {
-        text: currentDisplay.condition.slice(0, 15)
-        color: theme.primary.foreground
-        font {
-          pixelSize: 18
-          family: "ComicShannsMono Nerd Font"
-        }
+      CustomText {
+        name : currentDisplay.condition.slice(0, 15)
+        size: "small"
         Layout.alignment: Qt.AlignHCenter
-        horizontalAlignment: Text.AlignHCenter
       }
 
       Item {
@@ -87,7 +76,7 @@ RowLayout {
     Com.WeatherDetailCard {
       Layout.fillWidth: true
       Layout.fillHeight: true
-      image: "../../../assets/weather/humidity.png"
+      image: "weather/humidity.png"
       value: currentDisplay.humidity
     }
 
@@ -95,7 +84,7 @@ RowLayout {
     Com.WeatherDetailCard {
       Layout.fillWidth: true
       Layout.fillHeight: true
-      image: Settings.appearance.mode === "light" ? "../../../assets/weather/wind_light.png" : "../../../assets/weather/wind_dark.png"
+      image: Settings.appearance.mode === "light" ? "weather/wind_light.png" : "weather/wind_dark.png"
       value: currentDisplay.windSpeed
     }
 
@@ -103,7 +92,7 @@ RowLayout {
     Com.WeatherDetailCard {
       Layout.fillWidth: true
       Layout.fillHeight: true
-      image: "../../../assets/weather/pressure.png"
+      image: "weather/pressure.png"
       value: currentDisplay.pressure
     }
 
@@ -111,7 +100,7 @@ RowLayout {
     Com.WeatherDetailCard {
       Layout.fillWidth: true
       Layout.fillHeight: true
-      image: "../../../assets/weather/visibility.png"
+      image: "weather/visibility.png"
       value: currentDisplay.visibility
     }
 
@@ -119,7 +108,7 @@ RowLayout {
     Com.WeatherDetailCard {
       Layout.fillWidth: true
       Layout.fillHeight: true
-      image: Settings.appearance.mode === "light" ? "../../../assets/weather/uv_light.png" : "../../../assets/weather/uv_dark.png"
+      image: Settings.appearance.mode === "light" ? "weather/uv_light.png" : "weather/uv_dark.png"
       value: currentDisplay.uvIndex
     }
 
@@ -127,7 +116,7 @@ RowLayout {
     Com.WeatherDetailCard {
       Layout.fillWidth: true
       Layout.fillHeight: true
-      image: Settings.appearance.mode === "light" ? "../../../assets/weather/feels_like_light.png" : "../../../assets/weather/feels_like_dark.png"
+      image: Settings.appearance.mode === "light" ? "weather/feels_like_light.png" : "weather/feels_like_dark.png"
       value: currentDisplay.feelsLike
     }
   }

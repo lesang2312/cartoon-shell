@@ -25,13 +25,16 @@ Text {
       return 16
 
       case "normal":
-      return 22
+      return 24
 
       case "large":
       return 32
 
       case "xl":
       return 40
+
+      case "2xl":
+      return 48
 
       default:
       return 32

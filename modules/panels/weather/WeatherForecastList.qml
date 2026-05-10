@@ -1,122 +1,56 @@
 import QtQuick
 import QtQuick.Layouts
 import qs.services
+import "." as Com
 
 Rectangle {
-    id: forecastSection
+  id: forecastSection
 
-    property var theme: ThemeService.theme
-    required property var forecastDays
+  property var theme: ThemeService.theme
+  required property var forecastDays
 
-    visible: forecastDays.length > 0
-    Layout.fillWidth: true
-    Layout.preferredHeight: 200
-    radius: 16
-    color: Qt.rgba(theme.normal.black.r, theme.normal.black.g, theme.normal.black.b, 0.05)
-    border.color: Qt.rgba(theme.normal.black.r, theme.normal.black.g, theme.normal.black.b, 0.1)
-    border.width: 1
+  visible: forecastDays.length > 0
+  Layout.fillWidth: true
+  Layout.preferredHeight: 200
+  radius: 16
+  color: Qt.rgba(theme.normal.black.r, theme.normal.black.g, theme.normal.black.b, 0.05)
+  border.color: Qt.rgba(theme.normal.black.r, theme.normal.black.g, theme.normal.black.b, 0.1)
+  border.width: 1
 
-    ColumnLayout {
-        anchors.fill: parent
-        anchors.margins: 16
-        spacing: 12
+  ColumnLayout {
+    anchors.fill: parent
+    spacing: 12
 
-        // Forecast row - horizontal layout
-        RowLayout {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            spacing: 10
+    // Forecast row - horizontal layout
+    RowLayout {
+      Layout.fillWidth: true
+      Layout.fillHeight: true
 
-            Repeater {
-                model: forecastSection.forecastDays
+      Com.WeatherForecastItem {
+        dayName: forecastSection.forecastDays[0]?.dayName ?? ""
+        dateText: forecastSection.forecastDays[0]?.dateText ?? ""
+        icon: forecastSection.forecastDays[0]?.icon ?? ""
+        minTemp: (forecastSection.forecastDays[0]?.minTemp ?? "") + "℃ "
+        maxTemp: (forecastSection.forecastDays[0]?.maxTemp ?? "") + "℃ "
+      }
+      Item {Layout.fillWidth: true}
+      Com.WeatherForecastItem {
+        dayName: forecastSection.forecastDays[1]?.dayName ?? ""
+        dateText: forecastSection.forecastDays[1]?.dateText ?? ""
+        icon: forecastSection.forecastDays[1]?.icon ?? ""
+        minTemp: (forecastSection.forecastDays[1]?.minTemp ?? "") + "℃ "
+        maxTemp: (forecastSection.forecastDays[1]?.maxTemp ?? "") + "℃ "
+      }
 
-                Rectangle {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    radius: 12
-                    color: Qt.rgba(theme.normal.black.r, theme.normal.black.g, theme.normal.black.b, 0.05)
-                    border.color: Qt.rgba(theme.normal.black.r, theme.normal.black.g, theme.normal.black.b, 0.1)
-                    border.width: 1
+      Item {Layout.fillWidth: true}
 
-                    ColumnLayout {
-                        anchors.fill: parent
-                        anchors.margins: 10
-                        spacing: 8
-
-                        // Day name
-                        Text {
-                            text: modelData.dayName
-                            color: theme.primary.foreground
-                            font {
-                                pixelSize: 24
-                                bold: index === 0
-                                family: "ComicShannsMono Nerd Font"
-                            }
-                            Layout.alignment: Qt.AlignHCenter
-                            elide: Text.ElideRight
-                        }
-
-                        // Date
-                        Text {
-                            text: modelData.dateText
-                            color: theme.primary.dim_foreground
-                            font {
-                                pixelSize: 20
-                                family: "ComicShannsMono Nerd Font"
-                            }
-                            Layout.alignment: Qt.AlignHCenter
-                        }
-
-                        // Weather icon
-                        Image {
-                            source: modelData.icon
-                            Layout.alignment: Qt.AlignHCenter
-                            Layout.preferredWidth: 40
-                            Layout.preferredHeight: 40
-                            fillMode: Image.PreserveAspectFit
-                            asynchronous: true
-                            cache: false
-                            smooth: true
-                            mipmap: true
-                        }
-
-                        // Temperature range
-                        RowLayout {
-                            Layout.alignment: Qt.AlignHCenter
-                            spacing: 4
-
-                            Text {
-                                text: `${modelData.minTemp}°`
-                                color: theme.normal.cyan
-                                font {
-                                    pixelSize: 24
-                                    bold: true
-                                    family: "ComicShannsMono Nerd Font"
-                                }
-                            }
-
-                            Text {
-                                text: "/"
-                                color: theme.primary.dim_foreground
-                                font.pixelSize: 24
-                            }
-
-                            Text {
-                                text: `${modelData.maxTemp}°`
-                                color: theme.normal.red
-                                font {
-                                    pixelSize: 24
-                                    family: "ComicShannsMono Nerd Font"
-                                }
-                            }
-                        }
-
-                        Item {
-                            Layout.fillHeight: true
-                        }
-                    }
-                }
-            }
-        }
+      Com.WeatherForecastItem {
+        dayName: forecastSection.forecastDays[2]?.dayName ?? ""
+        dateText: forecastSection.forecastDays[2]?.dateText ?? ""
+        icon: forecastSection.forecastDays[2]?.icon ?? ""
+        minTemp: (forecastSection.forecastDays[2]?.minTemp ?? "") + "℃ "
+        maxTemp: (forecastSection.forecastDays[2]?.maxTemp ?? "") + "℃ "
+      }
     }
+  }
 }
