@@ -9,7 +9,7 @@ Item {
   id: root
 
   Loader {
-    source: "../modules/panels/calendar/Panel.qml"
+    source: "../modules/panels/calendar/CalendarPanel.qml"
     active: VisibleService.calendar
     onLoaded: {
       item.visible = Qt.binding(function () {
