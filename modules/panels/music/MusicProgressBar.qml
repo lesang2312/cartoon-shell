@@ -19,7 +19,7 @@ ColumnLayout {
       width: parent.width * Players.getProgress()
       height: parent.height
       radius: 2
-      color: theme.primary.foreground
+      color: theme.button.text
 
     }
   }

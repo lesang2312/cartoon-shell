@@ -19,9 +19,9 @@ Column {
     width: parent.width
     height: 70
     radius: 12
-    color: mouseArea.containsMouse ? theme.button.background_select : (networkData.isConnected ? theme.normal.blue : theme.primary.dim_background)
+    color: mouseArea.containsMouse ? theme.button.background_select : (networkData.isConnected ? theme.button.background : theme.primary.dim_background)
     border.width: 2
-    border.color: networkData.isConnected ? theme.normal.blue : theme.normal.black
+    border.color: networkData.isConnected ? theme.button.border : theme.normal.black
 
     RowLayout {
       anchors.margins: 8
@@ -33,13 +33,13 @@ Column {
           text: networkData.ssid
           font.pixelSize: 18
           font.bold: true
-          color: networkData.isConnected ? theme.normal.black : theme.primary.foreground
+          color: networkData.isConnected ? theme.primary.foreground : theme.primary.foreground
           font.family: "ComicShannsMono Nerd Font"
         }
         Text {
           text: networkData.security + " • " + networkData.signal
           font.pixelSize: 13
-          color: networkData.isConnected ? theme.normal.black : theme.primary.dim_foreground
+          color: networkData.isConnected ? theme.button.text : theme.primary.dim_foreground
           font.family: "ComicShannsMono Nerd Font"
         }
       }
@@ -54,7 +54,7 @@ Column {
           id: iconItem
           name: networkData.isConnected ? "check" : networkData.saved_password != "--" ? "lock_open" : "lock"
           size: "small"
-          textColor: networkData.isConnected ? theme.primary.background : theme.primary.foreground
+          textColor: networkData.isConnected ? theme.primary.background : theme.button.text
         }
 
       }

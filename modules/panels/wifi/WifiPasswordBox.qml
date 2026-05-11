@@ -22,7 +22,7 @@ Rectangle {
   radius: 12
   height: visible ? (hasError ? 120 : 80) : 0
   border.width: 2
-  border.color: theme.normal.blue
+  border.color: theme.button.border_select
 
   Behavior on height {
     NumberAnimation {
@@ -61,7 +61,8 @@ Rectangle {
         height: 40
         color: theme.primary.background
         radius: 8
-        border.color: theme.normal.blue
+        border.color: theme.button.border_select
+
         border.width: 1
 
         Text {
@@ -87,6 +88,8 @@ Rectangle {
         name: lang?.wifi?.connect || "Kết nối"
         size: "xs"
         implicitHeight: 30
+        visible: !networkData.isConnected
+
         onClicked: {
           // Kết nối với mật khẩu đã lưu
           wifiManager.connectToWifi(networkData.ssid, networkData.saved_password);
@@ -130,11 +133,12 @@ Rectangle {
         echoMode: passwordBox.showPassword ? TextInput.Normal : TextInput.Password
         enabled: networkData.security !== "Open"
         font.family: "ComicShannsMono Nerd Font"
+        horizontalAlignment: TextInput.AlignHCenter
         color: theme.primary.foreground
         background: Rectangle {
           color: theme.primary.background
           radius: 8
-          border.color: theme.normal.blue
+          border.color: theme.button.border_select
           border.width: 1
         }
 
