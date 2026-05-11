@@ -18,9 +18,6 @@ Rectangle {
   property var theme: ThemeService.theme
   property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
 
-  WeatherService {
-    id: weatherService
-  }
   DateTimeService {
     id: dateTimeService
   }
@@ -106,28 +103,22 @@ Rectangle {
         RowLayout {
           id: contentWeather
           anchors.centerIn: parent
-          Image {
-            source: weatherService.icon
-            Layout.preferredWidth: 30
-            Layout.preferredHeight: 30
-            fillMode: Image.PreserveAspectFit
-            asynchronous: true
-            cache: false
-            smooth: true
-            mipmap: true
+          IconImage {
+            path: WeatherService.icon
+            size: "normal"
           }
 
           ColumnLayout {
             spacing: 1
             CustomText {
-              name: weatherService.temperature || "Đang tải..."
+              name: WeatherService.temperature || "Đang tải..."
               Layout.alignment: Qt.AlignVCenter
               size: "small"
             }
             CustomText {
               id: textCondition
 
-              name: weatherService.condition.slice(0, 15) || "..."
+              name: WeatherService.condition.slice(0, 15) || "..."
               size: "xs"
               elide: Text.ElideRight
               maximumLineCount: 1

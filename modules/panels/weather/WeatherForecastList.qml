@@ -4,12 +4,10 @@ import qs.services
 import "." as Com
 
 Rectangle {
-  id: forecastSection
 
   property var theme: ThemeService.theme
-  required property var forecastDays
 
-  visible: forecastDays.length > 0
+  visible: WeatherService.forecastDays.length > 0
   Layout.fillWidth: true
   Layout.preferredHeight: 200
   radius: 16
@@ -27,29 +25,29 @@ Rectangle {
       Layout.fillHeight: true
 
       Com.WeatherForecastItem {
-        dayName: forecastSection.forecastDays[0]?.dayName ?? ""
-        dateText: forecastSection.forecastDays[0]?.dateText ?? ""
-        icon: forecastSection.forecastDays[0]?.icon ?? ""
-        minTemp: (forecastSection.forecastDays[0]?.minTemp ?? "") + "℃ "
-        maxTemp: (forecastSection.forecastDays[0]?.maxTemp ?? "") + "℃ "
+        dayName: WeatherService.forecastDays[0]?.dayName ?? ""
+        dateText: WeatherService.forecastDays[0]?.dateText ?? ""
+        icon: WeatherService.forecastDays[0]?.icon ?? ""
+        minTemp: (WeatherService.forecastDays[0]?.minTemp ?? "") + "℃ "
+        maxTemp: (WeatherService.forecastDays[0]?.maxTemp ?? "") + "℃ "
       }
       Item {Layout.fillWidth: true}
       Com.WeatherForecastItem {
-        dayName: forecastSection.forecastDays[1]?.dayName ?? ""
-        dateText: forecastSection.forecastDays[1]?.dateText ?? ""
-        icon: forecastSection.forecastDays[1]?.icon ?? ""
-        minTemp: (forecastSection.forecastDays[1]?.minTemp ?? "") + "℃ "
-        maxTemp: (forecastSection.forecastDays[1]?.maxTemp ?? "") + "℃ "
+        dayName: WeatherService.forecastDays[1]?.dayName ?? ""
+        dateText: WeatherService.forecastDays[1]?.dateText ?? ""
+        icon: WeatherService.forecastDays[1]?.icon ?? ""
+        minTemp: (WeatherService.forecastDays[1]?.minTemp ?? "") + "℃ "
+        maxTemp: (WeatherService.forecastDays[1]?.maxTemp ?? "") + "℃ "
       }
 
       Item {Layout.fillWidth: true}
 
       Com.WeatherForecastItem {
-        dayName: forecastSection.forecastDays[2]?.dayName ?? ""
-        dateText: forecastSection.forecastDays[2]?.dateText ?? ""
-        icon: forecastSection.forecastDays[2]?.icon ?? ""
-        minTemp: (forecastSection.forecastDays[2]?.minTemp ?? "") + "℃ "
-        maxTemp: (forecastSection.forecastDays[2]?.maxTemp ?? "") + "℃ "
+        dayName: WeatherService.forecastDays[2]?.dayName ?? ""
+        dateText: WeatherService.forecastDays[2]?.dateText ?? ""
+        icon: WeatherService.forecastDays[2]?.icon ?? ""
+        minTemp: (WeatherService.forecastDays[2]?.minTemp ?? "") + "℃ "
+        maxTemp: (WeatherService.forecastDays[2]?.maxTemp ?? "") + "℃ "
       }
     }
   }

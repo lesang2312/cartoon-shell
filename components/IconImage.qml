@@ -29,6 +29,12 @@ Item {
       case "xl":
       return 50
 
+      case "2xl":
+      return 64
+
+      case "3xl":
+      return 84
+
       default:
       return 32
     }

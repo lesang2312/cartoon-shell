@@ -7,18 +7,6 @@ import qs.components
 
 RowLayout {
   id: currentDisplay
-
-  required property string temperature
-  required property string condition
-  required property string icon
-  required property string feelsLike
-  required property string humidity
-  required property string windSpeed
-  required property string pressure
-  required property string visibility
-  required property string uvIndex
-  required property bool hasData
-
   spacing: 20
 
   // Main weather card - LEFT
@@ -38,21 +26,21 @@ RowLayout {
       spacing: 12
 
       IconImage{
-        path: currentDisplay.icon
+        path: WeatherService.icon
         size: "xl"
         Layout.alignment: Qt.AlignHCenter
 
       }
 
       CustomText {
-        name : currentDisplay.temperature
+        name : WeatherService.temperature
         size: "2xl"
         isBold: true
         Layout.alignment: Qt.AlignHCenter
       }
 
       CustomText {
-        name : currentDisplay.condition.slice(0, 15)
+        name : WeatherService.condition.slice(0, 15)
         size: "small"
         Layout.alignment: Qt.AlignHCenter
       }
@@ -65,7 +53,7 @@ RowLayout {
 
   // Weather details grid - 3x2 layout - RIGHT
   GridLayout {
-    visible: currentDisplay.hasData
+    visible: WeatherService.temperature !== "" && WeatherService.errorMessage === ""
     Layout.fillWidth: true
     Layout.fillHeight: true
     columns: 3
@@ -77,7 +65,7 @@ RowLayout {
       Layout.fillWidth: true
       Layout.fillHeight: true
       image: "weather/humidity.png"
-      value: currentDisplay.humidity
+      value: WeatherService.humidity
     }
 
     // Wind Speed
@@ -85,7 +73,7 @@ RowLayout {
       Layout.fillWidth: true
       Layout.fillHeight: true
       image: Settings.appearance.mode === "light" ? "weather/wind_light.png" : "weather/wind_dark.png"
-      value: currentDisplay.windSpeed
+      value: WeatherService.windSpeed
     }
 
     // Pressure
@@ -93,7 +81,7 @@ RowLayout {
       Layout.fillWidth: true
       Layout.fillHeight: true
       image: "weather/pressure.png"
-      value: currentDisplay.pressure
+      value: WeatherService.pressure
     }
 
     // Visibility
@@ -101,7 +89,7 @@ RowLayout {
       Layout.fillWidth: true
       Layout.fillHeight: true
       image: "weather/visibility.png"
-      value: currentDisplay.visibility
+      value: WeatherService.visibility
     }
 
     // UV Index
@@ -109,7 +97,7 @@ RowLayout {
       Layout.fillWidth: true
       Layout.fillHeight: true
       image: Settings.appearance.mode === "light" ? "weather/uv_light.png" : "weather/uv_dark.png"
-      value: currentDisplay.uvIndex
+      value: WeatherService.uvIndex
     }
 
     // Feels Like
@@ -117,7 +105,7 @@ RowLayout {
       Layout.fillWidth: true
       Layout.fillHeight: true
       image: Settings.appearance.mode === "light" ? "weather/feels_like_light.png" : "weather/feels_like_dark.png"
-      value: currentDisplay.feelsLike
+      value: WeatherService.feelsLike
     }
   }
 }
