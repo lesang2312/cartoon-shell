@@ -18,10 +18,6 @@ Rectangle {
   property var theme: ThemeService.theme
   property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
 
-  DateTimeService {
-    id: dateTimeService
-  }
-
   // UI Layout
   Loader {
     anchors.fill: parent
@@ -51,14 +47,14 @@ Rectangle {
           anchors.leftMargin: 10
           spacing: 0
           CustomText{
-            name: dateTimeService.currentTime
+            name: DateTimeService.currentTime
             isBold: true
             size: "small"
           }
           CustomText {
             id: textCurrentDate
 
-            name : dateTimeService.currentDate
+            name : DateTimeService.currentDate
             size: "xs"
             color: root.theme.primary.dim_foreground
 
@@ -194,7 +190,7 @@ Rectangle {
             spacing: 2
 
             Text {
-              text: dateTimeService.currentHour
+              text: DateTimeService.currentHour
               color: root.theme.primary.foreground
               font {
                 pixelSize: 20
@@ -203,7 +199,7 @@ Rectangle {
               }
             }
             Text {
-              text: dateTimeService.currentMinus
+              text: DateTimeService.currentMinus
               color: root.theme.primary.foreground
               font {
                 pixelSize: 20
@@ -253,21 +249,14 @@ Rectangle {
             anchors.centerIn: parent
             spacing: 8
 
-            Image {
-              source: weatherService.icon
-              Layout.preferredWidth: 25
-              Layout.preferredHeight: 25
-              fillMode: Image.PreserveAspectFit
-              asynchronous: true
-              cache: false
-              smooth: true
-              mipmap: true
+            IconImage {
+              path: WeatherService.icon
             }
 
             ColumnLayout {
               spacing: 1
               Text {
-                text: weatherService.temperature || "Đang tải..."
+                text: WeatherService.temperature || "Đang tải..."
                 color: root.theme.primary.foreground
                 Layout.alignment: Qt.AlignVCenter
                 font {

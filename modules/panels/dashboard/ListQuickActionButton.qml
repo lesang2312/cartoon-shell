@@ -116,8 +116,8 @@ ColumnLayout {
       Layout.fillWidth: true
       Layout.preferredHeight: 110
       radius: 28
-      color: mouseAreaRestart.containsMouse ? theme.button.background_select : theme.primary.background
-      border.color: mouseAreaRestart.containsPress ? theme.button.border_select : theme.button.border
+      color: mouseAreaShutdown.containsMouse ? theme.button.background_select : theme.primary.background
+      border.color: mouseAreaShutdown.containsPress ? theme.button.border_select : theme.button.border
       border.width: 3
 
       Image {
@@ -127,13 +127,6 @@ ColumnLayout {
         height: 50
         fillMode: Image.PreserveAspectFit
         smooth: true
-        rotation: mouseAreaShutdown.containsMouse ? 180 : 0
-        Behavior on rotation {
-          NumberAnimation {
-            duration: 400
-            easing.type: Easing.InOutCubic
-          }
-        }
       }
 
       MouseArea {

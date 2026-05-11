@@ -140,6 +140,7 @@ Singleton {
           calendar = false;
           flag = false;
           music = false;
+          weather = false;
           flag = false;
           launcher = false;
           dashboard = false;
@@ -197,6 +198,7 @@ Singleton {
           weather = true;
           music = false;
           dashboard = false;
+          ram = false;
           setting = false;
           fullsetting = false;
         } else {

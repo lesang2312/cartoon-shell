@@ -14,6 +14,7 @@ Rectangle {
   color: theme.primary.dim_background
   border.color: theme.primary.foreground
   border.width: 1
+  clip: true
 
   ColumnLayout {
     anchors.fill: parent
@@ -43,7 +44,7 @@ Rectangle {
     IconImage {
       path: root.icon
       Layout.alignment: Qt.AlignHCenter
-      size: "large"
+      size: "2xl"
     }
 
     Item {Layout.fillWidth: true}
@@ -51,27 +52,26 @@ Rectangle {
     // Temperature range
     RowLayout {
       Layout.alignment: Qt.AlignHCenter
-      spacing: 4
+      spacing: 0
 
       CustomText {
         name: root.minTemp
         textColor: theme.normal.cyan
-        size: "normal"
-
+        size: "small"
         isBold: true
       }
 
       CustomText{
-        name: " /"
+        name: "/ "
         textColor: theme.primary.dim_foreground
-        size: "normal"
+        size: "small"
 
       }
 
       CustomText {
         name: root.maxTemp
         textColor: theme.normal.red
-        size: "normal"
+        size: "small"
         isBold: true
       }
     }
