@@ -17,16 +17,6 @@ Item {
       });
     }
   }
-  Loader {
-    source: "../modules/dialogs/FileDialog.qml"
-    active: VisibleService.filedialog
-    onLoaded: {
-      item.visible = Qt.binding(function () {
-          return VisibleService.filedialog;
-      });
-
-    }
-  }
 
   // Flag Selection Panel
   Loader {

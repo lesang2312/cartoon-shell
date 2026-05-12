@@ -19,6 +19,7 @@ PanelWindow {
   property url selectedFile: ""
   property int gridSize: 100  // Kích thước mỗi item
   property string currentPath: "file:///home/long/"
+  signal fileOpened(url fileUrl)
 
   focusable: true
 
@@ -168,8 +169,14 @@ PanelWindow {
         }
       }
       Com.StatusBar{
+        id: statusBar
+
         selectedFile: root.selectedFile
 
+        onFileOpened: function(fileUrl) {
+          root.fileOpened(fileUrl)
+          root.hide()
+        }
       }
     }
   }

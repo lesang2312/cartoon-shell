@@ -10,6 +10,21 @@ Rectangle {
   id: root
 
   property var theme : ThemeService.theme
+  Loader {
+    source: "../../dialogs/FileDialog.qml"
+    active: VisibleService.filedialog
+
+    onLoaded: {
+      item.visible = Qt.binding(function () {
+          return VisibleService.filedialog;
+      });
+
+      item.fileOpened.connect(function(fileUrl) {
+          Settings.dashboard.urlAvatar = fileUrl
+          VisibleService.togglePanel("filedialog")
+      })
+    }
+  }
 
   Layout.fillWidth: true
   Layout.fillHeight: true
@@ -71,7 +86,9 @@ Rectangle {
 
         Image {
           anchors.fill: parent
-          source: "/home/long/Downloads/111423869.png"
+          source: Settings.dashboard.urlAvatar
+          ? Settings.dashboard.urlAvatar
+          : "/home/long/Downloads/111423869.png"
           fillMode: Image.PreserveAspectCrop
           smooth: true
         }

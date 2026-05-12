@@ -11,6 +11,7 @@ Rectangle {
 
   height: 30
   color: theme.primary.dim_background
+  signal fileOpened(url fileUrl)
   property var selectedFile: ""
 
   radius: 16
@@ -81,6 +82,9 @@ Rectangle {
         border.width: 2
         name: "Open"
         size: "small"
+        onClicked: {
+          root.fileOpened(root.selectedFile)
+        }
       }
     }
     RowLayout {

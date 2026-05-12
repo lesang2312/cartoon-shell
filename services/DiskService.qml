@@ -20,7 +20,6 @@ Item{
           root.diskPercents = parseInt(value)
         }
 
-        console.log(root.diskPercents)
       }
     }
 
