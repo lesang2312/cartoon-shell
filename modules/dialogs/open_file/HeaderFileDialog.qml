@@ -1,11 +1,9 @@
-// MusicHeader.qml
 import QtQuick
 import QtQuick.Layouts
 import qs.components
 import qs.services
-
 Item {
-  id: header
+  id: root
   Layout.fillWidth: true
   Layout.preferredHeight: 50
 
@@ -13,13 +11,13 @@ Item {
   CustomText {
     anchors.centerIn: parent
 
-    name: lang.musicPanel?.title || "Music Player"
+    name: "Open File"
     isBold: true
     size: "large"
   }
 
   // Close button (right side)
   CloseButton{
-    onClicked: VisibleService.togglePanel("music")
+    onClicked: VisibleService.togglePanel("filedialog")
   }
 }

@@ -5,32 +5,32 @@ import "." as Com
 import qs.services
 
 Rectangle {
-    id: root
+  id: root
 
-    property var theme: ThemeService.theme
+  property var theme: ThemeService.theme
 
-    Layout.preferredWidth: 220
-    Layout.preferredHeight: 220
-    radius: 28
-    color: theme.primary.background
-    border.color: theme.button.border
-    border.width: 3
+  Layout.preferredWidth: 220
+  Layout.preferredHeight: 220
+  radius: 28
+  color: theme.primary.background
+  border.color: theme.button.border
+  border.width: 3
 
-    GridLayout {
-        anchors.fill: parent
-        anchors.margins: 20
-        columns: 3
-        rows: 3
-        columnSpacing: 15
-        rowSpacing: 15
+  GridLayout {
+    anchors.fill: parent
+    anchors.margins: 20
+    columns: 3
+    rows: 3
+    columnSpacing: 15
+    rowSpacing: 15
 
-        Repeater {
-            model: 9
+    Repeater {
+      model: 9
 
-            Com.AppIcon {
-                iconSource: ""
-                bgColor: theme.button.background
-            }
-        }
+      Com.AppIcon {
+        iconSource: "firefox"
+        bgColor: theme.button.background
+      }
     }
+  }
 }

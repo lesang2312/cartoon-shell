@@ -15,6 +15,8 @@ Singleton {
   property bool fullsetting: false
   property bool listLauncher: false
 
+  property bool filedialog: false
+
   property bool cpu: false
 
   property bool ram: false
@@ -316,6 +318,11 @@ Singleton {
         fullsetting = !fullsetting;
         break;
       }
+      case "filedialog":
+      {
+        filedialog = !filedialog;
+        break;
+      }
       case "listLauncher":
       {
         setting = false;
@@ -373,6 +380,8 @@ Singleton {
       return dashboard;
       case "clock":
       return clock;
+      case "filedialog":
+      return filedialog
       default:
       return false;
     }

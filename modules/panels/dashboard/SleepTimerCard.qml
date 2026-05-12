@@ -30,7 +30,11 @@ Rectangle {
 
     ColumnLayout {
       Layout.fillWidth: true
-      spacing: 5
+      spacing: 2
+      CustomText {
+        name: "Uptime: "+ UptimeService.bootTime
+        size: "small"
+      }
 
       CustomText {
         name: UptimeService.uptimeHours + " hours"

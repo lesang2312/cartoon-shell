@@ -4,6 +4,7 @@ import QtQuick.Controls.Fusion
 import Quickshell.Widgets
 import qs.services
 import qs.commons
+import qs.components
 
 Rectangle {
   id: root
@@ -24,26 +25,93 @@ Rectangle {
 
     // Avatar
     Rectangle {
+      id: avatarRoot
+
       Layout.alignment: Qt.AlignHCenter
+
       width: 120
       height: 120
       radius: 60
+
       color: "#2a2a2a"
+
+      property bool hovered: false
+
+      scale: hovered ? 1.05 : 1.0
+
+      Behavior on scale {
+        NumberAnimation {
+          duration: 120
+        }
+      }
+
       ClippingRectangle {
         id: albumArtContainer
+
         anchors.fill: parent
         radius: width / 2
+
         color: theme.primary.dim_background
-        border.color: theme.button.border
-        border.width: 3
+
+        border.color:  theme.primary.foreground
+
+        border.width: mouseAreaAvt.containsMouse ? 2 : 1
+
+        Behavior on border.width {
+          NumberAnimation {
+            duration: 120
+          }
+        }
+
+        Behavior on border.color {
+          ColorAnimation {
+            duration: 120
+          }
+        }
 
         Image {
           anchors.fill: parent
           source: "/home/long/Downloads/111423869.png"
           fillMode: Image.PreserveAspectCrop
           smooth: true
-
         }
+        Rectangle {
+          anchors.fill: parent
+
+          color: "black"
+          opacity: mouseAreaAvt.containsMouse ? 0.4 : 0
+
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 150
+            }
+          }
+        }
+        IconText{
+          visible: avatarRoot.hovered ? true : false
+          name: "frame_person"
+
+          anchors.centerIn: parent
+
+          font.pixelSize: mouseAreaAvt.containsMouse ? 58 : 52
+
+          Behavior on font.pixelSize {
+            NumberAnimation {
+              duration: 150
+            }
+          }
+        }
+      }
+
+      MouseArea {
+        id: mouseAreaAvt
+        anchors.fill: parent
+        hoverEnabled: true
+        cursorShape: Qt.PointingHandCursor
+        onClicked: VisibleService.togglePanel("filedialog")
+
+        onEntered: avatarRoot.hovered = true
+        onExited: avatarRoot.hovered = false
       }
     }
 
