@@ -17,6 +17,9 @@ PanelWindow {
     enableCpuHistory: true
   }
 
+  DiskService{
+    id: diskService
+  }
   RamService {
     id: ramService
     useSimpleCalculation: true
@@ -56,7 +59,7 @@ PanelWindow {
           Layout.fillWidth: true
           nameIcon: "hard_disk"
           iconColor: theme.primary.background
-          value: 0.4
+          value: diskService.diskPercents / 100
         }
 
       }
