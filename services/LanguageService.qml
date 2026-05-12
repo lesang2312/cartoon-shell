@@ -7,130 +7,125 @@ import Quickshell.Io
 import qs.commons
 
 Singleton {
-    id: root
+  id: root
 
-    // ===============================
-    // Paths
-    // ===============================
-    readonly property string languagesDir: Quickshell.shellDir + "/assets/i18n"
-    readonly property string fallbackLang: "en"
+  // ===============================
+  // Paths
+  // ===============================
+  readonly property string languagesDir: Quickshell.shellDir + "/assets/i18n"
+  readonly property string fallbackLang: "en"
 
-    // ===============================
-    // State
-    // ===============================
-    property string currentLanguage: Settings.general.lang || fallbackLang
-    property var translations: ({})
-    property bool loading: false
+  // ===============================
+  // State
+  // ===============================
+  property string currentLanguage: Settings.general.lang || fallbackLang
+  property var translations: ({})
+  property bool loading: false
 
-    signal languageChanged(string lang)
+  signal languageChanged(string lang)
 
-    // ===============================
-    // Init
-    // ===============================
-    function init() {
-        console.log("LanguageService initialized");
-        loadLanguage(currentLanguage);
-    }
+  // ===============================
+  // Init
+  // ===============================
+  function init() {
+    loadLanguage(currentLanguage);
+  }
 
-    // ===============================
-    // Load language
-    // ===============================
-    function loadLanguage(lang) {
-        if (!lang || lang === "")
-            lang = fallbackLang;
+  // ===============================
+  // Load language
+  // ===============================
+  function loadLanguage(lang) {
+    if (!lang || lang === "")
+    lang = fallbackLang;
 
-        root.loading = true;
-        root.currentLanguage = lang;
+    root.loading = true;
+    root.currentLanguage = lang;
 
-        const path = languagesDir + "/" + lang + ".json";
-        languageReader.path = "";
-        languageReader.path = path;
-        console.log(path);
-    }
+    const path = languagesDir + "/" + lang + ".json";
+    languageReader.path = "";
+    languageReader.path = path;
+  }
 
-    // ===============================
-    // Change language (public API)
-    // ===============================
-    function changeLanguage(newLang) {
-        if (newLang === currentLanguage)
-            return translations;
+  // ===============================
+  // Change language (public API)
+  // ===============================
+  function changeLanguage(newLang) {
+    if (newLang === currentLanguage)
+    return translations;
 
-        Settings.general.lang = newLang;
-        loadLanguage(newLang);
-        return translations;
-    }
+    Settings.general.lang = newLang;
+    loadLanguage(newLang);
+    return translations;
+  }
 
-    // ===============================
-    // Translation helper
-    // ===============================
-    function t(section, key) {
-        if (translations?.[section]?.[key])
-            return translations[section][key];
-        return key;
-    }
+  // ===============================
+  // Translation helper
+  // ===============================
+  function t(section, key) {
+    if (translations?.[section]?.[key])
+    return translations[section][key];
+    return key;
+  }
 
-    // ===============================
-    // Fallback language
-    // ===============================
-    function getFallbackLanguage() {
-        return {
-            "settings": {
-                "title": "Settings",
-                "general": "General",
-                "appearance": "Appearance",
-                "network": "Network",
-                "audio": "Audio",
-                "performance": "Performance",
-                "shortcuts": "Shortcuts",
-                "system": "System"
-            }
-        };
-    }
+  // ===============================
+  // Fallback language
+  // ===============================
+  function getFallbackLanguage() {
+    return {
+      "settings": {
+        "title": "Settings",
+        "general": "General",
+        "appearance": "Appearance",
+        "network": "Network",
+        "audio": "Audio",
+        "performance": "Performance",
+        "shortcuts": "Shortcuts",
+        "system": "System"
+      }
+    };
+  }
 
-    // ===============================
-    // File loader
-    // ===============================
-    FileView {
-        id: languageReader
-        watchChanges: true
+  // ===============================
+  // File loader
+  // ===============================
+  FileView {
+    id: languageReader
+    watchChanges: true
 
-        onLoaded: {
-            try {
-                const jsonText = text();
-                if (!jsonText || jsonText === "") {
-                    throw "Empty language file";
-                }
-
-                root.translations = JSON.parse(jsonText);
-                console.log("Language loaded:", root.currentLanguage);
-            } catch (e) {
-                console.error("Language parse error:", e);
-                root.translations = getFallbackLanguage();
-            }
-
-            root.loading = false;
-            languageChanged(root.currentLanguage);
+    onLoaded: {
+      try {
+        const jsonText = text();
+        if (!jsonText || jsonText === "") {
+          throw "Empty language file";
         }
 
-        onLoadFailed: error => {
-            console.warn("Language file not found, fallback:", root.currentLanguage);
-            root.translations = getFallbackLanguage();
-            root.loading = false;
-            languageChanged(root.currentLanguage);
-        }
+        root.translations = JSON.parse(jsonText);
+      } catch (e) {
+        console.error("Language parse error:", e);
+        root.translations = getFallbackLanguage();
+      }
+
+      root.loading = false;
+      languageChanged(root.currentLanguage);
     }
 
-    // ===============================
-    // React to Settings change
-    // ===============================
-    Connections {
-        target: Settings.general
-
-        function onLangChanged() {
-            console.log("Language changed to:", Settings.general.lang);
-            Qt.callLater(function () {
-                loadLanguage(Settings.general.lang);
-            });
-        }
+    onLoadFailed: error => {
+      root.translations = getFallbackLanguage();
+      root.loading = false;
+      languageChanged(root.currentLanguage);
     }
+  }
+
+  // ===============================
+  // React to Settings change
+  // ===============================
+  Connections {
+    target: Settings.general
+
+    function onLangChanged() {
+      Qt.callLater(function () {
+          loadLanguage(Settings.general.lang);
+      });
+    }
+  }
 }
