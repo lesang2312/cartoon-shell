@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[Cartoon Shell Screenshot](https://github.com/user-attachments/assets/5d26eb04-14fa-42c2-a8a8-3d8ddafc04c7)
+[Cartoon Shell Screenshot](https://github.com/user-attachments/assets/315049eb-89f6-47e3-8890-e7c2b4364025)
 
 *A modern, feature-rich Wayland panel built with QuickShell for Hyprland*
 
