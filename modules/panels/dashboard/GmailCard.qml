@@ -2,37 +2,44 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Fusion
 import qs.services
+import qs.components
 
 Rectangle {
-    id: root
-    property int emailCount: 230
-    property var theme: ThemeService.theme
+  id: root
+  property int emailCount: 230
+  property var theme: ThemeService.theme
 
-    Layout.fillWidth: true
-    Layout.fillHeight: true
-    radius: 28
-    color: "#eff1f5"
-    border.width: 3
-    border.color: theme.button.border
+  Layout.fillWidth: true
+  Layout.fillHeight: true
+  radius: 28
+  color: theme.primary.background
+  border.width: 3
+  border.color: theme.button.border
 
-    RowLayout {
-        anchors.centerIn: parent
-        spacing: 20
+  RowLayout {
+    anchors.centerIn: parent
+    spacing: 20
 
-        Image {
-            source: "../../../assets/lockscreen/appicons/gmail.png"
-            Layout.preferredWidth: 48
-            Layout.preferredHeight: 48
-            fillMode: Image.PreserveAspectFit
-            smooth: true
-        }
-
-        Label {
-            text: root.emailCount.toString()
-            color: "#333333"
-            font.family: "ComicShannsMono Nerd Font"
-            font.pixelSize: 36
-            font.bold: true
-        }
+    Image {
+      source: "../../../assets/workspace/pacman.png"
+      Layout.preferredWidth: 48
+      Layout.preferredHeight: 48
+      fillMode: Image.PreserveAspectFit
+      smooth: true
     }
+
+    CustomText{
+      name: "820"
+      isBold: true
+    }
+  }
+  MouseArea {
+    anchors.fill: parent
+    hoverEnabled: true
+    cursorShape: Qt.PointingHandCursor
+
+    onClicked: {
+      VisibleService.togglePanel("packagePanel")
+    }
+  }
 }

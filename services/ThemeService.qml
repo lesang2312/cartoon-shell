@@ -87,7 +87,6 @@ Singleton {
   })
 
   function init() {
-    console.log("ThemeService: Initializing theme system");
     root.loading = true;
 
     // First find all theme files
@@ -215,7 +214,6 @@ Singleton {
     } else {
       // Load static theme
       var themeName = Settings.appearance.theme;
-      console.log("Loading theme:", themeName);
 
       if (themeName && themeName !== "") {
         loadThemeByName(themeName);
@@ -223,7 +221,6 @@ Singleton {
         // Use fallback theme based on mode
         var fallbackTheme = Settings.appearance.mode === "light" ? (Settings.appearance.light || "gruvbox-light") : (Settings.appearance.dark || "gruvbox-dark");
 
-        console.log("No theme specified, using fallback:", fallbackTheme);
         Settings.appearance.theme = fallbackTheme;
         loadThemeByName(fallbackTheme);
       }
@@ -232,7 +229,6 @@ Singleton {
 
   function loadThemeByName(name) {
     if (!name || name === "") {
-      console.warn("Theme name is empty");
       root.loading = false;
       return;
     }
@@ -250,11 +246,9 @@ Singleton {
     }
 
     if (path) {
-      console.log("Loading theme from:", path);
       themeReader.path = "";
       themeReader.path = path;
     } else {
-      console.warn("Theme not found:", name);
       // Try to load matugen.json as fallback
       fallbackThemeReader.path = "";
       fallbackThemeReader.path = matugenFilePath;
@@ -271,7 +265,6 @@ Singleton {
     // Theme mới có cấu trúc: type, primary, button, cursor, normal, bright
     if (data.type && data.primary && data.normal) {
       // Đây là theme mới
-      console.log("Loading new theme format");
       root._currentTheme = data;
       root.theme = data;
 
@@ -291,7 +284,6 @@ Singleton {
       }
     } else {
       // Đây là Material Design 3 format
-      console.log("Loading Material Design 3 format");
       let changed = false;
       for (const key in data) {
         if (palette.hasOwnProperty(key) && palette[key] !== data[key]) {
@@ -356,7 +348,6 @@ Singleton {
 
   function generateFromWallpaper(mode, type) {
     if (!ProgramCheckerService.matugenAvailable) {
-      console.warn("Matugen not available");
       root.loading = false;
       // Fall back to static theme
       var fallbackTheme = Settings.appearance.mode === "light" ? (Settings.appearance.light || "gruvbox-light") : (Settings.appearance.dark || "gruvbox-dark");
@@ -378,7 +369,6 @@ Singleton {
     }
 
     if (!wallpaper || wallpaper === "") {
-      console.warn("No wallpaper found");
       root.loading = false;
       // Fall back to static theme
       var fallbackTheme = Settings.appearance.mode === "light" ? (Settings.appearance.light || "gruvbox-light") : (Settings.appearance.dark || "gruvbox-dark");
@@ -388,8 +378,6 @@ Singleton {
 
     const matugenType = validMatugenSchemes.includes(type) ? type : "scheme-tonal-spot";
     const targetMode = mode === "light" ? "light" : "dark";
-
-    console.log("Running matugen with wallpaper:", wallpaper, "mode:", targetMode, "type:", matugenType);
 
     generateProcess.command = [
     "matugen",
@@ -431,8 +419,6 @@ Singleton {
     const themeData = root.theme;
     const themeJson = JSON.stringify(themeData, null, 2);
 
-    console.log("Creating matugen.json file at:", matugenFilePath);
-
     // Create a temporary file and then move it
     var tempFile = "/tmp/matugen_temp_" + Date.now() + ".json";
     var cmd = `echo '${themeJson.replace(/'/g, "'\"'\"'")}' > "${tempFile}" && mv "${tempFile}" "${matugenFilePath}"`;
@@ -463,7 +449,6 @@ Singleton {
 
   // Functions cho compatibility với code cũ
   function triggerMatugenOnThemeChange(themeMode) {
-    console.log("ThemeService: triggerMatugenOnThemeChange called with mode:", themeMode);
 
     if (Settings.appearance) {
       Settings.appearance.mode = themeMode;
@@ -475,10 +460,8 @@ Singleton {
   }
 
   function triggerMatugenOnWallpaperChange(currentWallpaper) {
-    console.log("ThemeService: triggerMatugenOnWallpaperChange called");
 
     if (!currentWallpaper || currentWallpaper === "") {
-      console.log("No wallpaper path provided");
       return;
     }
 
@@ -493,7 +476,6 @@ Singleton {
 
     function onReadyChanged() {
       if (Settings.ready) {
-        console.log("Settings ready, refreshing theme");
         // When settings are ready, refresh theme
         Qt.callLater(function () {
             root.refresh();
@@ -506,28 +488,24 @@ Singleton {
     target: Settings.appearance
 
     function onThemeChanged() {
-      console.log("Theme changed to:", Settings.appearance.theme);
       Qt.callLater(function () {
           root.refresh();
       });
     }
 
     function onModeChanged() {
-      console.log("Mode changed to:", Settings.appearance.mode);
       Qt.callLater(function () {
           root.refresh();
       });
     }
 
     function onDynamicChanged() {
-      console.log("Dynamic changed to:", Settings.appearance.dynamic);
       Qt.callLater(function () {
           root.refresh();
       });
     }
 
     function onMatugenTypeChanged() {
-      console.log("MatugenType changed to:", Settings.appearance.matugenType);
       if (Settings.appearance.dynamic || Settings.appearance.theme === "matugen") {
         Qt.callLater(function () {
             root.refresh();
@@ -540,7 +518,6 @@ Singleton {
     target: WallpaperService
     function onWallpaperChanged() {
       if (Settings.appearance.dynamic || Settings.appearance.theme === "matugen") {
-        console.log("Wallpaper changed, refreshing theme");
         Qt.callLater(function () {
             root.refresh();
         });
@@ -554,19 +531,15 @@ Singleton {
     onExited: exitCode => {
       if (exitCode === 0) {
         themeFiles = stdout.text.trim().split("\n").filter(Boolean);
-        console.log("Found theme files:", themeFiles.length);
 
         // Now refresh theme based on settings
         if (Settings.ready) {
-          console.log("Settings are ready, loading theme");
           root.refresh();
         } else {
-          console.log("Waiting for settings to be ready...");
           // Wait for settings to be ready
           settingsReadyTimer.start();
         }
       } else {
-        console.error("Find Theme Error:", stderr.text);
         root.loading = false;
       }
     }
@@ -580,7 +553,6 @@ Singleton {
     repeat: true
     onTriggered: {
       if (Settings.ready) {
-        console.log("Settings ready, loading theme");
         root.refresh();
         settingsReadyTimer.stop();
       } else {
@@ -597,7 +569,6 @@ Singleton {
       if (exitCode === 0) {
         try {
           var jsonText = stdout.text.trim();
-          console.log("Matugen output received, length:", jsonText.length);
           if (jsonText) {
             var jsonData = JSON.parse(jsonText);
             root.updateColors(root.parseMatugen(jsonData));
@@ -703,7 +674,6 @@ Singleton {
 
   // Thêm Component.onCompleted để tự động gọi init()
   Component.onCompleted: {
-    console.log("ThemeService component created");
     Qt.callLater(function () {
         init();
     });

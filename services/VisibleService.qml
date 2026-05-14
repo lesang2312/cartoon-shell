@@ -19,6 +19,8 @@ Singleton {
 
   property bool cpu: false
 
+  property bool packagePanel: false
+
   property bool ram: false
 
   property bool calendar: false
@@ -39,7 +41,7 @@ Singleton {
 
   property bool dashboard: false
 
-  property bool hasPanel: wifi || mixer || music || launcher || dashboard || battery || ram || cpu || calendar || weather || bluetooth
+  property bool hasPanel: packagePanel || wifi || mixer || music || launcher || dashboard || battery || ram || cpu || calendar || weather || bluetooth
 
   property bool clock: Settings.clock.enableWidget // Giữ nguyên từ config
 
@@ -143,7 +145,6 @@ Singleton {
           flag = false;
           music = false;
           weather = false;
-          flag = false;
           launcher = false;
           dashboard = false;
           setting = false;
@@ -285,6 +286,30 @@ Singleton {
         }
         break;
       }
+      case "packagePanel" :
+      {
+        if (!packagePanel) {
+          launcher = false;
+          battery = false;
+          wifi = false;
+          bluetooth = false;
+          mixer = false;
+          calendar = false;
+          cpu = false;
+          ram = false;
+          flag = false;
+          music = false;
+          weather = false;
+          packagePanel = true;
+          setting = false;
+          dashboard = false;
+          fullsetting = false;
+        } else {
+          packagePanel = false;
+
+        }
+        break;
+      }
       case "dashboard":
       {
         if (!dashboard) {
@@ -295,6 +320,7 @@ Singleton {
           mixer = false;
           calendar = false;
           cpu = false;
+          packagePanel = false;
           ram = false;
           flag = false;
           music = false;
@@ -326,6 +352,7 @@ Singleton {
       case "listLauncher":
       {
         setting = false;
+        break;
       }
     }
 
@@ -348,6 +375,8 @@ Singleton {
     dashboard = false;
     setting = false;
     fullsetting = false;
+    packagePanel = false;
+    filedialog = false;
     // Không đóng clock panel vì nó được điều khiển bởi config
   }
 

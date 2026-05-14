@@ -29,33 +29,17 @@ Rectangle {
     }
   }
 
-  // MouseArea cho toàn bộ sidebar
-  MouseArea {
-    id: sidebarMouseArea
-    anchors.fill: parent
-    hoverEnabled: true
-    acceptedButtons: Qt.NoButton // Chỉ theo dõi hover, không xử lý click
-    propagateComposedEvents: true // Cho phép sự kiện truyền xuống các MouseArea con
-
-    onEntered: {
-      sidebarSettings.anyItemHovered = true;
-    }
-
-    onExited: {
-      sidebarSettings.anyItemHovered = false;
-    }
-  }
-
   ColumnLayout {
     anchors.fill: parent
     anchors.margins: 12
     anchors.topMargin: 32
     spacing: 10
+    clip: true
 
     CustomText{
       name: lang.settings.title
       Layout.alignment: Qt.AlignHCenter
-      size: "large"
+      size: "normal"
       isBold: true
     }
 
@@ -146,7 +130,7 @@ Rectangle {
             : index % 2 === 0
             ? 20
             : -20
-            scale: mouseAreaLauncher.containsMouse ? 1.05 : 1.0
+            scale: mouseArea.containsMouse ? 1.05 : 1.0
             Behavior on rotation {
               NumberAnimation {
                 duration: 500

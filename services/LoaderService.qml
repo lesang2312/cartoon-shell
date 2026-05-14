@@ -9,6 +9,15 @@ Item {
   id: root
 
   Loader {
+    source: "../modules/panels/package/PackagePanel.qml"
+    active: VisibleService.packagePanel
+    onLoaded: {
+      item.visible = Qt.binding(function () {
+          return VisibleService.packagePanel;
+      });
+    }
+  }
+  Loader {
     source: "../modules/panels/calendar/CalendarPanel.qml"
     active: VisibleService.calendar
     onLoaded: {
