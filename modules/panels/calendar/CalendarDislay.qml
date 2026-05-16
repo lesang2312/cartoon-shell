@@ -2,241 +2,277 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import qs.services
+import qs.components
 
 Rectangle {
-    id: calendar
+  id: calendar
 
-    property var theme: ThemeService.theme
-    property var lang: LanguageService.translations
+  property var theme: ThemeService.theme
+  property var lang: LanguageService.translations
 
-    property date currentDate: new Date()
-    property int currentMonth: currentDate.getMonth()
-    property int currentYear: currentDate.getFullYear()
-    property date selectedDate: new Date()
+  property date currentDate: new Date()
+  property int currentMonth: currentDate.getMonth()
+  property int currentYear: currentDate.getFullYear()
+  property date selectedDate: new Date()
+  property real animationProgress: 0
 
-    width: 400
-    height: 400
-    color: "transparent"
-    radius: 10
+  SequentialAnimation on animationProgress {
+    running: true
 
-    property var weekdayLabels: {
-        const w = lang?.calendar?.weekdays;
-        return w ? [w.sunday || "CN", w.monday || "T2", w.tuesday || "T3", w.wednesday || "T4", w.thursday || "T5", w.friday || "T6", w.saturday || "T7"] : ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
+    NumberAnimation {
+      from: 0
+      to: 0.4
+      duration: 200
+      easing.type: Easing.Linear
+    }
+  }
+
+  width: 400
+  height: 400
+  color: "transparent"
+  radius: 10
+
+  property var weekdayLabels: {
+    const w = lang?.calendar?.weekdays;
+    return w ? [w.sunday || "CN", w.monday || "T2", w.tuesday || "T3", w.wednesday || "T4", w.thursday || "T5", w.friday || "T6", w.saturday || "T7"] : ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
+  }
+
+  property var monthLabels: {
+    const m = lang?.dateFormat?.month;
+    return m ? [m.january || "Tháng 1", m.february || "Tháng 2", m.march || "Tháng 3", m.april || "Tháng 4", m.may || "Tháng 5", m.june || "Tháng 6", m.july || "Tháng 7", m.august || "Tháng 8", m.september || "Tháng 9", m.october || "Tháng 10", m.november || "Tháng 11", m.december || "Tháng 12"] : ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
+  }
+
+  signal dateSelected(date selectedDate)
+
+  ColumnLayout {
+    anchors.fill: parent
+    anchors.margins: 10
+    spacing: 15
+
+    // Header
+    RowLayout {
+      Layout.fillWidth: true
+
+      ButtonIconText{
+        name: "arrow_circle_left"
+        opacity: calendar.animationProgress > 0.1 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
+        onClicked: previousMonth()
+      }
+
+      CustomText{
+        name: monthLabels[currentMonth] + " " + currentYear
+
+        opacity: calendar.animationProgress > 0.2 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
+        isBold: true
+        size: "normal"
+        horizontalAlignment: Text.AlignHCenter
+        Layout.fillWidth: true
+
+      }
+      ButtonIconText{
+        name: "arrow_circle_right"
+        opacity: calendar.animationProgress > 0.3 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
+        onClicked: nextMonth()
+      }
     }
 
-    property var monthLabels: {
-        const m = lang?.dateFormat?.month;
-        return m ? [m.january || "Tháng 1", m.february || "Tháng 2", m.march || "Tháng 3", m.april || "Tháng 4", m.may || "Tháng 5", m.june || "Tháng 6", m.july || "Tháng 7", m.august || "Tháng 8", m.september || "Tháng 9", m.october || "Tháng 10", m.november || "Tháng 11", m.december || "Tháng 12"] : ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
-    }
+    // Calendar grid với Flickable để cuộn
+    Flickable {
+      id: flickable
+      Layout.fillWidth: true
+      Layout.fillHeight: true
+      contentWidth: calendarGrid.width
+      contentHeight: calendarGrid.height
+      clip: true
 
-    signal dateSelected(date selectedDate)
+      GridLayout {
+        id: calendarGrid
+        width: flickable.width
+        columns: 7
+        rowSpacing: 8
+        columnSpacing: 8
 
-    ColumnLayout {
-        anchors.fill: parent
-        anchors.margins: 10
-        spacing: 15
+        // Week day headers
+        Repeater {
+          model: weekdayLabels
+          CustomText{
+            opacity: 0
 
-        // Header
-        RowLayout {
-            Layout.fillWidth: true
+            SequentialAnimation on opacity {
+              running: true
 
-            Button {
-                text: "◀"
-                onClicked: previousMonth()
-                flat: true
-                contentItem: Text {
-                    text: parent.text
-                    color: theme.primary.foreground
-                    font.family: "ComicShannsMono Nerd Font"
-                    font.pixelSize: 20
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
-                background: Rectangle {
-                    color: "transparent"
-                }
+              PauseAnimation {
+                duration: index * 50
+              }
+
+              NumberAnimation {
+                to: 1
+                duration: 200
+                easing.type: Easing.OutCubic
+              }
             }
+            name: modelData
+            isBold: true
+            size: "normal"
+            horizontalAlignment: Text.AlignHCenter
+            Layout.fillWidth: true
+            Layout.preferredHeight: 30
+
+          }
+        }
+
+        // Days
+        Repeater {
+          id: daysRepeater
+          model: getDaysInMonth(currentMonth, currentYear)
+
+          Rectangle {
+            id: dayRect
+            Layout.preferredWidth: 40
+            Layout.preferredHeight: 40
+
+            opacity: 0
+
+            SequentialAnimation on opacity {
+              running: true
+
+              PauseAnimation {
+                duration: index * 15
+              }
+
+              NumberAnimation {
+                to: 1
+                duration: 200
+                easing.type: Easing.OutCubic
+              }
+            }
+            color: {
+              if (modelData.isToday && modelData.isCurrentMonth)
+              return theme.button.background;
+              else if (modelData.fullDate.toDateString() === selectedDate.toDateString())
+              return theme.button.background_select;
+              else
+              return "transparent";
+            }
+            radius: 20
+            border.color: modelData.isCurrentMonth ? theme.button.border : "transparent"
 
             Label {
-                text: monthLabels[currentMonth] + " " + currentYear
-                font.bold: true
-                font.pixelSize: 24
-                Layout.fillWidth: true
-                horizontalAlignment: Text.AlignHCenter
-                color: theme.primary.foreground
-                font.family: "ComicShannsMono Nerd Font"
+              text: modelData.day
+              anchors.centerIn: parent
+              color: {
+                if (!modelData.isCurrentMonth)
+                return theme.primary.dim_foreground;
+                else if (modelData.isToday)
+                return "white";
+                else
+                return theme.primary.foreground;
+              }
+              font {
+                bold: modelData.isToday
+                pixelSize: 19
+                family: "ComicShannsMono Nerd Font"
+              }
             }
 
-            Button {
-                text: "▶"
-                onClicked: nextMonth()
-                flat: true
-                contentItem: Text {
-                    text: parent.text
-                    color: theme.primary.foreground
-                    font.family: "ComicShannsMono Nerd Font"
-                    font.pixelSize: 20
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
+            MouseArea {
+              anchors.fill: parent
+              onClicked: {
+                if (modelData.isCurrentMonth) {
+                  selectedDate = modelData.fullDate;
+                  calendar.dateSelected(selectedDate);
                 }
-                background: Rectangle {
-                    color: "transparent"
-                }
+              }
             }
+          }
         }
+      }
+    }
+  }
 
-        // Calendar grid với Flickable để cuộn
-        Flickable {
-            id: flickable
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            contentWidth: calendarGrid.width
-            contentHeight: calendarGrid.height
-            clip: true
+  function getDaysInMonth(month, year) {
+    var days = [];
+    var firstDay = new Date(year, month, 1);
+    var lastDay = new Date(year, month + 1, 0);
+    var startingDay = firstDay.getDay();
 
-            GridLayout {
-                id: calendarGrid
-                width: flickable.width
-                columns: 7
-                rowSpacing: 8
-                columnSpacing: 8
-
-                // Week day headers
-                Repeater {
-                    model: weekdayLabels
-                    Label {
-                        text: modelData
-                        font.bold: true
-                        color: theme.primary.foreground
-                        horizontalAlignment: Text.AlignHCenter
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 30
-                        font.pixelSize: 19
-                        font.family: "ComicShannsMono Nerd Font"
-                    }
-                }
-
-                // Days
-                Repeater {
-                    id: daysRepeater
-                    model: getDaysInMonth(currentMonth, currentYear)
-
-                    Rectangle {
-                        id: dayRect
-                        Layout.preferredWidth: 40
-                        Layout.preferredHeight: 40
-                        color: {
-                            if (modelData.isToday && modelData.isCurrentMonth)
-                                return theme.button.background;
-                            else if (modelData.fullDate.toDateString() === selectedDate.toDateString())
-                                return theme.button.background_select;
-                            else
-                                return "transparent";
-                        }
-                        radius: 20
-                        border.color: modelData.isCurrentMonth ? theme.button.border : "transparent"
-
-                        Label {
-                            text: modelData.day
-                            anchors.centerIn: parent
-                            color: {
-                                if (!modelData.isCurrentMonth)
-                                    return theme.primary.dim_foreground;
-                                else if (modelData.isToday)
-                                    return "white";
-                                else
-                                    return theme.primary.foreground;
-                            }
-                            font {
-                                bold: modelData.isToday
-                                pixelSize: 19
-                                family: "ComicShannsMono Nerd Font"
-                            }
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                if (modelData.isCurrentMonth) {
-                                    selectedDate = modelData.fullDate;
-                                    calendar.dateSelected(selectedDate);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    // Ngày từ tháng trước
+    var prevMonthLastDay = new Date(year, month, 0).getDate();
+    for (var i = 0; i < startingDay; i++) {
+      days.push({
+          day: prevMonthLastDay - startingDay + i + 1,
+          isCurrentMonth: false,
+          isToday: false,
+          fullDate: new Date(year, month - 1, prevMonthLastDay - startingDay + i + 1)
+      });
     }
 
-    function getDaysInMonth(month, year) {
-        var days = [];
-        var firstDay = new Date(year, month, 1);
-        var lastDay = new Date(year, month + 1, 0);
-        var startingDay = firstDay.getDay();
-
-        // Ngày từ tháng trước
-        var prevMonthLastDay = new Date(year, month, 0).getDate();
-        for (var i = 0; i < startingDay; i++) {
-            days.push({
-                day: prevMonthLastDay - startingDay + i + 1,
-                isCurrentMonth: false,
-                isToday: false,
-                fullDate: new Date(year, month - 1, prevMonthLastDay - startingDay + i + 1)
-            });
-        }
-
-        // Ngày của tháng hiện tại
-        var today = new Date();
-        for (var j = 1; j <= lastDay.getDate(); j++) {
-            var isToday = today.getDate() === j && today.getMonth() === month && today.getFullYear() === year;
-            days.push({
-                day: j,
-                isCurrentMonth: true,
-                isToday: isToday,
-                fullDate: new Date(year, month, j)
-            });
-        }
-
-        // Ngày từ tháng sau
-        var totalCells = 42;
-        var nextMonthDay = 1;
-        while (days.length < totalCells) {
-            days.push({
-                day: nextMonthDay,
-                isCurrentMonth: false,
-                isToday: false,
-                fullDate: new Date(year, month + 1, nextMonthDay)
-            });
-            nextMonthDay++;
-        }
-
-        return days;
+    // Ngày của tháng hiện tại
+    var today = new Date();
+    for (var j = 1; j <= lastDay.getDate(); j++) {
+      var isToday = today.getDate() === j && today.getMonth() === month && today.getFullYear() === year;
+      days.push({
+          day: j,
+          isCurrentMonth: true,
+          isToday: isToday,
+          fullDate: new Date(year, month, j)
+      });
     }
 
-    function previousMonth() {
-        currentDate = new Date(currentYear, currentMonth - 1, 1);
-        currentMonth = currentDate.getMonth();
-        currentYear = currentDate.getFullYear();
-        daysRepeater.model = getDaysInMonth(currentMonth, currentYear);
+    // Ngày từ tháng sau
+    var totalCells = 42;
+    var nextMonthDay = 1;
+    while (days.length < totalCells) {
+      days.push({
+          day: nextMonthDay,
+          isCurrentMonth: false,
+          isToday: false,
+          fullDate: new Date(year, month + 1, nextMonthDay)
+      });
+      nextMonthDay++;
     }
 
-    function nextMonth() {
-        currentDate = new Date(currentYear, currentMonth + 1, 1);
-        currentMonth = currentDate.getMonth();
-        currentYear = currentDate.getFullYear();
-        daysRepeater.model = getDaysInMonth(currentMonth, currentYear);
-    }
+    return days;
+  }
 
-    function goToToday() {
-        currentDate = new Date();
-        currentMonth = currentDate.getMonth();
-        currentYear = currentDate.getFullYear();
-        selectedDate = new Date();
-        daysRepeater.model = getDaysInMonth(currentMonth, currentYear);
-    }
+  function previousMonth() {
+    currentDate = new Date(currentYear, currentMonth - 1, 1);
+    currentMonth = currentDate.getMonth();
+    currentYear = currentDate.getFullYear();
+    daysRepeater.model = getDaysInMonth(currentMonth, currentYear);
+  }
 
-    Component.onCompleted: {
-        daysRepeater.model = getDaysInMonth(currentMonth, currentYear);
-    }
+  function nextMonth() {
+    currentDate = new Date(currentYear, currentMonth + 1, 1);
+    currentMonth = currentDate.getMonth();
+    currentYear = currentDate.getFullYear();
+    daysRepeater.model = getDaysInMonth(currentMonth, currentYear);
+  }
+
+  function goToToday() {
+    currentDate = new Date();
+    currentMonth = currentDate.getMonth();
+    currentYear = currentDate.getFullYear();
+    selectedDate = new Date();
+    daysRepeater.model = getDaysInMonth(currentMonth, currentYear);
+  }
+
+  Component.onCompleted: {
+    daysRepeater.model = getDaysInMonth(currentMonth, currentYear);
+  }
 }

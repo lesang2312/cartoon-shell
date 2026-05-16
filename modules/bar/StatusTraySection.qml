@@ -7,6 +7,7 @@ import QtQuick.Controls
 import Quickshell.Services.SystemTray
 import qs.services
 import qs.commons
+import qs.components
 
 Rectangle {
   id: root
@@ -209,13 +210,17 @@ Rectangle {
           anchors.centerIn: parent
           spacing: 8
 
-          Image {
-            id: bluetoothImage
-            source: root.bluetooth_icon
-            width: 35
-            height: 35
-            sourceSize: Qt.size(35, 35)
+          IconImage {
+            visible: Settings.bar.bluetooth.isImage
+            path: "settings/bluetooth.png"
+            size: "large"
           }
+          IconText {
+            visible: Settings.bar.bluetooth.isIcon
+            name: "bluetooth"
+            textColor: theme.button.text
+          }
+
         }
 
         MouseArea {
@@ -257,12 +262,20 @@ Rectangle {
           anchors.centerIn: parent
           spacing: 8
 
-          Image {
-            id: wifiImage
-            source: networkService.wifi_icon
-            width: 35
-            height: 35
-            sourceSize: Qt.size(35, 35)
+          IconImage {
+            visible: Settings.bar.wifi.isImage
+            path: networkService.wifi_icon
+            size: "large"
+          }
+          IconText{
+            visible: Settings.bar.wifi.isIcon1
+            name: networkService.wifi_icon_text_1
+            textColor: theme.button.text
+          }
+          IconText{
+            visible: Settings.bar.wifi.isIcon2
+            name: networkService.wifi_icon_text_2
+            textColor: theme.button.text
           }
 
         }

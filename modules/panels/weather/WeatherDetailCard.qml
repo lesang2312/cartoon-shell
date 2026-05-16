@@ -8,6 +8,8 @@ Rectangle {
 
   property string image: ""
   property string value: "Value"
+  property real animationProgress: 0
+  property real revealThreshold: 0.6
 
   radius: 16
   color: theme.primary.dim_background
@@ -23,6 +25,12 @@ Rectangle {
       path: root.image
       size: "large"
       Layout.alignment: Qt.AlignHCenter
+      opacity: root.animationProgress > root.revealThreshold ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
 
     }
     CustomText{
@@ -30,6 +38,12 @@ Rectangle {
       isBold: true
       size: "small"
       Layout.alignment: Qt.AlignHCenter
+      opacity: root.animationProgress > root.revealThreshold + 0.05 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
     }
   }
 }

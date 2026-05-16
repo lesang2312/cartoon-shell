@@ -13,18 +13,51 @@ import "./" as LauncherComponents
 
 PanelWindow {
   id: launcherPanel
+  property real animationProgress: 0
+  SequentialAnimation on animationProgress {
+    running: true
+
+    NumberAnimation {
+      from: 0
+      to: 1
+      duration: 1000
+      easing.type: Easing.Linear
+    }
+  }
+
   implicitWidth: {
     if (VisibleService.setting) {
       return 1000;
     } else {
-      return 600;
+      if (launcherPanel.animationProgress > 0.1) {
+        return 600;
+      } else {
+        return 100;
+      }
     }
   }
   implicitHeight: {
     if (VisibleService.setting) {
       return 700;
     } else {
-      return 640;
+      if (launcherPanel.animationProgress > 0.1) {
+        return 640;
+      } else {
+        return 100;
+      }
+    }
+  }
+  Behavior on implicitWidth {
+    NumberAnimation {
+      duration: 50
+      easing.type: Easing.OutCubic
+
+    }
+  }
+  Behavior on implicitHeight {
+    NumberAnimation {
+      duration: 100
+      easing.type: Easing.OutCubic
     }
   }
   color: "transparent"
@@ -75,12 +108,7 @@ PanelWindow {
   // Focus scope để quản lý focus
   Rectangle {
     anchors.fill: parent
-    radius: {
-      if (VisibleService.fullsetting && VisibleService.setting) {
-        return 10; // Radius nhỏ hơn khi full screen
-      }
-      return 20;
-    }
+    radius: 12
     color: theme.primary.background
     border.color: theme.button.border
     border.width: 3
@@ -132,6 +160,12 @@ PanelWindow {
               isBold: true
               Layout.alignment: Qt.AlignHCenter
               size: "2xl"
+              opacity: launcherPanel.animationProgress > 0.2 ? 1 : 0
+              Behavior on opacity {
+                NumberAnimation {
+                  duration: 200
+                }
+              }
 
             }
 
@@ -139,12 +173,24 @@ PanelWindow {
               id: searchBox
               onSearchChanged: text => launcherList.runSearch(text)
               onAccepted: text => launcherList.runSearch(text)
+              opacity: launcherPanel.animationProgress > 0.3 ? 1 : 0
+              Behavior on opacity {
+                NumberAnimation {
+                  duration: 200
+                }
+              }
             }
 
             LauncherComponents.LauncherList {
               id: launcherList
               Layout.fillWidth: true
               Layout.fillHeight: true
+              opacity: launcherPanel.animationProgress > 0.4 ? 1 : 0
+              Behavior on opacity {
+                NumberAnimation {
+                  duration: 200
+                }
+              }
             }
           }
         }
@@ -173,4 +219,5 @@ PanelWindow {
     // Đảm bảo panel không visible khi khởi động
     visible = false;
   }
+
 }

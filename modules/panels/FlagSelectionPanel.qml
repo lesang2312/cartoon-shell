@@ -14,9 +14,31 @@ PanelWindow {
   property var theme: ThemeService.theme
 
   property string selectedFlag: Settings.appearance.countryFlag
+  property real animationProgress: 0
+  SequentialAnimation on animationProgress {
+    id: staggerAnimation
+    running: true
+    loops: 1
 
-  implicitWidth: 600
-  implicitHeight: 420
+    PropertyAction { value: 0 }
+
+    NumberAnimation { to: 0.2; duration: 50 }
+  }
+
+  implicitWidth: flagSelectionPanel.animationProgress > 0.1 ?  600 : 100
+  implicitHeight: flagSelectionPanel.animationProgress > 0.1 ?  420 : 100
+  Behavior on implicitHeight {
+    NumberAnimation {
+      duration: 60
+      easing.type: Easing.OutCubic
+    }
+  }
+  Behavior on implicitWidth {
+    NumberAnimation {
+      duration: 60
+      easing.type: Easing.OutCubic
+    }
+  }
 
   property var flagList: [
   {

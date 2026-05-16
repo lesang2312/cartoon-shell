@@ -6,284 +6,299 @@ import qs.services
 import qs.components
 
 Item {
-    id: root
-    property var theme: ThemeService.theme
-    property var lang: LanguageService.translations
+  id: root
+  property var theme: ThemeService.theme
+  property var lang: LanguageService.translations
 
-    function setLanguageEditor(name) {
-        Settings.general.lang = name;
-    }
+  function setLanguageEditor(name) {
+    Settings.general.lang = name;
+  }
 
-    ScrollView {
-        anchors.fill: parent
-        anchors.margins: 20
-        clip: true
-        ScrollBar.vertical.policy: ScrollBar.AsNeeded
+  ScrollView {
+    anchors.fill: parent
+    anchors.margins: 20
+    clip: true
+    ScrollBar.vertical.policy: ScrollBar.AsNeeded
 
-        ColumnLayout {
-            width: parent.width
-            spacing: 15
+    ColumnLayout {
+      width: parent.width
+      spacing: 15
 
-            RowLayout {
-                Layout.fillWidth: true
-                spacing: 10
+      RowLayout {
+        Layout.fillWidth: true
+        spacing: 10
 
-                // Tiêu đề
-                HeaderSettings {
-                    name: "Language Region"
+        // Tiêu đề
+        HeaderSettings {
+          name: "Language Region"
+        }
+      }
+
+      Rectangle {
+        Layout.fillWidth: true
+        height: 1
+        color: theme.primary.foreground
+      }
+
+      // Language Selection
+      ColumnLayout {
+        Layout.fillWidth: true
+        spacing: 10
+
+        Text {
+          text: lang.general?.language_label || "Ngôn ngữ:"
+          color: theme.primary.foreground
+          font {
+            family: "ComicShannsMono Nerd Font"
+            pixelSize: 16
+          }
+        }
+
+        Grid {
+          Layout.fillWidth: true
+          columns: 6  // Đã sửa từ !panelManager.fullsetting ? 5 : 10
+          columnSpacing: 6  // Đã sửa từ !panelManager.fullsetting ? 8 : 10
+          rowSpacing: 6  // Đã sửa từ !panelManager.fullsetting ? 8 : 10
+
+          Repeater {
+            model: [
+            {
+              code: "vi",
+              name: "Tiếng Việt",
+              flagImg: "vietnam"
+            },
+            {
+              code: "en",
+              name: "English",
+              flagImg: "britain"
+            },
+            {
+              code: "zh",
+              name: "中文",
+              flagImg: "china"
+            },
+            {
+              code: "ja",
+              name: "日本語",
+              flagImg: "japan"
+            },
+            {
+              code: "ko",
+              name: "한국어",
+              flagImg: "korea"
+            },
+            {
+              code: "ru",
+              name: "Русский",
+              flagImg: "russia"
+            },
+            {
+              code: "hi",
+              name: "हिन्दी",
+              flagImg: "india"
+            },
+            {
+              code: "es",
+              name: "Español",
+              flagImg: "spain"
+            },
+            {
+              code: "pt",
+              name: "Português",
+              flagImg: "portugal"
+            },
+            {
+              code: "fr",
+              name: "Français",
+              flagImg: "france"
+            },
+            {
+              code: "de",
+              name: "Deutsch",
+              flagImg: "german"
+            },
+            {
+              code: "it",
+              name: "Italiano",
+              flagImg: "italy"
+            },
+            {
+              code: "ar",
+              name: "العربية",
+              flagImg: "saudi_arabia"
+            },
+            {
+              code: "tr",
+              name: "Türkçe",
+              flagImg: "turkey"
+            },
+            {
+              code: "nl",
+              name: "Nederlands",
+              flagImg: "netherlands"
+            },
+            {
+              code: "pl",
+              name: "Polski",
+              flagImg: "poland"
+            },
+            {
+              code: "sv",
+              name: "Svenska",
+              flagImg: "sweden"
+            },
+            {
+              code: "th",
+              name: "ไทย",
+              flagImg: "thailand"
+            },
+            {
+              code: "uk",
+              name: "Українська",
+              flagImg: "ukraine"
+            },
+            {
+              code: "no",
+              name: "Norsk",
+              flagImg: "norway"
+            },
+            {
+              code: "da",
+              name: "Dansk",
+              flagImg: "denmark"
+            },
+            {
+              code: "fi",
+              name: "Suomi",
+              flagImg: "finland"
+            },
+            {
+              code: "id",
+              name: "Indonesia",
+              flagImg: "indonesia"
+            },
+            {
+              code: "cs",
+              name: "Čeština",
+              flagImg: "czech"
+            },
+            {
+              code: "el",
+              name: "Ελληνικά",
+              flagImg: "greece"
+            },
+            {
+              code: "he",
+              name: "עברית",
+              flagImg: "israel"
+            },
+            {
+              code: "ro",
+              name: "Română",
+              flagImg: "romania"
+            },
+            {
+              code: "hu",
+              name: "Magyar",
+              flagImg: "hungary"
+            },
+            {
+              code: "bg",
+              name: "Български",
+              flagImg: "bulgaria"
+            },
+            {
+              code: "sk",
+              name: "Slovenčina",
+              flagImg: "slovakia"
+            },
+            ]
+
+            delegate: Rectangle {
+              opacity: 0
+
+              SequentialAnimation on opacity {
+                running: true
+
+                PauseAnimation {
+                  duration: index * 15
                 }
-            }
 
-            Rectangle {
-                Layout.fillWidth: true
-                height: 1
-                color: theme.primary.foreground
-            }
+                NumberAnimation {
+                  to: 1
+                  duration: 200
+                  easing.type: Easing.OutCubic
+                }
+              }
+              width: root.width / 7  // Đã sửa từ !panelManager.fullsetting ? root.width/6 : root.width/12
+              height: root.width / 7  // Đã sửa từ !panelManager.fullsetting ? root.width/6 : root.width/12
+              radius: 10
+              color: Settings.general.lang === modelData.code ? theme.normal.blue : (langMouseArea.containsMouse ? theme.button.background_select : theme.button.background)
+              border.color: Settings.general.lang === modelData.code ? theme.normal.blue : (langMouseArea.containsPress ? theme.button.border_select : theme.button.border)
+              border.width: 2
 
-            // Language Selection
-            ColumnLayout {
-                Layout.fillWidth: true
-                spacing: 10
+              Column {
+                anchors.centerIn: parent
+                spacing: 4
+
+                Image {
+                  source: Directories.assetsPath + `/flags/${modelData.flagImg}.png`
+                  width: root.width / 7 * 0.6  // Đã sửa từ !panelManager.fullsetting ? root.width/6 * 0.6 : root.width/12 * 0.6
+                  height: root.width / 7 * 0.4  // Đã sửa từ !panelManager.fullsetting ? root.width/6 * 0.4 : root.width/12 * 0.4
+                  fillMode: Image.PreserveAspectFit
+                  smooth: true
+                  anchors.horizontalCenter: parent.horizontalCenter
+                }
 
                 Text {
-                    text: lang.general?.language_label || "Ngôn ngữ:"
-                    color: theme.primary.foreground
-                    font {
-                        family: "ComicShannsMono Nerd Font"
-                        pixelSize: 16
-                    }
+                  text: modelData.name
+                  color: Settings.general.lang === modelData.code ? theme.primary.background : theme.primary.foreground
+                  font {
+                    family: "ComicShannsMono Nerd Font"
+                    pixelSize: 12
+                    bold: Settings.general.lang === modelData.code
+                  }
+                  anchors.horizontalCenter: parent.horizontalCenter
                 }
+              }
 
-                Grid {
-                    Layout.fillWidth: true
-                    columns: 6  // Đã sửa từ !panelManager.fullsetting ? 5 : 10
-                    columnSpacing: 6  // Đã sửa từ !panelManager.fullsetting ? 8 : 10
-                    rowSpacing: 6  // Đã sửa từ !panelManager.fullsetting ? 8 : 10
-
-                    Repeater {
-                        model: [
-                            {
-                                code: "vi",
-                                name: "Tiếng Việt",
-                                flagImg: "vietnam"
-                            },
-                            {
-                                code: "en",
-                                name: "English",
-                                flagImg: "britain"
-                            },
-                            {
-                                code: "zh",
-                                name: "中文",
-                                flagImg: "china"
-                            },
-                            {
-                                code: "ja",
-                                name: "日本語",
-                                flagImg: "japan"
-                            },
-                            {
-                                code: "ko",
-                                name: "한국어",
-                                flagImg: "korea"
-                            },
-                            {
-                                code: "ru",
-                                name: "Русский",
-                                flagImg: "russia"
-                            },
-                            {
-                                code: "hi",
-                                name: "हिन्दी",
-                                flagImg: "india"
-                            },
-                            {
-                                code: "es",
-                                name: "Español",
-                                flagImg: "spain"
-                            },
-                            {
-                                code: "pt",
-                                name: "Português",
-                                flagImg: "portugal"
-                            },
-                            {
-                                code: "fr",
-                                name: "Français",
-                                flagImg: "france"
-                            },
-                            {
-                                code: "de",
-                                name: "Deutsch",
-                                flagImg: "german"
-                            },
-                            {
-                                code: "it",
-                                name: "Italiano",
-                                flagImg: "italy"
-                            },
-                            {
-                                code: "ar",
-                                name: "العربية",
-                                flagImg: "saudi_arabia"
-                            },
-                            {
-                                code: "tr",
-                                name: "Türkçe",
-                                flagImg: "turkey"
-                            },
-                            {
-                                code: "nl",
-                                name: "Nederlands",
-                                flagImg: "netherlands"
-                            },
-                            {
-                                code: "pl",
-                                name: "Polski",
-                                flagImg: "poland"
-                            },
-                            {
-                                code: "sv",
-                                name: "Svenska",
-                                flagImg: "sweden"
-                            },
-                            {
-                                code: "th",
-                                name: "ไทย",
-                                flagImg: "thailand"
-                            },
-                            {
-                                code: "uk",
-                                name: "Українська",
-                                flagImg: "ukraine"
-                            },
-                            {
-                                code: "no",
-                                name: "Norsk",
-                                flagImg: "norway"
-                            },
-                            {
-                                code: "da",
-                                name: "Dansk",
-                                flagImg: "denmark"
-                            },
-                            {
-                                code: "fi",
-                                name: "Suomi",
-                                flagImg: "finland"
-                            },
-                            {
-                                code: "id",
-                                name: "Indonesia",
-                                flagImg: "indonesia"
-                            },
-                            {
-                                code: "cs",
-                                name: "Čeština",
-                                flagImg: "czech"
-                            },
-                            {
-                                code: "el",
-                                name: "Ελληνικά",
-                                flagImg: "greece"
-                            },
-                            {
-                                code: "he",
-                                name: "עברית",
-                                flagImg: "israel"
-                            },
-                            {
-                                code: "ro",
-                                name: "Română",
-                                flagImg: "romania"
-                            },
-                            {
-                                code: "hu",
-                                name: "Magyar",
-                                flagImg: "hungary"
-                            },
-                            {
-                                code: "bg",
-                                name: "Български",
-                                flagImg: "bulgaria"
-                            },
-                            {
-                                code: "sk",
-                                name: "Slovenčina",
-                                flagImg: "slovakia"
-                            },
-                        ]
-
-                        delegate: Rectangle {
-                            width: root.width / 7  // Đã sửa từ !panelManager.fullsetting ? root.width/6 : root.width/12
-                            height: root.width / 7  // Đã sửa từ !panelManager.fullsetting ? root.width/6 : root.width/12
-                            radius: 10
-                            color: Settings.general.lang === modelData.code ? theme.normal.blue : (langMouseArea.containsMouse ? theme.button.background_select : theme.button.background)
-                            border.color: Settings.general.lang === modelData.code ? theme.normal.blue : (langMouseArea.containsPress ? theme.button.border_select : theme.button.border)
-                            border.width: 2
-
-                            Column {
-                                anchors.centerIn: parent
-                                spacing: 4
-
-                                Image {
-                                    source: Directories.assetsPath + `/flags/${modelData.flagImg}.png`
-                                    width: root.width / 7 * 0.6  // Đã sửa từ !panelManager.fullsetting ? root.width/6 * 0.6 : root.width/12 * 0.6
-                                    height: root.width / 7 * 0.4  // Đã sửa từ !panelManager.fullsetting ? root.width/6 * 0.4 : root.width/12 * 0.4
-                                    fillMode: Image.PreserveAspectFit
-                                    smooth: true
-                                    anchors.horizontalCenter: parent.horizontalCenter
-                                }
-
-                                Text {
-                                    text: modelData.name
-                                    color: Settings.general.lang === modelData.code ? theme.primary.background : theme.primary.foreground
-                                    font {
-                                        family: "ComicShannsMono Nerd Font"
-                                        pixelSize: 12
-                                        bold: Settings.general.lang === modelData.code
-                                    }
-                                    anchors.horizontalCenter: parent.horizontalCenter
-                                }
-                            }
-
-                            MouseArea {
-                                id: langMouseArea
-                                anchors.fill: parent
-                                hoverEnabled: true
-                                cursorShape: Qt.PointingHandCursor
-                                onClicked: {
-                                    setLanguageEditor(modelData.code);
-                                }
-                            }
-
-                            // Checkmark for selected language
-                            Rectangle {
-                                visible: Settings.general.lang === modelData.code
-                                width: 18
-                                height: 18
-                                radius: 9
-                                color: theme.normal.blue
-                                anchors.top: parent.top
-                                anchors.right: parent.right
-                                anchors.margins: 4
-
-                                Text {
-                                    text: "✓"
-                                    color: theme.primary.background
-                                    font.pixelSize: 12
-                                    font.bold: true
-                                    anchors.centerIn: parent
-                                }
-                            }
-                        }
-                    }
+              MouseArea {
+                id: langMouseArea
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+                onClicked: {
+                  setLanguageEditor(modelData.code);
                 }
+              }
+
+              // Checkmark for selected language
+              Rectangle {
+                visible: Settings.general.lang === modelData.code
+                width: 18
+                height: 18
+                radius: 9
+                color: theme.normal.blue
+                anchors.top: parent.top
+                anchors.right: parent.right
+                anchors.margins: 4
+
+                Text {
+                  text: "✓"
+                  color: theme.primary.background
+                  font.pixelSize: 12
+                  font.bold: true
+                  anchors.centerIn: parent
+                }
+              }
             }
-
-            Item {
-                Layout.fillHeight: true
-            } // Spacer
+          }
         }
+      }
+
+      Item {
+        Layout.fillHeight: true
+      } // Spacer
     }
+  }
 }

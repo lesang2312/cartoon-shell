@@ -13,8 +13,32 @@ PanelWindow {
   property var theme: ThemeService.theme
   property var lang: LanguageService.translations
 
-  implicitWidth: 1000
-  implicitHeight: 550
+  property real animationProgress: 0
+  SequentialAnimation on animationProgress {
+    running: true
+
+    NumberAnimation {
+      from: 0
+      to: 1
+      duration: 500
+      easing.type: Easing.Linear
+    }
+  }
+
+  implicitWidth: weatherPanel.animationProgress > 0.1 ?  1000 : 100
+  implicitHeight: weatherPanel.animationProgress > 0.1 ?  550 : 100
+  Behavior on implicitHeight {
+    NumberAnimation {
+      duration: 60
+      easing.type: Easing.OutCubic
+    }
+  }
+  Behavior on implicitWidth {
+    NumberAnimation {
+      duration: 60
+      easing.type: Easing.OutCubic
+    }
+  }
   focusable: true
 
   property string apiKey: Settings.weather.keyApi
@@ -164,6 +188,7 @@ PanelWindow {
           locationSearchResults: weatherPanel.locationSearchResults
           currentLocationIndex: weatherPanel.currentLocationIndex
           isUserSearching: weatherPanel.isUserSearching
+          animationProgress: weatherPanel.animationProgress
           errorMessage: weatherPanel.errorMessage
 
           onApiKeyEdited: function (newKey) {
@@ -216,6 +241,8 @@ PanelWindow {
             Com.WeatherCurrentDisplay {
               Layout.fillWidth: true
               Layout.preferredHeight: parent.height / 2
+              animationProgress: weatherPanel.animationProgress
+
             }
 
             // 3-day forecast

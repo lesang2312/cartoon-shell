@@ -9,6 +9,11 @@ Rectangle {
   implicitHeight: 32
   radius: 116
   color: closeArea.containsMouse ? theme.normal.red : theme.button.background
+
+  Behavior on color {
+    ColorAnimation { duration: 350 }
+  }
+
   signal clicked()
 
   IconText {

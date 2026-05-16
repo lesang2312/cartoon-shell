@@ -6,12 +6,13 @@ import qs.commons
 import qs.components
 
 RowLayout {
-  id: currentDisplay
+  id: root
   spacing: 20
+  property real animationProgress: 0
 
   // Main weather card - LEFT
   Rectangle {
-    visible: currentDisplay.hasData
+    visible: root.hasData
     Layout.preferredWidth: 200
     Layout.fillHeight: true
     radius: 16
@@ -29,6 +30,12 @@ RowLayout {
         path: WeatherService.icon
         size: "xl"
         Layout.alignment: Qt.AlignHCenter
+        opacity: root.animationProgress > 0.5 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
 
       }
 
@@ -37,12 +44,24 @@ RowLayout {
         size: "2xl"
         isBold: true
         Layout.alignment: Qt.AlignHCenter
+        opacity: root.animationProgress > 0.55 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
       }
 
       CustomText {
         name : WeatherService.condition.slice(0, 15)
         size: "small"
         Layout.alignment: Qt.AlignHCenter
+        opacity: root.animationProgress > 0.6 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
       }
 
       Item {
@@ -66,6 +85,8 @@ RowLayout {
       Layout.fillHeight: true
       image: "weather/humidity.png"
       value: WeatherService.humidity
+      revealThreshold: 0.6
+      animationProgress: root.animationProgress
     }
 
     // Wind Speed
@@ -74,6 +95,8 @@ RowLayout {
       Layout.fillHeight: true
       image: Settings.appearance.mode === "light" ? "weather/wind_light.png" : "weather/wind_dark.png"
       value: WeatherService.windSpeed
+      revealThreshold: 0.65
+      animationProgress: root.animationProgress
     }
 
     // Pressure
@@ -82,6 +105,8 @@ RowLayout {
       Layout.fillHeight: true
       image: "weather/pressure.png"
       value: WeatherService.pressure
+      revealThreshold: 0.7
+      animationProgress: root.animationProgress
     }
 
     // Visibility
@@ -90,6 +115,8 @@ RowLayout {
       Layout.fillHeight: true
       image: "weather/visibility.png"
       value: WeatherService.visibility
+      revealThreshold: 0.75
+      animationProgress: root.animationProgress
     }
 
     // UV Index
@@ -98,6 +125,8 @@ RowLayout {
       Layout.fillHeight: true
       image: Settings.appearance.mode === "light" ? "weather/uv_light.png" : "weather/uv_dark.png"
       value: WeatherService.uvIndex
+      revealThreshold: 0.8
+      animationProgress: root.animationProgress
     }
 
     // Feels Like
@@ -106,6 +135,8 @@ RowLayout {
       Layout.fillHeight: true
       image: Settings.appearance.mode === "light" ? "weather/feels_like_light.png" : "weather/feels_like_dark.png"
       value: WeatherService.feelsLike
+      revealThreshold: 0.85
+      animationProgress: root.animationProgress
     }
   }
 }

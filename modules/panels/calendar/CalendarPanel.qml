@@ -11,9 +11,31 @@ PanelWindow {
   id: wtDetailPanel
 
   property var theme: ThemeService.theme
+  property real animationProgress: 0
+  SequentialAnimation on animationProgress {
+    id: staggerAnimation
+    running: true
+    loops: 1
 
-  implicitWidth: 500
-  implicitHeight: 500
+    PropertyAction { value: 0 }
+
+    NumberAnimation { to: 0.2; duration: 50 }
+  }
+
+  implicitWidth: wtDetailPanel.animationProgress > 0.1 ?  500 : 100
+  implicitHeight: wtDetailPanel.animationProgress > 0.1 ?  500 : 100
+  Behavior on implicitHeight {
+    NumberAnimation {
+      duration: 60
+      easing.type: Easing.OutCubic
+    }
+  }
+  Behavior on implicitWidth {
+    NumberAnimation {
+      duration: 60
+      easing.type: Easing.OutCubic
+    }
+  }
 
   anchors {
     top: Settings.bar.position === "top"

@@ -198,21 +198,14 @@ PanelWindow {
 
   // Staggered animation trigger
   SequentialAnimation on animationProgress {
-    id: staggerAnimation
     running: true
-    loops: 1
 
-    PropertyAction { value: 0 }
-
-    // Animate each threshold
-    NumberAnimation { to: 0.1; duration: 50 }
-    NumberAnimation { to: 0.2; duration: 100 }
-    NumberAnimation { to: 0.3; duration: 100 }
-    NumberAnimation { to: 0.4; duration: 100 }
-    NumberAnimation { to: 0.5; duration: 100 }
-    NumberAnimation { to: 0.6; duration: 100 }
-    NumberAnimation { to: 0.7; duration: 100 }
-    NumberAnimation { to: 1.0; duration: 100 }
+    NumberAnimation {
+      from: 0
+      to: 1
+      duration: 500
+      easing.type: Easing.Linear
+    }
   }
 
   Component.onCompleted: {

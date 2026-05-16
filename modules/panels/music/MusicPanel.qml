@@ -21,8 +21,39 @@ PanelWindow {
   property var theme : ThemeService.theme
   property var lang: LanguageService.translations
 
-  implicitWidth: 500
-  implicitHeight: 500
+  property real animationProgress: 0
+  SequentialAnimation on animationProgress {
+    id: staggerAnimation
+    running: true
+    loops: 1
+
+    PropertyAction { value: 0 }
+
+    NumberAnimation { to: 0.2; duration: 50 }
+    NumberAnimation { to: 0.4; duration: 100 }
+    NumberAnimation { to: 0.5; duration: 50 }
+    NumberAnimation { to: 0.6; duration: 50 }
+    NumberAnimation { to: 0.7; duration: 50 }
+    NumberAnimation { to: 0.8; duration: 50 }
+    NumberAnimation { to: 0.9; duration: 50 }
+    NumberAnimation { to: 1; duration: 50 }
+    NumberAnimation { to: 1.1; duration: 50 }
+  }
+
+  implicitWidth: musicPanel.animationProgress > 0.1 ?  500 : 100
+  implicitHeight: musicPanel.animationProgress > 0.1 ?  500 : 100
+  Behavior on implicitHeight {
+    NumberAnimation {
+      duration: 60
+      easing.type: Easing.OutCubic
+    }
+  }
+  Behavior on implicitWidth {
+    NumberAnimation {
+      duration: 60
+      easing.type: Easing.OutCubic
+    }
+  }
   focusable: true
 
   anchors {
@@ -71,6 +102,12 @@ PanelWindow {
 
       // Header
       Com.MusicHeader {
+        opacity: musicPanel.animationProgress > 0.5 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
       }
 
       // Album art and info section
@@ -81,23 +118,53 @@ PanelWindow {
 
         // Album art
         Com.AlbumArt {
+          opacity: musicPanel.animationProgress > 0.6 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
+          }
         }
 
         // Song info
         Com.SongInfo {
+          opacity: musicPanel.animationProgress > 0.7 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
+          }
         }
       }
 
       // Controls
       Com.MusicControls {
+        opacity: musicPanel.animationProgress > 0.8 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
       }
       Com.MusicProgressBar{
+        opacity: musicPanel.animationProgress > 0.9 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
 
       }
 
       // Cava Visualizer
       Com.CavaVisualizer {
         cavaService: cavaService
+        opacity: musicPanel.animationProgress > 1 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
       }
     }
   }

@@ -8,6 +8,18 @@ import qs.components
 Rectangle {
   id: root
   Layout.preferredWidth: 210
+  property real animationProgress: 0
+
+  SequentialAnimation on animationProgress {
+    running: true
+
+    NumberAnimation {
+      from: 0
+      to: 0.8
+      duration: 400
+      easing.type: Easing.Linear
+    }
+  }
   Layout.fillHeight: true
   radius: 12
   color: theme.primary.dim_background
@@ -32,6 +44,12 @@ Rectangle {
     // Tiêu đề Menu
     Rectangle {
       id: launcherButton
+      opacity: root.animationProgress > 0.1 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
       Layout.fillWidth: true
       Layout.preferredHeight: 60
       radius: 8
@@ -131,6 +149,12 @@ Rectangle {
     // Cài đặt
     Rectangle {
       id: settingsButton
+      opacity: root.animationProgress > 0.2 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
       Layout.fillWidth: true
       Layout.preferredHeight: 60
       radius: 8
@@ -230,6 +254,12 @@ Rectangle {
     // Chế độ ngủ
     Rectangle {
       id: sleepButton
+      opacity: root.animationProgress > 0.3 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
       Layout.fillWidth: true
       Layout.preferredHeight: 60
       radius: 8
@@ -327,6 +357,12 @@ Rectangle {
 
     // Khóa màn hình
     Rectangle {
+      opacity: root.animationProgress > 0.4 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
       id: lockButton
       Layout.fillWidth: true
       Layout.preferredHeight: 60
@@ -425,6 +461,12 @@ Rectangle {
 
     // Đăng xuất
     Rectangle {
+      opacity: root.animationProgress > 0.5 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
       id: logoutButton
       Layout.fillWidth: true
       Layout.preferredHeight: 60
@@ -524,6 +566,12 @@ Rectangle {
     // Khởi động lại
     Rectangle {
       id: restartButton
+      opacity: root.animationProgress > 0.6 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
       Layout.fillWidth: true
       Layout.preferredHeight: 60
       radius: 8
@@ -622,6 +670,12 @@ Rectangle {
 
     // Tắt máy
     Rectangle {
+      opacity: root.animationProgress > 0.7 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
       id: shutdownButton
       Layout.fillWidth: true
       Layout.preferredHeight: 60

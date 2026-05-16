@@ -5,7 +5,7 @@ import qs.services
 import qs.components
 
 Rectangle {
-  id: configSection
+  id: root
 
   property var theme: ThemeService.theme
   property var lang: LanguageService.translations
@@ -17,6 +17,7 @@ Rectangle {
   required property int currentLocationIndex
   required property bool isUserSearching
   required property string errorMessage
+  property real animationProgress: 0
 
   signal apiKeyEdited(string newKey)
   signal locationTextEdited(string newText)
@@ -48,17 +49,25 @@ Rectangle {
         Layout.fillWidth: true
         spacing: 12
 
-        Text {
-          text: lang?.weather?.apiKeyLabel || "API Key (weatherapi.com)"
-          color: theme.primary.foreground
-          font {
-            pixelSize: 16
-            family: "ComicShannsMono Nerd Font"
-            bold: true
+        CustomText {
+          name: lang?.weather?.apiKeyLabel || "API Key (weatherapi.com)"
+          size: "small"
+          isBold: true
+          opacity: root.animationProgress > 0.2 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
           }
         }
 
         Rectangle {
+          opacity: root.animationProgress > 0.25 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
+          }
           Layout.fillWidth: true
           height: 44
           radius: 10
@@ -70,7 +79,7 @@ Rectangle {
             id: apiKeyInput
             anchors.fill: parent
             anchors.margins: 5
-            text: configSection.apiKey
+            text: root.apiKey
             palette.text: theme.primary.foreground
             font {
               pixelSize: 14
@@ -86,19 +95,22 @@ Rectangle {
             palette.placeholderText: theme.primary.dim_foreground
 
             onTextChanged: {
-              configSection.apiKeyEdited(text);
+              root.apiKeyEdited(text);
             }
           }
         }
 
-        Text {
-          text: lang?.weather?.apiKeyHint || "Nhận API key miễn phí tại: weatherapi.com\nAPI key sẽ tự động lưu và kiểm tra khi bạn nhập"
-          color: theme.primary.dim_foreground
-          font {
-            pixelSize: 12
-            family: "ComicShannsMono Nerd Font"
-            italic: true
+        CustomText {
+          opacity: root.animationProgress > 0.3 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
           }
+          name: lang?.weather?.apiKeyHint || "Nhận API key miễn phí tại: weatherapi.com\nAPI key sẽ tự động lưu và kiểm tra khi bạn nhập"
+
+          size: "xs"
+          font.italic: true
           wrapMode: Text.WordWrap
           Layout.fillWidth: true
         }
@@ -109,13 +121,15 @@ Rectangle {
         Layout.fillWidth: true
         spacing: 12
 
-        Text {
-          text: lang?.weather?.locationLabel || "Địa điểm"
-          color: theme.primary.foreground
-          font {
-            pixelSize: 16
-            family: "ComicShannsMono Nerd Font"
-            bold: true
+        CustomText {
+          name: lang?.weather?.locationLabel || "Địa điểm"
+          size: "small"
+          isBold: true
+          opacity: root.animationProgress > 0.35 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
           }
         }
 
@@ -124,6 +138,12 @@ Rectangle {
           spacing: 10
 
           Rectangle {
+            opacity: root.animationProgress > 0.4 ? 1 : 0
+            Behavior on opacity {
+              NumberAnimation {
+                duration: 200
+              }
+            }
             Layout.fillWidth: true
             height: 44
             radius: 10
@@ -135,7 +155,7 @@ Rectangle {
               id: locationInput
               anchors.fill: parent
               anchors.margins: 5
-              text: configSection.location
+              text: root.location
               color: theme.primary.foreground
               font {
                 pixelSize: 14
@@ -152,11 +172,11 @@ Rectangle {
               palette.placeholderText: theme.primary.dim_foreground
 
               onActiveFocusChanged: {
-                configSection.locationFocusStatusChanged(activeFocus);
+                root.locationFocusStatusChanged(activeFocus);
               }
 
               onTextChanged: {
-                configSection.locationTextEdited(text);
+                root.locationTextEdited(text);
               }
             }
           }
@@ -165,25 +185,31 @@ Rectangle {
             width: 100
             height: 44
             radius: 10
+            opacity: root.animationProgress > 0.45 ? 1 : 0
+            Behavior on opacity {
+              NumberAnimation {
+                duration: 200
+              }
+            }
 
-            color: theme.normal.blue
+            color: theme.button.background
 
-            border.color: theme.primary.dim_foreground
+            border.color: theme.button.border
             border.width: 1
 
             IconText{
               name: "search"
               size: "small"
               anchors.centerIn: parent
-              textColor: theme.primary.background
+              textColor: theme.button.text
             }
             MouseArea {
               id: saveLocMouseArea
               anchors.fill: parent
               hoverEnabled: true
               cursorShape: Qt.PointingHandCursor
-              enabled: !configSection.isSearchingLocation
-              onClicked: configSection.searchLocationRequested(locationInput.text)
+              enabled: !root.isSearchingLocation
+              onClicked: root.searchLocationRequested(locationInput.text)
             }
           }
         }
@@ -191,13 +217,13 @@ Rectangle {
         // Location search results
         ListView {
           id: locationResultsList
-          visible: configSection.isUserSearching && configSection.locationSearchResults.length > 0
+          visible: root.isUserSearching && configSection.locationSearchResults.length > 0
           Layout.fillWidth: true
           Layout.preferredHeight: Math.min(count * 52, 208)
           clip: true
           spacing: 4
-          model: configSection.locationSearchResults
-          currentIndex: configSection.currentLocationIndex
+          model: root.locationSearchResults
+          currentIndex: root.currentLocationIndex
 
           delegate: Rectangle {
             width: ListView.view.width
@@ -264,7 +290,7 @@ Rectangle {
               }
               onClicked: {
                 locationInput.text = `${modelData.name},${modelData.country}`;
-                configSection.locationSelected(locationInput.text);
+                root.locationSelected(locationInput.text);
               }
             }
           }
@@ -273,9 +299,9 @@ Rectangle {
 
       // Error message (nếu có)
       Rectangle {
-        visible: configSection.errorMessage !== ""
+        visible: root.errorMessage !== ""
         Layout.fillWidth: true
-        Layout.preferredHeight: configSection.errorMessage !== "" ? 60 : 0
+        Layout.preferredHeight: root.errorMessage !== "" ? 60 : 0
         radius: 12
 
         gradient: Gradient {
@@ -305,7 +331,7 @@ Rectangle {
           }
 
           Text {
-            text: configSection.errorMessage
+            text: root.errorMessage
             color: theme.normal.red
             font {
               pixelSize: 13

@@ -85,6 +85,40 @@ Singleton {
 
   component Bar: JsonObject {
     property string position: "top"
+    property var ram: {
+      "isImage" : true,
+      "isIcon" : false,
+      "isName" : true,
+      "isValue": true,
+      "active": true
+    }
+    property var cpu: {
+      "isImage" : true,
+      "isIcon" : false,
+      "isName" : true,
+      "isValue": true,
+      "active": true
+    }
+    property var disk: {
+      "isImage" : true,
+      "isIcon" : false,
+      "isName" : true,
+      "isValue": true,
+      "active": true
+    }
+    property var bluetooth: {
+      "isImage" : true,
+      "isIcon" : false,
+    }
+    property var wifi: {
+      "isImage" : true,
+      "isIcon1" : false,
+      "isIcon2" : false,
+    }
+    property var volume: {
+      "isIamge": true,
+      "isIcon" : false,
+    }
   }
 
   component Clock: JsonObject {

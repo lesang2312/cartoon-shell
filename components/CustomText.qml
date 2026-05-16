@@ -18,6 +18,8 @@ Text {
 
   font.pixelSize: {
     switch (size) {
+      case "2xs":
+      return 8
       case "xs":
       return 12
 

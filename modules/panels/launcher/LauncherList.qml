@@ -10,7 +10,7 @@ Rectangle {
   id: container
   radius: 12
   color: theme.primary.dim_background
-  border.color: theme.normal.black
+  border.color: theme.primary.foreground
   border.width: 2
 
   property var apps: []

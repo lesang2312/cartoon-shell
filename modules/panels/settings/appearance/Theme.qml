@@ -6,121 +6,143 @@ import qs.services
 import qs.components
 
 Item {
-    id: root
-    property var theme: ThemeService.theme
-    property var lang: LanguageService.translations
+  id: root
+  property var theme: ThemeService.theme
+  property var lang: LanguageService.translations
+  property real animationProgress: 0
 
-    ScrollView {
-        id: scrollView
-        anchors.fill: parent
-        clip: true
-        anchors.margins: 20
+  SequentialAnimation on animationProgress {
+    running: true
 
-        // Cấu hình scrollbar
-        ScrollBar.vertical.policy: ScrollBar.AsNeeded
-        ScrollBar.horizontal.policy: ScrollBar.AsNeeded
-        ScrollBar.vertical.interactive: true
+    NumberAnimation {
+      from: 0
+      to: 1
+      duration: 500
+      easing.type: Easing.Linear
+    }
+  }
 
-        // Content area
-        contentWidth: contentLayout.width
-        contentHeight: contentLayout.height
+  ScrollView {
+    id: scrollView
+    anchors.fill: parent
+    clip: true
+    anchors.margins: 20
 
-        // Nền cho scrollview
-        background: Rectangle {
-            color: "transparent"
+    // Cấu hình scrollbar
+    ScrollBar.vertical.policy: ScrollBar.AsNeeded
+    ScrollBar.horizontal.policy: ScrollBar.AsNeeded
+    ScrollBar.vertical.interactive: true
+
+    // Content area
+    contentWidth: contentLayout.width
+    contentHeight: contentLayout.height
+
+    // Nền cho scrollview
+    background: Rectangle {
+      color: "transparent"
+    }
+
+    ColumnLayout {
+      id: contentLayout
+      width: scrollView.availableWidth
+      spacing: 25
+      // Tiêu đề chính
+      HeaderSettings {
+        opacity: root.animationProgress > 0.1 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
         }
+        name: "Theme"
+      }
+
+      // Đường phân cách
+      Rectangle {
+        Layout.fillWidth: true
+        height: 1
+        color: theme.primary.foreground
+        opacity: root.animationProgress > 0.15 ? 0.2 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
+        Layout.bottomMargin: 5
+      }
+
+      // Container chính cho nội dung
+      Rectangle {
+        id: contentContainer
+        Layout.fillWidth: true
+        color: "transparent"
 
         ColumnLayout {
-            id: contentLayout
-            width: scrollView.availableWidth
-            spacing: 25
-            // Tiêu đề chính
-            HeaderSettings {
-                name: "Theme"
-            }
+          width: parent.width
+          spacing: 25
 
-            // Đường phân cách
-            Rectangle {
-                Layout.fillWidth: true
-                height: 1
-                color: theme.primary.foreground
-                opacity: 0.2
-                Layout.bottomMargin: 5
-            }
+          // Phần chọn theme
+          Com.ThemeSelection {
+            id: themeSelection
+            width: parent.width
+            Layout.fillWidth: true
+          }
+          Com.ListTheme {
 
-            // Container chính cho nội dung
-            Rectangle {
-                id: contentContainer
-                Layout.fillWidth: true
-                color: "transparent"
-
-                ColumnLayout {
-                    width: parent.width
-                    spacing: 25
-
-                    // Phần chọn theme
-                    Com.ThemeSelection {
-                        id: themeSelection
-                        width: parent.width
-                        Layout.fillWidth: true
-                    }
-                    Com.ListTheme {}
-
-                    // Thêm phần cài đặt theme khác nếu cần
-                    // Ví dụ: chế độ tối/sáng tự động
-                }
-            }
-
-            // Spacer để đảm bảo nội dung không bị che ở dưới
-            Item {
-                Layout.fillHeight: true
-                Layout.minimumHeight: 20
-            }
+          }
         }
+      }
+
+      // Spacer để đảm bảo nội dung không bị che ở dưới
+      Item {
+        Layout.fillHeight: true
+        Layout.minimumHeight: 20
+      }
     }
+  }
 
-    // Tùy chọn: Hiển thị thanh scrollbar custom nếu muốn
-    Component {
-        id: customScrollBar
+  // Tùy chọn: Hiển thị thanh scrollbar custom nếu muốn
+  Component {
+    id: customScrollBar
 
-        Rectangle {
-            id: scrollBar
-            width: 8
-            radius: 4
-            color: theme.normal.blue
-            opacity: 0.5
-
-            Behavior on opacity {
-                NumberAnimation {
-                    duration: 200
-                }
-            }
-
-            states: State {
-                name: "hovered"
-                when: scrollBar.MouseArea.containsMouse
-                PropertyChanges {
-                    target: scrollBar
-                    opacity: 0.8
-                    width: 10
-                }
-            }
-        }
-    }
-
-    // Debug: Hiển thị kích thước scrollview (có thể xóa)
     Rectangle {
-        visible: false // Đặt true để debug
-        anchors.fill: scrollView
-        color: "transparent"
-        border.color: "red"
-        border.width: 1
+      id: scrollBar
+      width: 8
+      radius: 4
+      color: theme.normal.blue
+      opacity: 0.5
 
-        Text {
-            anchors.centerIn: parent
-            text: `SV: ${scrollView.width}x${scrollView.height}\nContent: ${scrollView.contentWidth}x${scrollView.contentHeight}`
-            color: "red"
-            font.pixelSize: 10
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
         }
+      }
+
+      states: State {
+        name: "hovered"
+        when: scrollBar.MouseArea.containsMouse
+        PropertyChanges {
+          target: scrollBar
+          opacity: 0.8
+          width: 10
+        }
+      }
     }
+  }
+
+  // Debug: Hiển thị kích thước scrollview (có thể xóa)
+  Rectangle {
+    visible: false // Đặt true để debug
+    anchors.fill: scrollView
+    color: "transparent"
+    border.color: "red"
+    border.width: 1
+
+    Text {
+      anchors.centerIn: parent
+      text: `SV: ${scrollView.width}x${scrollView.height}\nContent: ${scrollView.contentWidth}x${scrollView.contentHeight}`
+      color: "red"
+      font.pixelSize: 10
+    }
+  }
 }
