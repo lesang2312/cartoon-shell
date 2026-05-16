@@ -9,6 +9,7 @@ Rectangle {
   id: root
 
   property var theme : ThemeService.theme
+  property real animationProgress: 0
 
   Layout.fillWidth: true
   Layout.preferredHeight: 120
@@ -16,6 +17,7 @@ Rectangle {
   color: theme.primary.background
   border.width: 3
   border.color: theme.button.border
+  clip: true
 
   RowLayout {
     anchors.fill: parent
@@ -25,32 +27,41 @@ Rectangle {
     // Phần hiển thị thời gian (giờ và phút)
     ColumnLayout {
       spacing: 2
-      Text {
-        text: DateTimeService.currentHour
-        color: theme.primary.foreground
-        font {
-          pixelSize: 30
-          bold: true
-          family: "ComicShannsMono Nerd Font"
+      CustomText {
+        name: DateTimeService.currentHour
+        size: "large"
+        isBold: true
+        opacity: root.animationProgress > 0.4 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
         }
       }
 
-      Text {
-        text: DateTimeService.currentMinus
-        color: theme.primary.foreground
-        font {
-          pixelSize: 30
-          bold: true
-          family: "ComicShannsMono Nerd Font"
+      CustomText {
+        name: DateTimeService.currentMinus
+        size: "large"
+        isBold: true
+        opacity: root.animationProgress > 0.43 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
         }
       }
     }
 
     Rectangle {
       Layout.preferredWidth: 4
-      Layout.preferredHeight: 90
+      Layout.preferredHeight: root.animationProgress > 0.47 ? 70 : 0
       color: theme.primary.foreground
       radius: 2
+      Behavior on Layout.preferredHeight {
+        NumberAnimation {
+          duration: 500
+        }
+      }
     }
 
     // Phần hiển thị ngày tháng
@@ -61,11 +72,23 @@ Rectangle {
         name: DateTimeService.currentDay
         isBold: true
         size: "xl"
+        opacity: root.animationProgress > 0.5 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
       }
       CustomText {
         name: `${DateTimeService.currentOfDays} ${DateTimeService.currentMonth} ${DateTimeService.currentYear}`
         size: "normal"
         isBold: true
+        opacity: root.animationProgress > 0.55 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
 
       }
     }

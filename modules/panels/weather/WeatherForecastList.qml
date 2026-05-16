@@ -5,11 +5,14 @@ import "." as Com
 
 Rectangle {
 
+  id: root
   property var theme: ThemeService.theme
 
   visible: WeatherService.forecastDays.length > 0
   Layout.fillWidth: true
   Layout.preferredHeight: 200
+  property real animationProgress: 0
+
   radius: 16
   color: Qt.rgba(theme.normal.black.r, theme.normal.black.g, theme.normal.black.b, 0.05)
   border.color: Qt.rgba(theme.normal.black.r, theme.normal.black.g, theme.normal.black.b, 0.1)
@@ -30,6 +33,8 @@ Rectangle {
         icon: WeatherService.forecastDays[0]?.icon ?? ""
         minTemp: (WeatherService.forecastDays[0]?.minTemp ?? "") + "℃ "
         maxTemp: (WeatherService.forecastDays[0]?.maxTemp ?? "") + "℃ "
+        animationProgress: weatherPanel.animationProgress
+        revealThreshold: 0.9
       }
       Item {Layout.fillWidth: true}
       Com.WeatherForecastItem {
@@ -38,6 +43,8 @@ Rectangle {
         icon: WeatherService.forecastDays[1]?.icon ?? ""
         minTemp: (WeatherService.forecastDays[1]?.minTemp ?? "") + "℃ "
         maxTemp: (WeatherService.forecastDays[1]?.maxTemp ?? "") + "℃ "
+        animationProgress: weatherPanel.animationProgress
+        revealThreshold: 1
       }
 
       Item {Layout.fillWidth: true}
@@ -48,6 +55,8 @@ Rectangle {
         icon: WeatherService.forecastDays[2]?.icon ?? ""
         minTemp: (WeatherService.forecastDays[2]?.minTemp ?? "") + "℃ "
         maxTemp: (WeatherService.forecastDays[2]?.maxTemp ?? "") + "℃ "
+        animationProgress: weatherPanel.animationProgress
+        revealThreshold: 1.1
       }
     }
   }

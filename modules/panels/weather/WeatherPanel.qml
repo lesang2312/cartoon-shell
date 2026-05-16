@@ -19,8 +19,8 @@ PanelWindow {
 
     NumberAnimation {
       from: 0
-      to: 1
-      duration: 500
+      to: 2
+      duration: 1000
       easing.type: Easing.Linear
     }
   }
@@ -249,6 +249,7 @@ PanelWindow {
             Com.WeatherForecastList {
               Layout.preferredHeight: parent.height / 2
               theme: weatherPanel.theme
+              animationProgress: weatherPanel.animationProgress
             }
           }
         }

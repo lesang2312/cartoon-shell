@@ -8,6 +8,7 @@ import qs.components
 Rectangle {
   id: root
   property var theme : ThemeService.theme
+  property real animationProgress: 0
 
   Layout.preferredWidth: 400
   Layout.preferredHeight: 240
@@ -31,6 +32,12 @@ Rectangle {
       IconImage {
         path: WeatherService.icon
         size: "3xl"
+        opacity: root.animationProgress > 0.75 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
       }
 
       ColumnLayout {
@@ -42,6 +49,12 @@ Rectangle {
           Layout.alignment: Qt.AlignVCenter
           size: "2xl"
           isBold: true
+          opacity: root.animationProgress > 0.77 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
+          }
         }
         CustomText {
           id: textCondition
@@ -50,6 +63,12 @@ Rectangle {
           size: "large"
           elide: Text.ElideRight
           maximumLineCount: 1
+          opacity: root.animationProgress > 0.8 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
+          }
         }
 
       }
@@ -64,13 +83,9 @@ Rectangle {
       Repeater {
         model: WeatherService.forecastDays
 
-        Rectangle {
+        Item {
           Layout.fillWidth: true
           Layout.fillHeight: true
-          radius: 12
-          color: Qt.rgba(theme.normal.black.r, theme.normal.black.g, theme.normal.black.b, 0.05)
-          border.color: Qt.rgba(theme.normal.black.r, theme.normal.black.g, theme.normal.black.b, 0.1)
-          border.width: 1
 
           ColumnLayout {
             anchors.fill: parent
@@ -78,16 +93,26 @@ Rectangle {
             spacing: 4
 
             // Day name
-            Text {
-              text: modelData.dayName
-              color: theme.primary.foreground
-              font {
-                pixelSize: 16
-                bold: index === 0
-                family: "ComicShannsMono Nerd Font"
-              }
+            CustomText{
+              name: modelData.dayName
+              isBold: true
+              size: "small"
               Layout.alignment: Qt.AlignHCenter
               elide: Text.ElideRight
+              opacity: 0
+              SequentialAnimation on opacity {
+                running: root.animationProgress > 0.85
+
+                PauseAnimation {
+                  duration: index * 50
+                }
+
+                NumberAnimation {
+                  to: 1
+                  duration: 200
+                  easing.type: Easing.OutCubic
+                }
+              }
             }
 
             // Weather icon
@@ -95,6 +120,20 @@ Rectangle {
               path: modelData.icon
               size: "normal"
               Layout.alignment: Qt.AlignHCenter
+              opacity: 0
+              SequentialAnimation on opacity {
+                running: root.animationProgress > 0.85
+
+                PauseAnimation {
+                  duration: index * 30
+                }
+
+                NumberAnimation {
+                  to: 1
+                  duration: 200
+                  easing.type: Easing.OutCubic
+                }
+              }
             }
 
             // Temperature range
@@ -102,28 +141,68 @@ Rectangle {
               Layout.alignment: Qt.AlignHCenter
               spacing: 2
 
-              Text {
-                text: `${modelData.minTemp}°`
-                color: theme.normal.cyan
-                font {
-                  pixelSize: 16
-                  bold: true
-                  family: "ComicShannsMono Nerd Font"
+              CustomText {
+                name: `${modelData.minTemp}°`
+                textColor: theme.normal.cyan
+
+                size: "small"
+                isBold: true
+                opacity: 0
+                SequentialAnimation on opacity {
+                  running: root.animationProgress > 0.85
+
+                  PauseAnimation {
+                    duration: index * 20
+                  }
+
+                  NumberAnimation {
+                    to: 1
+                    duration: 200
+                    easing.type: Easing.OutCubic
+                  }
                 }
               }
 
-              Text {
-                text: "/"
-                color: theme.primary.dim_foreground
-                font.pixelSize: 16
+              CustomText {
+                name: "/"
+                textColor: theme.primary.dim_foreground
+                size: "small"
+                isBold: true
+                opacity: 0
+                SequentialAnimation on opacity {
+                  running: root.animationProgress > 0.85
+
+                  PauseAnimation {
+                    duration: index * 40
+                  }
+
+                  NumberAnimation {
+                    to: 1
+                    duration: 200
+                    easing.type: Easing.OutCubic
+                  }
+                }
               }
 
-              Text {
-                text: `${modelData.maxTemp}°`
-                color: theme.normal.red
-                font {
-                  pixelSize: 16
-                  family: "ComicShannsMono Nerd Font"
+              CustomText {
+                name: `${modelData.maxTemp}°`
+                textColor: theme.normal.red
+
+                size: "small"
+                isBold: true
+                opacity: 0
+                SequentialAnimation on opacity {
+                  running: root.animationProgress > 0.85
+
+                  PauseAnimation {
+                    duration: index * 60
+                  }
+
+                  NumberAnimation {
+                    to: 1
+                    duration: 200
+                    easing.type: Easing.OutCubic
+                  }
                 }
               }
             }

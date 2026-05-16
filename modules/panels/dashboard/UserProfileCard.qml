@@ -10,6 +10,8 @@ Rectangle {
   id: root
 
   property var theme : ThemeService.theme
+  property real animationProgress: 0
+
   Loader {
     source: "../../dialogs/FileDialog.qml"
     active: VisibleService.filedialog
@@ -63,6 +65,12 @@ Rectangle {
       ClippingRectangle {
         id: albumArtContainer
 
+        opacity: root.animationProgress > 0.1 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
         anchors.fill: parent
         radius: width / 2
 
@@ -140,6 +148,12 @@ Rectangle {
       font.pixelSize: 40
       font.bold: true
       font.family: "ComicShannsMono Nerd Font"
+      opacity: root.animationProgress > 0.15 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
     }
 
     // User Handle
@@ -149,6 +163,12 @@ Rectangle {
       color: theme.primary.foreground
       font.pixelSize: 24
       font.family: "ComicShannsMono Nerd Font"
+      opacity: root.animationProgress > 0.2 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
     }
   }
 }

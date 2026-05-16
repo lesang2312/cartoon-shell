@@ -29,14 +29,11 @@ Item {
 
   // Flag Selection Panel
   Loader {
-    source: "../modules/panels/FlagSelectionPanel.qml"
+    source: "../modules/panels/flag/FlagPanel.qml"
     active: VisibleService.flag
     onLoaded: {
       item.visible = Qt.binding(function () {
           return VisibleService.flag;
-      });
-      item.selectedFlag = Qt.binding(function () {
-          return root.selectedFlag;
       });
     }
   }

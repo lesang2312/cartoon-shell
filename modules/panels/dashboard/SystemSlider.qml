@@ -8,6 +8,9 @@ RowLayout {
   id: root
   property string nameIcon: ""
   property color iconColor: "white"
+  property real animationProgress: 0
+  property real revealThreshold: 0.6
+
   property var theme : ThemeService.theme
 
   property real value: 0.5
@@ -28,6 +31,12 @@ RowLayout {
       name: root.nameIcon
       size: "normal"
       anchors.centerIn: parent
+      opacity: root.animationProgress > root.revealThreshold ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
 
     }
 
@@ -55,7 +64,12 @@ RowLayout {
 
       Rectangle {
         height: parent.height
-        width: parent.width * root.value
+        width: root.animationProgress > root.revealThreshold + 0.03 ? parent.width * root.value : 0
+        Behavior on width {
+          NumberAnimation {
+            duration: 500
+          }
+        }
         radius: parent.radius
         color: theme.button.text
       }

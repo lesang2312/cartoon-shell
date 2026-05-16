@@ -43,11 +43,8 @@ PanelWindow {
         Layout.fillHeight: true
         spacing: 15
 
-        Behavior on opacity { NumberAnimation { duration: 600 } }
-
         Com.UserProfileCard {
-          opacity: root.animationProgress > 0.1 ? 1 : 0
-          Behavior on opacity { NumberAnimation { duration: 500 } }
+          animationProgress: root.animationProgress
         }
 
         Com.SystemSlider {
@@ -55,8 +52,8 @@ PanelWindow {
           nameIcon: "memory"
           iconColor: theme.primary.background
           value: cpuService.cpuPercent / 100
-          opacity: root.animationProgress > 0.2 ? 1 : 0
-          Behavior on opacity { NumberAnimation { duration: 500 } }
+          revealThreshold: 0.25
+          animationProgress: root.animationProgress
         }
 
         Com.SystemSlider {
@@ -64,8 +61,8 @@ PanelWindow {
           nameIcon: "memory_alt"
           iconColor: theme.primary.background
           value: ramService.memPercent / 100
-          opacity: root.animationProgress > 0.3 ? 1 : 0
-          Behavior on opacity { NumberAnimation { duration: 500 } }
+          revealThreshold: 0.3
+          animationProgress: root.animationProgress
         }
 
         Com.SystemSlider {
@@ -73,8 +70,8 @@ PanelWindow {
           nameIcon: "hard_disk"
           iconColor: theme.primary.background
           value: diskService.diskPercents / 100
-          opacity: root.animationProgress > 0.4 ? 1 : 0
-          Behavior on opacity { NumberAnimation { duration: 500 } }
+          revealThreshold: 0.35
+          animationProgress: root.animationProgress
         }
       }
 
@@ -95,24 +92,20 @@ PanelWindow {
             Layout.preferredWidth: 100
 
             Com.TimeCard {
-              opacity: root.animationProgress > 0.15 ? 1 : 0
-              Behavior on opacity { NumberAnimation { duration: 500 } }
+              animationProgress: root.animationProgress
             }
 
             Com.SleepTimerCard {
-              opacity: root.animationProgress > 0.25 ? 1 : 0
-              Behavior on opacity { NumberAnimation { duration: 500 } }
+              animationProgress: root.animationProgress
             }
           }
 
           Com.WeatherCard {
-            opacity: root.animationProgress > 0.2 ? 1 : 0
-            Behavior on opacity { NumberAnimation { duration: 500 } }
+            animationProgress: root.animationProgress
+
           }
 
           Com.ListQuickActionButton {
-            opacity: root.animationProgress > 0.3 ? 1 : 0
-            Behavior on opacity { NumberAnimation { duration: 500 } }
           }
         }
 
@@ -133,13 +126,10 @@ PanelWindow {
               spacing: 15
 
               Com.MediaPlayerCard {
-                opacity: root.animationProgress > 0.35 ? 1 : 0
-                Behavior on opacity { NumberAnimation { duration: 500 } }
+                animationProgress: root.animationProgress
               }
 
               Com.AppGridCard {
-                opacity: root.animationProgress > 0.4 ? 1 : 0
-                Behavior on opacity { NumberAnimation { duration: 500 } }
               }
             }
 
@@ -151,35 +141,25 @@ PanelWindow {
                 image: "../../../assets/lockscreen/appicons/youtube.png"
                 bgColor: "#d20f39"
                 linkSocial: "https://www.youtube.com/"
-                opacity: root.animationProgress > 0.45 ? 1 : 0
-                Behavior on opacity { NumberAnimation { duration: 450 } }
               }
               Com.SocialIcon {
                 image: "../../../assets/lockscreen/appicons/reddit.png"
                 bgColor: "#fe640b"
                 linkSocial: "https://www.reddit.com/"
-                opacity: root.animationProgress > 0.5 ? 1 : 0
-                Behavior on opacity { NumberAnimation { duration: 450 } }
               }
               Com.SocialIcon {
                 image: "../../../assets/lockscreen/appicons/facebook.png"
                 bgColor: "#04a5e5"
                 linkSocial: "https://www.facebook.com/"
-                opacity: root.animationProgress > 0.55 ? 1 : 0
-                Behavior on opacity { NumberAnimation { duration: 450 } }
               }
               Com.SocialIcon {
                 image: "../../../assets/lockscreen/appicons/tiktok.png"
                 bgColor: "#eff1f5"
                 linkSocial: "https://www.tiktok.com/"
-                opacity: root.animationProgress > 0.6 ? 1 : 0
-                Behavior on opacity { NumberAnimation { duration: 450 } }
               }
 
               Com.GmailCard {
                 emailCount: 230
-                opacity: root.animationProgress > 0.65 ? 1 : 0
-                Behavior on opacity { NumberAnimation { duration: 500 } }
               }
             }
           }
@@ -188,8 +168,6 @@ PanelWindow {
           Com.FileBrowserCard {
             Layout.preferredWidth: 300
             Layout.fillHeight: true
-            opacity: root.animationProgress > 0.5 ? 1 : 0
-            Behavior on opacity { NumberAnimation { duration: 600 } }
           }
         }
       }
@@ -202,8 +180,8 @@ PanelWindow {
 
     NumberAnimation {
       from: 0
-      to: 1
-      duration: 500
+      to: 2
+      duration: 1000
       easing.type: Easing.Linear
     }
   }

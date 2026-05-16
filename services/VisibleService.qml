@@ -41,7 +41,7 @@ Singleton {
 
   property bool dashboard: false
 
-  property bool hasPanel: packagePanel || wifi || mixer || music || launcher || dashboard || battery || ram || cpu || calendar || weather || bluetooth
+  property bool hasPanel: packagePanel || wifi || flag || mixer || music || launcher || dashboard || battery || ram || cpu || calendar || weather || bluetooth
 
   property bool clock: Settings.clock.enableWidget // Giữ nguyên từ config
 

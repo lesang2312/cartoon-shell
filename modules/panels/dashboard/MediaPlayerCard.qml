@@ -15,6 +15,7 @@ Rectangle {
   property var mprisPlayer: Mpris.players.values.length > 0 ? Mpris.players.values[0] : null
   property string currentSong: "No song playing"
   property string currentArtist: "Unknown Artist"
+  property real animationProgress: 0
   property string albumArt: ""
   property int position: 0
   property int duration: 0
@@ -68,6 +69,12 @@ Rectangle {
           color: theme.primary.dim_background
           border.color: theme.normal.black
           border.width: 3
+          opacity: root.animationProgress > 0.75 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
+          }
 
           Image {
             id: albumImage
@@ -108,6 +115,12 @@ Rectangle {
 
         Text {
           id: songText
+          opacity: root.animationProgress > 0.8 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
+          }
           text: root.mprisPlayer ? (root.mprisPlayer.trackTitle || "No song playing") : "No song playing"
           font.family: "ComicShannsMono Nerd Font"
           font.pixelSize: 20
@@ -138,13 +151,17 @@ Rectangle {
       }
 
       // Artist name
-      Text {
-        Layout.fillWidth: true
-        text: root.mprisPlayer ? (root.mprisPlayer.trackArtist || "Unknown Artist") : "Unknown Artist"
-        font.family: "ComicShannsMono Nerd Font"
-        font.pixelSize: 14
-        color: theme.primary.dim_foreground
+      CustomText{
+        name: root.mprisPlayer ? (root.mprisPlayer.trackArtist || "Unknown Artist") : "Unknown Artist"
+        opacity: root.animationProgress > 0.85 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
         elide: Text.ElideRight
+        size: "small"
+        textColor: theme.primary.dim_foreground
       }
 
       Item { Layout.fillHeight: true }
@@ -165,6 +182,12 @@ Rectangle {
           color: prevArea.containsMouse ? theme.button.text : theme.button.background
 
           IconText {
+            opacity: root.animationProgress > 0.88 ? 1 : 0
+            Behavior on opacity {
+              NumberAnimation {
+                duration: 200
+              }
+            }
             anchors.centerIn: parent
             name: "skip_previous"
             size: "large"
@@ -192,6 +215,12 @@ Rectangle {
             anchors.centerIn: parent
             name: Players.mprisPlayer && Players.mprisPlayer.isPlaying ? "pause" : "play_arrow"
             size: "large"
+            opacity: root.animationProgress > 0.91 ? 1 : 0
+            Behavior on opacity {
+              NumberAnimation {
+                duration: 200
+              }
+            }
           }
 
           MouseArea {
@@ -216,6 +245,12 @@ Rectangle {
             anchors.centerIn: parent
             name: "skip_next"
             size: "large"
+            opacity: root.animationProgress > 0.94 ? 1 : 0
+            Behavior on opacity {
+              NumberAnimation {
+                duration: 200
+              }
+            }
           }
 
           MouseArea {
@@ -241,20 +276,32 @@ Rectangle {
         RowLayout {
           Layout.fillWidth: true
 
-          Text {
-            text: formatTime(root.mprisPlayer ? root.mprisPlayer.position : 0)
-            font.family: "ComicShannsMono Nerd Font"
-            font.pixelSize: 11
-            color: theme.primary.dim_foreground
+          CustomText {
+            name: formatTime(root.mprisPlayer ? root.mprisPlayer.position : 0)
+            size: "xs"
+            textColor: theme.primary.dim_foreground
+            opacity: root.animationProgress > 0.95 ? 1 : 0
+            Behavior on opacity {
+              NumberAnimation {
+                duration: 200
+              }
+            }
+
           }
 
           Item { Layout.fillWidth: true }
 
-          Text {
-            text: formatTime(root.mprisPlayer ? root.mprisPlayer.length : 0)
-            font.family: "ComicShannsMono Nerd Font"
-            font.pixelSize: 11
-            color: theme.primary.dim_foreground
+          CustomText {
+            name: formatTime(root.mprisPlayer ? root.mprisPlayer.length : 0)
+            size: "xs"
+            textColor: theme.primary.dim_foreground
+            opacity: root.animationProgress > 0.97 ? 1 : 0
+            Behavior on opacity {
+              NumberAnimation {
+                duration: 200
+              }
+            }
+
           }
         }
 
@@ -267,7 +314,7 @@ Rectangle {
           Rectangle {
             id: progressFill
             height: parent.height
-            width: root.mprisPlayer ? Math.min(parent.width, parent.width * (root.mprisPlayer.position / Math.max(1, root.mprisPlayer.length))) : 0
+            width: root.animationProgress ? root.mprisPlayer ? Math.min(parent.width, parent.width * (root.mprisPlayer.position / Math.max(1, root.mprisPlayer.length))) : 0 : 0
             radius: parent.radius
             color: theme.button.text
 
