@@ -13,6 +13,17 @@ Item {
   function setLanguageEditor(name) {
     Settings.general.lang = name;
   }
+  property real animationProgress: 0
+  SequentialAnimation on animationProgress {
+    running: true
+
+    NumberAnimation {
+      from: 0
+      to: 1
+      duration: 500
+      easing.type: Easing.Linear
+    }
+  }
 
   ScrollView {
     anchors.fill: parent
@@ -31,6 +42,12 @@ Item {
         // Tiêu đề
         HeaderSettings {
           name: "Language Region"
+          opacity: root.animationProgress > 0.1 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
+          }
         }
       }
 
@@ -38,6 +55,12 @@ Item {
         Layout.fillWidth: true
         height: 1
         color: theme.primary.foreground
+        opacity: root.animationProgress > 0.2 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
       }
 
       // Language Selection
@@ -45,20 +68,22 @@ Item {
         Layout.fillWidth: true
         spacing: 10
 
-        Text {
-          text: lang.general?.language_label || "Ngôn ngữ:"
-          color: theme.primary.foreground
-          font {
-            family: "ComicShannsMono Nerd Font"
-            pixelSize: 16
+        CustomText {
+          name: lang.general?.language_label || "Ngôn ngữ:"
+          size: "small"
+          opacity: root.animationProgress > 0.3 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
           }
         }
 
         Grid {
           Layout.fillWidth: true
-          columns: 6  // Đã sửa từ !panelManager.fullsetting ? 5 : 10
-          columnSpacing: 6  // Đã sửa từ !panelManager.fullsetting ? 8 : 10
-          rowSpacing: 6  // Đã sửa từ !panelManager.fullsetting ? 8 : 10
+          columns: 6
+          columnSpacing: 6
+          rowSpacing: 6
 
           Repeater {
             model: [
@@ -218,7 +243,7 @@ Item {
               opacity: 0
 
               SequentialAnimation on opacity {
-                running: true
+                running: root.animationProgress > 0.2
 
                 PauseAnimation {
                   duration: index * 15
@@ -237,28 +262,52 @@ Item {
               border.color: Settings.general.lang === modelData.code ? theme.normal.blue : (langMouseArea.containsPress ? theme.button.border_select : theme.button.border)
               border.width: 2
 
-              Column {
+              ColumnLayout {
                 anchors.centerIn: parent
                 spacing: 4
 
-                Image {
-                  source: Directories.assetsPath + `/flags/${modelData.flagImg}.png`
-                  width: root.width / 7 * 0.6  // Đã sửa từ !panelManager.fullsetting ? root.width/6 * 0.6 : root.width/12 * 0.6
-                  height: root.width / 7 * 0.4  // Đã sửa từ !panelManager.fullsetting ? root.width/6 * 0.4 : root.width/12 * 0.4
-                  fillMode: Image.PreserveAspectFit
-                  smooth: true
-                  anchors.horizontalCenter: parent.horizontalCenter
+                IconImage {
+                  path: `flags/${modelData.flagImg}.png`
+                  size : "large"
+                  Layout.alignment: Qt.AlignHCenter
+                  opacity: 0
+
+                  SequentialAnimation on opacity {
+                    running: root.animationProgress > 0.4
+
+                    PauseAnimation {
+                      duration: index * 15
+                    }
+
+                    NumberAnimation {
+                      to: 1
+                      duration: 200
+                      easing.type: Easing.OutCubic
+                    }
+                  }
                 }
 
-                Text {
-                  text: modelData.name
-                  color: Settings.general.lang === modelData.code ? theme.primary.background : theme.primary.foreground
-                  font {
-                    family: "ComicShannsMono Nerd Font"
-                    pixelSize: 12
-                    bold: Settings.general.lang === modelData.code
+                CustomText {
+                  name: modelData.name
+                  textColor: Settings.general.lang === modelData.code ? theme.primary.background : theme.primary.foreground
+                  isBold: Settings.general.lang === modelData.code
+                  size: "xs"
+                  Layout.alignment: Qt.AlignHCenter
+                  opacity: 0
+
+                  SequentialAnimation on opacity {
+                    running: root.animationProgress > 0.5
+
+                    PauseAnimation {
+                      duration: index * 15
+                    }
+
+                    NumberAnimation {
+                      to: 1
+                      duration: 200
+                      easing.type: Easing.OutCubic
+                    }
                   }
-                  anchors.horizontalCenter: parent.horizontalCenter
                 }
               }
 

@@ -130,6 +130,7 @@ PanelWindow {
               }
 
               Com.AppGridCard {
+                animationProgress: root.animationProgress
               }
             }
 

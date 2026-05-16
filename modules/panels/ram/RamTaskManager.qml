@@ -11,22 +11,7 @@ Item {
 
   property var theme: ThemeService.theme
   property var lang: LanguageService.translations
-
-  property color headerColor: theme.normal.blue
-  property color rowEvenColor: theme.primary.background
-  property color rowOddColor: theme.primary.dim_background
-  property color textColor: theme.primary.foreground
-  property color dimTextColor: theme.primary.dim_foreground
-  property color highlightColor: theme.normal.green
-
-  property color criticalColor: theme.normal.red
-  property color warningColor: theme.normal.yellow
-  property color normalColor: theme.normal.green
-  property color lowColor: theme.normal.cyan
-
-  property color borderColor: theme.button.border
-  property color progressBgColor: theme.bright.black
-
+  property real animationProgress: 0
   property int updateInterval: 3000
 
   property var processList: []
@@ -74,8 +59,14 @@ Item {
     anchors.fill: parent
     color: theme.primary.background
     radius: 12
-    border.color: borderColor
+    border.color: theme.primary.foreground
     border.width: 2
+    opacity: root.animationProgress > 0.4 ? 1 : 0
+    Behavior on opacity {
+      NumberAnimation {
+        duration: 200
+      }
+    }
 
     ColumnLayout {
       anchors.fill: parent
@@ -96,7 +87,12 @@ Item {
             name: lang.ram.title
             size: "large"
             isBold: true
-
+            opacity: root.animationProgress > 0.85 ? 1 : 0
+            Behavior on opacity {
+              NumberAnimation {
+                duration: 200
+              }
+            }
           }
 
           Item {
@@ -108,11 +104,23 @@ Item {
             CustomText {
               name: lang.ram.header_bar.last_update
               size: "small"
+              opacity: root.animationProgress > 0.9 ? 1 : 0
+              Behavior on opacity {
+                NumberAnimation {
+                  duration: 200
+                }
+              }
             }
             CustomText {
               name: lastUpdateTime
               size: "small"
               isBold: true
+              opacity: root.animationProgress > 0.95 ? 1 : 0
+              Behavior on opacity {
+                NumberAnimation {
+                  duration: 200
+                }
+              }
             }
           }
         }
@@ -121,7 +129,13 @@ Item {
       Rectangle {
         Layout.fillWidth: true
         height: 32
-        color: theme.bright.black
+        color: theme.button.background
+        opacity: root.animationProgress > 0.5 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
         radius: 6
 
         RowLayout {
@@ -129,41 +143,59 @@ Item {
           anchors.margins: 8
           spacing: 8
 
-          Text {
-            text: lang.ram.headers.pid
-            color: theme.primary.dim_foreground
-            font.family: "ComicShannsMono Nerd Font"
-            font.bold: true
-            font.pixelSize: 14
+          CustomText {
+            name: lang.ram.headers.pid
+            size: "small"
+            isBold: true
+            textColor: theme.button.text
             Layout.preferredWidth: 70
+            opacity: root.animationProgress > 1 ? 1 : 0
+            Behavior on opacity {
+              NumberAnimation {
+                duration: 200
+              }
+            }
           }
-
-          Text {
-            text: lang.ram.headers.name
-            font.family: "ComicShannsMono Nerd Font"
-            color: theme.primary.dim_foreground
-            font.bold: true
-            font.pixelSize: 14
+          CustomText {
+            name: lang.ram.headers.name
+            size: "small"
+            isBold: true
+            textColor: theme.button.text
             Layout.fillWidth: true
+            opacity: root.animationProgress > 1.05 ? 1 : 0
+            Behavior on opacity {
+              NumberAnimation {
+                duration: 200
+              }
+            }
           }
-
-          Text {
-            text: lang.ram.headers.ram_percent
-            color: theme.primary.dim_foreground
-            font.bold: true
-            font.pixelSize: 14
+          CustomText {
+            name: lang.ram.headers.ram_percent
+            size: "small"
+            isBold: true
+            textColor: theme.button.text
             Layout.preferredWidth: 80
             horizontalAlignment: Text.AlignRight
+            opacity: root.animationProgress > 1.1 ? 1 : 0
+            Behavior on opacity {
+              NumberAnimation {
+                duration: 200
+              }
+            }
           }
-
-          Text {
-            text: lang.ram.headers.memory
-            color: theme.primary.dim_foreground
-            font.family: "ComicShannsMono Nerd Font"
-            font.bold: true
-            font.pixelSize: 14
+          CustomText {
+            name: lang.ram.headers.memory
+            size: "small"
+            isBold: true
+            textColor: theme.button.text
             Layout.preferredWidth: 100
             horizontalAlignment: Text.AlignRight
+            opacity: root.animationProgress > 1.15 ? 1 : 0
+            Behavior on opacity {
+              NumberAnimation {
+                duration: 200
+              }
+            }
           }
         }
       }
@@ -179,7 +211,7 @@ Item {
         delegate: Rectangle {
           width: processListView.width
           height: 50
-          color: index % 2 === 0 ? rowEvenColor : rowOddColor
+          color: index % 2 === 0 ? theme.primary.background : theme.primary.dim_background
           radius: 6
           border.color: Qt.lighter(color, 1.1)
           border.width: 1
@@ -188,42 +220,93 @@ Item {
             anchors.fill: parent
             anchors.margins: 10
             spacing: 10
-
-            Text {
-              text: modelData.pid
-              color: theme.normal.blue
-              font.family: "ComicShannsMono Nerd Font"
-              font.pixelSize: 14
-              font.bold: true
+            CustomText {
+              name: modelData.pid
+              size: "small"
+              textColor: theme.button.text
               Layout.preferredWidth: 70
-            }
+              opacity: 0
 
-            Text {
-              text: modelData.name
-              color: textColor
-              font.pixelSize: 14
-              elide: Text.ElideRight
+              SequentialAnimation on opacity {
+                running: root.animationProgress > 1.2 ? 1 : 0
+
+                PauseAnimation {
+                  duration: index * 15
+                }
+
+                NumberAnimation {
+                  to: 1
+                  duration: 200
+                  easing.type: Easing.OutCubic
+                }
+              }
+            }
+            CustomText {
+              name: modelData.name
+              size: "small"
+              textColor: theme.primary.foreground
               Layout.fillWidth: true
-            }
+              opacity: 0
 
-            Text {
-              text: modelData.percent.toFixed(1) + "%"
-              color: getPercentageColor(modelData.percent)
-              font.family: "ComicShannsMono Nerd Font"
-              font.pixelSize: 14
-              font.bold: modelData.percent > 3
+              SequentialAnimation on opacity {
+                running: root.animationProgress > 1.25 ? 1 : 0
+
+                PauseAnimation {
+                  duration: index * 15
+                }
+
+                NumberAnimation {
+                  to: 1
+                  duration: 200
+                  easing.type: Easing.OutCubic
+                }
+              }
+            }
+            CustomText {
+              name: modelData.percent.toFixed(1)
+              size: "small"
+              textColor: getPercentageColor(modelData.percent)
               Layout.preferredWidth: 80
               horizontalAlignment: Text.AlignRight
-            }
+              opacity: 0
 
-            Text {
-              text: modelData.rss_mb.toFixed(1) + " MB"
-              color: textColor
-              font.family: "ComicShannsMono Nerd Font"
-              font.pixelSize: 14
+              SequentialAnimation on opacity {
+                running: root.animationProgress > 1.3 ? 1 : 0
+
+                PauseAnimation {
+                  duration: index * 15
+                }
+
+                NumberAnimation {
+                  to: 1
+                  duration: 200
+                  easing.type: Easing.OutCubic
+                }
+              }
+            }
+            CustomText {
+              name: modelData.rss_mb.toFixed(1) + " MB"
+              size: "small"
+              textColor: theme.primary.foreground
               Layout.preferredWidth: 100
               horizontalAlignment: Text.AlignRight
+              opacity: 0
+
+              SequentialAnimation on opacity {
+                running: root.animationProgress > 1.35 ? 1 : 0
+
+                PauseAnimation {
+                  duration: index * 15
+                }
+
+                NumberAnimation {
+                  to: 1
+                  duration: 200
+                  easing.type: Easing.OutCubic
+                }
+              }
             }
+
           }
 
           Rectangle {
@@ -235,10 +318,10 @@ Item {
             }
             height: 3
             radius: 1.5
-            color: progressBgColor
+            color: theme.primary.dim_background
 
             Rectangle {
-              width: parent.width * Math.min(modelData.percent / 30, 1)
+              width: root.animationProgress > 1.5 ? parent.width * Math.min(modelData.percent / 30, 1) : 0
               height: parent.height
               radius: 1.5
               color: getPercentageColor(modelData.percent)
@@ -263,12 +346,12 @@ Item {
             Text {
               text: "⏳"
               font.pixelSize: 30
-              color: dimTextColor
+              color: theme.primary.dim_foreground
             }
             Text {
               text: lang.ram.loading.message
               font.family: "ComicShannsMono Nerd Font"
-              color: dimTextColor
+              color: theme.primary.dim_foreground
               font.pixelSize: 14
             }
           }
@@ -278,29 +361,43 @@ Item {
       Rectangle {
         Layout.fillWidth: true
         height: 60
-        color: theme.bright.black
+        color: theme.button.background
         radius: 8
-        border.color: borderColor
-        border.width: 1
+        opacity: root.animationProgress > 0.6 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
 
         RowLayout {
           anchors.fill: parent
           anchors.margins: 10
 
-          Column {
+          ColumnLayout {
             spacing: 2
-            Text {
-              text: lang.ram.footer.process_count_label
-              font.family: "ComicShannsMono Nerd Font"
-              color: dimTextColor
-              font.pixelSize: 14
+            CustomText {
+              opacity: root.animationProgress > 1.55 ? 1 : 0
+              Behavior on opacity {
+                NumberAnimation {
+                  duration: 200
+                }
+              }
+              name: lang.ram.footer.process_count_label
+              size: "small"
+              textColor: theme.primary.dim_foreground
             }
-            Text {
-              text: processListView.count
-              font.family: "ComicShannsMono Nerd Font"
-              color: theme.normal.cyan
-              font.pixelSize: 14
-              font.bold: true
+            CustomText {
+              name: processListView.count
+              size: "small"
+              textColor: theme.button.text
+              isBold: true
+              opacity: root.animationProgress > 1.6 ? 1 : 0
+              Behavior on opacity {
+                NumberAnimation {
+                  duration: 200
+                }
+              }
             }
           }
 
@@ -308,20 +405,30 @@ Item {
             Layout.fillWidth: true
           }
 
-          Column {
+          ColumnLayout {
             spacing: 2
-            Text {
-              text: lang.ram.footer.total_ram_label
-              font.family: "ComicShannsMono Nerd Font"
-              color: dimTextColor
-              font.pixelSize: 14
+            CustomText {
+              name: lang.ram.footer.total_ram_label
+              size: "small"
+              textColor: theme.primary.dim_foreground
+              opacity: root.animationProgress > 1.65 ? 1 : 0
+              Behavior on opacity {
+                NumberAnimation {
+                  duration: 200
+                }
+              }
             }
-            Text {
-              text: calculateTotalRAM().toFixed(1) + " MB"
-              font.family: "ComicShannsMono Nerd Font"
-              color: theme.normal.green
-              font.pixelSize: 14
-              font.bold: true
+            CustomText {
+              name: calculateTotalRAM().toFixed(1) + " MB"
+              size: "small"
+              textColor: theme.button.text
+              isBold: true
+              opacity: root.animationProgress > 1.7 ? 1 : 0
+              Behavior on opacity {
+                NumberAnimation {
+                  duration: 200
+                }
+              }
             }
           }
 
@@ -329,20 +436,30 @@ Item {
             Layout.preferredWidth: 20
           }
 
-          Column {
+          ColumnLayout {
             spacing: 2
-            Text {
-              text: lang.ram.footer.memory_distribution_label
-              font.family: "ComicShannsMono Nerd Font"
-              color: dimTextColor
-              font.pixelSize: 14
+            CustomText {
+              name: lang.ram.footer.memory_distribution_label
+              size: "small"
+              textColor: theme.primary.dim_foreground
+              opacity: root.animationProgress > 1.75 ? 1 : 0
+              Behavior on opacity {
+                NumberAnimation {
+                  duration: 200
+                }
+              }
             }
-            Text {
-              text: getMemoryDistribution()
-              font.family: "ComicShannsMono Nerd Font"
-              color: theme.normal.magenta
-              font.pixelSize: 14
-              font.bold: true
+            CustomText {
+              name: getMemoryDistribution()
+              size: "small"
+              textColor: theme.button.text
+              opacity: root.animationProgress > 1.8 ? 1 : 0
+              Behavior on opacity {
+                NumberAnimation {
+                  duration: 200
+                }
+              }
+              isBold: true
             }
           }
         }
@@ -359,13 +476,13 @@ Item {
   }
 
   function getPercentageColor(percent) {
-    if (percent > 10)
-    return criticalColor;
-    if (percent > 5)
-    return warningColor;
-    if (percent > 2)
-    return normalColor;
-    return lowColor;
+    if (percent > 90)
+    return theme.normal.red;
+    if (percent > 70)
+    return theme.normal.yellow;
+    if (percent > 50)
+    return theme.normal.green;
+    return theme.normal.cyan;
   }
 
   function getMemoryDistribution() {

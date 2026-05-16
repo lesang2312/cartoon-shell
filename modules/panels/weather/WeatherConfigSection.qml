@@ -33,6 +33,12 @@ Rectangle {
   color: theme.primary.dim_background
   border.color: theme.primary.foreground
   border.width: 1
+  opacity: root.animationProgress > 0.15 ? 1 : 0
+  Behavior on opacity {
+    NumberAnimation {
+      duration: 200
+    }
+  }
 
   ScrollView {
     anchors.fill: parent

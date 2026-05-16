@@ -81,6 +81,17 @@ Singleton {
     property string fullname: "long"
     property string urlAvatar: ""
     property string username: "mailong2401"
+    property var appGrid: [
+    {"name" : "firefox"},
+    {"name" : "firefox"},
+    {"name" : "firefox"},
+    {"name" : "firefox"},
+    {"name" : "firefox"},
+    {"name" : "firefox"},
+    {"name" : "firefox"},
+    {"name" : "firefox"},
+    {"name" : "firefox"}
+    ]
   }
 
   component Bar: JsonObject {

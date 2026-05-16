@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Fusion
 import "." as Com
 import qs.services
+import qs.commons
 
 Rectangle {
   id: root
@@ -15,6 +16,7 @@ Rectangle {
   color: theme.primary.background
   border.color: theme.button.border
   border.width: 3
+  property real animationProgress: 0
 
   GridLayout {
     anchors.fill: parent
@@ -25,11 +27,13 @@ Rectangle {
     rowSpacing: 15
 
     Repeater {
-      model: 9
+      model: Settings.dashboard.appGrid
 
       Com.AppIcon {
-        iconSource: "firefox"
+        iconSource: modelData.name
         bgColor: theme.button.background
+        animationProgress: root.animationProgress
+        revealThreshold: 0.5 + (index * 0.1)
       }
     }
   }

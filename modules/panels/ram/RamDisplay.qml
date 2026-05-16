@@ -12,6 +12,7 @@ Item {
   id: ramDisplay
   property var lang: LanguageService.translations
   property var theme: ThemeService.theme
+  property real animationProgress: 0
 
   RamService {
     id: ramService
@@ -26,6 +27,12 @@ Item {
     radius: 12
     border.color: theme.button.border
     border.width: 2
+    opacity: root.animationProgress > 0.2 ? 1 : 0
+    Behavior on opacity {
+      NumberAnimation {
+        duration: 200
+      }
+    }
 
     Rectangle {
       anchors.fill: parent
@@ -69,6 +76,12 @@ Item {
         name: lang?.ram?.memory_monitor || "Memory Monitor"
         size: "large"
         isBold: true
+        opacity: root.animationProgress > 0.2 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
       }
 
       Item {
@@ -76,10 +89,24 @@ Item {
       }
 
       Rectangle {
-        width: 8
-        height: 8
+        width: root.animationProgress > 0.25 ? 8 : 0
+        height: root.animationProgress > 0.25 ? 8 : 0
         radius: 4
         color: ramService.memPercent > 80 ? theme.normal.red : ramService.memPercent > 60 ? theme.normal.yellow : theme.normal.green
+        opacity: root.animationProgress > 0.2 ? 1 : 0
+        Behavior on color {
+          ColorAnimation { duration: 150 }
+        }
+        Behavior on height {
+          NumberAnimation {
+            duration: 200
+          }
+        }
+        Behavior on width {
+          NumberAnimation {
+            duration: 200
+          }
+        }
       }
     }
 
@@ -97,6 +124,12 @@ Item {
           CustomText {
             name: "RAM"
             isBold: true
+            opacity: root.animationProgress > 0.3 ? 1 : 0
+            Behavior on opacity {
+              NumberAnimation {
+                duration: 200
+              }
+            }
           }
 
           Item {
@@ -107,7 +140,12 @@ Item {
             name: ramService.memPercent + "%"
             isBold: true
             textColor: getUsageColor(ramService.memPercent)
-
+            opacity: root.animationProgress > 0.35 ? 1 : 0
+            Behavior on opacity {
+              NumberAnimation {
+                duration: 200
+              }
+            }
           }
         }
 
@@ -121,7 +159,7 @@ Item {
             width: parent.width * (ramService.memPercent / 100)
             height: parent.height
             radius: 10
-            color: theme.button.text
+            color: getUsageColor(ramService.memPercent)
             Behavior on width {
               NumberAnimation {
                 duration: 800
@@ -139,14 +177,32 @@ Item {
         Com.RamItemMemoryMonitor{
           name: lang?.ram?.used || "Used"
           value: ramService.memUsed + " MB"
+          opacity: root.animationProgress > 0.4 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
+          }
         }
         Com.RamItemMemoryMonitor{
           name: lang?.ram?.free || "Free"
           value: ramService.memFree + " MB"
+          opacity: root.animationProgress > 0.45 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
+          }
         }
         Com.RamItemMemoryMonitor{
           name:  "Total"
           value: ramService.memTotal + " MB"
+          opacity: root.animationProgress > 0.5 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
+          }
         }
       }
     }
@@ -158,10 +214,14 @@ Item {
 
       Rectangle {
         anchors.centerIn: parent
-        width: parent.width * 0.8
+        width: root.animationProgress > 0.9 ? parent.width * 0.8 : 0
         height: 1
         color: theme.primary.foreground
-
+        Behavior on width {
+          NumberAnimation {
+            duration: 400
+          }
+        }
       }
     }
 
@@ -175,27 +235,33 @@ Item {
 
         RowLayout {
           Layout.fillWidth: true
-
-          Text {
-            text: "SWAP"
-            color: theme.primary.foreground
-            font.bold: true
-            font.family: "ComicShannsMono Nerd Font"
-            font.pixelSize: 24
+          CustomText {
+            name: "SWAP"
+            isBold: true
+            opacity: root.animationProgress > 0.6 ? 1 : 0
+            Behavior on opacity {
+              NumberAnimation {
+                duration: 200
+              }
+            }
           }
 
           Item {
             Layout.fillWidth: true
           }
 
-          Text {
-            text: ramService.swapPercent + "%"
-            color: getUsageColor(ramService.swapPercent)
-            font.bold: true
-            font.family: "ComicShannsMono Nerd Font"
-            font.pixelSize: 24
-            opacity: ramService.swapTotal > 0 ? 1 : 0.3
+          CustomText {
+            name: ramService.swapPercent + "%"
+            isBold: true
+            textColor: getUsageColor(ramService.swapPercent)
+            opacity: root.animationProgress > 0.65 ? 1 : 0
+            Behavior on opacity {
+              NumberAnimation {
+                duration: 200
+              }
+            }
           }
+
         }
 
         Rectangle {
@@ -209,7 +275,7 @@ Item {
             width: parent.width * (ramService.swapPercent / 100)
             height: parent.height
             radius: 7
-            color: theme.button.text
+            color: getUsageColor(ramService.swapPercent)
 
             Behavior on width {
               NumberAnimation {
@@ -227,14 +293,32 @@ Item {
         Com.RamItemMemoryMonitor{
           name: lang?.ram?.used || "Used"
           value: ramService.swapFree + " MB"
+          opacity: root.animationProgress > 0.7 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
+          }
         }
         Com.RamItemMemoryMonitor{
           name: lang?.ram?.free || "Free"
           value: ramService.swapFree + " MB"
+          opacity: root.animationProgress > 0.75 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
+          }
         }
         Com.RamItemMemoryMonitor{
           name:  "Total"
           value: ramService.swapTotal + " MB"
+          opacity: root.animationProgress > 0.8 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
+          }
         }
       }
     }

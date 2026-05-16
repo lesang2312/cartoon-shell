@@ -13,6 +13,7 @@ Rectangle {
   border.color: theme.primary.foreground
   border.width: 2
 
+  property real animationProgress: 0
   property var apps: []
   property var allApps: []
   property string lastQuery: ""
@@ -71,6 +72,21 @@ Rectangle {
         color: (ListView.isCurrentItem || mouseArea.containsMouse) ? theme.button.background_select : "transparent"
         border.color: (ListView.isCurrentItem || mouseArea.containsMouse) ? theme.button.border_select : "transparent"
         border.width: 1
+        opacity: 0
+
+        SequentialAnimation on opacity {
+          running: animationProgress > 0.5
+
+          PauseAnimation {
+            duration: index * 15
+          }
+
+          NumberAnimation {
+            to: 1
+            duration: 200
+            easing.type: Easing.OutCubic
+          }
+        }
 
         RowLayout {
           anchors.fill: parent
@@ -83,6 +99,21 @@ Rectangle {
             fillMode: Image.PreserveAspectFit
             source: modelData.icon ? "image://icon/" + modelData.icon : ""
             asynchronous: true
+            opacity: 0
+
+            SequentialAnimation on opacity {
+              running: animationProgress > 0.6
+
+              PauseAnimation {
+                duration: index * 15
+              }
+
+              NumberAnimation {
+                to: 1
+                duration: 200
+                easing.type: Easing.OutCubic
+              }
+            }
           }
 
           ColumnLayout {
@@ -92,12 +123,42 @@ Rectangle {
               name: modelData.name || "Unknown"
               size: "small"
               elide: Text.ElideRight
+              opacity: 0
+
+              SequentialAnimation on opacity {
+                running: animationProgress > 0.7
+
+                PauseAnimation {
+                  duration: index * 15
+                }
+
+                NumberAnimation {
+                  to: 1
+                  duration: 200
+                  easing.type: Easing.OutCubic
+                }
+              }
             }
             CustomText{
               name: modelData.comment || ""
               size: "xs"
               elide: Text.ElideRight
               textColor: theme.button.text
+              opacity: 0
+
+              SequentialAnimation on opacity {
+                running: animationProgress > 0.8
+
+                PauseAnimation {
+                  duration: index * 15
+                }
+
+                NumberAnimation {
+                  to: 1
+                  duration: 200
+                  easing.type: Easing.OutCubic
+                }
+              }
 
             }
           }

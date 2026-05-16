@@ -35,6 +35,12 @@ Rectangle {
         maxTemp: (WeatherService.forecastDays[0]?.maxTemp ?? "") + "℃ "
         animationProgress: weatherPanel.animationProgress
         revealThreshold: 0.9
+        opacity: root.animationProgress > 0.6 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
       }
       Item {Layout.fillWidth: true}
       Com.WeatherForecastItem {
@@ -45,6 +51,12 @@ Rectangle {
         maxTemp: (WeatherService.forecastDays[1]?.maxTemp ?? "") + "℃ "
         animationProgress: weatherPanel.animationProgress
         revealThreshold: 1
+        opacity: root.animationProgress > 0.7 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
       }
 
       Item {Layout.fillWidth: true}
@@ -57,6 +69,12 @@ Rectangle {
         maxTemp: (WeatherService.forecastDays[2]?.maxTemp ?? "") + "℃ "
         animationProgress: weatherPanel.animationProgress
         revealThreshold: 1.1
+        opacity: root.animationProgress > 0.8 ? 1 : 0
+        Behavior on opacity {
+          NumberAnimation {
+            duration: 200
+          }
+        }
       }
     }
   }

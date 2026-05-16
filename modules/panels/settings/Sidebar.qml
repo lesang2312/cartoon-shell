@@ -4,7 +4,7 @@ import qs.services
 import qs.components
 
 Rectangle {
-  id: sidebarSettings
+  id: root
   property var theme: ThemeService.theme
   property var lang: LanguageService.translations
 
@@ -14,12 +14,24 @@ Rectangle {
   signal categoryChanged(int index)
   signal backRequested
 
-  Layout.preferredWidth:  200
+  Layout.preferredWidth:  root.animationProgress > 0.1 ? 200 : 0
   Layout.fillHeight: true
   color: theme.primary.dim_background
   radius: 12
   border.color: theme.button.border
   border.width: 2
+
+  property real animationProgress: 0
+  SequentialAnimation on animationProgress {
+    running: true
+
+    NumberAnimation {
+      from: 0
+      to: 1
+      duration: 500
+      easing.type: Easing.Linear
+    }
+  }
 
   // Behavior cho animation width
   Behavior on Layout.preferredWidth {
@@ -41,6 +53,12 @@ Rectangle {
       Layout.alignment: Qt.AlignHCenter
       size: "normal"
       isBold: true
+      opacity: root.animationProgress > 0.3 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
     }
 
     // Danh mục cài đặt
@@ -86,12 +104,27 @@ Rectangle {
 
       delegate: Rectangle {
         id: categoryDelegate
+        opacity: 0
+
+        SequentialAnimation on opacity {
+          running: root.animationProgress > 0.3
+
+          PauseAnimation {
+            duration: index * 15
+          }
+
+          NumberAnimation {
+            to: 1
+            duration: 200
+            easing.type: Easing.OutCubic
+          }
+        }
         Layout.fillWidth: true
         Layout.preferredHeight: 50
         radius: 8
 
         property bool hovered: false
-        property bool selected: sidebarSettings.currentIndex === index
+        property bool selected: root.currentIndex === index
 
         color: mouseArea.containsMouse || selected ? theme.button.background_select : theme.button.background
         border.color: mouseArea.containsMouse || selected ? theme.button.border_select : theme.button.border
@@ -125,6 +158,21 @@ Rectangle {
           IconImage {
             path: modelData.icon
             Layout.alignment: Qt.AlignHCenter
+            opacity: 0
+
+            SequentialAnimation on opacity {
+              running: root.animationProgress > 0.5
+
+              PauseAnimation {
+                duration: index * 15
+              }
+
+              NumberAnimation {
+                to: 1
+                duration: 200
+                easing.type: Easing.OutCubic
+              }
+            }
             rotation: !mouseArea.containsMouse
             ? 0
             : index % 2 === 0
@@ -150,6 +198,21 @@ Rectangle {
             size: "small"
             textColor: mouseArea.containsMouse || selected ? theme.primary.bright_foreground : theme.primary.foreground
             isBold: selected
+            opacity: 0
+
+            SequentialAnimation on opacity {
+              running: root.animationProgress > 0.6
+
+              PauseAnimation {
+                duration: index * 15
+              }
+
+              NumberAnimation {
+                to: 1
+                duration: 200
+                easing.type: Easing.OutCubic
+              }
+            }
             Layout.alignment: Qt.AlignVCenter
             Layout.fillWidth: true
             Behavior on color {
@@ -162,11 +225,36 @@ Rectangle {
 
           // Indicator khi selected - chỉ hiển thị khi expanded
           Rectangle {
-            Layout.preferredWidth: 4
-            Layout.preferredHeight:  20
+            Layout.preferredWidth: root.animationProgress > 0.7 ? selected ? 4 : 0 : 0
+            Layout.preferredHeight: root.animationProgress > 0.7 ? selected ? 20 : 0 : 0
+            Behavior on Layout.preferredWidth {
+              NumberAnimation {
+                duration: 300
+              }
+            }
+            Behavior on Layout.preferredHeight {
+              NumberAnimation {
+                duration: 300
+              }
+            }
             radius: 2
-            color: theme.normal.blue
+            color: theme.button.text
             visible: selected
+            opacity: 0
+
+            SequentialAnimation on opacity {
+              running: root.animationProgress > 0.7
+
+              PauseAnimation {
+                duration: index * 15
+              }
+
+              NumberAnimation {
+                to: 1
+                duration: 200
+                easing.type: Easing.OutCubic
+              }
+            }
 
             // Hiệu ứng xuất hiện
             scale: selected ? 1.0 : 0.0
@@ -192,8 +280,8 @@ Rectangle {
           propagateComposedEvents: true
 
           onClicked: {
-            sidebarSettings.currentIndex = index;
-            sidebarSettings.categoryChanged(index);
+            root.currentIndex = index;
+            root.categoryChanged(index);
           }
 
           onEntered: {

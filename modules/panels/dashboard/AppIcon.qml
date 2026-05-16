@@ -8,6 +8,8 @@ Rectangle {
   property string iconSource: ""
   property color bgColor: "white"
   property var theme: ThemeService.theme
+  property real animationProgress: 0
+  property real revealThreshold: 0.6
 
   Layout.fillWidth: true
   Layout.fillHeight: true
@@ -15,6 +17,12 @@ Rectangle {
   color: bgColor
   border.color: theme.button.border
   border.width: 3
+  opacity: root.animationProgress > revealThreshold ? 1 : 0
+  Behavior on opacity {
+    NumberAnimation {
+      duration: 200
+    }
+  }
 
   Image {
     anchors.centerIn: parent
@@ -25,6 +33,12 @@ Rectangle {
     fillMode: Image.PreserveAspectFit
     smooth: true
     visible: status === Image.Ready
+    opacity: root.animationProgress > revealThreshold + 0.5 ? 1 : 0
+    Behavior on opacity {
+      NumberAnimation {
+        duration: 200
+      }
+    }
 
     // Placeholder when no icon
     Text {

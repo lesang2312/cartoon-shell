@@ -20,7 +20,7 @@ PanelWindow {
     NumberAnimation {
       from: 0
       to: 1
-      duration: 1000
+      duration: 500
       easing.type: Easing.Linear
     }
   }
@@ -49,14 +49,14 @@ PanelWindow {
   }
   Behavior on implicitWidth {
     NumberAnimation {
-      duration: 50
+      duration: 40
       easing.type: Easing.OutCubic
 
     }
   }
   Behavior on implicitHeight {
     NumberAnimation {
-      duration: 100
+      duration: 40
       easing.type: Easing.OutCubic
     }
   }
@@ -67,12 +67,12 @@ PanelWindow {
 
   Behavior on width {
     NumberAnimation {
-      duration: 10
+      duration: 60
     }
   }
   Behavior on height {
     NumberAnimation {
-      duration: 10
+      duration: 60
     }
   }
 
@@ -186,6 +186,7 @@ PanelWindow {
               Layout.fillWidth: true
               Layout.fillHeight: true
               opacity: launcherPanel.animationProgress > 0.4 ? 1 : 0
+              animationProgress : launcherPanel.animationProgress
               Behavior on opacity {
                 NumberAnimation {
                   duration: 200

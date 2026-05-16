@@ -20,6 +20,12 @@ RowLayout {
     color: theme.primary.dim_background
     border.color: theme.primary.foreground
     border.width: 1
+    opacity: root.animationProgress > 0.2 ? 1 : 0
+    Behavior on opacity {
+      NumberAnimation {
+        duration: 200
+      }
+    }
 
     ColumnLayout {
       anchors.fill: parent
@@ -36,7 +42,6 @@ RowLayout {
             duration: 200
           }
         }
-
       }
 
       CustomText {
@@ -87,6 +92,12 @@ RowLayout {
       value: WeatherService.humidity
       revealThreshold: 0.6
       animationProgress: root.animationProgress
+      opacity: root.animationProgress > 0.3 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
     }
 
     // Wind Speed
@@ -97,6 +108,12 @@ RowLayout {
       value: WeatherService.windSpeed
       revealThreshold: 0.65
       animationProgress: root.animationProgress
+      opacity: root.animationProgress > 0.35 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
     }
 
     // Pressure
@@ -107,6 +124,12 @@ RowLayout {
       value: WeatherService.pressure
       revealThreshold: 0.7
       animationProgress: root.animationProgress
+      opacity: root.animationProgress > 0.4 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
     }
 
     // Visibility
@@ -117,6 +140,12 @@ RowLayout {
       value: WeatherService.visibility
       revealThreshold: 0.75
       animationProgress: root.animationProgress
+      opacity: root.animationProgress > 0.45 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
     }
 
     // UV Index
@@ -127,6 +156,12 @@ RowLayout {
       value: WeatherService.uvIndex
       revealThreshold: 0.8
       animationProgress: root.animationProgress
+      opacity: root.animationProgress > 0.5 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
     }
 
     // Feels Like
@@ -137,6 +172,12 @@ RowLayout {
       value: WeatherService.feelsLike
       revealThreshold: 0.85
       animationProgress: root.animationProgress
+      opacity: root.animationProgress > 0.55 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
     }
   }
 }

@@ -8,57 +8,84 @@ import qs.services
 import qs.commons
 
 PanelWindow {
-    id: root
+  id: root
 
-    implicitWidth: 930
-    implicitHeight: 960
+  implicitWidth: root.animationProgress > 0.1 ?  930 : 100
+  implicitHeight: root.animationProgress > 0.1 ?  960 : 100
 
-    anchors {
-        top: Settings.bar.position === "top"
-        bottom: Settings.bar.position === "bottom"
-        left: Settings.bar.position === "top" || Settings.bar.position === "bottom" || Settings.bar.position === "left"
-        right: Settings.bar.position === "right"
+  Behavior on implicitHeight {
+    NumberAnimation {
+      duration: 100
+      easing.type: Easing.OutCubic
     }
-
-    margins {
-        top: Settings.bar.position === "top" ? 10 : 0
-        bottom: Settings.bar.position === "bottom" ? 10 : 0
-        left: (Settings.bar.position === "top" || Settings.bar.position === "bottom") ? 400 : 10
-        right: Settings.bar.position === "right" ? 10 : 0
+  }
+  Behavior on implicitWidth {
+    NumberAnimation {
+      duration: 100
+      easing.type: Easing.OutCubic
     }
+  }
 
-    exclusiveZone: 0
-    color: "transparent"
+  anchors {
+    top: Settings.bar.position === "top"
+    bottom: Settings.bar.position === "bottom"
+    left: Settings.bar.position === "top" || Settings.bar.position === "bottom" || Settings.bar.position === "left"
+    right: Settings.bar.position === "right"
+  }
 
-    property var theme: ThemeService.theme
-    property var lang: LanguageService.translations
+  margins {
+    top: Settings.bar.position === "top" ? 10 : 0
+    bottom: Settings.bar.position === "bottom" ? 10 : 0
+    left: (Settings.bar.position === "top" || Settings.bar.position === "bottom") ? 400 : 10
+    right: Settings.bar.position === "right" ? 10 : 0
+  }
 
-    Rectangle {
-        anchors.fill: parent
-        color: theme.primary.background
-        radius: 8
-        border.color: theme.button.border
-        border.width: 3
+  exclusiveZone: 0
+  color: "transparent"
 
-        ColumnLayout {
-            anchors.fill: parent
-            anchors.margins: 16
-            spacing: 30
+  property var theme: ThemeService.theme
+  property var lang: LanguageService.translations
+  property real animationProgress: 0
+  SequentialAnimation on animationProgress {
+    running: true
 
-            Components.RamDetailHeader {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 40
-            }
-
-            Components.RamDisplay {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 330
-            }
-
-            Components.RamTaskManager {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 500
-            }
-        }
+    NumberAnimation {
+      from: 0
+      to: 2
+      duration: 1000
+      easing.type: Easing.Linear
     }
+  }
+
+  Rectangle {
+    anchors.fill: parent
+    color: theme.primary.background
+    radius: 8
+    border.color: theme.button.border
+    border.width: 3
+
+    ColumnLayout {
+      anchors.fill: parent
+      anchors.margins: 16
+      spacing: 30
+
+      Components.RamDetailHeader {
+        Layout.fillWidth: true
+        Layout.preferredHeight: 40
+        animationProgress : root.animationProgress
+      }
+
+      Components.RamDisplay {
+        Layout.fillWidth: true
+        Layout.preferredHeight: 330
+        animationProgress : root.animationProgress
+      }
+
+      Components.RamTaskManager {
+        Layout.fillWidth: true
+        Layout.preferredHeight: 500
+        animationProgress : root.animationProgress
+      }
+    }
+  }
 }

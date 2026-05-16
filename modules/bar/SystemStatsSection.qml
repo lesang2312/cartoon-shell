@@ -20,7 +20,7 @@ Rectangle {
 
   CpuService {
     id: cpuService
-    enableCpuHistory: true
+    enableCpuHistory: false
   }
 
   RamService {

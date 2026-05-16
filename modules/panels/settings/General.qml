@@ -13,6 +13,17 @@ Item {
   property var theme: ThemeService.theme
   property var lang: LanguageService.translations
   property int currentTab: 0
+  property real animationProgress: 0
+  SequentialAnimation on animationProgress {
+    running: true
+
+    NumberAnimation {
+      from: 0
+      to: 1
+      duration: 500
+      easing.type: Easing.Linear
+    }
+  }
 
   // Timer để reload ngôn ngữ
   property Timer reloadTimer: Timer {
@@ -35,11 +46,15 @@ Item {
       id: minimalNav
       Layout.fillWidth: true
       Layout.preferredHeight: 50
+      opacity: root.animationProgress > 0.1 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
 
-      color: theme.primary.dim_background
+      color: theme.button.background
       radius: 12
-      border.color: theme.button.border
-      border.width: 2
 
       RowLayout {
         anchors.fill: parent
@@ -75,6 +90,21 @@ Item {
               width: 32
               fillMode: Image.PreserveAspectFit
               smooth: true
+              opacity: 0
+
+              SequentialAnimation on opacity {
+                running: root.animationProgress > 0.4
+
+                PauseAnimation {
+                  duration: index * 15
+                }
+
+                NumberAnimation {
+                  to: 1
+                  duration: 200
+                  easing.type: Easing.OutCubic
+                }
+              }
             }
 
             MouseArea {

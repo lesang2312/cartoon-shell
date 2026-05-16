@@ -180,6 +180,12 @@ Rectangle {
           Layout.preferredHeight: 48
           radius: 24
           color: prevArea.containsMouse ? theme.button.text : theme.button.background
+          opacity: root.animationProgress > 0.5 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
+          }
 
           IconText {
             opacity: root.animationProgress > 0.88 ? 1 : 0
@@ -210,6 +216,12 @@ Rectangle {
           Layout.preferredHeight: 64
           radius: 32
           color: playArea.containsMouse ? theme.button.text : theme.button.background
+          opacity: root.animationProgress > 0.6 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
+          }
 
           IconText {
             anchors.centerIn: parent
@@ -240,6 +252,12 @@ Rectangle {
           Layout.preferredHeight: 48
           radius: 24
           color: nextArea.containsMouse ? theme.button.text : theme.button.background
+          opacity: root.animationProgress > 0.7 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
+          }
 
           IconText {
             anchors.centerIn: parent
@@ -310,11 +328,17 @@ Rectangle {
           Layout.preferredHeight:6
           radius: 3
           color: theme.primary.dim_background
+          opacity: root.animationProgress > 0.7 ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation {
+              duration: 200
+            }
+          }
 
           Rectangle {
             id: progressFill
             height: parent.height
-            width: root.animationProgress ? root.mprisPlayer ? Math.min(parent.width, parent.width * (root.mprisPlayer.position / Math.max(1, root.mprisPlayer.length))) : 0 : 0
+            width: root.animationProgress > 1 ? root.mprisPlayer ? Math.min(parent.width, parent.width * (root.mprisPlayer.position / Math.max(1, root.mprisPlayer.length))) : 0 : 0
             radius: parent.radius
             color: theme.button.text
 

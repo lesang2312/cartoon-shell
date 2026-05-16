@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Fusion
 import qs.services
+import qs.components
 
 import "." as Com
 
@@ -19,14 +20,12 @@ ColumnLayout {
       border.color: mouseAreaLogout.containsPress ? theme.button.border_select : theme.button.border
       border.width: 3
 
-      Image {
-        source: "../../../assets/system/sys-exit.png"
-        anchors.centerIn: parent
-        width: 50
-        height: 50
-        fillMode: Image.PreserveAspectFit
-        smooth: true
+      IconImage {
+        path: "system/sys-exit.png"
+        size: "2xl"
         rotation: mouseAreaLogout.containsMouse ? -5 : 0
+        anchors.centerIn: parent
+
         Behavior on rotation {
           NumberAnimation {
             duration: 200
@@ -52,13 +51,10 @@ ColumnLayout {
       border.color: mouseAreaSleep.containsPress ? theme.button.border_select : theme.button.border
       border.width: 3
 
-      Image {
-        source: "../../../assets/system/sys-sleep.png"
+      IconImage {
+        path: "system/sys-sleep.png"
         anchors.centerIn: parent
-        width: 50
-        height: 50
-        fillMode: Image.PreserveAspectFit
-        smooth: true
+        size: "2xl"
         rotation: mouseAreaSleep.containsMouse ? 5 : 0
         Behavior on rotation {
           NumberAnimation {
@@ -87,14 +83,11 @@ ColumnLayout {
       border.color: mouseAreaRestart.containsPress ? theme.button.border_select : theme.button.border
       border.width: 3
 
-      Image {
-        source: "../../../assets/system/sys-reboot.png"
-        anchors.centerIn: parent
-        width: 50
-        height: 50
-        fillMode: Image.PreserveAspectFit
-        smooth: true
+      IconImage {
+        path: "system/sys-reboot.png"
         rotation: mouseAreaRestart.containsMouse ? 180 : 0
+        anchors.centerIn: parent
+        size: "2xl"
         Behavior on rotation {
           NumberAnimation {
             duration: 400
@@ -120,13 +113,17 @@ ColumnLayout {
       border.color: mouseAreaShutdown.containsPress ? theme.button.border_select : theme.button.border
       border.width: 3
 
-      Image {
-        source: "../../../assets/system/poweroff.png"
+      IconImage {
+        path: "system/poweroff.png"
+        scale: mouseAreaShutdown.containsMouse ? 1.1 : 1
         anchors.centerIn: parent
-        width: 50
-        height: 50
-        fillMode: Image.PreserveAspectFit
-        smooth: true
+        size: "2xl"
+        Behavior on scale {
+          NumberAnimation {
+            duration: 200
+            easing.type: Easing.InOutCubic
+          }
+        }
       }
 
       MouseArea {
