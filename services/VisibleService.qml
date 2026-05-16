@@ -121,12 +121,12 @@ Singleton {
       case "cpu":
       {
         if (!cpu) {
-          cpu = true;
           ram = false;
+          cpu = true;
           calendar = false;
-          weather = false;
-          music = false;
           flag = false;
+          music = false;
+          weather = false;
           launcher = false;
           dashboard = false;
           setting = false;
@@ -199,6 +199,7 @@ Singleton {
           calendar = false;
           launcher = false;
           weather = true;
+          cpu = false;
           music = false;
           dashboard = false;
           ram = false;
