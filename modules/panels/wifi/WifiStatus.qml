@@ -1,88 +1,46 @@
 import QtQuick
 import QtQuick.Layouts
 import qs.services
+import qs.components
 
 Rectangle {
-  id: wifiStatus
-  property var theme: ThemeService.theme
-  property var lang: LanguageService.translations
+  id: root
   property var wifiManager
 
-  height: 80
+  implicitHeight: 80
   radius: 12
   color: theme.primary.dim_background
   border.width: 2
   border.color: theme.normal.black
+  property real animationProgress: 0
 
   RowLayout {
     anchors.fill: parent
     anchors.margins: 12
 
-    Column {
-      Layout.fillWidth: true
-      Text {
-        text: wifiManager.wifiEnabled ? (lang?.wifi?.enabled || "WiFi đang bật") : (lang?.wifi?.disabled || "WiFi đang tắt")
-        font.pixelSize: 20
-        font.bold: true
-        color: wifiManager.wifiEnabled ? theme.button.text : theme.normal.red
-        font.family: "ComicShannsMono Nerd Font"
+    ColumnLayout {
+      Layout.fillHeight: true
+      CustomText {
+        name: wifiManager.wifiEnabled ? (lang?.wifi?.enabled || "WiFi đang bật") : (lang?.wifi?.disabled || "WiFi đang tắt")
+        isBold: true
+        textColor: wifiManager.wifiEnabled ? theme.button.text : theme.normal.red
+        opacity: root.animationProgress > 0.4 ? 1 : 0
       }
-      Text {
-        text: wifiManager.connectedWifi || (lang?.wifi?.not_connected || "Chưa kết nối")
-        font.pixelSize: 14
-        color: theme.primary.dim_foreground
+      CustomText {
+        name: wifiManager.connectedWifi || (lang?.wifi?.not_connected || "Chưa kết nối")
+        size: "small"
+        textColor: theme.primary.dim_foreground
         elide: Text.ElideRight
-        font.family: "ComicShannsMono Nerd Font"
+        opacity: root.animationProgress > 0.5 ? 1 : 0
       }
     }
-
-    // Custom Toggle Switch - Updated design
-    Rectangle {
-      width: 56
-      height: 32
-      radius: 16
-      color: wifiManager.wifiEnabled ? theme.button.text : theme.button.background
-
-      scale: toggleMouseArea.containsPress ? 0.95 : (toggleMouseArea.containsMouse ? 1.05 : 1.0)
-      Behavior on scale {
-        NumberAnimation {
-          duration: 150
-          easing.type: Easing.OutBack
-        }
-      }
-      Behavior on color {
-        ColorAnimation {
-          duration: 300
-        }
-      }
-
-      Rectangle {
-        id: toggleIndicator
-        x: wifiManager.wifiEnabled ? parent.width - width - 4 : 4
-        y: 4
-        width: 24
-        height: 24
-        radius: 24 / 2
-        color: theme.primary.dim_background
-        border.width: 1
-        border.color: theme.normal.black
-
-        Behavior on x {
-          NumberAnimation {
-            duration: 200
-            easing.type: Easing.OutCubic
-          }
-        }
-      }
-
-      MouseArea {
-        id: toggleMouseArea
-        anchors.fill: parent
-        hoverEnabled: true
-        cursorShape: Qt.PointingHandCursor
-        onClicked: {
-          wifiManager.toggleWifi();
-        }
+    Item{
+      Layout.fillWidth: true
+    }
+    CustomToggleSwitch {
+      opacity: root.animationProgress > 0.6 ? 1 : 0
+      onClicked:{
+        wifiManager.toggleWifi();
       }
     }
   }

@@ -7,10 +7,33 @@ import qs.commons
 import "." as Com
 
 PanelWindow {
-  id: wifiPanel
+  id: root
 
-  implicitWidth: 450
-  implicitHeight: 800
+  implicitWidth: root.animationProgress > 0.1 ? 450 : 100
+  implicitHeight: root.animationProgress > 0.1 ?  800 : 100
+  property real animationProgress: 0
+  SequentialAnimation on animationProgress {
+    running: true
+
+    NumberAnimation {
+      from: 0
+      to: 1
+      duration: 500
+      easing.type: Easing.Linear
+    }
+  }
+  Behavior on implicitHeight {
+    NumberAnimation {
+      duration: 60
+      easing.type: Easing.OutCubic
+    }
+  }
+  Behavior on implicitWidth {
+    NumberAnimation {
+      duration: 60
+      easing.type: Easing.OutCubic
+    }
+  }
 
   anchors {
     // Anchor theo vị trí của bar
@@ -38,9 +61,9 @@ PanelWindow {
 
   Rectangle {
     anchors.fill: parent
-    radius: 10
+    radius: 16
     color: theme.primary.background
-    border.width: 2
+    border.width: 3
     border.color: theme.button.border
 
     ColumnLayout {
@@ -50,32 +73,29 @@ PanelWindow {
 
       Com.WifiHeader {
         Layout.fillWidth: true
-        theme: wifiPanel.theme
-        lang: wifiPanel.lang
         wifiManager: wifiManager
+        animationProgress: root.animationProgress
       }
 
       Com.WifiStatus {
         Layout.fillWidth: true
-        theme: wifiPanel.theme
-        lang: wifiPanel.lang
         wifiManager: wifiManager
+        animationProgress: root.animationProgress
       }
 
       Com.WifiNetworkList {
         Layout.fillWidth: true
         Layout.fillHeight: true
-        theme: wifiPanel.theme
-        lang: wifiPanel.lang
         wifiManager: wifiManager
         visible: wifiManager.wifiEnabled
+        animationProgress: root.animationProgress
       }
 
       Com.WifiEmptyState {
         Layout.fillWidth: true
         Layout.fillHeight: true
-        theme: wifiPanel.theme
-        lang: wifiPanel.lang
+        theme: root.theme
+        lang: root.lang
         visible: !wifiManager.wifiEnabled
       }
     }

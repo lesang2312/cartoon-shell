@@ -5,9 +5,8 @@ import qs.components
 
 RowLayout {
   id: header
-  property var theme: ThemeService.theme
-  property var lang: LanguageService.translations
   property var wifiManager
+  property real animationProgress: 0
 
   spacing: 20
 
@@ -24,19 +23,17 @@ RowLayout {
     }
   }
 
-  Text {
-    text: "WiFi"
-    font.pixelSize: 50
-    font.family: "ComicShannsMono Nerd Font"
-    font.bold: true
-    color: theme.primary.foreground
+  CustomText {
+    name: "WIFI"
+    size: "2xl"
+    isBold: true
+    opacity: root.animationProgress > 0.2 ? 1 : 0
   }
 
   Item {
     Layout.fillWidth: true
   }
 
-  // Nút refresh với icon search và hiệu ứng giống hệt Bluetooth
   Rectangle {
     id: scanButton
     Layout.preferredWidth: 55
@@ -51,8 +48,16 @@ RowLayout {
       return theme.primary.dim_background;
     }
 
+    opacity: root.animationProgress > 0.3 ? 1 : 0
+
     scale: scanButtonMouse.containsPress ? 0.95 : (scanButtonMouse.containsMouse ? 1.1 : 1.0)
     Behavior on scale {
+      NumberAnimation {
+        duration: 200
+        easing.type: Easing.OutCubic
+      }
+    }
+    Behavior on opacity {
       NumberAnimation {
         duration: 200
         easing.type: Easing.OutCubic

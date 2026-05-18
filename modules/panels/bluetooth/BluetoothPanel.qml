@@ -9,229 +9,247 @@ import "." as Components
 import qs.commons
 
 PanelWindow {
-    id: root
-    implicitWidth: 450
-    implicitHeight: 600
-    anchors {
-        // Anchor theo vị trí của bar
-        left: Settings.bar.position === "left"
-        right: Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom"
-        top: Settings.bar.position === "top"
-        bottom: Settings.bar.position === "left" || Settings.bar.position === "right" || Settings.bar.position === "bottom"
+  id: root
+  implicitWidth: root.animationProgress > 0.1 ? 450 : 100
+  implicitHeight: root.animationProgress > 0.1 ?  600 : 100
+  property real animationProgress: 0
+  SequentialAnimation on animationProgress {
+    running: true
+
+    NumberAnimation {
+      from: 0
+      to: 1
+      duration: 500
+      easing.type: Easing.Linear
     }
-
-    margins {
-        top: Settings.bar.position === "top" ? 10 : 0
-        bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? 10 : 0
-        left: Settings.bar.position === "left" ? 10 : 0
-        right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? (sizes.anchorMargin || 10) : 0
+  }
+  Behavior on implicitHeight {
+    NumberAnimation {
+      duration: 60
+      easing.type: Easing.OutCubic
     }
-    color: "transparent"
-    focusable: true
-    aboveWindows: true
-    objectName: "BluetoothPanel"
-
-    property var theme: ThemeService.theme
-    property var lang: LanguageService.translations
-    property var adapter: Bluetooth.defaultAdapter
-    property int connectedCount: {
-        let count = 0;
-        for (let i = 0; i < Bluetooth.devices.length; i++) {
-            if (Bluetooth.devices[i].connected)
-                count++;
-        }
-        return count;
+  }
+  Behavior on implicitWidth {
+    NumberAnimation {
+      duration: 60
+      easing.type: Easing.OutCubic
     }
+  }
+  anchors {
+    // Anchor theo vị trí của bar
+    left: Settings.bar.position === "left"
+    right: Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom"
+    top: Settings.bar.position === "top"
+    bottom: Settings.bar.position === "left" || Settings.bar.position === "right" || Settings.bar.position === "bottom"
+  }
 
-    property bool isDiscoverable: adapter ? adapter.discoverable : false
-    property bool isPairable: adapter ? adapter.pairable : true
+  margins {
+    top: Settings.bar.position === "top" ? 10 : 0
+    bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? 10 : 0
+    left: Settings.bar.position === "left" ? 10 : 0
+    right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? (sizes.anchorMargin || 10) : 0
+  }
+  color: "transparent"
+  focusable: true
+  aboveWindows: true
+  objectName: "BluetoothPanel"
 
-    // Timer to automatically stop scanning after 30 seconds
-    Timer {
-        id: scanTimer
-        interval: 30000
-        onTriggered: {
-            if (adapter && adapter.discovering) {
-                adapter.discovering = false;
+  property var theme: ThemeService.theme
+  property var lang: LanguageService.translations
+  property var adapter: Bluetooth.defaultAdapter
+  property int connectedCount: {
+    let count = 0;
+    for (let i = 0; i < Bluetooth.devices.length; i++) {
+      if (Bluetooth.devices[i].connected)
+      count++;
+    }
+    return count;
+  }
+
+  property bool isDiscoverable: adapter ? adapter.discoverable : false
+  property bool isPairable: adapter ? adapter.pairable : true
+
+  // Timer to automatically stop scanning after 30 seconds
+  Timer {
+    id: scanTimer
+    interval: 30000
+    onTriggered: {
+      if (adapter && adapter.discovering) {
+        adapter.discovering = false;
+      }
+    }
+  }
+
+  // Show error message when pairing fails
+  property string pairErrorMessage: ""
+  Timer {
+    id: errorMessageTimer
+    interval: 5000
+    onTriggered: pairErrorMessage = ""
+  }
+
+  // Main container
+  Rectangle {
+    anchors.fill: parent
+    color: theme.primary.background
+    radius: 16
+    border.color: theme.button.border
+    border.width: 3
+
+    ColumnLayout {
+      anchors.fill: parent
+      anchors.margins: 10
+      spacing: 6
+
+      // Header with title and scan button
+      Components.BluetoothHeader {
+        adapter: root.adapter
+        lang: root.lang
+        isDiscovering: adapter?.discovering || false
+
+        onScanClicked: {
+          if (adapter) {
+            if (adapter.discovering) {
+              adapter.discovering = false;
+              scanTimer.stop();
+            } else {
+              adapter.discovering = true;
+              scanTimer.restart();
+
+              // Ensure adapter is discoverable
+              adapter.discoverable = true;
+              adapter.pairable = true;
             }
+          }
         }
-    }
+      }
 
-    // Show error message when pairing fails
-    property string pairErrorMessage: ""
-    Timer {
-        id: errorMessageTimer
-        interval: 5000
-        onTriggered: pairErrorMessage = ""
-    }
+      // Error message
+      Rectangle {
+        Layout.fillWidth: true
+        height: pairErrorMessage ? 40 : 0
+        radius: 8
+        color: theme.normal.red
+        visible: pairErrorMessage !== ""
+        clip: true
 
-    // Main container
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
+        Behavior on height {
+          NumberAnimation {
+            duration: 300
+            easing.type: Easing.OutCubic
+          }
+        }
 
-        Rectangle {
-            anchors.fill: parent
-            color: theme.primary.background
-            radius: 16
-            border.color: theme.normal.black
-            border.width: 3
+        RowLayout {
+          anchors.fill: parent
+          anchors.margins: 8
 
-            ColumnLayout {
-                anchors.fill: parent
-                anchors.margins: 10
-                spacing: 6
+          Text {
+            text: "⚠️ " + pairErrorMessage
+            color: theme.primary.foreground
+            font.pixelSize: 12
+            Layout.fillWidth: true
+          }
 
-                // Header with title and scan button
-                Components.BluetoothHeader {
-                    adapter: root.adapter
-                    lang: root.lang
-                    isDiscovering: adapter?.discovering || false
-
-                    onScanClicked: {
-                        if (adapter) {
-                            if (adapter.discovering) {
-                                adapter.discovering = false;
-                                scanTimer.stop();
-                            } else {
-                                adapter.discovering = true;
-                                scanTimer.restart();
-
-                                // Ensure adapter is discoverable
-                                adapter.discoverable = true;
-                                adapter.pairable = true;
-                            }
-                        }
-                    }
-                }
-
-                // Error message
-                Rectangle {
-                    Layout.fillWidth: true
-                    height: pairErrorMessage ? 40 : 0
-                    radius: 8
-                    color: theme.normal.red
-                    visible: pairErrorMessage !== ""
-                    clip: true
-
-                    Behavior on height {
-                        NumberAnimation {
-                            duration: 300
-                            easing.type: Easing.OutCubic
-                        }
-                    }
-
-                    RowLayout {
-                        anchors.fill: parent
-                        anchors.margins: 8
-
-                        Text {
-                            text: "⚠️ " + pairErrorMessage
-                            color: theme.primary.foreground
-                            font.pixelSize: 12
-                            Layout.fillWidth: true
-                        }
-
-                        Text {
-                            text: "✕"
-                            color: theme.primary.foreground
-                            font.pixelSize: 14
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: pairErrorMessage = ""
-                            }
-                        }
-                    }
-                }
-
-                // Status card with toggle
-                Components.BluetoothStatusCard {
-                    adapter: root.adapter
-                    lang: root.lang
-                    connectedCount: root.connectedCount
-                }
-
-                // Device list
-                Components.BluetoothDeviceList {
-                    adapter: root.adapter
-                    lang: root.lang
-                    connectedCount: root.connectedCount
-
-                    onPairError: function (message) {
-                        pairErrorMessage = message;
-                        errorMessageTimer.restart();
-                    }
-                }
-
-                // Disabled state message
-                Rectangle {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    radius: 12
-                    color: theme.primary.dim_background
-                    visible: !adapter?.enabled
-
-                    Column {
-                        anchors.centerIn: parent
-                        spacing: 16
-
-                        Text {
-                            text: "📶"
-                            color: theme.primary.dim_foreground
-                            font.pixelSize: 48
-                            anchors.horizontalCenter: parent.horizontalCenter
-                        }
-
-                        Text {
-                            text: lang?.bluetooth?.disabled || "Bluetooth đã tắt"
-                            color: theme.primary.foreground
-                            font.pixelSize: 16
-                            font.weight: Font.Medium
-                            anchors.horizontalCenter: parent.horizontalCenter
-                        }
-
-                        Text {
-                            text: lang?.bluetooth?.turn_on || "Bật Bluetooth để kết nối với thiết bị"
-                            color: theme.primary.dim_foreground
-                            font.pixelSize: 12
-                            anchors.horizontalCenter: parent.horizontalCenter
-                        }
-                    }
-                }
+          Text {
+            text: "✕"
+            color: theme.primary.foreground
+            font.pixelSize: 14
+            MouseArea {
+              anchors.fill: parent
+              onClicked: pairErrorMessage = ""
             }
+          }
         }
-    }
+      }
 
-    // Monitor adapter changes
-    Connections {
-        target: adapter
-        enabled: !!adapter
-        function onEnabledChanged() {
-            if (adapter?.enabled) {
-                // When enabling adapter, set default modes
-                adapter.pairable = true;
-                adapter.discoverable = false; // Default not discoverable
-            }
-        }
-        function onDiscoveringChanged() {
-        }
-        function onDiscoverableChanged() {
-        }
-        function onPairableChanged() {
-        }
-    }
+      // Status card with toggle
+      Components.BluetoothStatusCard {
+        adapter: root.adapter
+        lang: root.lang
+        connectedCount: root.connectedCount
+      }
 
-    // Monitor device list changes
-    Connections {
-        target: Bluetooth
-        function onDevicesChanged() {
-        }
-    }
+      // Device list
+      Components.BluetoothDeviceList {
+        adapter: root.adapter
+        lang: root.lang
+        connectedCount: root.connectedCount
 
-    Component.onCompleted: {
-        // Ensure adapter is pairable on startup
-        if (adapter && adapter.enabled) {
-            adapter.pairable = true;
+        onPairError: function (message) {
+          pairErrorMessage = message;
+          errorMessageTimer.restart();
         }
+      }
+
+      // Disabled state message
+      Rectangle {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        radius: 12
+        color: theme.primary.dim_background
+        visible: !adapter?.enabled
+
+        Column {
+          anchors.centerIn: parent
+          spacing: 16
+
+          Text {
+            text: "📶"
+            color: theme.primary.dim_foreground
+            font.pixelSize: 48
+            anchors.horizontalCenter: parent.horizontalCenter
+          }
+
+          Text {
+            text: lang?.bluetooth?.disabled || "Bluetooth đã tắt"
+            color: theme.primary.foreground
+            font.pixelSize: 16
+            font.weight: Font.Medium
+            anchors.horizontalCenter: parent.horizontalCenter
+          }
+
+          Text {
+            text: lang?.bluetooth?.turn_on || "Bật Bluetooth để kết nối với thiết bị"
+            color: theme.primary.dim_foreground
+            font.pixelSize: 12
+            anchors.horizontalCenter: parent.horizontalCenter
+          }
+        }
+      }
     }
+  }
+
+  // Monitor adapter changes
+  Connections {
+    target: adapter
+    enabled: !!adapter
+    function onEnabledChanged() {
+      if (adapter?.enabled) {
+        // When enabling adapter, set default modes
+        adapter.pairable = true;
+        adapter.discoverable = false; // Default not discoverable
+      }
+    }
+    function onDiscoveringChanged() {
+    }
+    function onDiscoverableChanged() {
+    }
+    function onPairableChanged() {
+    }
+  }
+
+  // Monitor device list changes
+  Connections {
+    target: Bluetooth
+    function onDevicesChanged() {
+    }
+  }
+
+  Component.onCompleted: {
+    // Ensure adapter is pairable on startup
+    if (adapter && adapter.enabled) {
+      adapter.pairable = true;
+    }
+  }
 }

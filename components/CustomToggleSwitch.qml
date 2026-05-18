@@ -23,6 +23,11 @@ Rectangle {
       duration: 300
     }
   }
+  Behavior on opacity {
+    NumberAnimation {
+      duration: 200
+    }
+  }
 
   Rectangle {
     id: toggleIndicator

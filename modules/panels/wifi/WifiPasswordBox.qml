@@ -20,7 +20,6 @@ Rectangle {
 
   color: theme.primary.dim_background
   radius: 12
-  height: visible ? (hasError ? 120 : 80) : 0
   border.width: 2
   border.color: theme.button.border_select
 

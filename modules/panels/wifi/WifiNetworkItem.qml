@@ -4,20 +4,20 @@ import "." as Com
 import qs.services
 import qs.components
 
-Column {
+ColumnLayout {
   id: networkItem
   property var theme: ThemeService.theme
   property var lang: LanguageService.translations
   property var wifiManager
   property var networkData
 
-  width: parent.width
   spacing: 4
 
   Rectangle {
     id: wifiItem
     width: parent.width
-    height: 70
+    Layout.fillWidth: true
+    Layout.preferredHeight: 70
     radius: 12
     color: mouseArea.containsMouse ? theme.button.background_select : (networkData.isConnected ? theme.button.background : theme.primary.dim_background)
     border.width: 2
@@ -27,27 +27,25 @@ Column {
       anchors.margins: 8
       anchors.fill: parent
 
-      Column {
-        Layout.fillWidth: true
-        Text {
-          text: networkData.ssid
-          font.pixelSize: 18
-          font.bold: true
-          color: networkData.isConnected ? theme.primary.foreground : theme.primary.foreground
-          font.family: "ComicShannsMono Nerd Font"
+      ColumnLayout {
+        CustomText {
+          name: networkData.ssid
+          size: "small"
+          isBold: true
+          textColor: networkData.isConnected ? theme.primary.foreground : theme.primary.foreground
         }
-        Text {
-          text: networkData.security + " • " + networkData.signal
-          font.pixelSize: 13
-          color: networkData.isConnected ? theme.button.text : theme.primary.dim_foreground
-          font.family: "ComicShannsMono Nerd Font"
+        CustomText {
+          name: networkData.security + " • " + networkData.signal
+          size: "xs"
+          textColor: networkData.isConnected ? theme.button.text : theme.primary.dim_foreground
         }
       }
+      Item{Layout.fillWidth: true}
 
       Rectangle {
         color: networkData.isConnected ? theme.normal.green : theme.button.background
-        implicitWidth: iconItem.height
-        implicitHeight: iconItem.height
+        Layout.preferredHeight: iconItem.height
+        Layout.preferredWidth: iconItem.height
         radius: 16
         IconText{
           anchors.centerIn: parent
@@ -77,6 +75,8 @@ Column {
   }
 
   Com.WifiPasswordBox {
+    Layout.fillWidth: true
+    Layout.preferredHeight: 70
     visible: networkItem.networkData.ssid === wifiManager.openSsid
     networkData: networkItem.networkData
     theme: networkItem.theme
