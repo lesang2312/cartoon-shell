@@ -53,7 +53,7 @@ ColumnLayout {
   }
 
   CustomText {
-    name: Players.mprisPlayer?.trackTitle
+    name: Players.mprisPlayer ? (Players.mprisPlayer.trackArtist || "Unknown Artist") : "Unknown Artist"
     size: "small"
     textColor: theme.primary.dim_foreground
     elide: Text.ElideRight

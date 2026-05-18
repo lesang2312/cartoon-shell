@@ -106,11 +106,10 @@ Rectangle {
         }
 
         // Artist name
-        Text {
-          text: Players.mprisPlayer?.trackTitle
-          color: theme.primary.dim_foreground
-          font.family: "ComicShannsMono Nerd Font"
-          font.pixelSize: 10
+        CustomText {
+          name: Players.mprisPlayer ? (Players.mprisPlayer.trackArtist || "Unknown Artist") : "Unknown Artist"
+          textColor: theme.primary.dim_foreground
+          size: "xs"
           elide: Text.ElideRight
           Layout.fillWidth: true
         }
@@ -171,7 +170,7 @@ Rectangle {
         Layout.fillHeight: true
 
         // Xoay toàn bộ container 90 độ để text chạy dọc
-        Item {
+        Rectangle {
           anchors.centerIn: parent
           width: parent.height  // Đảo width và height
           height: parent.width
