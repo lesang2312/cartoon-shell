@@ -199,136 +199,160 @@ Item {
           }
         }
       }
-
-      ListView {
-        id: processListView
+      Flickable {
+        id: processFlick
         Layout.fillWidth: true
         Layout.fillHeight: true
-        model: ramTaskManager.processList
+
         clip: true
-        spacing: 2
+        contentWidth: width
+        contentHeight: processColumn.height
 
-        delegate: Rectangle {
-          width: processListView.width
-          height: 50
-          color: index % 2 === 0 ? theme.primary.background : theme.primary.dim_background
-          radius: 6
-          border.color: Qt.lighter(color, 1.1)
-          border.width: 1
+        boundsBehavior: Flickable.StopAtBounds
 
-          RowLayout {
-            anchors.fill: parent
-            anchors.margins: 10
-            spacing: 10
-            CustomText {
-              name: modelData.pid
-              size: "small"
-              textColor: theme.button.text
-              Layout.preferredWidth: 70
-              opacity: 0
+        Column {
+          id: processColumn
+          width: processFlick.width
+          spacing: 2
 
-              SequentialAnimation on opacity {
-                running: root.animationProgress > 1.2 ? 1 : 0
+          Repeater {
+            model: ramTaskManager.processList
 
-                PauseAnimation {
-                  duration: index * 15
+            delegate: Rectangle {
+              width: processFlick.width
+              height: 50
+
+              color: index % 2 === 0
+              ? theme.primary.background
+              : theme.primary.dim_background
+
+              radius: 6
+              border.color: Qt.lighter(color, 1.1)
+              border.width: 1
+
+              RowLayout {
+                anchors.fill: parent
+                anchors.margins: 10
+                spacing: 10
+
+                CustomText {
+                  name: modelData.pid
+                  size: "small"
+                  textColor: theme.button.text
+                  Layout.preferredWidth: 70
+                  opacity: root.animationProgress > 1.5 ? 1 : 0
+
+                  SequentialAnimation on opacity {
+                    running: root.animationProgress > 1.2
+
+                    PauseAnimation {
+                      duration: index * 15
+                    }
+
+                    NumberAnimation {
+                      to: 1
+                      duration: 200
+                      easing.type: Easing.OutCubic
+                    }
+                  }
                 }
 
-                NumberAnimation {
-                  to: 1
-                  duration: 200
-                  easing.type: Easing.OutCubic
+                CustomText {
+                  name: modelData.name
+                  size: "small"
+                  textColor: theme.primary.foreground
+                  Layout.fillWidth: true
+                  opacity: root.animationProgress > 1.5 ? 1 : 0
+
+                  SequentialAnimation on opacity {
+                    running: root.animationProgress > 1.25
+
+                    PauseAnimation {
+                      duration: index * 15
+                    }
+
+                    NumberAnimation {
+                      to: 1
+                      duration: 200
+                      easing.type: Easing.OutCubic
+                    }
+                  }
+                }
+
+                CustomText {
+                  name: modelData.percent.toFixed(1)
+                  size: "small"
+                  textColor: getPercentageColor(modelData.percent)
+                  Layout.preferredWidth: 80
+                  horizontalAlignment: Text.AlignRight
+                  opacity: root.animationProgress > 1.5 ? 1 : 0
+
+                  SequentialAnimation on opacity {
+                    running: root.animationProgress > 1.3
+
+                    PauseAnimation {
+                      duration: index * 15
+                    }
+
+                    NumberAnimation {
+                      to: 1
+                      duration: 200
+                      easing.type: Easing.OutCubic
+                    }
+                  }
+                }
+
+                CustomText {
+                  name: modelData.rss_mb.toFixed(1) + " MB"
+                  size: "small"
+                  textColor: theme.primary.foreground
+                  Layout.preferredWidth: 100
+                  horizontalAlignment: Text.AlignRight
+                  opacity: root.animationProgress > 1.5 ? 1 : 0
+
+                  SequentialAnimation on opacity {
+                    running: root.animationProgress > 1.35
+
+                    PauseAnimation {
+                      duration: index * 15
+                    }
+
+                    NumberAnimation {
+                      to: 1
+                      duration: 200
+                      easing.type: Easing.OutCubic
+                    }
+                  }
                 }
               }
-            }
-            CustomText {
-              name: modelData.name
-              size: "small"
-              textColor: theme.primary.foreground
-              Layout.fillWidth: true
-              opacity: 0
 
-              SequentialAnimation on opacity {
-                running: root.animationProgress > 1.25 ? 1 : 0
-
-                PauseAnimation {
-                  duration: index * 15
+              Rectangle {
+                anchors {
+                  left: parent.left
+                  right: parent.right
+                  bottom: parent.bottom
+                  margins: 6
                 }
 
-                NumberAnimation {
-                  to: 1
-                  duration: 200
-                  easing.type: Easing.OutCubic
-                }
-              }
-            }
-            CustomText {
-              name: modelData.percent.toFixed(1)
-              size: "small"
-              textColor: getPercentageColor(modelData.percent)
-              Layout.preferredWidth: 80
-              horizontalAlignment: Text.AlignRight
-              opacity: 0
+                height: 3
+                radius: 1.5
+                color: theme.primary.dim_background
 
-              SequentialAnimation on opacity {
-                running: root.animationProgress > 1.3 ? 1 : 0
+                Rectangle {
+                  width: root.animationProgress > 1.5
+                  ? parent.width * Math.min(modelData.percent / 30, 1)
+                  : 0
 
-                PauseAnimation {
-                  duration: index * 15
-                }
+                  height: parent.height
+                  radius: 1.5
+                  color: getPercentageColor(modelData.percent)
 
-                NumberAnimation {
-                  to: 1
-                  duration: 200
-                  easing.type: Easing.OutCubic
-                }
-              }
-            }
-            CustomText {
-              name: modelData.rss_mb.toFixed(1) + " MB"
-              size: "small"
-              textColor: theme.primary.foreground
-              Layout.preferredWidth: 100
-              horizontalAlignment: Text.AlignRight
-              opacity: 0
-
-              SequentialAnimation on opacity {
-                running: root.animationProgress > 1.35 ? 1 : 0
-
-                PauseAnimation {
-                  duration: index * 15
-                }
-
-                NumberAnimation {
-                  to: 1
-                  duration: 200
-                  easing.type: Easing.OutCubic
-                }
-              }
-            }
-
-          }
-
-          Rectangle {
-            anchors {
-              left: parent.left
-              right: parent.right
-              bottom: parent.bottom
-              margins: 6
-            }
-            height: 3
-            radius: 1.5
-            color: theme.primary.dim_background
-
-            Rectangle {
-              width: root.animationProgress > 1.5 ? parent.width * Math.min(modelData.percent / 30, 1) : 0
-              height: parent.height
-              radius: 1.5
-              color: getPercentageColor(modelData.percent)
-              Behavior on width {
-                NumberAnimation {
-                  duration: 500
-                  easing.type: Easing.OutCubic
+                  Behavior on width {
+                    NumberAnimation {
+                      duration: 500
+                      easing.type: Easing.OutCubic
+                    }
+                  }
                 }
               }
             }
@@ -336,18 +360,20 @@ Item {
         }
 
         Rectangle {
-          visible: processListView.count === 0
+          visible: ramTaskManager.processList.length === 0
           anchors.fill: parent
           color: "transparent"
 
           Column {
             anchors.centerIn: parent
             spacing: 12
+
             Text {
               text: "⏳"
               font.pixelSize: 30
               color: theme.primary.dim_foreground
             }
+
             Text {
               text: lang.ram.loading.message
               font.family: "ComicShannsMono Nerd Font"
@@ -355,6 +381,10 @@ Item {
               font.pixelSize: 14
             }
           }
+        }
+
+        ScrollBar.vertical: ScrollBar {
+          policy: ScrollBar.AsNeeded
         }
       }
 

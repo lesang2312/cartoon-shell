@@ -209,6 +209,7 @@ PanelWindow {
           Com.FileBrowserCard {
             Layout.preferredWidth: 300
             Layout.fillHeight: true
+            animationProgress: root.animationProgress
             opacity: root.animationProgress > 0.65 ? 1 : 0
           }
         }

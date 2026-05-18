@@ -14,6 +14,11 @@ Text {
       duration: 200
     }
   }
+  Behavior on font.bold {
+    PropertyAnimation {
+      duration: 150
+    }
+  }
 
   text: name
   color: textColor

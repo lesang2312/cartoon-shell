@@ -14,6 +14,7 @@ Rectangle {
 
   color: theme.primary.background
   border.color: theme.button.border
+  property real animationProgress: 0
   border.width: 3
   Behavior on opacity {
     NumberAnimation {
@@ -27,40 +28,40 @@ Rectangle {
     spacing: 8
 
     Com.FileItem {
-      iconDark: "../../../assets/lockscreen/filebrowser/documents_dark.png"
-      iconLight: "../../../assets/lockscreen/filebrowser/documents_light.png"
+      icon: "filebrowser/documents.png"
       label: "Documents"
-      iconColor: theme.normal.red
+      animationProgress: root.animationProgress
+      revealThreshold: 1
     }
     Com.FileItem {
-      iconDark: "../../../assets/lockscreen/filebrowser/downloads_dark.png"
-      iconLight: "../../../assets/lockscreen/filebrowser/downloads_light.png"
+      icon: "filebrowser/downloads.png"
       label: "Downloads"
-      iconColor: theme.normal.green
+      animationProgress: root.animationProgress
+      revealThreshold: 1.1
     }
     Com.FileItem {
-      iconDark: "../../../assets/lockscreen/filebrowser/music_dark.png"
-      iconLight: "../../../assets/lockscreen/filebrowser/music_light.png"
+      icon: "filebrowser/music.png"
       label: "Musics"
-      iconColor: theme.normal.yellow
+      animationProgress: root.animationProgress
+      revealThreshold: 1.2
     }
     Com.FileItem {
-      iconDark: "../../../assets/lockscreen/filebrowser/pictures_dark.png"
-      iconLight: "../../../assets/lockscreen/filebrowser/pictures_light.png"
+      icon: "filebrowser/pictures.png"
       label: "Pictures"
-      iconColor: theme.normal.blue
+      animationProgress: root.animationProgress
+      revealThreshold: 1.3
     }
     Com.FileItem {
-      iconDark: "../../../assets/lockscreen/filebrowser/config_dark.png"
-      iconLight: "../../../assets/lockscreen/filebrowser/config_light.png"
+      icon: "filebrowser/config.png"
       label: "~/.config"
-      iconColor: theme.normal.cyan
+      animationProgress: root.animationProgress
+      revealThreshold: 1.4
     }
     Com.FileItem {
-      iconDark: "../../../assets/lockscreen/filebrowser/local_dark.png"
-      iconLight: "../../../assets/lockscreen/filebrowser/local_light.png"
+      icon: "filebrowser/local.png"
       label: "~/.local"
-      iconColor: theme.bright.red
+      animationProgress: root.animationProgress
+      revealThreshold: 1.5
     }
   }
 }
