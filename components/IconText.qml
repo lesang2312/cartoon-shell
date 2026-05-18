@@ -17,6 +17,11 @@ Text {
   color: textColor
 
   font.family: fontFamily
+  Behavior on opacity {
+    NumberAnimation {
+      duration: 200
+    }
+  }
 
   font.pixelSize: {
     switch (size) {

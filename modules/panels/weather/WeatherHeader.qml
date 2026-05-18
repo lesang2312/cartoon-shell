@@ -12,14 +12,10 @@ Item {
   Layout.fillWidth: true
   height: 70
 
-  Text {
-    text: lang?.weather?.title || "Thời Tiết"
-    color: theme.primary.foreground
-    font {
-      pixelSize: 40
-      bold: true
-      family: "ComicShannsMono Nerd Font"
-    }
+  CustomText {
+    name: lang?.weather?.title || "Thời Tiết"
+    size: "2xl"
+    isBold: true
     anchors.centerIn: parent
   }
   CloseButton{

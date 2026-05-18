@@ -36,11 +36,6 @@ Rectangle {
         animationProgress: weatherPanel.animationProgress
         revealThreshold: 0.9
         opacity: root.animationProgress > 0.6 ? 1 : 0
-        Behavior on opacity {
-          NumberAnimation {
-            duration: 200
-          }
-        }
       }
       Item {Layout.fillWidth: true}
       Com.WeatherForecastItem {
@@ -52,11 +47,6 @@ Rectangle {
         animationProgress: weatherPanel.animationProgress
         revealThreshold: 1
         opacity: root.animationProgress > 0.7 ? 1 : 0
-        Behavior on opacity {
-          NumberAnimation {
-            duration: 200
-          }
-        }
       }
 
       Item {Layout.fillWidth: true}
@@ -70,11 +60,6 @@ Rectangle {
         animationProgress: weatherPanel.animationProgress
         revealThreshold: 1.1
         opacity: root.animationProgress > 0.8 ? 1 : 0
-        Behavior on opacity {
-          NumberAnimation {
-            duration: 200
-          }
-        }
       }
     }
   }

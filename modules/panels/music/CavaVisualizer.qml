@@ -11,8 +11,15 @@ Rectangle {
   radius: 12
   color: theme.primary.dim_background
   clip: true
+  property real animationProgress: 0
 
   property var cavaService: null
+  opacity: root.animationProgress > 0.7 ? 1 : 0
+  Behavior on opacity {
+    NumberAnimation {
+      duration: 200
+    }
+  }
 
   Row {
     id: cavaRow
@@ -24,6 +31,21 @@ Rectangle {
       model: cavaService?.values.length ?? 0
 
       Rectangle {
+        opacity: 0
+
+        SequentialAnimation on opacity {
+          running: root.animationProgress > 1.2
+
+          PauseAnimation {
+            duration: index * 10
+          }
+
+          NumberAnimation {
+            to: 1
+            duration: 200
+            easing.type: Easing.OutCubic
+          }
+        }
         width: cavaService && cavaService.values.length > 0
         ? (cavaRow.width - (cavaService.values.length - 1) * 2) / cavaService.values.length
         : 0

@@ -9,6 +9,11 @@ Text {
   property bool isBold: false
   property color textColor: theme.primary.foreground
   property string fontFamily: "ComicShannsMono Nerd Font"
+  Behavior on opacity {
+    NumberAnimation {
+      duration: 200
+    }
+  }
 
   text: name
   color: textColor

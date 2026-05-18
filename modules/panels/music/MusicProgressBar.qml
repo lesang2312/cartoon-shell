@@ -5,6 +5,7 @@ import qs.components
 ColumnLayout {
   Layout.fillWidth: true
   spacing: 6
+  property real animationProgress: 0
 
   // Progress bar
   Rectangle {
@@ -13,14 +14,30 @@ ColumnLayout {
     Layout.preferredHeight: 4
     radius: 2
     color: theme.primary.dim_background
+    opacity: root.animationProgress > 0.5 ? 1 : 0
+    Behavior on opacity {
+      NumberAnimation {
+        duration: 200
+      }
+    }
 
     Rectangle {
       id: progress_bar
-      width: parent.width * Players.getProgress()
+      width: root.animationProgress > 1.2 ? parent.width * Players.getProgress() : 0
       height: parent.height
       radius: 2
       color: theme.button.text
-
+      opacity: root.animationProgress > 0.9 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
+      Behavior on width {
+        NumberAnimation {
+          duration: 200
+        }
+      }
     }
   }
 
@@ -35,6 +52,8 @@ ColumnLayout {
       size: "xs"
       Layout.alignment: Qt.AlignLeft
       textColor: theme.primary.dim_foreground
+      opacity: root.animationProgress > 1 ? 1 : 0
+
     }
 
     Item {
@@ -46,6 +65,7 @@ ColumnLayout {
       Layout.alignment: Qt.AlignRight
 
       textColor: theme.primary.dim_foreground
+      opacity: root.animationProgress > 1.1 ? 1 : 0
     }
   }
   Timer {

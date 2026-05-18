@@ -15,6 +15,11 @@ Rectangle {
   color: theme.primary.dim_background
   border.color: theme.primary.foreground
   border.width: 1
+  Behavior on opacity {
+    NumberAnimation {
+      duration: 200
+    }
+  }
 
   ColumnLayout {
     anchors.fill: parent
@@ -26,12 +31,6 @@ Rectangle {
       size: "large"
       Layout.alignment: Qt.AlignHCenter
       opacity: root.animationProgress > root.revealThreshold ? 1 : 0
-      Behavior on opacity {
-        NumberAnimation {
-          duration: 200
-        }
-      }
-
     }
     CustomText{
       name: root.value
@@ -39,11 +38,6 @@ Rectangle {
       size: "small"
       Layout.alignment: Qt.AlignHCenter
       opacity: root.animationProgress > root.revealThreshold + 0.05 ? 1 : 0
-      Behavior on opacity {
-        NumberAnimation {
-          duration: 200
-        }
-      }
     }
   }
 }

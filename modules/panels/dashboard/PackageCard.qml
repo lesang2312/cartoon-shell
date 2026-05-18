@@ -6,7 +6,8 @@ import qs.components
 
 Rectangle {
   id: root
-  property int emailCount: 230
+  property int count: 230
+  property int index: 0
   property var theme: ThemeService.theme
 
   Layout.fillWidth: true
@@ -15,22 +16,42 @@ Rectangle {
   color: theme.primary.background
   border.width: 3
   border.color: theme.button.border
+  opacity: 0
+
+  SequentialAnimation on index {
+    running: root.animationProgress > 0.9
+
+    PauseAnimation {
+      duration: 200
+    }
+
+    NumberAnimation {
+      to: root.count
+      duration: 400
+      easing.type: Easing.OutCubic
+    }
+  }
+  property real animationProgress: 0
+  Behavior on opacity {
+    NumberAnimation {
+      duration: 200
+    }
+  }
 
   RowLayout {
     anchors.centerIn: parent
     spacing: 20
 
-    Image {
-      source: "../../../assets/workspace/pacman.png"
-      Layout.preferredWidth: 48
-      Layout.preferredHeight: 48
-      fillMode: Image.PreserveAspectFit
-      smooth: true
+    IconImage {
+      path: "workspace/pacman.png"
+      size: "xl"
+      opacity: root.animationProgress > 0.8 ? 1 : 0
     }
 
     CustomText{
-      name: "820"
+      name: index
       isBold: true
+      opacity: root.animationProgress > 0.85 ? 1 : 0
     }
   }
   MouseArea {

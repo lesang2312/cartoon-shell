@@ -17,6 +17,11 @@ Rectangle {
   border.width: 3
   border.color: theme.button.border
   clip: true
+  Behavior on opacity {
+    NumberAnimation {
+      duration: 200
+    }
+  }
 
   ColumnLayout {
     anchors.fill: parent

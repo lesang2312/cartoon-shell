@@ -12,6 +12,17 @@ Item {
   property bool isVertical: Settings.bar.position === "left"
   || Settings.bar.position === "right"
 
+  Behavior on opacity {
+    NumberAnimation {
+      duration: 200
+    }
+  }
+  Behavior on rotation {
+    NumberAnimation {
+      duration: 200
+    }
+  }
+
   width: {
     switch (size) {
       case "xs":

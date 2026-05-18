@@ -12,6 +12,7 @@ PanelWindow {
 
   PackageService{
     id: packageService
+    simplePackage: false
   }
 
   property var theme: ThemeService.theme

@@ -26,6 +26,13 @@ RowLayout {
     color: root.iconColor
     border.width: 3
     border.color: theme.button.border
+    opacity: root.animationProgress > root.revealThreshold - 0.1 ? 1 : 0
+
+    Behavior on opacity {
+      NumberAnimation {
+        duration: 200
+      }
+    }
 
     IconText{
       name: root.nameIcon
@@ -55,6 +62,7 @@ RowLayout {
     color: theme.primary.background
     border.width: 3
     border.color: theme.button.border
+    opacity: root.animationProgress > root.revealThreshold - 0.05 ? 1 : 0
 
     Rectangle {
       anchors.fill: parent

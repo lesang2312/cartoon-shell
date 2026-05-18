@@ -13,6 +13,8 @@ Item {
 
   // Callback async
   property var _currentCallback: null
+  property int totalPackage: 0
+  property bool simplePackage : true
 
   function getPackageInfo(pkgName, callback) {
 
@@ -105,7 +107,7 @@ Item {
 
     command: ["bash", Directories.scriptsPath + "/package.sh"]
 
-    running: true
+    running: !root.simplePackage
 
     stdout: StdioCollector {
       onTextChanged: {
@@ -114,6 +116,28 @@ Item {
           console.log("Loaded packages")
         } catch (e) {
           console.log("JSON parse error:", e)
+        }
+      }
+    }
+  }
+
+  Process {
+    id: simplePkgProc
+
+    command: [
+    "bash",
+    "-c",
+    "pacman -Qq | wc -l"
+    ]
+
+    running: root.simplePackage
+
+    stdout: StdioCollector {
+      onTextChanged: {
+        try {
+          root.totalPackage = parseInt(text.trim())
+        } catch (e) {
+          console.log("parse error:", e)
         }
       }
     }

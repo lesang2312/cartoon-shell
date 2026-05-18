@@ -2,12 +2,14 @@
 import QtQuick
 import QtQuick.Layouts
 import qs.services
+import qs.components
 
 ColumnLayout {
-  id: songInfo
+  id: root
   Layout.fillWidth: true
   Layout.fillHeight: true
   spacing: 8
+  property real animationProgress: 0
 
   Item {
     Layout.fillHeight: true
@@ -19,13 +21,11 @@ ColumnLayout {
     Layout.preferredHeight: songText.height
     clip: true
 
-    Text {
+    CustomText {
       id: songText
-      text: Players.mprisPlayer?.trackTitle ?? "Not Playing"
-      font.family: "ComicShannsMono Nerd Font"
-      font.pixelSize: 22
-      font.bold: true
-      color: theme.primary.foreground
+      name: Players.mprisPlayer?.trackTitle ?? "Not Playing"
+      isBold: true
+      opacity: root.animationProgress > 0.4 ? 1 : 0
 
       property bool needsMarquee: width > parent.width
 
@@ -52,16 +52,14 @@ ColumnLayout {
     }
   }
 
-  Text {
-    text: Players.mprisPlayer?.trackTitle
-    font.family: "ComicShannsMono Nerd Font"
-    font.pixelSize: 16
-    color: theme.primary.dim_foreground
+  CustomText {
+    name: Players.mprisPlayer?.trackTitle
+    size: "small"
+    textColor: theme.primary.dim_foreground
     elide: Text.ElideRight
     Layout.fillWidth: true
+    opacity: root.animationProgress > 0.5 ? 1 : 0
   }
-
-  // Progress bar
 
   Item {
     Layout.fillHeight: true

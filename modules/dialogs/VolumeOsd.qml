@@ -6,138 +6,143 @@ import Quickshell.Widgets
 import qs.services
 
 Scope {
-    id: root
+  id: root
 
-    property var theme: ThemeService.theme
-    property var lang: LanguageService.translations
-    property bool shouldShowOsd: false
-    property real currentVolume: Pipewire.defaultAudioSink?.audio.volume ?? 0
-    property bool isMuted: Pipewire.defaultAudioSink?.audio.mute ?? false
+  property var theme: ThemeService.theme
+  property var lang: LanguageService.translations
+  property bool shouldShowOsd: false
+  property real currentVolume: Pipewire.defaultAudioSink?.audio.volume ?? 0
+  property bool isMuted: Pipewire.defaultAudioSink?.audio.mute ?? false
 
-    PwObjectTracker {
-        objects: [Pipewire.defaultAudioSink]
+  PwObjectTracker {
+    objects: [Pipewire.defaultAudioSink]
+  }
+
+  Connections {
+    target: Pipewire.defaultAudioSink?.audio ?? null
+
+    function onVolumeChanged() {
+      root.shouldShowOsd = true;
+      hideTimer.restart();
     }
+  }
 
-    Connections {
-        target: Pipewire.defaultAudioSink?.audio ?? null
+  Timer {
+    id: hideTimer
+    interval: 1000
+    onTriggered: root.shouldShowOsd = false
+  }
 
-        function onVolumeChanged() {
-            root.shouldShowOsd = true;
-            hideTimer.restart();
-        }
-    }
+  LazyLoader {
+    active: root.shouldShowOsd
 
-    Timer {
-        id: hideTimer
-        interval: 1000
-        onTriggered: root.shouldShowOsd = false
-    }
+    PanelWindow {
+      anchors {
+        bottom: true
+      }
+      margins {
+        bottom: 120
+      }
+      exclusiveZone: 0
+      implicitWidth: 280
+      implicitHeight: 100
+      color: "transparent"
+      mask: Region {}
 
-    LazyLoader {
-        active: root.shouldShowOsd
+      Rectangle {
+        anchors.fill: parent
+        radius: 15
+        color: theme.primary.background
+        border.color: theme.normal.black
+        border.width: 3
 
-        PanelWindow {
-            anchors {
-                bottom: true
+        ColumnLayout {
+          anchors {
+            fill: parent
+            leftMargin: 15
+            rightMargin: 15
+            bottomMargin: 15
+          }
+          spacing: 12
+
+          RowLayout {
+            Image {
+              Layout.preferredWidth: 40
+              Layout.preferredHeight: 40
+              source: root.getVolumeIcon()
+              fillMode: Image.PreserveAspectFit
+              smooth: true
             }
-            margins {
-                bottom: 120
+            Text {
+              text: isMuted ? (lang?.volume?.muted || "Muted") : Math.round(currentVolume * 100) + "%"
+              color: theme.primary.foreground
+              font.family: "ComicShannsMono Nerd Font"
+              font.pixelSize: 30
+              font.bold: true
             }
-            exclusiveZone: 0
-            implicitWidth: 280
-            implicitHeight: 100
-            color: "transparent"
-            mask: Region {}
+            Rectangle {
+              color: "transparent"
+
+              Layout.fillWidth: true
+              Layout.fillHeight: true
+              Text {
+                text: " " + (lang?.volume?.title || "Âm thanh")
+                anchors.margins: 10
+                anchors.top: parent.top
+                anchors.right: parent.right
+                color: theme.primary.foreground
+                font.family: "ComicShannsMono Nerd Font"
+                font.pixelSize: 20
+                font.bold: true
+              }
+            }
+          }
+
+          // Thanh volume
+          ColumnLayout {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            spacing: 4
 
             Rectangle {
-                anchors.fill: parent
-                radius: 15
-                color: theme.primary.background
-                border.color: theme.normal.black
-                border.width: 3
+              Layout.fillWidth: true
+              Layout.preferredHeight: 20
+              radius: 20
+              color: "#333333"
 
-                ColumnLayout {
-                    anchors {
-                        fill: parent
-                        leftMargin: 15
-                        rightMargin: 15
-                        bottomMargin: 15
-                    }
-                    spacing: 12
-
-                    RowLayout {
-                        Image {
-                            Layout.preferredWidth: 40
-                            Layout.preferredHeight: 40
-                            source: root.getVolumeIcon()
-                            fillMode: Image.PreserveAspectFit
-                            smooth: true
-                        }
-                        Text {
-                            text: isMuted ? (lang?.volume?.muted || "Muted") : Math.round(currentVolume * 100) + "%"
-                            color: theme.primary.foreground
-                            font.family: "ComicShannsMono Nerd Font"
-                            font.pixelSize: 30
-                            font.bold: true
-                        }
-                        Rectangle {
-                            color: "transparent"
-
-                            Layout.fillWidth: true
-                            Layout.fillHeight: true
-                            Text {
-                                text: " " + (lang?.volume?.title || "Âm thanh")
-                                anchors.margins: 10
-                                anchors.top: parent.top
-                                anchors.right: parent.right
-                                color: theme.primary.foreground
-                                font.family: "ComicShannsMono Nerd Font"
-                                font.pixelSize: 20
-                                font.bold: true
-                            }
-                        }
-                    }
-
-                    // Thanh volume
-                    ColumnLayout {
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-                        spacing: 4
-
-                        Rectangle {
-                            Layout.fillWidth: true
-                            Layout.preferredHeight: 20
-                            radius: 20
-                            color: "#333333"
-
-                            Rectangle {
-                                anchors {
-                                    left: parent.left
-                                    top: parent.top
-                                    bottom: parent.bottom
-                                }
-                                width: parent.width * currentVolume
-                                radius: parent.radius
-                                color: isMuted ? "#ff6b6b" : "#4a86e8"
-                            }
-                        }
-                    }
+              Rectangle {
+                anchors {
+                  left: parent.left
+                  top: parent.top
+                  bottom: parent.bottom
                 }
+                width: parent.width * currentVolume
+                radius: parent.radius
+                color: isMuted ? "#ff6b6b" : "#4a86e8"
+                Behavior on width {
+                  NumberAnimation {
+                    duration: 200
+                  }
+                }
+              }
             }
+          }
         }
+      }
     }
+  }
 
-    function getVolumeIcon() {
-        if (isMuted || currentVolume == 0)
-            return "../../assets/volume/volume_0.png";
-        if (currentVolume <= 0.25)
-            return "../../assets/volume/volume_1.png";
-        if (currentVolume <= 0.50)
-            return "../../assets/volume/volume_2.png";
-        if (currentVolume <= 0.75)
-            return "../../assets/volume/volume_3.png";
-        if (currentVolume <= 1)
-            return "../../assets/volume/volume_4.png";
-        return "../../assets/volume/volume_5.png";
-    }
+  function getVolumeIcon() {
+    if (isMuted || currentVolume == 0)
+    return "../../assets/volume/volume_0.png";
+    if (currentVolume <= 0.25)
+    return "../../assets/volume/volume_1.png";
+    if (currentVolume <= 0.50)
+    return "../../assets/volume/volume_2.png";
+    if (currentVolume <= 0.75)
+    return "../../assets/volume/volume_3.png";
+    if (currentVolume <= 1)
+    return "../../assets/volume/volume_4.png";
+    return "../../assets/volume/volume_5.png";
+  }
 }

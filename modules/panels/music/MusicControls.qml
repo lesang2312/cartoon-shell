@@ -1,4 +1,3 @@
-// MusicControls.qml
 import QtQuick
 import QtQuick.Layouts
 import qs.commons
@@ -6,9 +5,10 @@ import qs.components
 import qs.services
 
 RowLayout {
-  id: controls
+  id: root
   Layout.fillWidth: true
   Layout.preferredHeight: 60
+  property real animationProgress: 0
   spacing: 24
 
   Item { Layout.fillWidth: true }
@@ -19,11 +19,18 @@ RowLayout {
     Layout.preferredHeight: 48
     radius: 24
     color: prevArea.containsMouse ? theme.button.background_select : theme.button.background
+    opacity: root.animationProgress > 0.2 ? 1 : 0
+    Behavior on opacity {
+      NumberAnimation {
+        duration: 200
+      }
+    }
 
     IconText {
       anchors.centerIn: parent
       name: "skip_previous"
       size: "large"
+      opacity: root.animationProgress > 0.6 ? 1 : 0
     }
 
     MouseArea {
@@ -43,11 +50,18 @@ RowLayout {
     Layout.preferredHeight: 64
     radius: 32
     color: playArea.containsMouse ? theme.normal.blue : theme.button.background
+    opacity: root.animationProgress > 0.3 ? 1 : 0
+    Behavior on opacity {
+      NumberAnimation {
+        duration: 200
+      }
+    }
 
     IconText {
       anchors.centerIn: parent
       name: Players.mprisPlayer && Players.mprisPlayer.isPlaying ? "pause" : "play_arrow"
       size: "large"
+      opacity: root.animationProgress > 0.7 ? 1 : 0
     }
 
     MouseArea {
@@ -67,11 +81,18 @@ RowLayout {
     Layout.preferredHeight: 48
     radius: 24
     color: nextArea.containsMouse ? theme.button.background_select : theme.button.background
+    opacity: root.animationProgress > 0.4 ? 1 : 0
+    Behavior on opacity {
+      NumberAnimation {
+        duration: 200
+      }
+    }
 
     IconText {
       anchors.centerIn: parent
       name: "skip_next"
       size: "large"
+      opacity: root.animationProgress > 0.8 ? 1 : 0
     }
 
     MouseArea {

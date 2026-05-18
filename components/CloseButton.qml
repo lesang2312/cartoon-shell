@@ -10,6 +10,11 @@ Rectangle {
   radius: 116
   color: closeArea.containsMouse ? theme.normal.red : theme.button.background
 
+  Behavior on opacity {
+    NumberAnimation {
+      duration: 200
+    }
+  }
   Behavior on color {
     ColorAnimation { duration: 350 }
   }

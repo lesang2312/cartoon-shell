@@ -3,11 +3,13 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell.Widgets
 import qs.services
+import qs.components
 
 Item {
-  id: albumArt
+  id: root
   width: 160
   height: 160
+  property real animationProgress: 0
 
   // Rotating container
   Item {
@@ -23,12 +25,18 @@ Item {
     }
 
     ClippingRectangle {
-      id: albumArtContainer
+      id: rootContainer
       anchors.fill: parent
       radius: 80
       color: theme.primary.dim_background
       border.color: theme.normal.black
       border.width: 3
+      opacity: root.animationProgress > 0.3 ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 200
+        }
+      }
 
       Image {
         id: albumImage
@@ -42,12 +50,10 @@ Item {
       }
 
       // Placeholder when no album art
-      Text {
+      CustomText {
+        name: "No Art"
+        size: "normal"
         anchors.centerIn: parent
-        text: "No Art"
-        font.family: "ComicShannsMono Nerd Font"
-        font.pixelSize: 14
-        color: theme.primary.dim_foreground
         visible: albumImage.status !== Image.Ready
       }
     }

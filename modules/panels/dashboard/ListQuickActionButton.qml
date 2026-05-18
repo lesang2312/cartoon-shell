@@ -10,6 +10,7 @@ ColumnLayout {
   Layout.preferredWidth: 90
   spacing: 15
   property var theme: ThemeService.theme
+  property real animationProgress: 0
   RowLayout {
     spacing: 15
     Rectangle {
@@ -25,12 +26,8 @@ ColumnLayout {
         size: "2xl"
         rotation: mouseAreaLogout.containsMouse ? -5 : 0
         anchors.centerIn: parent
+        opacity: root.animationProgress > 0.9 ? 1 : 0
 
-        Behavior on rotation {
-          NumberAnimation {
-            duration: 200
-          }
-        }
       }
 
       MouseArea {
@@ -56,11 +53,7 @@ ColumnLayout {
         anchors.centerIn: parent
         size: "2xl"
         rotation: mouseAreaSleep.containsMouse ? 5 : 0
-        Behavior on rotation {
-          NumberAnimation {
-            duration: 200
-          }
-        }
+        opacity: root.animationProgress > 0.95 ? 1 : 0
       }
 
       MouseArea {
@@ -88,12 +81,7 @@ ColumnLayout {
         rotation: mouseAreaRestart.containsMouse ? 180 : 0
         anchors.centerIn: parent
         size: "2xl"
-        Behavior on rotation {
-          NumberAnimation {
-            duration: 400
-            easing.type: Easing.InOutCubic
-          }
-        }
+        opacity: root.animationProgress > 1 ? 1 : 0
       }
 
       MouseArea {
@@ -118,12 +106,7 @@ ColumnLayout {
         scale: mouseAreaShutdown.containsMouse ? 1.1 : 1
         anchors.centerIn: parent
         size: "2xl"
-        Behavior on scale {
-          NumberAnimation {
-            duration: 200
-            easing.type: Easing.InOutCubic
-          }
-        }
+        opacity: root.animationProgress > 1.05 ? 1 : 0
       }
 
       MouseArea {

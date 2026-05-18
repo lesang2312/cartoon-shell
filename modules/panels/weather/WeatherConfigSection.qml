@@ -60,11 +60,6 @@ Rectangle {
           size: "small"
           isBold: true
           opacity: root.animationProgress > 0.2 ? 1 : 0
-          Behavior on opacity {
-            NumberAnimation {
-              duration: 200
-            }
-          }
         }
 
         Rectangle {
@@ -108,11 +103,6 @@ Rectangle {
 
         CustomText {
           opacity: root.animationProgress > 0.3 ? 1 : 0
-          Behavior on opacity {
-            NumberAnimation {
-              duration: 200
-            }
-          }
           name: lang?.weather?.apiKeyHint || "Nhận API key miễn phí tại: weatherapi.com\nAPI key sẽ tự động lưu và kiểm tra khi bạn nhập"
 
           size: "xs"
@@ -132,11 +122,6 @@ Rectangle {
           size: "small"
           isBold: true
           opacity: root.animationProgress > 0.35 ? 1 : 0
-          Behavior on opacity {
-            NumberAnimation {
-              duration: 200
-            }
-          }
         }
 
         RowLayout {

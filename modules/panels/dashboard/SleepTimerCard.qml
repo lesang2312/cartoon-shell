@@ -16,6 +16,11 @@ Rectangle {
   color: theme.primary.background
   border.width: 3
   border.color: theme.button.border
+  Behavior on opacity {
+    NumberAnimation {
+      duration: 200
+    }
+  }
 
   RowLayout {
     anchors.fill: parent

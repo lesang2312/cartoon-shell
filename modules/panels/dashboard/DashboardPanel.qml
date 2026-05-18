@@ -13,6 +13,20 @@ PanelWindow {
 
   property var theme: ThemeService.theme
   property real animationProgress: 0
+  PackageService{
+    id: packageService
+    simplePackage: true
+  }
+  SequentialAnimation on animationProgress {
+    running: true
+
+    NumberAnimation {
+      from: 0
+      to: 2
+      duration: 1000
+      easing.type: Easing.Linear
+    }
+  }
 
   CpuService {
     id: cpuService
@@ -45,6 +59,8 @@ PanelWindow {
 
         Com.UserProfileCard {
           animationProgress: root.animationProgress
+          opacity: root.animationProgress > 0.05 ? 1 : 0
+
         }
 
         Com.SystemSlider {
@@ -72,6 +88,7 @@ PanelWindow {
           value: diskService.diskPercents / 100
           revealThreshold: 0.35
           animationProgress: root.animationProgress
+
         }
       }
 
@@ -92,20 +109,25 @@ PanelWindow {
             Layout.preferredWidth: 100
 
             Com.TimeCard {
+              opacity: root.animationProgress > 0.25 ? 1 : 0
               animationProgress: root.animationProgress
             }
 
             Com.SleepTimerCard {
+              opacity: root.animationProgress > 0.3 ? 1 : 0
               animationProgress: root.animationProgress
             }
           }
 
           Com.WeatherCard {
+            opacity: root.animationProgress > 0.35 ? 1 : 0
             animationProgress: root.animationProgress
 
           }
 
           Com.ListQuickActionButton {
+            opacity: root.animationProgress > 0.4 ? 1 : 0
+            animationProgress: root.animationProgress
           }
         }
 
@@ -127,9 +149,12 @@ PanelWindow {
 
               Com.MediaPlayerCard {
                 animationProgress: root.animationProgress
+                opacity: root.animationProgress > 0.3 ? 1 : 0
+
               }
 
               Com.AppGridCard {
+                opacity: root.animationProgress > 0.35 ? 1 : 0
                 animationProgress: root.animationProgress
               }
             }
@@ -139,28 +164,43 @@ PanelWindow {
               spacing: 15
 
               Com.SocialIcon {
-                image: "../../../assets/lockscreen/appicons/youtube.png"
-                bgColor: "#d20f39"
+                image: "lockscreen/appicons/youtube.png"
+                bgColor: root.animationProgress > 0.55 ? "#d20f39" : theme.primary.background
+                revealThreshold: 0.6
                 linkSocial: "https://www.youtube.com/"
+                opacity: root.animationProgress > 0.4 ? 1 : 0
+                animationProgress: root.animationProgress
+
               }
               Com.SocialIcon {
-                image: "../../../assets/lockscreen/appicons/reddit.png"
-                bgColor: "#fe640b"
+                image: "lockscreen/appicons/reddit.png"
+                bgColor: root.animationProgress > 0.6 ? "#fe640b" : theme.primary.background
+                revealThreshold: 0.65
                 linkSocial: "https://www.reddit.com/"
+                opacity: root.animationProgress > 0.45 ? 1 : 0
+                animationProgress: root.animationProgress
               }
               Com.SocialIcon {
-                image: "../../../assets/lockscreen/appicons/facebook.png"
-                bgColor: "#04a5e5"
+                image: "lockscreen/appicons/facebook.png"
+                bgColor: root.animationProgress > 0.65 ? "#04a5e5" : theme.primary.background
+                revealThreshold: 0.7
                 linkSocial: "https://www.facebook.com/"
+                opacity: root.animationProgress > 0.5 ? 1 : 0
+                animationProgress: root.animationProgress
               }
               Com.SocialIcon {
-                image: "../../../assets/lockscreen/appicons/tiktok.png"
-                bgColor: "#eff1f5"
+                image: "lockscreen/appicons/tiktok.png"
+                bgColor: root.animationProgress > 0.65 ? "#eff1f5" : theme.primary.background
+                revealThreshold: 0.75
                 linkSocial: "https://www.tiktok.com/"
+                opacity: root.animationProgress > 0.55 ? 1 : 0
+                animationProgress: root.animationProgress
               }
 
-              Com.GmailCard {
-                emailCount: 230
+              Com.PackageCard {
+                count: packageService.totalPackage
+                animationProgress: root.animationProgress
+                opacity: root.animationProgress > 0.6 ? 1 : 0
               }
             }
           }
@@ -169,25 +209,10 @@ PanelWindow {
           Com.FileBrowserCard {
             Layout.preferredWidth: 300
             Layout.fillHeight: true
+            opacity: root.animationProgress > 0.65 ? 1 : 0
           }
         }
       }
     }
-  }
-
-  // Staggered animation trigger
-  SequentialAnimation on animationProgress {
-    running: true
-
-    NumberAnimation {
-      from: 0
-      to: 2
-      duration: 1000
-      easing.type: Easing.Linear
-    }
-  }
-
-  Component.onCompleted: {
-    staggerAnimation.start()
   }
 }

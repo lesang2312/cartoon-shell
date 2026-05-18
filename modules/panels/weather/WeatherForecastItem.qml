@@ -18,6 +18,11 @@ Rectangle {
   border.color: theme.primary.foreground
   border.width: 1
   clip: true
+  Behavior on opacity {
+    NumberAnimation {
+      duration: 200
+    }
+  }
 
   ColumnLayout {
     anchors.fill: parent
@@ -30,11 +35,6 @@ Rectangle {
       size: "normal"
       Layout.alignment: Qt.AlignHCenter
       opacity: root.animationProgress > root.revealThreshold ? 1 : 0
-      Behavior on opacity {
-        NumberAnimation {
-          duration: 200
-        }
-      }
     }
     Item {Layout.fillWidth: true}
 
@@ -45,12 +45,6 @@ Rectangle {
       size: "normal"
       Layout.alignment: Qt.AlignHCenter
       opacity: root.animationProgress > root.revealThreshold + 0.03 ? 1 : 0
-      Behavior on opacity {
-        NumberAnimation {
-          duration: 200
-        }
-      }
-
     }
     Item {Layout.fillWidth: true}
 
@@ -60,11 +54,6 @@ Rectangle {
       Layout.alignment: Qt.AlignHCenter
       size: "2xl"
       opacity: root.animationProgress > root.revealThreshold + 0.06 ? 1 : 0
-      Behavior on opacity {
-        NumberAnimation {
-          duration: 200
-        }
-      }
     }
 
     Item {Layout.fillWidth: true}
@@ -80,11 +69,6 @@ Rectangle {
         size: "small"
         isBold: true
         opacity: root.animationProgress > root.revealThreshold + 0.07 ? 1 : 0
-        Behavior on opacity {
-          NumberAnimation {
-            duration: 200
-          }
-        }
       }
 
       CustomText{
@@ -92,12 +76,6 @@ Rectangle {
         textColor: theme.primary.dim_foreground
         size: "small"
         opacity: root.animationProgress > root.revealThreshold + 0.08 ? 1 : 0
-        Behavior on opacity {
-          NumberAnimation {
-            duration: 200
-          }
-        }
-
       }
 
       CustomText {
@@ -106,13 +84,7 @@ Rectangle {
         size: "small"
         isBold: true
         opacity: root.animationProgress > root.revealThreshold + 0.09 ? 1 : 0
-        Behavior on opacity {
-          NumberAnimation {
-            duration: 200
-          }
-        }
       }
     }
-
   }
 }

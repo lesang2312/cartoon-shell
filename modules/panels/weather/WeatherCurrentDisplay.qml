@@ -50,11 +50,6 @@ RowLayout {
         isBold: true
         Layout.alignment: Qt.AlignHCenter
         opacity: root.animationProgress > 0.55 ? 1 : 0
-        Behavior on opacity {
-          NumberAnimation {
-            duration: 200
-          }
-        }
       }
 
       CustomText {
@@ -62,11 +57,6 @@ RowLayout {
         size: "small"
         Layout.alignment: Qt.AlignHCenter
         opacity: root.animationProgress > 0.6 ? 1 : 0
-        Behavior on opacity {
-          NumberAnimation {
-            duration: 200
-          }
-        }
       }
 
       Item {
@@ -93,11 +83,6 @@ RowLayout {
       revealThreshold: 0.6
       animationProgress: root.animationProgress
       opacity: root.animationProgress > 0.3 ? 1 : 0
-      Behavior on opacity {
-        NumberAnimation {
-          duration: 200
-        }
-      }
     }
 
     // Wind Speed
@@ -109,11 +94,6 @@ RowLayout {
       revealThreshold: 0.65
       animationProgress: root.animationProgress
       opacity: root.animationProgress > 0.35 ? 1 : 0
-      Behavior on opacity {
-        NumberAnimation {
-          duration: 200
-        }
-      }
     }
 
     // Pressure
@@ -125,11 +105,6 @@ RowLayout {
       revealThreshold: 0.7
       animationProgress: root.animationProgress
       opacity: root.animationProgress > 0.4 ? 1 : 0
-      Behavior on opacity {
-        NumberAnimation {
-          duration: 200
-        }
-      }
     }
 
     // Visibility
@@ -141,11 +116,6 @@ RowLayout {
       revealThreshold: 0.75
       animationProgress: root.animationProgress
       opacity: root.animationProgress > 0.45 ? 1 : 0
-      Behavior on opacity {
-        NumberAnimation {
-          duration: 200
-        }
-      }
     }
 
     // UV Index
@@ -157,11 +127,6 @@ RowLayout {
       revealThreshold: 0.8
       animationProgress: root.animationProgress
       opacity: root.animationProgress > 0.5 ? 1 : 0
-      Behavior on opacity {
-        NumberAnimation {
-          duration: 200
-        }
-      }
     }
 
     // Feels Like
@@ -173,11 +138,6 @@ RowLayout {
       revealThreshold: 0.85
       animationProgress: root.animationProgress
       opacity: root.animationProgress > 0.55 ? 1 : 0
-      Behavior on opacity {
-        NumberAnimation {
-          duration: 200
-        }
-      }
     }
   }
 }
