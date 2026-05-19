@@ -65,12 +65,12 @@ PanelWindow {
     color: theme.primary.background
     border.width: 3
     border.color: theme.button.border
+    clip: true
 
     ColumnLayout {
       anchors.fill: parent
       anchors.margins: 16
       spacing: 12
-
       Com.WifiHeader {
         Layout.fillWidth: true
         wifiManager: wifiManager
