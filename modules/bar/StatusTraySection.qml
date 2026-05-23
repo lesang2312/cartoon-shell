@@ -211,12 +211,12 @@ Rectangle {
           spacing: 8
 
           IconImage {
-            visible: Settings.bar.bluetooth.isImage
+            visible: Settings.bar.bluetooth.style === 1
             path: "settings/bluetooth.png"
             size: "large"
           }
           IconText {
-            visible: Settings.bar.bluetooth.isIcon
+            visible: Settings.bar.bluetooth.style === 2
             name: "bluetooth"
             textColor: theme.button.text
           }
@@ -263,17 +263,17 @@ Rectangle {
           spacing: 8
 
           IconImage {
-            visible: Settings.bar.wifi.isImage
+            visible: Settings.bar.wifi.style === 1
             path: networkService.wifi_icon
             size: "large"
           }
           IconText{
-            visible: Settings.bar.wifi.isIcon1
+            visible: Settings.bar.wifi.style === 2
             name: networkService.wifi_icon_text_1
             textColor: theme.button.text
           }
           IconText{
-            visible: Settings.bar.wifi.isIcon2
+            visible: Settings.bar.wifi.style === 3
             name: networkService.wifi_icon_text_2
             textColor: theme.button.text
           }

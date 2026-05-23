@@ -19,10 +19,6 @@ Rectangle {
   // Shadow effect
   layer.enabled: true
 
-  ListSettingsService {
-    id: listSettingService
-  }
-
   RowLayout {
     anchors.fill: parent
     spacing: 20

@@ -1,3 +1,4 @@
+//SystemStatsSection
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
@@ -5,6 +6,7 @@ import Quickshell.Io
 import qs.services
 import qs.commons
 import qs.components
+import "./widget/" as Com
 
 Rectangle {
   id: root
@@ -43,67 +45,16 @@ Rectangle {
       spacing: 4
 
       // CPU Container
-      Rectangle {
-        id: cpuContainer
+      Com.StatContainer {
         Layout.fillWidth: true
         Layout.fillHeight: true
-        color: "transparent"
-        radius: 6
+        panelName: "cpu"
 
-        RowLayout {
-          id: cpuContent
+        Com.CpuStat {
           anchors.centerIn: parent
-          spacing: 2
-
-          ColumnLayout {
-            Layout.alignment: Qt.AlignVCenter
-            spacing: 0
-            CustomText {
-              name: cpuService.cpuPercent + "%"
-              isBold: true
-              size: "small"
-              Layout.alignment: Qt.AlignHCenter
-
-            }
-            CustomText {
-              name: "Cpu"
-              textColor: theme.primary.dim_foreground
-              size: "2xs"
-              Layout.alignment: Qt.AlignHCenter
-
-            }
-          }
-
-          IconImage {
-            visible: Settings.bar.cpu.isImage
-            path: "cpu/cpu.png"
-            Layout.alignment: Qt.AlignVCenter
-          }
-          IconText {
-            visible: Settings.bar.cpu.isIcon
-            name: "memory"
-            textColor: theme.button.text
-          }
-        }
-
-        MouseArea {
-          anchors.fill: parent
-          hoverEnabled: true
-          cursorShape: Qt.PointingHandCursor
-          onClicked: {
-            VisibleService.togglePanel("cpu");
-          }
-          onEntered: cpuContainer.opacity = 0.8
-          onExited: cpuContainer.opacity = 1.0
-        }
-
-        Behavior on opacity {
-          NumberAnimation {
-            duration: 100
-          }
+          percent: cpuService.cpuPercent + "%"
         }
       }
-
       // Memory Container
       Rectangle {
         id: memoryContainer
@@ -137,12 +88,12 @@ Rectangle {
           }
 
           IconImage {
-            visible: Settings.bar.ram.isImage
+            visible: Settings.bar.ram.style === 1
             path: "panel/memory.png"
             Layout.alignment: Qt.AlignVCenter
           }
           IconText {
-            visible: Settings.bar.ram.isIcon
+            visible: Settings.bar.ram.style === 2
             name: "memory_alt"
             textColor: theme.button.text
           }

@@ -25,9 +25,6 @@ Item {
     }
   }
 
-  ListSettingsService {
-    id: listSettingService
-  }
   ColumnLayout {
     anchors.fill: parent
     spacing: 10
@@ -68,7 +65,7 @@ Item {
         source: "./appearance/ClockTime.qml"
         onLoaded: {
           item.visible = Qt.binding(function () {
-              return root.currentTab === 3;
+              return root.currentTab === 2;
           });
         }
       }
