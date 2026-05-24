@@ -9,9 +9,9 @@ import qs.components
 Rectangle {
   id: root
   color: theme.primary.background
-  radius: 10
+  radius: Settings.appearance.radius2
   border.color: theme.button.border
-  border.width: 3
+  border.width: Settings.appearance.enableBorder ? 3 : 0
 
   property var lang: LanguageService.translations
   property string selectedFlag: Settings.appearance.countryFlag

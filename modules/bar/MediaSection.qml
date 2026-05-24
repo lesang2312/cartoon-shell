@@ -12,8 +12,8 @@ Rectangle {
   id: root
   color: theme.primary.background
   border.color: theme.button.border
-  border.width: 3
-  radius: 10
+  border.width: Settings.appearance.enableBorder ? 3 : 0
+  radius: Settings.appearance.radius2
 
   property var theme: ThemeService.theme
   property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
@@ -170,7 +170,7 @@ Rectangle {
         Layout.fillHeight: true
 
         // Xoay toàn bộ container 90 độ để text chạy dọc
-        Rectangle {
+        Item {
           anchors.centerIn: parent
           width: parent.height  // Đảo width và height
           height: parent.width

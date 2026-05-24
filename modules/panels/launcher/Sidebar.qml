@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import Quickshell.Io
 import qs.services
 import qs.components
+import qs.commons
 
 Rectangle {
   id: root
@@ -21,10 +22,10 @@ Rectangle {
     }
   }
   Layout.fillHeight: true
-  radius: 12
   color: theme.primary.dim_background
   border.color: theme.button.border
-  border.width: 2
+  radius: Settings.appearance.radius2
+  border.width: Settings.appearance.enableBorder ? 2 : 0
 
   property var theme: ThemeService.theme
   property var lang: LanguageService.translations
@@ -52,10 +53,10 @@ Rectangle {
       }
       Layout.fillWidth: true
       Layout.preferredHeight: 60
-      radius: 8
       color: mouseAreaLauncher.containsMouse ? theme.button.background_select : theme.button.background
       border.color: mouseAreaLauncher.containsPress ? theme.button.border_select : theme.button.border
-      border.width: 3
+      border.width: Settings.appearance.enableBorder ? 1 : 0
+      radius: Settings.appearance.radius3
 
       scale: mouseAreaLauncher.containsPress ? 0.98 : 1.0
       Behavior on scale {
@@ -157,10 +158,10 @@ Rectangle {
       }
       Layout.fillWidth: true
       Layout.preferredHeight: 60
-      radius: 8
+      border.width: Settings.appearance.enableBorder ? 1 : 0
+      radius: Settings.appearance.radius3
       color: mouseAreaSettings.containsMouse ? theme.button.background_select : theme.button.background
       border.color: mouseAreaSettings.containsPress ? theme.button.border_select : theme.button.border
-      border.width: 3
 
       scale: mouseAreaSettings.containsPress ? 0.98 : 1.0
       Behavior on scale {
@@ -262,10 +263,10 @@ Rectangle {
       }
       Layout.fillWidth: true
       Layout.preferredHeight: 60
-      radius: 8
       color: mouseAreaSleep.containsMouse ? theme.button.background_select : theme.button.background
       border.color: mouseAreaSleep.containsPress ? theme.button.border_select : theme.button.border
-      border.width: 3
+      border.width: Settings.appearance.enableBorder ? 1 : 0
+      radius: Settings.appearance.radius3
 
       scale: mouseAreaSleep.containsPress ? 0.98 : 1.0
       Behavior on scale {
@@ -366,10 +367,10 @@ Rectangle {
       id: lockButton
       Layout.fillWidth: true
       Layout.preferredHeight: 60
-      radius: 8
       color: mouseAreaLock.containsMouse ? theme.button.background_select : theme.button.background
       border.color: mouseAreaLock.containsPress ? theme.button.border_select : theme.button.border
-      border.width: 3
+      border.width: Settings.appearance.enableBorder ? 1 : 0
+      radius: Settings.appearance.radius3
 
       scale: mouseAreaLock.containsPress ? 0.98 : 1.0
       Behavior on scale {
@@ -470,10 +471,10 @@ Rectangle {
       id: logoutButton
       Layout.fillWidth: true
       Layout.preferredHeight: 60
-      radius: 8
       color: mouseAreaLogout.containsMouse ? theme.button.background_select : theme.button.background
       border.color: mouseAreaLogout.containsPress ? theme.button.border_select : theme.button.border
-      border.width: 3
+      border.width: Settings.appearance.enableBorder ? 1 : 0
+      radius: Settings.appearance.radius3
 
       scale: mouseAreaLogout.containsPress ? 0.98 : 1.0
       Behavior on scale {
@@ -574,10 +575,10 @@ Rectangle {
       }
       Layout.fillWidth: true
       Layout.preferredHeight: 60
-      radius: 8
       color: mouseAreaRestart.containsMouse ? theme.button.background_select : theme.button.background
       border.color: mouseAreaRestart.containsPress ? theme.button.border_select : theme.button.border
-      border.width: 3
+      border.width: Settings.appearance.enableBorder ? 1 : 0
+      radius: Settings.appearance.radius3
 
       scale: mouseAreaRestart.containsPress ? 0.98 : 1.0
       Behavior on scale {
@@ -679,10 +680,10 @@ Rectangle {
       id: shutdownButton
       Layout.fillWidth: true
       Layout.preferredHeight: 60
-      radius: 8
       color: mouseAreaShutdown.containsMouse ? theme.button.background_select : theme.button.background
       border.color: mouseAreaShutdown.containsPress ? theme.button.border_select : theme.button.border
-      border.width: 3
+      border.width: Settings.appearance.enableBorder ? 1 : 0
+      radius: Settings.appearance.radius3
 
       scale: mouseAreaShutdown.containsPress ? 0.98 : 1.0
       Behavior on scale {

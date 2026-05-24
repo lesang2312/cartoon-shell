@@ -203,8 +203,8 @@ PanelWindow {
 
   Rectangle {
     anchors.fill: parent
-    radius: 16
-    border.width: 2
+    radius: Settings.appearance.radius1
+    border.width: Settings.appearance.enableBorder ? 3 : 0
     border.color: theme.primary.foreground
     color: theme.primary.background
 

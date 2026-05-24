@@ -5,6 +5,7 @@ import Quickshell
 import qs.services
 import Quickshell.Io
 import qs.components
+import qs.commons
 
 Item {
   id: ramTaskManager
@@ -58,9 +59,9 @@ Item {
   Rectangle {
     anchors.fill: parent
     color: theme.primary.background
-    radius: 12
+    radius: Settings.appearance.radius2
+    border.width: Settings.appearance.enableBorder ? 2 : 0
     border.color: theme.primary.foreground
-    border.width: 2
     opacity: root.animationProgress > 0.4 ? 1 : 0
     Behavior on opacity {
       NumberAnimation {

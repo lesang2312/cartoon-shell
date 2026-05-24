@@ -5,13 +5,14 @@ import Quickshell
 import Quickshell.Io
 import qs.services
 import qs.components
+import qs.commons
 
 Rectangle {
   id: container
-  radius: 12
+  radius: Settings.appearance.radius2
   color: theme.primary.dim_background
-  border.color: theme.primary.foreground
-  border.width: 2
+  border.color: theme.button.border
+  border.width: Settings.appearance.enableBorder ? 2 : 0
 
   property real animationProgress: 0
   property var apps: []
@@ -68,10 +69,11 @@ Rectangle {
       delegate: Rectangle {
         width: ListView.view.width
         height: 56
-        radius: 8
+        radius: Settings.appearance.radius3
         color: (ListView.isCurrentItem || mouseArea.containsMouse) ? theme.button.background_select : "transparent"
         border.color: (ListView.isCurrentItem || mouseArea.containsMouse) ? theme.button.border_select : "transparent"
-        border.width: 1
+        border.width: Settings.appearance.enableBorder ? 1 : 0
+
         opacity: 0
 
         SequentialAnimation on opacity {

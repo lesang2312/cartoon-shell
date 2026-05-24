@@ -7,9 +7,10 @@ Rectangle {
   implicitWidth: 56
   implicitHeight: 32
   radius: 16
-  color: wifiManager.wifiEnabled ? theme.button.text : theme.button.background
+  color: adapter ? theme.button.text : theme.button.background
 
   scale: toggleMouseArea.containsPress ? 0.95 : (toggleMouseArea.containsMouse ? 1.05 : 1.0)
+  property bool adapter: true
   signal clicked()
 
   Behavior on scale {
@@ -31,7 +32,7 @@ Rectangle {
 
   Rectangle {
     id: toggleIndicator
-    x: wifiManager.wifiEnabled ? parent.width - width - 4 : 4
+    x: root.adapter ? parent.width - width - 4 : 4
     y: 4
     width: 24
     height: 24

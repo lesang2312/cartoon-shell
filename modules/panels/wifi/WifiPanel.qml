@@ -61,9 +61,9 @@ PanelWindow {
 
   Rectangle {
     anchors.fill: parent
-    radius: 16
     color: theme.primary.background
-    border.width: 3
+    radius: Settings.appearance.radius1
+    border.width: Settings.appearance.enableBorder ? 3 : 0
     border.color: theme.button.border
     clip: true
 

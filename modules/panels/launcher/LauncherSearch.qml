@@ -3,15 +3,16 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import qs.services
 import qs.components
+import qs.commons
 
 Rectangle {
   id: root
   Layout.fillWidth: true
   Layout.preferredHeight: 45
-  radius: 12
+  radius: Settings.appearance.radius2
   color: theme.primary.dim_background
   border.color: theme.button.border
-  border.width: 2
+  border.width: Settings.appearance.enableBorder ? 2 : 0
 
   signal searchChanged(string text) // phát ra khi cần tìm (sau debounce)
   signal accepted(string text)      // khi nhấn Enter

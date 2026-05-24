@@ -12,9 +12,9 @@ Rectangle {
   width: 200
   height: 50
   color: theme.primary.background
-  radius: 10
+  radius: Settings.appearance.radius2
   border.color: theme.button.border
-  border.width: 3
+  border.width: Settings.appearance.enableBorder ? 3 : 0
   property var theme: ThemeService.theme
   property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
   RowLayout {

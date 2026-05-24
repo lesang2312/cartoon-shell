@@ -138,7 +138,10 @@ Singleton {
     property string mode: "dark"
     property string countryFlag: "vietnam"
     property string fonts: ""
-    property int radius: 16
+    property int radius1: 22
+    property int radius2: 16
+    property int radius3: 8
+    property bool enableBorder: false
     // Thêm các properties cho dynamic theme
     property bool dynamic: false
     property string light: "light"

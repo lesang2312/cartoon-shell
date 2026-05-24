@@ -160,9 +160,9 @@ PanelWindow {
   // Main UI
   Rectangle {
     anchors.fill: parent
-    radius: 20
     border.color: theme.button.border
-    border.width: 3
+    radius: Settings.appearance.radius1
+    border.width: Settings.appearance.enableBorder ? 3 : 0
 
     color: theme.primary.background
 

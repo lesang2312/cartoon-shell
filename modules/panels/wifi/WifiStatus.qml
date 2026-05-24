@@ -39,6 +39,7 @@ Rectangle {
     }
     CustomToggleSwitch {
       opacity: root.animationProgress > 0.6 ? 1 : 0
+      adapter: wifiManager.wifiEnabled
       onClicked:{
         wifiManager.toggleWifi();
       }

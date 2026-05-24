@@ -40,6 +40,7 @@ Item {
 
       // Panel Position Settings
       Com.PanelPositionSelector{}
+      Com.Border{}
       Com.PanelSystemStats{}
 
       // Spacer

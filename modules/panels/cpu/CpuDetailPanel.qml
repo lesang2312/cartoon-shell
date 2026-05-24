@@ -45,9 +45,9 @@ PanelWindow {
   Rectangle {
     anchors.fill: parent
     color: theme.primary.background
-    radius: 8
     border.color: theme.button.border
-    border.width: 3
+    radius: Settings.appearance.radius1
+    border.width: Settings.appearance.enableBorder ? 3 : 0
 
     ColumnLayout {
       anchors.fill: parent

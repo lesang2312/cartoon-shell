@@ -7,6 +7,7 @@ import Quickshell
 import qs.services
 import qs.components
 import "." as Com
+import qs.commons
 
 Item {
   id: ramDisplay
@@ -24,9 +25,9 @@ Item {
   Rectangle {
     anchors.fill: parent
     color: theme.primary.background
-    radius: 12
+    radius: Settings.appearance.radius2
+    border.width: Settings.appearance.enableBorder ? 2 : 0
     border.color: theme.button.border
-    border.width: 2
     opacity: root.animationProgress > 0.2 ? 1 : 0
     Behavior on opacity {
       NumberAnimation {

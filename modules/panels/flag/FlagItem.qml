@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import qs.services
 import qs.components
+import qs.commons
 
 Rectangle {
   id: flagItem
@@ -15,10 +16,10 @@ Rectangle {
 
   width: 105
   height: 70
-  color: isSelected ? theme.primary.dim_background : theme.primary.background
-  border.color: isSelected ? theme.normal.green : theme.button.border
-  border.width: isSelected ? 3 : 2
-  radius: 10
+  color: isSelected ? theme.button.background_select : theme.primary.dim_background
+  border.color: isSelected ? theme.button.border_select : theme.button.border
+  radius: Settings.appearance.radius3
+  border.width: Settings.appearance.enableBorder ? isSelected ? 2 : 1 : 0
 
   signal clicked()
 

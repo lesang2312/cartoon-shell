@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import qs.services
+import qs.commons
 import qs.components
 
 Rectangle {
@@ -17,9 +18,10 @@ Rectangle {
   Layout.preferredWidth:  root.animationProgress > 0.1 ? 200 : 0
   Layout.fillHeight: true
   color: theme.primary.dim_background
-  radius: 12
+  radius: Settings.appearance.radius2
+
   border.color: theme.button.border
-  border.width: 2
+  border.width: Settings.appearance.enableBorder ? 2 : 0
 
   property real animationProgress: 0
   SequentialAnimation on animationProgress {
@@ -121,14 +123,14 @@ Rectangle {
         }
         Layout.fillWidth: true
         Layout.preferredHeight: 50
-        radius: 8
+        radius: Settings.appearance.radius3
 
         property bool hovered: false
         property bool selected: root.currentIndex === index
 
         color: mouseArea.containsMouse || selected ? theme.button.background_select : theme.button.background
         border.color: mouseArea.containsMouse || selected ? theme.button.border_select : theme.button.border
-        border.width: 2
+        border.width: Settings.appearance.enableBorder ? 1 : 0
 
         // Hiệu ứng scale
         scale: mouseArea.containsMouse ? 0.98 : 1.0

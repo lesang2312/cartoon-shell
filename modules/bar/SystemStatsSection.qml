@@ -12,8 +12,8 @@ Rectangle {
   id: root
   color: theme.primary.background
   border.color: theme.button.border
-  border.width: 3
-  radius: 10
+  border.width: Settings.appearance.enableBorder ? 3 : 0
+  radius: Settings.appearance.radius2
   clip: true
 
   property string memoryUsage: "0%"

@@ -108,10 +108,11 @@ PanelWindow {
   // Focus scope để quản lý focus
   Rectangle {
     anchors.fill: parent
-    radius: 12
+    radius: Settings.appearance.radius1
     color: theme.primary.background
     border.color: theme.button.border
-    border.width: 3
+    border.width: Settings.appearance.enableBorder ? 3 : 0
+
     ColumnLayout {
       anchors.fill: parent
       Item {
