@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import qs.components
+import qs.commons
 Rectangle {
   id: root
   property var minTemp: ""
@@ -13,10 +14,10 @@ Rectangle {
 
   implicitWidth: 180
   Layout.fillHeight: true
-  radius: 12
+  radius: Settings.appearance.radius2
+  border.width: Settings.appearance.enableBorder ? 2 : 0
   color: theme.primary.dim_background
   border.color: theme.primary.foreground
-  border.width: 1
   clip: true
   Behavior on opacity {
     NumberAnimation {

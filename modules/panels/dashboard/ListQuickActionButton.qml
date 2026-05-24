@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Fusion
 import qs.services
 import qs.components
+import qs.commons
 
 import "." as Com
 
@@ -16,10 +17,10 @@ ColumnLayout {
     Rectangle {
       Layout.fillWidth: true
       Layout.preferredHeight: 110
-      radius: 28
       color: mouseAreaLogout.containsMouse ? theme.button.background_select : theme.primary.background
       border.color: mouseAreaLogout.containsPress ? theme.button.border_select : theme.button.border
-      border.width: 3
+      radius: Settings.appearance.radius1
+      border.width: Settings.appearance.enableBorder ? 3 : 0
 
       IconImage {
         path: "system/sys-exit.png"
@@ -43,10 +44,10 @@ ColumnLayout {
     Rectangle {
       Layout.fillWidth: true
       Layout.preferredHeight: 110
-      radius: 28
       color: mouseAreaSleep.containsMouse ? theme.button.background_select : theme.primary.background
       border.color: mouseAreaSleep.containsPress ? theme.button.border_select : theme.button.border
-      border.width: 3
+      radius: Settings.appearance.radius1
+      border.width: Settings.appearance.enableBorder ? 3 : 0
 
       IconImage {
         path: "system/sys-sleep.png"
@@ -71,10 +72,10 @@ ColumnLayout {
     Rectangle {
       Layout.fillWidth: true
       Layout.preferredHeight: 110
-      radius: 28
       color: mouseAreaRestart.containsMouse ? theme.button.background_select : theme.primary.background
       border.color: mouseAreaRestart.containsPress ? theme.button.border_select : theme.button.border
-      border.width: 3
+      radius: Settings.appearance.radius1
+      border.width: Settings.appearance.enableBorder ? 3 : 0
 
       IconImage {
         path: "system/sys-reboot.png"
@@ -96,10 +97,10 @@ ColumnLayout {
     Rectangle {
       Layout.fillWidth: true
       Layout.preferredHeight: 110
-      radius: 28
       color: mouseAreaShutdown.containsMouse ? theme.button.background_select : theme.primary.background
       border.color: mouseAreaShutdown.containsPress ? theme.button.border_select : theme.button.border
-      border.width: 3
+      radius: Settings.appearance.radius1
+      border.width: Settings.appearance.enableBorder ? 3 : 0
 
       IconImage {
         path: "system/poweroff.png"

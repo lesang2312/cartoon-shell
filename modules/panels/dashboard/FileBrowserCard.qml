@@ -3,19 +3,20 @@ import QtQuick.Layouts
 import QtQuick.Controls.Fusion
 import "." as Com
 import qs.services
+import qs.commons
 
 Rectangle {
   id: root
 
   Layout.preferredWidth: 200
   Layout.preferredHeight: 220
-  radius: 28
   property var theme: ThemeService.theme
 
   color: theme.primary.background
   border.color: theme.button.border
   property real animationProgress: 0
-  border.width: 3
+  radius: Settings.appearance.radius1
+  border.width: Settings.appearance.enableBorder ? 3 : 0
   Behavior on opacity {
     NumberAnimation {
       duration: 200

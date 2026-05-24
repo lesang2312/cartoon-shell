@@ -2,15 +2,16 @@ import QtQuick
 import QtQuick.Layouts
 import qs.services
 import qs.components
+import qs.commons
 
 Rectangle {
   id: root
   property var wifiManager
 
   implicitHeight: 80
-  radius: 12
   color: theme.primary.dim_background
-  border.width: 2
+  radius: Settings.appearance.radius2
+  border.width: Settings.appearance.enableBorder ? 2 : 0
   border.color: theme.normal.black
   property real animationProgress: 0
 

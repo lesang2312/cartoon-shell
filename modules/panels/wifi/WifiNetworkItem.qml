@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import "." as Com
 import qs.services
 import qs.components
+import qs.commons
 
 ColumnLayout {
   id: networkItem
@@ -18,9 +19,9 @@ ColumnLayout {
     width: parent.width
     Layout.fillWidth: true
     Layout.preferredHeight: 70
-    radius: 12
     color: mouseArea.containsMouse ? theme.button.background_select : (networkData.isConnected ? theme.button.background : theme.primary.dim_background)
-    border.width: 2
+    radius: Settings.appearance.radius2
+    border.width: Settings.appearance.enableBorder ? 2 : 0
     border.color: networkData.isConnected ? theme.button.border : theme.normal.black
 
     RowLayout {

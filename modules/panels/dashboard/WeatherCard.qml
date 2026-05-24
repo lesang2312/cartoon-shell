@@ -4,6 +4,7 @@ import QtQuick.Controls.Fusion
 import Quickshell.Io
 import qs.services
 import qs.components
+import qs.commons
 
 Rectangle {
   id: root
@@ -12,10 +13,11 @@ Rectangle {
 
   Layout.preferredWidth: 400
   Layout.preferredHeight: 240
-  radius: 28
-  color: theme.primary.background
-  border.width: 3
+
+  radius: Settings.appearance.radius1
+  border.width: Settings.appearance.enableBorder ? 3 : 0
   border.color: theme.button.border
+  color: theme.primary.background
   clip: true
   Behavior on opacity {
     NumberAnimation {

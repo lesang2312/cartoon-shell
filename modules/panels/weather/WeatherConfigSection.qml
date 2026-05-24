@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import qs.services
 import qs.components
+import qs.commons
 
 Rectangle {
   id: root
@@ -29,10 +30,10 @@ Rectangle {
   Layout.fillHeight: true
   Layout.preferredWidth: parent.width * 0.4
 
-  radius: 16
   color: theme.primary.dim_background
   border.color: theme.primary.foreground
-  border.width: 1
+  radius: Settings.appearance.radius2
+  border.width: Settings.appearance.enableBorder ? 2 : 0
   opacity: root.animationProgress > 0.15 ? 1 : 0
   Behavior on opacity {
     NumberAnimation {
@@ -71,10 +72,10 @@ Rectangle {
           }
           Layout.fillWidth: true
           height: 44
-          radius: 10
           color: theme.primary.dim_background
           border.color: apiKeyInput.activeFocus ? theme.normal.blue : theme.primary.dim_foreground
-          border.width: 1
+          radius: Settings.appearance.radius3
+          border.width: Settings.appearance.enableBorder ? 1 : 0
 
           TextField {
             id: apiKeyInput
@@ -137,10 +138,10 @@ Rectangle {
             }
             Layout.fillWidth: true
             height: 44
-            radius: 10
             color: theme.primary.dim_background
             border.color: locationInput.activeFocus ? theme.normal.blue : theme.primary.dim_foreground
-            border.width: 1
+            radius: Settings.appearance.radius3
+            border.width: Settings.appearance.enableBorder ? 1 : 0
 
             TextField {
               id: locationInput
@@ -175,7 +176,8 @@ Rectangle {
           Rectangle {
             width: 100
             height: 44
-            radius: 10
+            radius: Settings.appearance.radius3
+            border.width: Settings.appearance.enableBorder ? 1 : 0
             opacity: root.animationProgress > 0.45 ? 1 : 0
             Behavior on opacity {
               NumberAnimation {
@@ -186,7 +188,6 @@ Rectangle {
             color: theme.button.background
 
             border.color: theme.button.border
-            border.width: 1
 
             IconText{
               name: "search"

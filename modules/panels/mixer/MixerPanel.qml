@@ -6,6 +6,7 @@ import Quickshell
 import Quickshell.Services.Pipewire
 import "./" as Components
 import qs.commons
+import qs.components
 import qs.services
 
 PanelWindow {
@@ -73,40 +74,17 @@ PanelWindow {
         Layout.fillWidth: true
         spacing: 12
 
-        Rectangle {
-          width: 50
-          height: 50
-          color: "transparent"
-
-          Image {
-            anchors.centerIn: parent
-            source: Directories.assetsPath + "/system/mixer.png"
-            width: 50
-            height: 50
-            fillMode: Image.PreserveAspectFit
-          }
+        IconImage {
+          path: "system/mixer.png"
+          size: "xl"
         }
 
-        ColumnLayout {
-          Layout.fillWidth: true
-          spacing: 2
-
-          Label {
-            text: lang.mixer.title
-            font.family: "ComicShannsMono Nerd Font"
-            font.bold: true
-            font.pixelSize: 17
-            color: theme.primary.foreground
-          }
-
-          Label {
-            text: lang.mixer.subtitle
-            font.family: "ComicShannsMono Nerd Font"
-            font.pixelSize: 13
-            color: theme.primary.dim_foreground
-            opacity: 0.8
-          }
+        CustomText {
+          name: lang.mixer.title
+          isBold: true
+          size: "large"
         }
+
       }
 
       // Default sink section
@@ -114,9 +92,9 @@ PanelWindow {
         Layout.fillWidth: true
         Layout.preferredHeight: 120
         color: theme.primary.dim_background
-        radius: 6
-        border.color: theme.normal.blue
-        border.width: 2
+        border.color: theme.button.border_select
+        radius: Settings.appearance.radius2
+        border.width: Settings.appearance.enableBorder ? 2 : 0
 
         ColumnLayout {
           anchors.fill: parent
@@ -148,9 +126,9 @@ PanelWindow {
         Layout.fillWidth: true
         Layout.fillHeight: true
         color: theme.primary.dim_background
-        radius: 6
-        border.color: theme.normal.black
-        border.width: 2
+        border.color: theme.button.border_select
+        radius: Settings.appearance.radius2
+        border.width: Settings.appearance.enableBorder ? 2 : 0
 
         ColumnLayout {
           anchors.fill: parent
@@ -215,22 +193,18 @@ PanelWindow {
           Layout.fillWidth: true
           Layout.preferredHeight: 20
           color: "transparent"
-          border.color: theme.normal.black
-          border.width: 1
-          radius: 4
-
-          Label {
+          CustomText{
             anchors.centerIn: parent
-            text: `Active streams: ${linkTracker.linkGroups.count}`
-            font.pixelSize: 10
-            color: theme.primary.dim_foreground
+            name: `Active streams: ${linkTracker.linkGroups.count}`
+            size: "small"
+            textColor: theme.primary.dim_foreground
           }
         }
 
         Rectangle {
-          width: 20
-          height: 20
-          radius: 4
+          Layout.preferredWidth: 20
+          Layout.preferredHeight: 20
+          radius: width/2
           color: theme.normal.green
           opacity: 0.7
 

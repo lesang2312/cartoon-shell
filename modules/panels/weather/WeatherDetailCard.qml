@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import qs.services
 import qs.components
+import qs.commons
 
 Rectangle {
   id: root
@@ -11,10 +12,10 @@ Rectangle {
   property real animationProgress: 0
   property real revealThreshold: 0.6
 
-  radius: 16
   color: theme.primary.dim_background
   border.color: theme.primary.foreground
-  border.width: 1
+  radius: Settings.appearance.radius2
+  border.width: Settings.appearance.enableBorder ? 2 : 0
   Behavior on opacity {
     NumberAnimation {
       duration: 200

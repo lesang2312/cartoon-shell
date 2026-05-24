@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Fusion
 import qs.services
 import qs.components
+import qs.commons
 
 RowLayout {
   id: root
@@ -22,9 +23,9 @@ RowLayout {
   Rectangle {
     Layout.preferredWidth: 50
     Layout.preferredHeight: 50
-    radius: 25
     color: root.iconColor
-    border.width: 3
+    radius: Settings.appearance.radius1
+    border.width: Settings.appearance.enableBorder ? 3 : 0
     border.color: theme.button.border
     opacity: root.animationProgress > root.revealThreshold - 0.1 ? 1 : 0
 
@@ -58,9 +59,9 @@ RowLayout {
   Rectangle {
     Layout.fillWidth: true
     Layout.preferredHeight: 50
-    radius: 25
     color: theme.primary.background
-    border.width: 3
+    radius: Settings.appearance.radius1
+    border.width: Settings.appearance.enableBorder ? 3 : 0
     border.color: theme.button.border
     opacity: root.animationProgress > root.revealThreshold - 0.05 ? 1 : 0
 

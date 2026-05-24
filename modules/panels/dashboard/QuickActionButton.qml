@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls.Fusion
 import QtQuick.Layouts
 import qs.services
+import qs.commons
 
 Rectangle {
   id: root
@@ -9,9 +10,9 @@ Rectangle {
   property color iconColor: "white"
   property var theme : ThemeService.theme
 
-  radius: 28
   color: theme.primary.background
-  border.width: 3
+  radius: Settings.appearance.radius1
+  border.width: Settings.appearance.enableBorder ? 3 : 0
   border.color: theme.button.border
   Behavior on opacity {
     NumberAnimation {
