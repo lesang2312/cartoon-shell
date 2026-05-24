@@ -337,6 +337,7 @@ Singleton {
       case "setting":
       {
         calendar = false;
+        flag = false
         setting = true;
         break;
       }
