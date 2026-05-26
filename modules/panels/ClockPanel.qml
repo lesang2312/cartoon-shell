@@ -4,132 +4,116 @@ import Quickshell
 import Quickshell.Wayland
 import QtQuick.Controls
 import qs.services
+import qs.components
 
 PanelWindow {
-    id: root
-    WlrLayershell.exclusiveZone: 0   // không chiếm không gian ứng dụng
+  id: root
+  WlrLayershell.exclusiveZone: 0   // không chiếm không gian ứng dụng
 
-    property string currentHour: ""
-    property string currentMin: ""
-    property string currentDay: ""
-    property string currentDate: ""
-    property var lang: LanguageService.translations
+  property string currentHour: ""
+  property string currentMin: ""
+  property string currentDay: ""
+  property string currentDate: ""
+  property var lang: LanguageService.translations
 
-    anchors {
-        top: true
-        bottom: true
-        left: true
-        right: true
+  anchors {
+    top: true
+    bottom: true
+    left: true
+    right: true
+  }
+
+  margins {
+    top: 10
+    bottom: 10
+    left: 10
+    right: 10
+  }
+
+  implicitWidth: content.implicitWidth
+  implicitHeight: content.implicitHeight
+
+  WlrLayershell.layer: WlrLayer.Bottom
+
+  SystemClock {
+    id: clock
+    precision: SystemClock.Seconds
+    onDateChanged: {
+      updateDateTime();
     }
+  }
 
-    margins {
-        top: 10
-        bottom: 10
-        left: 10
-        right: 10
-    }
+  function updateDateTime() {
+    const now = new Date();
+    const dayData = lang?.dateFormat?.day;
+    const weekdays = dayData ? [dayData.sunday || "CN", dayData.monday || "T2", dayData.tuesday || "T3", dayData.wednesday || "T4", dayData.thursday || "T5", dayData.friday || "T6", dayData.saturday || "T7"] : ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
 
-    implicitWidth: content.implicitWidth
-    implicitHeight: content.implicitHeight
+    const monthData = lang?.dateFormat?.month;
+    const months = monthData ? [monthData.january || "Th1", monthData.february || "Th2", monthData.march || "Th3", monthData.april || "Th4", monthData.may || "Th5", monthData.june || "Th6", monthData.july || "Th7", monthData.august || "Th8", monthData.september || "Th9", monthData.october || "Th10", monthData.november || "Th11", monthData.december || "Th12"] : ["Th1", "Th2", "Th3", "Th4", "Th5", "Th6", "Th7", "Th8", "Th9", "Th10", "Th11", "Th12"];
 
-    WlrLayershell.layer: WlrLayer.Bottom
+    root.currentDay = `${weekdays[now.getDay()]}`;
+    root.currentHour = Qt.formatTime(now, "HH");
+    root.currentMin = Qt.formatTime(now, "mm");
+    root.currentDate = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+  }
 
-    SystemClock {
-        id: clock
-        precision: SystemClock.Seconds
-        onDateChanged: {
-            updateDateTime();
-        }
-    }
+  color: "transparent"
 
-    function updateDateTime() {
-        const now = new Date();
-        const dayData = lang?.dateFormat?.day;
-        const weekdays = dayData ? [dayData.sunday || "CN", dayData.monday || "T2", dayData.tuesday || "T3", dayData.wednesday || "T4", dayData.thursday || "T5", dayData.friday || "T6", dayData.saturday || "T7"] : ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
-
-        const monthData = lang?.dateFormat?.month;
-        const months = monthData ? [monthData.january || "Th1", monthData.february || "Th2", monthData.march || "Th3", monthData.april || "Th4", monthData.may || "Th5", monthData.june || "Th6", monthData.july || "Th7", monthData.august || "Th8", monthData.september || "Th9", monthData.october || "Th10", monthData.november || "Th11", monthData.december || "Th12"] : ["Th1", "Th2", "Th3", "Th4", "Th5", "Th6", "Th7", "Th8", "Th9", "Th10", "Th11", "Th12"];
-
-        root.currentDay = `${weekdays[now.getDay()]}`;
-        root.currentHour = Qt.formatTime(now, "HH");
-        root.currentMin = Qt.formatTime(now, "mm");
-        root.currentDate = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
-    }
-
+  Rectangle {
+    id: clockContainer
+    anchors.fill: parent
+    radius: 10
     color: "transparent"
 
-    Rectangle {
-        id: clockContainer
-        anchors.fill: parent
-        radius: 10
-        color: "transparent"
+    RowLayout {
+      id: content
+      anchors.centerIn: parent
+      spacing: 33
 
-        RowLayout {
-            id: content
-            anchors.centerIn: parent
-            spacing: 33
-
-            // Phần hiển thị thời gian (giờ và phút)
-            ColumnLayout {
-                spacing: 5
-                Text {
-                    id: timeHour
-                    text: root.currentHour
-                    color: "#ffffff"
-                    font {
-                        pixelSize: 124
-                        bold: true
-                        family: "ComicShannsMono Nerd Font"
-                    }
-                }
-
-                Text {
-                    id: timeMin
-                    text: root.currentMin
-                    color: "#ffffff"
-                    font {
-                        pixelSize: 124
-                        bold: true
-                        family: "ComicShannsMono Nerd Font"
-                    }
-                }
-            }
-
-            Rectangle {
-                Layout.preferredWidth: 10
-                Layout.preferredHeight: Math.max(timeHour.implicitHeight, timeMin.implicitHeight) * 2
-                color: "#ffffff"
-                radius: 10
-            }
-
-            // Phần hiển thị ngày tháng
-            ColumnLayout {
-                spacing: 5
-                Text {
-                    id: dayText
-                    text: root.currentDay
-                    color: "#ffffff"
-                    font {
-                        pixelSize: 124
-                        bold: true
-                        family: "ComicShannsMono Nerd Font"
-                    }
-                }
-                Text {
-                    id: dateText
-                    text: root.currentDate
-                    color: "#ffffff"
-                    font {
-                        pixelSize: 64
-                        bold: true
-                        family: "ComicShannsMono Nerd Font"
-                    }
-                }
-            }
+      ColumnLayout {
+        spacing: 5
+        CustomText{
+          name: root.currentHour
+          isBold: true
+          textColor: "#ffffff"
+          font.pixelSize: 124
         }
-    }
 
-    Component.onCompleted: {
-        root.updateDateTime(); // Khởi tạo thời gian ban đầu
+        CustomText {
+          name: root.currentMin
+          color: "#ffffff"
+          isBold: true
+          font.pixelSize: 124
+        }
+      }
+
+      Rectangle {
+        Layout.preferredWidth: 10
+        Layout.preferredHeight: parent.height
+        color: "#ffffff"
+        radius: 10
+      }
+
+      // Phần hiển thị ngày tháng
+      ColumnLayout {
+        spacing: 5
+        CustomText {
+          name: root.currentDay
+          isBold: true
+          textColor: "#ffffff"
+          font.pixelSize: 124
+        }
+        CustomText {
+          name: root.currentDate
+          isBold: true
+          textColor: "#ffffff"
+          font.pixelSize: 64
+        }
+      }
     }
+  }
+
+  Component.onCompleted: {
+    root.updateDateTime(); // Khởi tạo thời gian ban đầu
+  }
 }

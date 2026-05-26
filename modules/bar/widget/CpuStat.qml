@@ -1,16 +1,15 @@
 import QtQuick
 import QtQuick.Layouts
 import qs.components
-import qs.services
+import qs.services.cpu
 import qs.commons
+import qs.services
 
 RowLayout {
   id: root
 
   property int style: Settings.bar.cpu.style
   property var theme: ThemeService.theme
-  property string percent: "0%"
-
   property bool textBefore: style <= 4
   property bool compact: [3,4,7,8].includes(style)
 
@@ -21,7 +20,7 @@ RowLayout {
     spacing: 0
 
     CustomText {
-      name: percent
+      name: CpuSimpleService.cpuPercent + "%"
       isBold: !compact
       size: compact ? "normal" : "small"
     }
@@ -50,7 +49,7 @@ RowLayout {
     spacing: 0
 
     CustomText {
-      name: percent
+      name: CpuSimpleService.cpuPercent + "%"
       isBold: !compact
       size: compact ? "normal" : "small"
     }

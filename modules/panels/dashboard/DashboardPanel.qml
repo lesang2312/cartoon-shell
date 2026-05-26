@@ -5,6 +5,7 @@ import Quickshell.Wayland
 import Quickshell.Io
 import "." as Com
 import qs.services
+import qs.services.cpu
 
 PanelWindow {
   id: root
@@ -26,11 +27,6 @@ PanelWindow {
       duration: 1000
       easing.type: Easing.Linear
     }
-  }
-
-  CpuService {
-    id: cpuService
-    enableCpuHistory: true
   }
 
   DiskService{
@@ -67,7 +63,7 @@ PanelWindow {
           Layout.fillWidth: true
           nameIcon: "memory"
           iconColor: theme.primary.background
-          value: cpuService.cpuPercent / 100
+          value: CpuSimpleService.cpuPercent / 100
           revealThreshold: 0.25
           animationProgress: root.animationProgress
         }

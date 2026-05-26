@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import QtQuick.Controls
 import Quickshell.Wayland
 import Quickshell.Io
 import "./" as Components
@@ -10,7 +11,7 @@ import qs.commons
 PanelWindow {
   id: detailPanel
 
-  implicitWidth: 1030
+  implicitWidth: 1000
   implicitHeight: 850
 
   anchors {
@@ -35,13 +36,6 @@ PanelWindow {
 
   property var theme: ThemeService.theme
 
-  // Process để lấy CPU usage tổng
-  CpuService {
-    id: cpuService
-    enableCpuHistory: true
-    enableProcessList: true
-  }
-
   Rectangle {
     anchors.fill: parent
     color: theme.primary.background
@@ -57,21 +51,42 @@ PanelWindow {
       // Header với nút đóng
       Components.CpuDetailHeader {
         Layout.fillWidth: true
-        Layout.preferredHeight: 70
+        Layout.preferredHeight: parent.height * 0.1
       }
-
       // Thông tin CPU
       Components.CpuInfoSection {
         Layout.fillWidth: true
-        Layout.preferredHeight: 120
+        Layout.preferredHeight: parent.height * 0.2
       }
 
-      // BIỂU ĐỒ CPU USAGE
-      Components.CpuUsageChart {
-        Layout.fillWidth: true
+      // chia đôi ra
+      Item {
         Layout.fillHeight: true
-        cpuHistory: cpuService.cpuHistory
+        Layout.fillWidth: true
+        RowLayout {
+          anchors.fill: parent
+
+          ColumnLayout {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            // BIỂU ĐỒ CPU USAGE
+            Components.CpuUsageChart {
+              Layout.fillWidth: true
+              Layout.fillHeight: true
+            }
+          }
+
+          // List app CPU
+          Components.CpuTaskManager {
+            Layout.preferredWidth: parent.width * 0.5
+            Layout.fillHeight: true
+
+          }
+        }
+
       }
+
     }
   }
 }

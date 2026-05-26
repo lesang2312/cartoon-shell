@@ -20,11 +20,6 @@ Rectangle {
   property var theme: ThemeService.theme
   property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
 
-  CpuService {
-    id: cpuService
-    enableCpuHistory: false
-  }
-
   RamService {
     id: ramService
     useSimpleCalculation: true
@@ -52,7 +47,6 @@ Rectangle {
 
         Com.CpuStat {
           anchors.centerIn: parent
-          percent: cpuService.cpuPercent + "%"
         }
       }
       // Memory Container
