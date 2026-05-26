@@ -5,9 +5,6 @@ import qs.components
 Item {
   id: header
 
-  property var theme: ThemeService.theme
-  property var lang: LanguageService.translations
-
   CustomText{
     name: lang?.calendar?.title || "Lịch"
     anchors.centerIn: parent

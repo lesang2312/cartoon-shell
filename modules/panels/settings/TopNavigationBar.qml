@@ -6,7 +6,6 @@ import qs.commons
 
 Rectangle {
   id: root
-  property var theme: ThemeService.theme
   property real animationProgress: 0
   property int indexCategoegory: 0
   signal currentTab(int index);

@@ -9,7 +9,6 @@ import "." as Com
 PanelWindow {
   id: root
 
-  property var theme: ThemeService.theme
   property string selectedFlag: Settings.appearance.countryFlag
   property real animationProgress: 0
 

@@ -7,8 +7,6 @@ import qs.components
 
 Item {
   id: root
-  property var theme: ThemeService.theme
-  property var lang: LanguageService.translations
   property real animationProgress: 0
 
   SequentialAnimation on animationProgress {

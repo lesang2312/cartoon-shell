@@ -7,8 +7,6 @@ import qs.commons
 
 ColumnLayout {
   id: networkItem
-  property var theme: ThemeService.theme
-  property var lang: LanguageService.translations
   property var wifiManager
   property var networkData
 
@@ -80,8 +78,6 @@ ColumnLayout {
     Layout.preferredHeight: 70
     visible: networkItem.networkData.ssid === wifiManager.openSsid
     networkData: networkItem.networkData
-    theme: networkItem.theme
-    lang: networkItem.lang
     wifiManager: networkItem.wifiManager
     width: parent.width
   }

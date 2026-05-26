@@ -8,9 +8,6 @@ import "./panel/" as Com
 
 Item {
   id: root
-  property var theme: ThemeService.theme
-  property var lang: LanguageService.translations
-
   ScrollView {
     id: scrollView
     anchors.fill: parent

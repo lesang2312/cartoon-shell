@@ -10,8 +10,6 @@ import qs.commons
 Item {
   id: ramTaskManager
 
-  property var theme: ThemeService.theme
-  property var lang: LanguageService.translations
   property real animationProgress: 0
   property int updateInterval: 3000
 

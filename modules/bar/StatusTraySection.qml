@@ -27,7 +27,6 @@ Rectangle {
   property bool bluetoothVisible: true
   property real currentVolume: Pipewire.defaultAudioSink?.audio.volume ?? 0
   property bool isMuted: Pipewire.defaultAudioSink?.audio.mute ?? false
-  property var theme: ThemeService.theme
   property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
 
   NetworkService {

@@ -10,7 +10,6 @@ import "." as Com
 PanelWindow {
   id: wtDetailPanel
 
-  property var theme: ThemeService.theme
   property real animationProgress: 0
   SequentialAnimation on animationProgress {
     id: staggerAnimation

@@ -8,8 +8,6 @@ ColumnLayout {
   id: root
   spacing: 20
   Layout.fillWidth: true
-  property var theme: ThemeService.theme
-  property var lang: LanguageService.translations
   function changeStyle(nameSystem,style) {
     switch(nameSystem) {
       case "cpu": {

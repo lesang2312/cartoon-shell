@@ -8,8 +8,6 @@ import qs.commons
 ColumnLayout {
   spacing: 20
   Layout.fillWidth: true
-  property var theme: ThemeService.theme
-  property var lang: LanguageService.translations
   CustomText {
     name: root.lang?.appearance?.panel_position || "Panel Position"
     isBold: true

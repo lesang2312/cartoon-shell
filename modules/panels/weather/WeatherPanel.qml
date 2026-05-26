@@ -10,9 +10,6 @@ import "." as Com
 PanelWindow {
   id: weatherPanel
 
-  property var theme: ThemeService.theme
-  property var lang: LanguageService.translations
-
   property real animationProgress: 0
   SequentialAnimation on animationProgress {
     running: true
@@ -248,7 +245,6 @@ PanelWindow {
             // 3-day forecast
             Com.WeatherForecastList {
               Layout.preferredHeight: parent.height / 2
-              theme: weatherPanel.theme
               animationProgress: weatherPanel.animationProgress
             }
           }

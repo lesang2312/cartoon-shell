@@ -9,7 +9,6 @@ import qs.components
 Rectangle {
   id: root
 
-  property var theme : ThemeService.theme
   property real animationProgress: 0
 
   Loader {

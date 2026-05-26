@@ -43,8 +43,6 @@ PanelWindow {
   exclusiveZone: 0
   color: "transparent"
 
-  property var theme: ThemeService.theme
-  property var lang: LanguageService.translations
   property real animationProgress: 0
   SequentialAnimation on animationProgress {
     running: true

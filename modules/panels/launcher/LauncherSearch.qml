@@ -17,7 +17,6 @@ Rectangle {
   signal searchChanged(string text) // phát ra khi cần tìm (sau debounce)
   signal accepted(string text)      // khi nhấn Enter
 
-  property var theme: ThemeService.theme
   property alias searchField: searchField  // Expose searchField để có thể focus từ bên ngoài
 
   RowLayout {

@@ -18,7 +18,6 @@ Rectangle {
   property var apps: []
   property var allApps: []
   property string lastQuery: ""
-  property var theme: ThemeService.theme
   property int currentIndex: 0
 
   signal appLaunched

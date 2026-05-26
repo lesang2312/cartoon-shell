@@ -8,8 +8,6 @@ import qs.commons
 
 Rectangle {
   id: rootSettings
-  property var theme: ThemeService.theme
-  property var lang: LanguageService.translations
   property var launcherPanel: null  // Reference to LauncherPanel
   property int currentTab: 0
   signal backRequested
@@ -25,7 +23,6 @@ Rectangle {
 
     // Sidebar
     Com.Sidebar {
-      theme: rootSettings.theme
       onCategoryChanged: function (index) {
         rootSettings.currentTab = 0;
         settingsStack.currentIndex = index;

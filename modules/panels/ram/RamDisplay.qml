@@ -11,8 +11,6 @@ import qs.commons
 
 Item {
   id: ramDisplay
-  property var lang: LanguageService.translations
-  property var theme: ThemeService.theme
   property real animationProgress: 0
 
   RamService {

@@ -10,7 +10,6 @@ Rectangle {
 
   Layout.preferredWidth: 200
   Layout.preferredHeight: 220
-  property var theme: ThemeService.theme
 
   color: theme.primary.background
   border.color: theme.button.border

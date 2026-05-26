@@ -18,9 +18,6 @@ PanelWindow {
   property int position: 0
   property int duration: 0
 
-  property var theme : ThemeService.theme
-  property var lang: LanguageService.translations
-
   property real animationProgress: 0
   SequentialAnimation on animationProgress {
     running: true

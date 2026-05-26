@@ -3,34 +3,32 @@ import QtQuick.Controls.Fusion
 import qs.services
 
 Rectangle {
-    id: root
-    property string icon: ""
-    property int size: 35
-    property color backgroundColor: "transparent"
-    property var onButtonClicked: function() {}
-    property var theme : ThemeService.theme
+  id: root
+  property string icon: ""
+  property int size: 35
+  property color backgroundColor: "transparent"
+  property var onButtonClicked: function() {}
 
+  width: size
+  height: size
+  radius: size / 2
+  color: backgroundColor
 
-    width: size
-    height: size
-    radius: size / 2
-    color: backgroundColor
+  border.color: theme.normal.black
+  border.width: 3
 
-    border.color: theme.normal.black
-    border.width: 3
+  Label {
+    anchors.centerIn: parent
+    text: root.icon
+    color: root.backgroundColor === "transparent" ? "#8899bb" : "white"
+    font.pixelSize: root.size * 0.5
+    font.family: "ComicShannsMono Nerd Font"
+  }
 
-    Label {
-        anchors.centerIn: parent
-        text: root.icon
-        color: root.backgroundColor === "transparent" ? "#8899bb" : "white"
-        font.pixelSize: root.size * 0.5
-        font.family: "ComicShannsMono Nerd Font"
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        hoverEnabled: true
-        cursorShape: Qt.PointingHandCursor
-        onClicked: root.onButtonClicked()
-    }
+  MouseArea {
+    anchors.fill: parent
+    hoverEnabled: true
+    cursorShape: Qt.PointingHandCursor
+    onClicked: root.onButtonClicked()
+  }
 }

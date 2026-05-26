@@ -7,7 +7,6 @@ Rectangle {
   id: root
   property string iconSource: ""
   property color bgColor: "white"
-  property var theme: ThemeService.theme
   property real animationProgress: 0
   property real revealThreshold: 0.6
 

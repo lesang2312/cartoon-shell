@@ -8,7 +8,6 @@ import qs.components
 ColumnLayout {
   id: root
   property var wifiManager
-  property var theme: ThemeService.theme
   property real animationProgress: 0
   Rectangle {
     Layout.preferredHeight: 20

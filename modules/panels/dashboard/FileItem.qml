@@ -8,7 +8,6 @@ Rectangle {
   id: root
   property string icon: ""
   property string label: ""
-  property var theme: ThemeService.theme
   property real revealThreshold: 0.6
   property real animationProgress: 0
 

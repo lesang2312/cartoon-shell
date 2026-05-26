@@ -15,8 +15,6 @@ PanelWindow {
     simplePackage: false
   }
 
-  property var theme: ThemeService.theme
-
   property var diskList: null
   property var infoPackage: null
   property bool loaded: false

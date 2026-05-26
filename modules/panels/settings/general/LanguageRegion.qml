@@ -7,9 +7,6 @@ import qs.components
 
 Item {
   id: root
-  property var theme: ThemeService.theme
-  property var lang: LanguageService.translations
-
   function setLanguageEditor(name) {
     Settings.general.lang = name;
   }

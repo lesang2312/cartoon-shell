@@ -10,7 +10,6 @@ import "." as Com
 ColumnLayout {
   Layout.preferredWidth: 90
   spacing: 15
-  property var theme: ThemeService.theme
   property real animationProgress: 0
   RowLayout {
     spacing: 15

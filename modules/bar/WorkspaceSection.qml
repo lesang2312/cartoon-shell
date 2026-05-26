@@ -13,7 +13,6 @@ Rectangle {
   border.width: Settings.appearance.enableBorder ? 3 : 0
   radius: Settings.appearance.radius2
 
-  property var theme: ThemeService.theme
   property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
   color: theme.primary.background
 

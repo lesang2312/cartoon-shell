@@ -27,9 +27,6 @@ Rectangle {
   radius: Settings.appearance.radius2
   border.width: Settings.appearance.enableBorder ? 2 : 0
 
-  property var theme: ThemeService.theme
-  property var lang: LanguageService.translations
-
   signal confirmRequested(string action, string actionLabel)
 
   function showConfirmDialog(action, actionLabel) {

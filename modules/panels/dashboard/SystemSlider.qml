@@ -12,8 +12,6 @@ RowLayout {
   property real animationProgress: 0
   property real revealThreshold: 0.6
 
-  property var theme : ThemeService.theme
-
   property real value: 0.5
 
   Layout.fillWidth: true

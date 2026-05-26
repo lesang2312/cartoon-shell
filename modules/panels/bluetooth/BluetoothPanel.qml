@@ -47,15 +47,13 @@ PanelWindow {
     top: Settings.bar.position === "top" ? 10 : 0
     bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? 10 : 0
     left: Settings.bar.position === "left" ? 10 : 0
-    right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? (sizes.anchorMargin || 10) : 0
+    right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? 10 : 0
   }
   color: "transparent"
   focusable: true
   aboveWindows: true
   objectName: "BluetoothPanel"
 
-  property var theme: ThemeService.theme
-  property var lang: LanguageService.translations
   property var adapter: Bluetooth.defaultAdapter
   property int connectedCount: {
     let count = 0;
@@ -104,7 +102,6 @@ PanelWindow {
       // Header with title and scan button
       Components.BluetoothHeader {
         adapter: root.adapter
-        lang: root.lang
         isDiscovering: adapter?.discovering || false
 
         onScanClicked: {
@@ -166,14 +163,12 @@ PanelWindow {
       // Status card with toggle
       Components.BluetoothStatusCard {
         adapter: root.adapter
-        lang: root.lang
         connectedCount: root.connectedCount
       }
 
       // Device list
       Components.BluetoothDeviceList {
         adapter: root.adapter
-        lang: root.lang
         connectedCount: root.connectedCount
 
         onPairError: function (message) {

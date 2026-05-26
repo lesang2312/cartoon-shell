@@ -9,8 +9,6 @@ import "./" as Bar
 
 Item {
   id: root
-  property var theme: ThemeService.theme
-  property var lang: LanguageService.translations
 
   property int currentTab: 0
   property real animationProgress: 0

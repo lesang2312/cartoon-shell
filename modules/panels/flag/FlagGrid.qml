@@ -10,7 +10,6 @@ ScrollView {
 
   property var flagList: []
   property string selectedFlag: ""
-  property var theme: ThemeService.theme
 
   clip: true
   ScrollBar.vertical.policy: ScrollBar.AlwaysOff

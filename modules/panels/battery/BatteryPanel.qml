@@ -11,8 +11,6 @@ Item {
   width: 320
   height: 400
 
-  property var theme: ThemeService.theme
-
   // Catppuccin Mocha color scheme
   property color batteryHighColor: theme.normal.green       // "#a6da95"
   property color batteryMediumColor: theme.normal.yellow    // "#eed49f"

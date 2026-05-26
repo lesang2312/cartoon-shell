@@ -6,9 +6,6 @@ import qs.services
 Rectangle {
   id: statusCard
   required property var adapter
-  property var theme: ThemeService.theme
-
-  property var lang: LanguageService.translations
   required property int connectedCount
 
   Layout.fillWidth: true

@@ -6,8 +6,6 @@ import "." as Com
 Item {
 
   id: root
-  property var theme: ThemeService.theme
-
   visible: WeatherService.forecastDays.length > 0
   Layout.fillWidth: true
   Layout.preferredHeight: 200

@@ -8,7 +8,6 @@ import qs.commons
 Rectangle {
   id: root
 
-  property var theme : ThemeService.theme
   property real animationProgress: 0
 
   Layout.fillWidth: true

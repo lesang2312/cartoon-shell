@@ -8,7 +8,6 @@ ColumnLayout {
   id: flagFooter
 
   property string selectedFlag: ""
-  property var theme: ThemeService.theme
   property real animationProgress: 0
 
   Rectangle {

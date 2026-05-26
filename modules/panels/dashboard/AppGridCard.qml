@@ -8,8 +8,6 @@ import qs.commons
 Rectangle {
   id: root
 
-  property var theme: ThemeService.theme
-
   Layout.preferredWidth: 220
   Layout.preferredHeight: 220
   color: theme.primary.background

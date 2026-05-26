@@ -6,59 +6,55 @@ import qs.components
 import qs.services
 
 Item {
-    id: root
-    property var theme: ThemeService.theme
+  id: root
+  ScrollView {
+    id: scrollView
+    anchors.fill: parent
+    anchors.margins: 20
+    clip: true
 
-    property var lang: LanguageService.translations
+    ScrollBar.vertical.policy: ScrollBar.AsNeeded
+    ScrollBar.horizontal.policy: ScrollBar.AsNeeded
 
-    ScrollView {
-        id: scrollView
-        anchors.fill: parent
-        anchors.margins: 20
-        clip: true
+    contentWidth: contentLayout.width
+    contentHeight: contentLayout.height
 
-        ScrollBar.vertical.policy: ScrollBar.AsNeeded
-        ScrollBar.horizontal.policy: ScrollBar.AsNeeded
+    ColumnLayout {
+      id: contentLayout
+      width: scrollView.availableWidth
+      spacing: 20
+      anchors.margins: 20
 
-        contentWidth: contentLayout.width
-        contentHeight: contentLayout.height
+      HeaderSettings {
+        name: "Clock Time"
+      }
 
-        ColumnLayout {
-            id: contentLayout
-            width: scrollView.availableWidth
-            spacing: 20
-            anchors.margins: 20
+      Rectangle {
+        Layout.fillWidth: true
+        height: 1
+        color: theme.primary.foreground
+        opacity: 0.3
+      }
 
-            HeaderSettings {
-                name: "Clock Time"
-            }
+      // Nội dung Clock ở đây
+      Text {
+        text: "Clock settings content"
+        color: theme.primary.foreground
+        Layout.alignment: Qt.AlignLeft
+      }
 
-            Rectangle {
-                Layout.fillWidth: true
-                height: 1
-                color: theme.primary.foreground
-                opacity: 0.3
-            }
+      Com.ClockPanelToggle {
+        Layout.fillWidth: true
+      }
 
-            // Nội dung Clock ở đây
-            Text {
-                text: "Clock settings content"
-                color: theme.primary.foreground
-                Layout.alignment: Qt.AlignLeft
-            }
+      Com.ClockPositionSelector {
+        Layout.fillWidth: true
+      }
 
-            Com.ClockPanelToggle {
-                Layout.fillWidth: true
-            }
-
-            Com.ClockPositionSelector {
-                Layout.fillWidth: true
-            }
-
-            Item {
-                // Spacer để đảm bảo nội dung không bị che
-                Layout.fillHeight: true
-            }
-        }
+      Item {
+        // Spacer để đảm bảo nội dung không bị che
+        Layout.fillHeight: true
+      }
     }
+  }
 }

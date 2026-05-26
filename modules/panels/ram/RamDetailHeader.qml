@@ -6,9 +6,6 @@ Item {
   id: header
   signal closeClicked
 
-  property var theme: ThemeService.theme
-
-  property var lang: LanguageService.translations
   property real animationProgress: 0
 
   CustomText{

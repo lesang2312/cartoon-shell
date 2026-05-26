@@ -6,9 +6,6 @@ import qs.components
 
 Rectangle {
   id: root
-  property var theme: ThemeService.theme
-  property var lang: LanguageService.translations
-
   property int currentIndex: 0
   property bool anyItemHovered: false
 

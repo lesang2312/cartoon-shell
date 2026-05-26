@@ -7,8 +7,6 @@ import qs.services
 
 ColumnLayout {
   id: root
-  property var theme: ThemeService.theme
-
   width: parent.width
   spacing: 15
   property real animationProgress: 0

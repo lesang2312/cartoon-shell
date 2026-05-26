@@ -13,7 +13,6 @@ Rectangle {
   property string linkSocial: ""
   property color bgColor: "white"
   property real hoverScale: 1.2 // Tỷ lệ phóng to khi hover
-  property var theme : ThemeService.theme
   property real revealThreshold: 0
   property real animationProgress: 0
 

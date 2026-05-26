@@ -5,8 +5,6 @@ import qs.services.cpu
 import qs.components
 
 Item {
-  property var theme: ThemeService.theme
-
   property var cpuHistory: CpuSimpleService.cpuHistory
 
   RowLayout {

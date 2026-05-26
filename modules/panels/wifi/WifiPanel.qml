@@ -56,9 +56,6 @@ PanelWindow {
     id: wifiManager
   }
 
-  property var theme: ThemeService.theme
-  property var lang: LanguageService.translations
-
   Rectangle {
     anchors.fill: parent
     color: theme.primary.background
@@ -94,8 +91,6 @@ PanelWindow {
       Com.WifiEmptyState {
         Layout.fillWidth: true
         Layout.fillHeight: true
-        theme: root.theme
-        lang: root.lang
         visible: !wifiManager.wifiEnabled
       }
     }

@@ -12,7 +12,6 @@ PanelWindow {
   implicitWidth: 1300
   implicitHeight: 600
 
-  property var theme: ThemeService.theme
   property real animationProgress: 0
   PackageService{
     id: packageService

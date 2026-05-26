@@ -14,8 +14,6 @@ Item {
   CpuAppService {
     id: cpuAppService
   }
-  property var theme: ThemeService.theme
-  property var lang: LanguageService.translations
   property real animationProgress: 2
   property var processList: cpuAppService.listAppCpu
   function getPercentageColor(percent) {

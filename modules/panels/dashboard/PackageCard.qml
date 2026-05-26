@@ -9,7 +9,6 @@ Rectangle {
   id: root
   property int count: 230
   property int index: 0
-  property var theme: ThemeService.theme
 
   Layout.fillWidth: true
   Layout.fillHeight: true

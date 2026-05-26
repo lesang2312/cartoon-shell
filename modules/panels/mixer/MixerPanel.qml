@@ -51,11 +51,9 @@ PanelWindow {
     top: Settings.bar.position === "top" ? 10 : 0
     bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? 10 : 0
     left: Settings.bar.position === "left" ? 10 : 0
-    right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? (sizes.anchorMargin || 10) : 0
+    right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? 10 : 0
   }
   color: "transparent"
-
-  property var theme: ThemeService.theme
 
   Rectangle {
     anchors.fill: parent

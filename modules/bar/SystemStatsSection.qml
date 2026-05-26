@@ -17,7 +17,6 @@ Rectangle {
   clip: true
 
   property string memoryUsage: "0%"
-  property var theme: ThemeService.theme
   property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
 
   RamService {

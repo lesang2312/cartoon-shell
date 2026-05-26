@@ -34,8 +34,6 @@ PanelWindow {
 
   signal closeRequested
 
-  property var theme: ThemeService.theme
-
   Rectangle {
     anchors.fill: parent
     color: theme.primary.background

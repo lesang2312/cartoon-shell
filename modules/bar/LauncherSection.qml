@@ -15,7 +15,6 @@ Rectangle {
   radius: Settings.appearance.radius2
   border.color: theme.button.border
   border.width: Settings.appearance.enableBorder ? 3 : 0
-  property var theme: ThemeService.theme
   property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
   RowLayout {
     anchors.centerIn: parent

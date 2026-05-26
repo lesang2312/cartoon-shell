@@ -23,6 +23,8 @@ ShellRoot {
   LoaderService {
     id: loaderService
   }
+  property var theme: ThemeService.theme
+  property var lang: LanguageService.translations
 
   function showConfirmDialog(action, actionLabel) {
     confirmDialog.show(action, actionLabel);

@@ -8,7 +8,6 @@ Rectangle {
   id: root
   property string icon: ""
   property color iconColor: "white"
-  property var theme : ThemeService.theme
 
   color: theme.primary.background
   radius: Settings.appearance.radius1

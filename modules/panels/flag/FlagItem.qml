@@ -12,8 +12,6 @@ Rectangle {
   property bool isSelected: false
   property real animationProgress: 0
 
-  property var theme: ThemeService.theme
-
   width: 105
   height: 70
   color: isSelected ? theme.button.background_select : theme.primary.dim_background

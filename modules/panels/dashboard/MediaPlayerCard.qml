@@ -11,8 +11,6 @@ import qs.commons
 
 Rectangle {
   id: root
-  property var theme : ThemeService.theme
-
   property var mprisPlayer: Mpris.players.values.length > 0 ? Mpris.players.values[0] : null
   property string currentSong: "No song playing"
   property string currentArtist: "Unknown Artist"

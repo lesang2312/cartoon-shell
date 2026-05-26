@@ -14,8 +14,6 @@ PanelWindow {
   property string currentMin: ""
   property string currentDay: ""
   property string currentDate: ""
-  property var lang: LanguageService.translations
-
   anchors {
     top: true
     bottom: true
