@@ -44,7 +44,6 @@ ScrollView {
         flagName: modelData.name
         displayName: modelData.displayName
         isSelected: flagGridView.selectedFlag === modelData.name
-        theme: flagGridView.theme
 
         onClicked: {
           Settings.appearance.countryFlag = flagName
