@@ -189,7 +189,7 @@ Rectangle {
 
             Text {
               text: DateTimeService.currentHour
-              color: root.theme.primary.foreground
+              color: theme.primary.foreground
               font {
                 pixelSize: 20
                 bold: true
@@ -198,7 +198,7 @@ Rectangle {
             }
             Text {
               text: DateTimeService.currentMinus
-              color: root.theme.primary.foreground
+              color: theme.primary.foreground
               font {
                 pixelSize: 20
                 bold: true
@@ -255,7 +255,7 @@ Rectangle {
               spacing: 1
               Text {
                 text: WeatherService.temperature || "Đang tải..."
-                color: root.theme.primary.foreground
+                color: theme.primary.foreground
                 Layout.alignment: Qt.AlignVCenter
                 font {
                   pixelSize: 14
