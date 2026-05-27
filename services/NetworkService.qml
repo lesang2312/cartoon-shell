@@ -87,8 +87,8 @@ Item {
       networkService.wifi_icon_text_2 = "network_wifi_3_bar"
     } else {
       networkService.wifi_icon = "wifi/wifi.png";
-      networkService.wifi_icon_text_1 = "wifi_3_bar";
-      networkService.wifi_icon_text_2 = "signal_wifi_4_ar "
+      networkService.wifi_icon_text_1 = "android_wifi_3_bar";
+      networkService.wifi_icon_text_2 = "signal_wifi_4_bar"
     }
   }
 

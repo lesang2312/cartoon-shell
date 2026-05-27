@@ -14,15 +14,15 @@ Rectangle {
   width: 60
   height: 60
   radius: 12
-  color: isSelected ? theme.normal.blue : (mouseArea.containsMouse ? theme.button.background_select : theme.button.background)
-  border.color: isSelected ? theme.normal.blue : (mouseArea.containsPress ? theme.button.border_select : theme.button.border)
+  color: isSelected ? theme.button.text : (mouseArea.containsMouse ? theme.button.background_select : theme.button.background)
+  border.color: isSelected ? theme.button.text : (mouseArea.containsPress ? theme.button.border_select : theme.button.border)
   border.width: 3
 
   Rectangle {
     width: 25
     height: 15
     radius: 6
-    color: isSelected ? theme.primary.dim_foreground : theme.normal.blue
+    color: isSelected ? theme.primary.dim_background : theme.button.text
 
     anchors.top: anchorConfig.top ? parent.top : undefined
     anchors.bottom: anchorConfig.bottom ? parent.bottom : undefined

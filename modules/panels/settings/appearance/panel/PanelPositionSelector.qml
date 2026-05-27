@@ -25,7 +25,7 @@ ColumnLayout {
       Layout.preferredHeight: 80
       radius: 10
       color: theme.primary.dim_background
-      border.color: Settings.bar.position === "top" ? theme.normal.blue : "transparent"
+      border.color: Settings.bar.position === "top" ? theme.button.text : "transparent"
       border.width: 2
 
       ColumnLayout {
@@ -37,12 +37,12 @@ ColumnLayout {
           width: 60
           height: 10
           radius: 3
-          color: Settings.bar.position === "top" ? theme.normal.blue : theme.primary.dim_foreground
+          color: Settings.bar.position === "top" ? theme.button.text : theme.primary.dim_foreground
         }
 
         Text {
           text: root.lang?.appearance?.top || "Top"
-          color: Settings.bar.position === "top" ? theme.normal.blue : theme.primary.foreground
+          color: Settings.bar.position === "top" ? theme.button.text : theme.primary.foreground
           font {
             family: "ComicShannsMono Nerd Font"
             pixelSize: 14
@@ -75,7 +75,7 @@ ColumnLayout {
       Layout.preferredHeight: 80
       radius: 10
       color: theme.primary.dim_background
-      border.color: Settings.bar.position === "bottom" ? theme.normal.blue : "transparent"
+      border.color: Settings.bar.position === "bottom" ? theme.button.text : "transparent"
       border.width: 2
 
       ColumnLayout {
@@ -87,12 +87,12 @@ ColumnLayout {
           width: 60
           height: 10
           radius: 3
-          color: Settings.bar.position === "bottom" ? theme.normal.blue : theme.primary.dim_foreground
+          color: Settings.bar.position === "bottom" ? theme.button.text : theme.primary.dim_foreground
         }
 
         Text {
           text: root.lang?.appearance?.bottom || "Bottom"
-          color: Settings.bar.position === "bottom" ? theme.normal.blue : theme.primary.foreground
+          color: Settings.bar.position === "bottom" ? theme.button.text : theme.primary.foreground
           font {
             family: "ComicShannsMono Nerd Font"
             pixelSize: 14
@@ -125,7 +125,7 @@ ColumnLayout {
       Layout.preferredHeight: 80
       radius: 10
       color: theme.primary.dim_background
-      border.color: Settings.bar.position === "left" ? theme.normal.blue : "transparent"
+      border.color: Settings.bar.position === "left" ? theme.button.text : "transparent"
       border.width: 2
 
       RowLayout {
@@ -137,12 +137,12 @@ ColumnLayout {
           width: 10
           height: 40
           radius: 3
-          color: Settings.bar.position === "left" ? theme.normal.blue : theme.primary.dim_foreground
+          color: Settings.bar.position === "left" ? theme.button.text : theme.primary.dim_foreground
         }
 
         Text {
           text: root.lang?.appearance?.left || "Left"
-          color: Settings.bar.position === "left" ? theme.normal.blue : theme.primary.foreground
+          color: Settings.bar.position === "left" ? theme.button.text : theme.primary.foreground
           font {
             family: "ComicShannsMono Nerd Font"
             pixelSize: 14
@@ -175,7 +175,7 @@ ColumnLayout {
       Layout.preferredHeight: 80
       radius: 10
       color: theme.primary.dim_background
-      border.color: Settings.bar.position === "right" ? theme.normal.blue : "transparent"
+      border.color: Settings.bar.position === "right" ? theme.button.text : "transparent"
       border.width: 2
 
       RowLayout {
@@ -184,7 +184,7 @@ ColumnLayout {
 
         Text {
           text: root.lang?.appearance?.right || "Right"
-          color: Settings.bar.position === "right" ? theme.normal.blue : theme.primary.foreground
+          color: Settings.bar.position === "right" ? theme.button.text : theme.primary.foreground
           font {
             family: "ComicShannsMono Nerd Font"
             pixelSize: 14
@@ -197,7 +197,7 @@ ColumnLayout {
           width: 10
           height: 40
           radius: 3
-          color: Settings.bar.position === "right" ? theme.normal.blue : theme.primary.dim_foreground
+          color: Settings.bar.position === "right" ? theme.button.text : theme.primary.dim_foreground
         }
       }
 

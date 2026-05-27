@@ -3,75 +3,135 @@ import QtQuick.Layouts
 import qs.services
 import qs.components
 import qs.commons
+import "./" as Com
 
 ColumnLayout {
   id: root
-  spacing: 20
+  spacing: 32
   Layout.fillWidth: true
-  function changeStyle(nameSystem,style) {
+
+  function changeStyle(nameSystem, style) {
     switch(nameSystem) {
       case "cpu": {
         Settings.bar.cpu = {
           "style": style,
-          "active" : Settings.bar.cpu.active
+          "active": Settings.bar.cpu.active
         }
         return;
       }
       case "ram": {
         Settings.bar.ram = {
           "style": style,
-          "active" : Settings.bar.ram.active
+          "active": Settings.bar.ram.active
+        }
+        return;
+      }
+      case "bluetooth": {
+        Settings.bar.bluetooth = {
+          "style": style,
+          "active": Settings.bar.bluetooth.active
+        }
+        return;
+      }
+      case "wifi": {
+        Settings.bar.wifi = {
+          "style": style,
+          "active": Settings.bar.wifi.active
+        }
+        return;
+      }
+      case "volume": {
+        Settings.bar.volume = {
+          "style": style,
+          "active": Settings.bar.volume.active
         }
         return;
       }
     }
   }
+
   CustomText {
     name: "System Stats"
     isBold: true
   }
-  RowLayout {
-    CustomText {
-      name: "CPU"
+
+  Com.StyleSelectorRow {
+    title: "CPU"
+    systemName: "cpu"
+    styleModel: 8
+    currentStyle: Settings.bar.cpu.style
+    onStyleChanged: function(style) {
+      root.changeStyle("cpu", style)
     }
-    Item{Layout.fillWidth: true}
-    GridLayout {
-      columns: 4
-      rowSpacing: 12
-      columnSpacing: 12
+  }
 
-      Repeater {
-        model: 8
+  Rectangle {
+    Layout.preferredWidth: parent.width * 0.8
+    Layout.preferredHeight: 2
+    radius: 8
+    color: theme.primary.dim_foreground
+    Layout.alignment: Qt.AlignHCenter
+  }
 
-        delegate: ButtonText {
-          required property int index
+  Com.StyleSelectorRow {
+    title: "Ram"
+    systemName: "ram"
+    styleModel: 8
+    currentStyle: Settings.bar.ram.style
+    onStyleChanged: function(style) {
+      root.changeStyle("ram", style)
+    }
+  }
+  Rectangle {
+    Layout.preferredWidth: parent.width * 0.8
+    Layout.preferredHeight: 2
+    radius: 8
+    color: theme.primary.dim_foreground
+    Layout.alignment: Qt.AlignHCenter
+  }
 
-          property int styleIndex: index + 1
-          property bool selected: Settings.bar.cpu.style === styleIndex
+  Com.StyleSelectorRow {
+    title: "Bluetooth"
+    systemName: "bluetooth"
+    styleModel: 2
+    currentStyle: Settings.bar.bluetooth.style
+    onStyleChanged: function(style) {
+      root.changeStyle("bluetooth", style)
+    }
+  }
+  Rectangle {
+    Layout.preferredWidth: parent.width * 0.8
+    Layout.preferredHeight: 2
+    radius: 8
+    color: theme.primary.dim_foreground
+    Layout.alignment: Qt.AlignHCenter
+  }
 
-          Layout.preferredHeight: 40
-          Layout.preferredWidth: 80
+  Com.StyleSelectorRow {
+    title: "Wifi"
+    systemName: "wifi"
+    styleModel: 3
+    currentStyle: Settings.bar.wifi.style
+    onStyleChanged: function(style) {
+      root.changeStyle("wifi", style)
+    }
+  }
 
-          name: `Style ${styleIndex}`
-          size: "xs"
+  Rectangle {
+    Layout.preferredWidth: parent.width * 0.8
+    Layout.preferredHeight: 2
+    radius: 8
+    color: theme.primary.dim_foreground
+    Layout.alignment: Qt.AlignHCenter
+  }
 
-          color: selected
-          ? theme.button.background_select
-          : theme.button.background
-
-          textColor: selected
-          ? theme.button.text
-          : theme.primary.dim_foreground
-
-          border.color: selected
-          ? theme.button.border_select
-          : theme.primary.foreground
-
-          onClicked: {
-            root.changeStyle("cpu", styleIndex)
-          }
-        }
-      }
+  Com.StyleSelectorRow {
+    title: "Volume"
+    systemName: "volume"
+    styleModel: 2
+    currentStyle: Settings.bar.volume.style
+    onStyleChanged: function(style) {
+      root.changeStyle("volume", style)
     }
   }
 }

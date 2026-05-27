@@ -8,14 +8,14 @@ import Quickshell.Io
 Singleton {
   id: root
 
-  property real cpuPercent: 0
+  property real ramPercent: 0
 
-  property var cpuHistory: []
+  property var ramHistory: []
 
   property int maxHistoryLength: 50
 
   Process {
-    id: cpuProcess
+    id: ramProcess
 
     command: [
     "sh",
@@ -32,9 +32,9 @@ Singleton {
         if (isNaN(value))
         return;
 
-        root.cpuPercent = value;
+        root.ramPercent = value;
 
-        const history = root.cpuHistory.slice();
+        const history = root.ramHistory.slice();
 
         history.push({
             usage: value
@@ -43,7 +43,7 @@ Singleton {
         if (history.length > root.maxHistoryLength)
         history.shift();
 
-        root.cpuHistory = history;
+        root.ramHistory = history;
       }
     }
   }
@@ -55,8 +55,8 @@ Singleton {
     triggeredOnStart: true
 
     onTriggered: {
-      if (!cpuProcess.running)
-      cpuProcess.running = true;
+      if (!ramProcess.running)
+      ramProcess.running = true;
     }
   }
 

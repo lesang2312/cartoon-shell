@@ -8,6 +8,7 @@ import Quickshell.Services.SystemTray
 import qs.services
 import qs.commons
 import qs.components
+import "./widget/" as Com
 
 Rectangle {
   id: root
@@ -28,10 +29,6 @@ Rectangle {
   property real currentVolume: Pipewire.defaultAudioSink?.audio.volume ?? 0
   property bool isMuted: Pipewire.defaultAudioSink?.audio.mute ?? false
   property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
-
-  NetworkService {
-    id: networkService
-  }
 
   PwObjectTracker {
     objects: [Pipewire.defaultAudioSink]
@@ -196,50 +193,13 @@ Rectangle {
       }
 
       // Bluetooth
-      Rectangle {
-        id: bluetoothContainer
-        Layout.preferredWidth: bluetoothContent.width
+      Com.StatContainer {
+        Layout.fillWidth: true
         Layout.fillHeight: true
-        color: "transparent"
-        radius: 6
-        transformOrigin: Item.Center
+        panelName: "bluetooth"
 
-        RowLayout {
-          id: bluetoothContent
+        Com.BluetoothStat {
           anchors.centerIn: parent
-          spacing: 8
-
-          IconImage {
-            visible: Settings.bar.bluetooth.style === 1
-            path: "settings/bluetooth.png"
-            size: "large"
-          }
-          IconText {
-            visible: Settings.bar.bluetooth.style === 2
-            name: "bluetooth"
-            textColor: theme.button.text
-          }
-
-        }
-
-        MouseArea {
-          anchors.fill: parent
-          hoverEnabled: true
-          cursorShape: Qt.PointingHandCursor
-          preventStealing: true
-
-          onEntered: bluetoothContainer.scale = 1.1
-          onExited: bluetoothContainer.scale = 1.0
-          onPressed: bluetoothContainer.scale = 0.95
-          onReleased: bluetoothContainer.scale = containsMouse ? 1.1 : 1.0
-          onClicked: VisibleService.togglePanel("bluetooth")
-        }
-
-        Behavior on scale {
-          NumberAnimation {
-            duration: 100
-            easing.type: Easing.OutCubic
-          }
         }
       }
 
@@ -247,120 +207,28 @@ Rectangle {
         Layout.fillWidth: true
       }
 
-      // Network Status
-      Rectangle {
-        id: networkContainer
-        Layout.preferredWidth: networkContent.width
+      Com.StatContainer {
+        Layout.fillWidth: true
         Layout.fillHeight: true
-        color: "transparent"
-        radius: 6
-        transformOrigin: Item.Center
+        panelName: "wifi"
 
-        RowLayout {
-          id: networkContent
+        Com.WifiStat {
           anchors.centerIn: parent
-          spacing: 8
-
-          IconImage {
-            visible: Settings.bar.wifi.style === 1
-            path: networkService.wifi_icon
-            size: "large"
-          }
-          IconText{
-            visible: Settings.bar.wifi.style === 2
-            name: networkService.wifi_icon_text_1
-            textColor: theme.button.text
-          }
-          IconText{
-            visible: Settings.bar.wifi.style === 3
-            name: networkService.wifi_icon_text_2
-            textColor: theme.button.text
-          }
-
-        }
-
-        MouseArea {
-          anchors.fill: parent
-          hoverEnabled: true
-          cursorShape: Qt.PointingHandCursor
-          preventStealing: true
-
-          onEntered: networkContainer.scale = 1.1
-          onExited: networkContainer.scale = 1.0
-          onPressed: networkContainer.scale = 0.95
-          onReleased: networkContainer.scale = containsMouse ? 1.1 : 1.0
-          onClicked: VisibleService.togglePanel("wifi")
-        }
-
-        Behavior on scale {
-          NumberAnimation {
-            duration: 100
-            easing.type: Easing.OutCubic
-          }
         }
       }
-
       Item {
         Layout.fillWidth: true
       }
 
       // Volume
-      Rectangle {
-        id: volumeContainer
-        Layout.preferredWidth: volumeContent.width
+
+      Com.StatContainer {
+        Layout.fillWidth: true
         Layout.fillHeight: true
-        color: "transparent"
-        radius: 6
-        transformOrigin: Item.Center
+        panelName: "mixer"
 
-        RowLayout {
-          id: volumeContent
+        Com.VolumeStat {
           anchors.centerIn: parent
-
-          Image {
-            id: volumeIcon
-            source: isMuted || currentVolume === 0 ? Directories.assetsPath + "/volume/mute.png" : Directories.assetsPath + "/volume/volume.png"
-            width: 35
-            height: 35
-            sourceSize: Qt.size(35, 35)
-          }
-          Text {
-            text: isMuted ? "Muted" : Math.round(currentVolume * 100) + "%"
-            color: theme.primary.foreground
-            font {
-              pixelSize: 16
-              bold: true
-            }
-            verticalAlignment: Text.AlignVCenter
-          }
-        }
-
-        MouseArea {
-          anchors.fill: parent
-          hoverEnabled: true
-          cursorShape: Qt.PointingHandCursor
-          preventStealing: true
-
-          onEntered: volumeContainer.scale = 1.1
-          onExited: volumeContainer.scale = 1.0
-          onPressed: volumeContainer.scale = 0.95
-          onReleased: volumeContainer.scale = containsMouse ? 1.1 : 1.0
-          onClicked: VisibleService.togglePanel("mixer")
-          onWheel: {
-            var delta = wheel.angleDelta.y / 120;
-            if (delta > 0) {
-              Qt.createQmlObject('import Quickshell; Process { command: ["pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%"]; running: true }', root);
-            } else {
-              Qt.createQmlObject('import Quickshell; Process { command: ["pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%"]; running: true }', root);
-            }
-          }
-        }
-
-        Behavior on scale {
-          NumberAnimation {
-            duration: 100
-            easing.type: Easing.OutCubic
-          }
         }
       }
 

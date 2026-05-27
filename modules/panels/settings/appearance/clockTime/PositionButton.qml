@@ -12,8 +12,8 @@ Rectangle {
   width: 80
   height: 40
   radius: 8
-  color: isSelected ? theme.normal.blue : (mouseArea.containsMouse ? theme.button.background_select : theme.button.background)
-  border.color: isSelected ? theme.normal.blue : (mouseArea.containsPress ? theme.button.border_select : theme.button.border)
+  color: isSelected ? theme.button.text : (mouseArea.containsMouse ? theme.button.background_select : theme.button.background)
+  border.color: isSelected ? theme.button.text : (mouseArea.containsPress ? theme.button.border_select : theme.button.border)
   border.width: 2
 
   Text {

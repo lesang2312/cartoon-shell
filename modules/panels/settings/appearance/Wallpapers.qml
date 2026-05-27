@@ -294,7 +294,7 @@ Item {
 
                   // Current Wallpaper Indicator
                   Rectangle {
-                    visible: isCurrentWallpaper(filePath)
+                    visible: systemSettings.currentWallpaper === filePath
                     anchors.top: parent.top
                     anchors.right: parent.right
                     anchors.margins: 5
@@ -350,11 +350,11 @@ Item {
                       width: (parent.width - 6) / 2
                       height: 28
                       radius: 6
-                      color: isCurrentWallpaper(filePath) ? theme.normal.green : theme.normal.blue
+                      color: systemSettings.currentWallpaper === filePath ? theme.normal.green : theme.normal.blue
 
                       Text {
                         anchors.centerIn: parent
-                        text: isCurrentWallpaper(filePath) ? (lang?.wallpapers?.already_set || "Đã đặt") : (lang?.wallpapers?.set_wallpaper || "Đặt nền")
+                        text: systemSettings.currentWallpaper === filePath ? (lang?.wallpapers?.already_set || "Đã đặt") : (lang?.wallpapers?.set_wallpaper || "Đặt nền")
                         color: theme.primary.background
                         font.pixelSize: 10
                         font.bold: true
@@ -363,7 +363,10 @@ Item {
                       MouseArea {
                         anchors.fill: parent
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: setWallpaper(filePath)
+                        onClicked: {
+                          setWallpaper(filePath)
+                          console.log(filePath)
+                        }
                       }
                     }
 
@@ -540,7 +543,6 @@ Item {
 
   function setWallpaper(filePath) {
     var cleanPath = filePath.toString().replace("file://", "");
-
     // Set cho tất cả màn hình
     if (Settings.wallpaper.setWallpaperOnAllMonitors) {
       for (var i = 0; i < Quickshell.screens.length; i++) {
@@ -557,6 +559,7 @@ Item {
     }
 
     showNotification(lang?.wallpapers?.success_set || "Đã đặt hình nền thành công!");
+    systemSettings.currentWallpaper = filePath
   }
 
   function generateThumbnail(filePath) {
@@ -619,5 +622,8 @@ Item {
     return cleanFilePath === cleanCurrentWallpaper;
   }
 
-  Component.onCompleted: {}
+  Component.onCompleted: {
+    systemSettings.currentWallpaper = `${WallpaperService.getWallpaper(currentScreen.name)}`;
+    console.log(systemSettings.currentWallpaper)
+  }
 }

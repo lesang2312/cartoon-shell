@@ -2,6 +2,7 @@
 import QtQuick
 import qs.services
 import qs.commons
+import qs.components
 
 Rectangle {
   id: themeCard
@@ -19,7 +20,7 @@ Rectangle {
   radius: 12
 
   color: type === "light" ? "#f5eee6" : "#24273a"
-  border.color: isSelected ? theme.normal.blue : theme.button.border
+  border.color: isSelected ? theme.button.text : theme.button.border
   border.width: isSelected ? 3 : 2
 
   // 👇 hiệu ứng xám
@@ -71,17 +72,16 @@ Rectangle {
     width: 20
     height: 20
     radius: 10
-    color: theme.normal.blue
+    color: theme.button.text
     anchors.top: parent.top
     anchors.right: parent.right
     anchors.margins: 5
 
-    Text {
-      text: "✓"
-      color: theme.primary.background
-      font.pixelSize: 12
-      font.bold: true
+    IconText {
+      name: "check"
+      size: "xs"
       anchors.centerIn: parent
+      textColor: theme.button.background
     }
   }
 }

@@ -48,66 +48,13 @@ Rectangle {
           anchors.centerIn: parent
         }
       }
-      // Memory Container
-      Rectangle {
-        id: memoryContainer
+      Com.StatContainer {
         Layout.fillWidth: true
         Layout.fillHeight: true
-        color: "transparent"
-        radius: 6
+        panelName: "ram"
 
-        RowLayout {
-          id: memoryContent
+        Com.RamStat {
           anchors.centerIn: parent
-          spacing: 2
-
-          ColumnLayout {
-            Layout.alignment: Qt.AlignVCenter
-            spacing: 0
-            CustomText {
-              name: ramService.memPercent + "%"
-              isBold: true
-              size: "small"
-              Layout.alignment: Qt.AlignHCenter
-
-            }
-            CustomText {
-              name: "Ram"
-              textColor: theme.primary.dim_foreground
-              size: "2xs"
-              Layout.alignment: Qt.AlignHCenter
-
-            }
-          }
-
-          IconImage {
-            visible: Settings.bar.ram.style === 1
-            path: "panel/memory.png"
-            Layout.alignment: Qt.AlignVCenter
-          }
-          IconText {
-            visible: Settings.bar.ram.style === 2
-            name: "memory_alt"
-            textColor: theme.button.text
-          }
-
-        }
-
-        MouseArea {
-          anchors.fill: parent
-          hoverEnabled: true
-          cursorShape: Qt.PointingHandCursor
-          onClicked: {
-            VisibleService.togglePanel("ram");
-          }
-          onEntered: memoryContainer.opacity = 0.8
-          onExited: memoryContainer.opacity = 1.0
-        }
-
-        Behavior on opacity {
-          NumberAnimation {
-            duration: 100
-          }
         }
       }
     }

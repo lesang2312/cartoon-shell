@@ -36,8 +36,8 @@ Item {
         implicitWidth: 48
         implicitHeight: 28
         radius: 14
-        color: autoStartSwitch.checked ? theme.normal.blue : theme.button.background
-        border.color: autoStartSwitch.checked ? theme.normal.blue : theme.button.border
+        color: autoStartSwitch.checked ? theme.button.text : theme.button.background
+        border.color: autoStartSwitch.checked ? theme.button.text : theme.button.border
         border.width: 2
       }
 

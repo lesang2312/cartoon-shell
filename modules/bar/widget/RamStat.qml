@@ -1,13 +1,13 @@
 import QtQuick
 import QtQuick.Layouts
 import qs.components
-import qs.services.cpu
+import qs.services.ram
 import qs.commons
 
 RowLayout {
   id: root
 
-  property int style: Settings.bar.cpu.style
+  property int style: Settings.bar.ram.style
   property bool textBefore: style <= 4
   property bool compact: [3,4,7,8].includes(style)
 
@@ -18,14 +18,14 @@ RowLayout {
     spacing: 0
 
     CustomText {
-      name: CpuSimpleService.cpuPercent + "%"
+      name: RamSimpleService.ramPercent + "%"
       isBold: !compact
       size: compact ? "normal" : "small"
     }
 
     CustomText {
       visible: !compact
-      name: "Cpu"
+      name: "Ram"
       textColor: theme.primary.dim_foreground
       size: "2xs"
     }
@@ -33,12 +33,12 @@ RowLayout {
 
   IconImage {
     visible: [1,3,5,7].includes(root.style)
-    path: "cpu/cpu.png"
+    path: "panel/memory.png"
   }
 
   IconText {
     visible: [2,4,6,8].includes(root.style)
-    name: "memory"
+    name: "memory_alt"
     textColor: theme.button.text
   }
 
@@ -47,14 +47,14 @@ RowLayout {
     spacing: 0
 
     CustomText {
-      name: CpuSimpleService.cpuPercent + "%"
+      name: RamSimpleService.ramPercent + "%"
       isBold: !compact
       size: compact ? "normal" : "small"
     }
 
     CustomText {
       visible: !compact
-      name: "Cpu"
+      name: "Ram"
       textColor: theme.primary.dim_foreground
       size: "2xs"
     }
