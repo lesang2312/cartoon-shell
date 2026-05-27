@@ -160,7 +160,8 @@ Rectangle {
         onClicked: {
           var password = wifiPassword.text.trim();
 
-          if (password.length === 0 && networkData.security !== "Open") {
+          if (password.length === 0 && networkData.security !== "Open" && networkData.security !== "--")
+          {
             passwordBox.hasError = true;
             passwordBox.errorMessage = lang?.wifi?.password_required || "Vui lòng nhập mật khẩu";
             return;

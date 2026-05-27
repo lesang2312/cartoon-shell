@@ -52,7 +52,7 @@ PanelWindow {
 
   color: "transparent"
   focusable: true
-  Com.WifiManager {
+  WifiService {
     id: wifiManager
   }
 
