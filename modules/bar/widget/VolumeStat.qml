@@ -25,7 +25,7 @@ RowLayout {
   }
   IconText {
     visible: root.style === 2
-    name: Pipewire.defaultAudioSink.audio.muted ? "volume_mute" : root.getNameIcon(Math.round(Pipewire.defaultAudioSink.audio.volume * 100))
+    name: Pipewire.defaultAudioSink.audio.muted ? "volume_off" : root.getNameIcon(Math.round(Pipewire.defaultAudioSink.audio.volume * 100))
     textColor: theme.button.text
   }
   CustomText {

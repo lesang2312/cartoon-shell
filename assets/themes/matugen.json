@@ -1,18 +1,18 @@
 {
   "type": "dark",
   "primary": {
-    "background": "#1a110e",
-    "foreground": "#f1dfd9",
-    "dim_background": "#231a16",
-    "dim_foreground": "#d8c2ba",
-    "bright_foreground": "#ffb598"
+    "background": "#1a120e",
+    "foreground": "#f0dfd8",
+    "dim_background": "#221a16",
+    "dim_foreground": "#d7c2ba",
+    "bright_foreground": "#ffb694"
   },
   "button": {
-    "background": "#53433e",
-    "text": "#ffb598",
-    "background_select": "#a08d86",
-    "border": "#d8c2ba",
-    "border_select": "#d8c2ba"
+    "background": "#52443d",
+    "text": "#ffb694",
+    "background_select": "#a08d85",
+    "border": "#d7c2ba",
+    "border_select": "#d7c2ba"
   },
   "cursor": {
     "cursor": "#cad3f5",
@@ -21,21 +21,21 @@
   "normal": {
     "black": "#494d64",
     "red": "#ffb4ab",
-    "green": "#ffb598",
-    "yellow": "#d3c78e",
+    "green": "#ffb694",
+    "yellow": "#d1c88f",
     "blue": "#8aadf4",
     "magenta": "#f5bde6",
-    "cyan": "#d3c78e",
-    "white": "#f1dfd9"
+    "cyan": "#d1c88f",
+    "white": "#f0dfd8"
   },
   "bright": {
     "black": "#5b6078",
     "red": "#ffb4ab",
-    "green": "#ffb598",
-    "yellow": "#d3c78e",
+    "green": "#ffb694",
+    "yellow": "#d1c88f",
     "blue": "#8aadf4",
     "magenta": "#f5bde6",
-    "cyan": "#d3c78e",
-    "white": "#f1dfd9"
+    "cyan": "#d1c88f",
+    "white": "#f0dfd8"
   }
 }
