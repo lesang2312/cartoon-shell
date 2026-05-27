@@ -50,7 +50,7 @@ Rectangle {
     RowLayout {
       Layout.fillWidth: true
       spacing: 8
-      visible: passwordBox.hasSavedPassword
+      visible: passwordBox.hasSavedPassword || networkData.security === "--"
 
       Rectangle {
         Layout.fillWidth: true
@@ -58,7 +58,7 @@ Rectangle {
         color: theme.primary.background
         radius: 8
         border.color: theme.button.border_select
-
+        visible: networkData.security !== "--"
         border.width: 1
 
         Text {
@@ -75,6 +75,7 @@ Rectangle {
         size: "xs"
         implicitHeight: 30
         fontFamily: "Material Symbols Rounded"
+        visible: networkData.security !== "--"
         onClicked: {
           passwordBox.showPassword = !passwordBox.showPassword;
         }
@@ -106,6 +107,7 @@ Rectangle {
         name: lang?.wifi?.forget || "Quên"
         size: "xs"
         implicitHeight: 30
+        visible: networkData.isConnected
         onClicked: {
           wifiManager.forgetPassword(networkData.ssid);
           passwordBox.hasSavedPassword = false;
@@ -120,7 +122,7 @@ Rectangle {
     RowLayout {
       Layout.fillWidth: true
       spacing: 8
-      visible: !passwordBox.hasSavedPassword
+      visible: !passwordBox.hasSavedPassword && networkData.security !== "--"
 
       TextField {
         id: wifiPassword
