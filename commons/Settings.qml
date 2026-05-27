@@ -163,6 +163,7 @@ Singleton {
     property string defaultWallpaper: ""
     property string fillMode: "crop"
     property color fillColor: "#000000"
+    property int shaders: 0
     property list<var> monitors: []
     property int transitionDuration: 500
     property real transitionEdgeSmoothness: 0.05

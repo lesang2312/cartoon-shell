@@ -6,6 +6,7 @@ import Quickshell.Io
 import qs.services
 import qs.commons
 import qs.components
+import qs.services.cpu
 import "./widget/" as Com
 
 Rectangle {
@@ -101,7 +102,7 @@ Rectangle {
               }
               Text {
                 id: cpuTextVertical
-                text: cpuService.cpuPercent + "%"
+                text: CpuSimpleService.cpuPercent + "%"
                 color: theme.primary.foreground
                 font {
                   family: "ComicShannsMono Nerd Font"

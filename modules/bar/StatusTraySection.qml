@@ -221,7 +221,6 @@ Rectangle {
       }
 
       // Volume
-
       Com.StatContainer {
         Layout.fillWidth: true
         Layout.fillHeight: true
@@ -401,134 +400,43 @@ Rectangle {
       }
 
       // Bluetooth (vertical)
-      Item {
-        width: 25
-        height: 25
-        Item {
+      Com.StatContainer {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        panelName: "bluetooth"
+
+        Com.BluetoothStat {
           anchors.centerIn: parent
-          width: parent.height
-          height: parent.width
-          transformOrigin: Item.Center
-
-          Image {
-            id: bluetoothImageVertical
-            anchors.centerIn: parent
-            source: root.bluetooth_icon
-            width: 25
-            height: 25
-            sourceSize: Qt.size(25, 25)
-          }
-        }
-
-        MouseArea {
-          anchors.fill: parent
-          hoverEnabled: true
-          cursorShape: Qt.PointingHandCursor
-          onClicked: VisibleService.togglePanel("bluetooth")
-          onEntered: parent.opacity = 0.8
-          onExited: parent.opacity = 1.0
-        }
-
-        Behavior on opacity {
-          NumberAnimation {
-            duration: 100
-          }
         }
       }
 
-      // Network (vertical - chỉ icon)
       Item {
-        width: 25
-        height: 25
-
-        Item {
-          anchors.centerIn: parent
-          width: parent.height
-          height: parent.width
-          transformOrigin: Item.Center
-
-          ColumnLayout {
-            anchors.centerIn: parent
-            spacing: 2
-
-            Image {
-              id: wifiImageVertical
-              source: networkService.wifi_icon
-              width: 25
-              height: 25
-              sourceSize: Qt.size(25, 25)
-              Layout.alignment: Qt.AlignHCenter
-            }
-          }
-        }
-
-        MouseArea {
-          anchors.fill: parent
-          hoverEnabled: true
-          cursorShape: Qt.PointingHandCursor
-          onClicked: VisibleService.togglePanel("wifi")
-          onEntered: parent.opacity = 0.8
-          onExited: parent.opacity = 1.0
-        }
-
-        Behavior on opacity {
-          NumberAnimation {
-            duration: 100
-          }
-        }
+        Layout.fillWidth: true
       }
 
-      // Volume (vertical)
-      Item {
-        width: 25
-        height: 25
+      Com.StatContainer {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        panelName: "wifi"
 
-        Item {
+        Com.WifiStat {
           anchors.centerIn: parent
-          width: parent.height
-          height: parent.width
-          transformOrigin: Item.Center
-
-          ColumnLayout {
-            anchors.centerIn: parent
-            spacing: 2
-
-            Image {
-              id: volumeIconVertical
-              source: isMuted || currentVolume === 0 ? Directories.assetsPath + "/volume/mute.png" : Directories.assetsPath + "/volume/volume.png"
-              width: 25
-              height: 25
-              sourceSize: Qt.size(25, 25)
-              Layout.alignment: Qt.AlignHCenter
-            }
-          }
-        }
-
-        MouseArea {
-          anchors.fill: parent
-          hoverEnabled: true
-          cursorShape: Qt.PointingHandCursor
-          onClicked: VisibleService.togglePanel("mixer")
-          onEntered: parent.opacity = 0.8
-          onExited: parent.opacity = 1.0
-          onWheel: {
-            var delta = wheel.angleDelta.y / 120;
-            if (delta > 0) {
-              Qt.createQmlObject('import Quickshell; Process { command: ["pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%"]; running: true }', root);
-            } else {
-              Qt.createQmlObject('import Quickshell; Process { command: ["pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%"]; running: true }', root);
-            }
-          }
-        }
-
-        Behavior on opacity {
-          NumberAnimation {
-            duration: 100
-          }
         }
       }
+      Item {
+        Layout.fillWidth: true
+      }
 
-      // Battery (vertical)
+      // Volume
+      Com.StatContainer {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        panelName: "mixer"
+
+        Com.VolumeStat {
+          anchors.centerIn: parent
+        }
+      }      // Battery (vertical)
       Item {
         width: 25
         height: 25

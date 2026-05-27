@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell.Services.Pipewire
+import qs.components
 
 ColumnLayout {
   required property PwNode node
@@ -84,20 +85,14 @@ ColumnLayout {
       height: 28
       opacity: hovered ? 1.0 : 0.8
 
-      background: Rectangle {
-        color: "transparent"
-        radius: 4
-        border.color: theme.button.border
-        border.width: muteButton.down ? 2 : 1
-        opacity: 0.5
+      background: Item {
       }
 
-      contentItem: Text {
-        text: node.audio.muted ? "🔇" : "🔊"
-        font.pixelSize: 11
+      contentItem: IconText {
+        name: node.audio.muted ? "volume_off" : "volume_up"
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        color: node.audio.muted ? theme.normal.red : theme.normal.green
+        textColor: node.audio.muted ? theme.normal.red : theme.button.text
       }
 
       onClicked: node.audio.muted = !node.audio.muted
@@ -112,13 +107,12 @@ ColumnLayout {
     spacing: 8
 
     // Volume percentage
-    Label {
+    CustomText {
       Layout.preferredWidth: 40
-      text: `${Math.round(node.audio.volume * 100)}%`
-      font.family: "ComicShannsMono Nerd Font"
-      font.pixelSize: 15
-      font.bold: true
-      color: node.audio.muted ? theme.normal.red : theme.normal.blue
+      name: `${Math.round(node.audio.volume * 100)}%`
+      isBold: true
+      size: "small"
+      textColor: node.audio.muted ? theme.normal.red : theme.button.text
       horizontalAlignment: Text.AlignRight
     }
 

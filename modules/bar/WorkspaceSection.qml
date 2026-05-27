@@ -248,13 +248,9 @@ Rectangle {
           radius: 6
           color: "transparent"
 
-          Image {
+          IconImage {
+            path: modelData.isActive ? "workspace/pacman.png" : modelData.exists ? "workspace/ghost.png" : "workspace/empty.png"
             anchors.centerIn: parent
-            width: 24
-            height: 24
-            fillMode: Image.PreserveAspectFit
-            source: modelData.isActive ? "../../assets/workspace/pacman.png" : modelData.exists ? "../../assets/workspace/ghost.png" : "../../assets/workspace/empty.png"
-            opacity: 1
           }
 
           MouseArea {

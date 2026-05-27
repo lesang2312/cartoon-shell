@@ -29,7 +29,7 @@ RowLayout {
     textColor: theme.button.text
   }
   CustomText {
-    visible: root.style === 1
+    visible: root.style === 1 && Settings.bar.position === "top" || Settings.bar.position === "bottom"
     name: Math.round(Pipewire.defaultAudioSink.audio.volume * 100) + "%"
     isBold: true
     size: "small"

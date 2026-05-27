@@ -542,6 +542,7 @@ Item {
   }
 
   function setWallpaper(filePath) {
+    Settings.wallpaper.shaders = Math.floor(Math.random() * 4)
     var cleanPath = filePath.toString().replace("file://", "");
     // Set cho tất cả màn hình
     if (Settings.wallpaper.setWallpaperOnAllMonitors) {
