@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import qs.components
 import QtQuick.Controls
+import qs.services
 
 Rectangle {
   id: root
@@ -9,10 +10,10 @@ Rectangle {
   property string name: ""
   property bool hovered: false
 
-  Layout.preferredHeight: 40
+  Layout.preferredHeight: ScalerService.s(40)
   Layout.fillWidth: true
-  border.width: 1
-  radius: 8
+  border.width: ScalerService.s(1)
+  radius: ScalerService.s(8)
   color: mouseArea.containsMouse ? theme.button.background_select : theme.button.background
   border.color: mouseArea.containsMouse ? theme.button.border_select : theme.button.border
   scale: mouseArea.containsMouse ? 0.98 : 1.0
@@ -34,8 +35,8 @@ Rectangle {
 
   RowLayout {
     anchors.fill: parent
-    anchors.margins: 5
-    spacing: 5
+    anchors.margins: ScalerService.s(5)
+    spacing: ScalerService.s(5)
     clip: true
     IconImage{
       path: root.image

@@ -14,7 +14,7 @@ RowLayout {
   property var nameIcon1: ""
   property var nameIcon2: ""
   property var pathIcon: ""
-  spacing: 2
+  spacing: ScalerService.s(2)
   IconImage {
     visible: root.style === 1
     path: networkService.wifi_icon

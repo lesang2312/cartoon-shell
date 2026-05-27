@@ -2,17 +2,18 @@ import QtQuick
 import QtQuick.Layouts
 import qs.services
 import qs.components
+
 ColumnLayout {
   Layout.fillWidth: true
-  spacing: 6
+  spacing: ScalerService.s(6)
   property real animationProgress: 0
 
   // Progress bar
   Rectangle {
     id: parent_progress_bar
     Layout.fillWidth: true
-    Layout.preferredHeight: 4
-    radius: 2
+    Layout.preferredHeight: ScalerService.s(4)
+    radius: ScalerService.s(2)
     color: theme.primary.dim_background
     opacity: root.animationProgress > 0.5 ? 1 : 0
     Behavior on opacity {
@@ -25,7 +26,7 @@ ColumnLayout {
       id: progress_bar
       width: root.animationProgress > 1.2 ? parent.width * Players.getProgress() : 0
       height: parent.height
-      radius: 2
+      radius: ScalerService.s(2)
       color: theme.button.text
       opacity: root.animationProgress > 0.9 ? 1 : 0
       Behavior on opacity {
@@ -44,7 +45,7 @@ ColumnLayout {
   // Time labels
   RowLayout {
     Layout.fillWidth: true
-    spacing: 0
+    spacing: ScalerService.s(0)
 
     CustomText{
       id: music_pos

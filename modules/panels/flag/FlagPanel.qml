@@ -23,16 +23,8 @@ PanelWindow {
     }
   }
 
-  implicitWidth: root.animationProgress > 0.1 ? 600 : 100
-  implicitHeight: root.animationProgress > 0.1 ? 420 : 100
-
-  Behavior on implicitHeight {
-    NumberAnimation { duration: 60; easing.type: Easing.OutCubic }
-  }
-
-  Behavior on implicitWidth {
-    NumberAnimation { duration: 60; easing.type: Easing.OutCubic }
-  }
+  implicitWidth:  600
+  implicitHeight: 420
 
   property var flagList: [
   { name: "britain", displayName: "Britain" },

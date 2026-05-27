@@ -22,10 +22,10 @@ PanelWindow {
   }
 
   margins {
-    top: 10
-    bottom: 10
-    left: 10
-    right: 10
+    top: ScalerService.s(10)
+    bottom: ScalerService.s(10)
+    left: ScalerService.s(10)
+    right: ScalerService.s(10)
   }
 
   implicitWidth: content.implicitWidth
@@ -60,52 +60,52 @@ PanelWindow {
   Rectangle {
     id: clockContainer
     anchors.fill: parent
-    radius: 10
+    radius: ScalerService.s(10)
     color: "transparent"
 
     RowLayout {
       id: content
       anchors.centerIn: parent
-      spacing: 33
+      spacing: ScalerService.s(33)
 
       ColumnLayout {
-        spacing: 5
+        spacing: ScalerService.s(5)
         CustomText{
           name: root.currentHour
           isBold: true
           textColor: "#ffffff"
-          font.pixelSize: 124
+          font.pixelSize: ScalerService.s(124)
         }
 
         CustomText {
           name: root.currentMin
           color: "#ffffff"
           isBold: true
-          font.pixelSize: 124
+          font.pixelSize: ScalerService.s(124)
         }
       }
 
       Rectangle {
-        Layout.preferredWidth: 10
+        Layout.preferredWidth: ScalerService.s(10)
         Layout.preferredHeight: parent.height
         color: "#ffffff"
-        radius: 10
+        radius: ScalerService.s(10)
       }
 
       // Phần hiển thị ngày tháng
       ColumnLayout {
-        spacing: 5
+        spacing: ScalerService.s(5)
         CustomText {
           name: root.currentDay
           isBold: true
           textColor: "#ffffff"
-          font.pixelSize: 124
+          font.pixelSize: ScalerService.s(124)
         }
         CustomText {
           name: root.currentDate
           isBold: true
           textColor: "#ffffff"
-          font.pixelSize: 64
+          font.pixelSize: ScalerService.s(64)
         }
       }
     }

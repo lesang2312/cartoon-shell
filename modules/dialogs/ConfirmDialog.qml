@@ -13,8 +13,8 @@ PanelWindow {
   property string pendingAction: ""
   property string pendingActionLabel: ""
 
-  implicitWidth: 380
-  implicitHeight: 200
+  implicitWidth: ScalerService.s(380)
+  implicitHeight: ScalerService.s(200)
 
   anchors {
     top: true
@@ -85,20 +85,20 @@ PanelWindow {
 
   Rectangle {
     anchors.fill: parent
-    radius: 15
+    radius: ScalerService.s(15)
     color: theme.primary.background
     border.color: theme.normal.black
-    border.width: 3
+    border.width: ScalerService.s(3)
 
     Column {
       anchors.fill: parent
-      anchors.margins: 25
-      spacing: 20
+      anchors.margins: ScalerService.s(25)
+      spacing: ScalerService.s(20)
 
       Text {
         text: lang?.confirm?.title || "Xác nhận"
         color: theme.primary.foreground
-        font.pixelSize: 24
+        font.pixelSize: ScalerService.s(24)
         font.bold: true
         font.family: "ComicShannsMono Nerd Font"
         anchors.horizontalCenter: parent.horizontalCenter
@@ -107,7 +107,7 @@ PanelWindow {
       Text {
         text: (lang?.confirm?.message || "Bạn có chắc chắn muốn {action}?").replace("{action}", pendingActionLabel)
         color: theme.primary.foreground
-        font.pixelSize: 16
+        font.pixelSize: ScalerService.s(16)
         font.family: "ComicShannsMono Nerd Font"
         wrapMode: Text.WordWrap
         width: parent.width
@@ -116,21 +116,21 @@ PanelWindow {
 
       Row {
         anchors.horizontalCenter: parent.horizontalCenter
-        spacing: 30
+        spacing: ScalerService.s(30)
 
         Rectangle {
-          width: 110
-          height: 45
-          radius: 10
+          width: ScalerService.s(110)
+          height: ScalerService.s(45)
+          radius: ScalerService.s(10)
           color: mouseAreaNo.containsMouse ? theme.button.background_select : theme.button.background
           border.color: theme.button.border
-          border.width: 2
+          border.width: ScalerService.s(2)
 
           Text {
             anchors.centerIn: parent
             text: lang?.confirm?.no || "Không"
             color: theme.primary.foreground
-            font.pixelSize: 18
+            font.pixelSize: ScalerService.s(18)
             font.family: "ComicShannsMono Nerd Font"
           }
 
@@ -144,18 +144,18 @@ PanelWindow {
         }
 
         Rectangle {
-          width: 110
-          height: 45
-          radius: 10
+          width: ScalerService.s(110)
+          height: ScalerService.s(45)
+          radius: ScalerService.s(10)
           color: mouseAreaYes.containsMouse ? theme.normal.red : theme.button.background
           border.color: theme.normal.red
-          border.width: 2
+          border.width: ScalerService.s(2)
 
           Text {
             anchors.centerIn: parent
             text: lang?.confirm?.yes || "Có"
             color: mouseAreaYes.containsMouse ? "white" : theme.primary.foreground
-            font.pixelSize: 18
+            font.pixelSize: ScalerService.s(18)
             font.family: "ComicShannsMono Nerd Font"
             font.bold: true
           }

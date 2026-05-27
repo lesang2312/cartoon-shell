@@ -15,7 +15,7 @@ Rectangle {
 
   Layout.fillWidth: true
   Layout.fillHeight: true
-  radius: 12
+  radius: ScalerService.s(12)
   color: theme.primary.dim_background
   clip: true
   visible: adapter?.enabled || false
@@ -25,9 +25,9 @@ Rectangle {
 
     Rectangle {
       Layout.fillWidth: true
-      height: 20
+      height: ScalerService.s(20)
       color: theme.primary.background
-      radius: 12
+      radius: ScalerService.s(12)
     }
 
     ScrollView {
@@ -38,7 +38,7 @@ Rectangle {
       ListView {
         id: deviceList
         model: Bluetooth.devices
-        spacing: 4
+        spacing: ScalerService.s(4)
         boundsBehavior: Flickable.StopAtBounds
 
         delegate: Components.BluetoothDeviceItem {
@@ -61,7 +61,7 @@ Rectangle {
             return "";
           }
           color: theme.primary.dim_foreground
-          font.pixelSize: 13
+          font.pixelSize: ScalerService.s(13)
           visible: text !== ""
         }
       }

@@ -4,11 +4,12 @@ import QtQuick.Controls
 import Qt.labs.folderlistmodel
 import qs.components
 import qs.commons
+import qs.services
 
 Item {
   id: root
   property var folderModel
-  property int gridSize: 100
+  property int gridSize: ScalerService.s(100)
   property url currentPath
   property var theme: ThemeService.theme
   property var selectedFile: ""
@@ -74,35 +75,35 @@ Item {
       anchors.fill: parent
       model: folderModel
       cellWidth: gridSize
-      cellHeight: gridSize + 30
+      cellHeight: gridSize + ScalerService.s(30)
 
       property var currentIndex: -1
 
       delegate: Item {
         width: gridSize
-        height: gridSize + 30
+        height: gridSize + ScalerService.s(30)
 
         Rectangle {
           clip: true
           id: itemBg
           anchors.fill: parent
-          anchors.margins: 5
-          radius: 8
+          anchors.margins: ScalerService.s(5)
+          radius: ScalerService.s(8)
           color: theme.button.background
-          border.width: root.selectedFile === fileUrl  ? 3 : 1
+          border.width: root.selectedFile === fileUrl  ? ScalerService.s(3) : ScalerService.s(1)
           border.color: root.selectedFile === fileUrl ? theme.button.text : theme.button.border
 
           ColumnLayout {
             anchors.centerIn: parent
-            spacing: 5
+            spacing: ScalerService.s(5)
 
             Image {
               id: itemIcon
               Layout.alignment: Qt.AlignHCenter
 
               source: getFileIcon(fileName, fileIsDir,fileUrl)
-              Layout.preferredWidth: 52
-              Layout.preferredHeight: 52
+              Layout.preferredWidth: ScalerService.s(52)
+              Layout.preferredHeight: ScalerService.s(52)
               fillMode: Image.PreserveAspectFit
               asynchronous: true
               cache: false
@@ -118,7 +119,7 @@ Item {
               horizontalAlignment: Text.AlignHCenter
               wrapMode: Text.WordWrap
               maximumLineCount: 2
-              Layout.maximumWidth: gridSize - 10
+              Layout.maximumWidth: gridSize - ScalerService.s(10)
               size: "xs"
             }
 
@@ -127,7 +128,7 @@ Item {
               Layout.alignment: Qt.AlignHCenter
               text: formatFileSize(fileSize)
               color: theme.button.text
-              font.pixelSize: 9
+              font.pixelSize: ScalerService.s(9)
             }
           }
         }
@@ -193,14 +194,14 @@ Item {
   Shortcut {
     sequence: "Ctrl++"
     onActivated: {
-      gridSize = Math.min(gridSize + 20, 200)
+      gridSize = Math.min(gridSize + ScalerService.s(20), ScalerService.s(200))
     }
   }
 
   Shortcut {
     sequence: "Ctrl+-"
     onActivated: {
-      gridSize = Math.max(gridSize - 20, 60)
+      gridSize = Math.max(gridSize - ScalerService.s(20), ScalerService.s(60))
     }
   }
 

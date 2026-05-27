@@ -13,8 +13,8 @@ Rectangle {
   id: root
   color: theme.primary.background
   border.color: theme.button.border
-  border.width: Settings.appearance.enableBorder ? 3 : 0
-  radius: Settings.appearance.radius2
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
+  radius: ScalerService.s(Settings.appearance.radius2)
   clip: true
 
   property string memoryUsage: "0%"
@@ -28,7 +28,7 @@ Rectangle {
   // UI Layout
   Loader {
     anchors.fill: parent
-    anchors.margins: isVertical ? 6 : 4
+    anchors.margins: isVertical ? ScalerService.s(6) : ScalerService.s(4)
     sourceComponent: isVertical ? verticalLayout : horizontalLayout
   }
 
@@ -37,7 +37,7 @@ Rectangle {
 
     RowLayout {
       anchors.fill: parent
-      spacing: 4
+      spacing: ScalerService.s(4)
 
       // CPU Container
       Com.StatContainer {
@@ -66,7 +66,7 @@ Rectangle {
 
     ColumnLayout {
       anchors.fill: parent
-      spacing: 8
+      spacing: ScalerService.s(8)
 
       // CPU Container (vertical)
       Rectangle {
@@ -74,7 +74,7 @@ Rectangle {
         Layout.fillWidth: true
         Layout.fillHeight: true
         color: "transparent"
-        radius: 6
+        radius: ScalerService.s(6)
 
         // Xoay container để hiển thị dọc
         Item {
@@ -85,7 +85,7 @@ Rectangle {
 
           ColumnLayout {
             anchors.centerIn: parent
-            spacing: 4
+            spacing: ScalerService.s(4)
 
             ColumnLayout {
               Layout.alignment: Qt.AlignVCenter
@@ -96,7 +96,7 @@ Rectangle {
                 color: theme.primary.dim_foreground
                 font {
                   family: "ComicShannsMono Nerd Font"
-                  pixelSize: 13
+                  pixelSize: ScalerService.s(13)
                 }
                 Layout.alignment: Qt.AlignHCenter
               }
@@ -106,7 +106,7 @@ Rectangle {
                 color: theme.primary.foreground
                 font {
                   family: "ComicShannsMono Nerd Font"
-                  pixelSize: 12
+                  pixelSize: ScalerService.s(12)
                   bold: true
                 }
                 Layout.alignment: Qt.AlignHCenter
@@ -139,7 +139,7 @@ Rectangle {
         Layout.fillWidth: true
         Layout.fillHeight: true
         color: "transparent"
-        radius: 6
+        radius: ScalerService.s(6)
 
         // Xoay container để hiển thị dọc
         Item {
@@ -150,7 +150,7 @@ Rectangle {
 
           ColumnLayout {
             anchors.centerIn: parent
-            spacing: 4
+            spacing: ScalerService.s(4)
 
             ColumnLayout {
               Layout.alignment: Qt.AlignVCenter
@@ -162,7 +162,7 @@ Rectangle {
                 color: theme.primary.dim_foreground
                 font {
                   family: "ComicShannsMono Nerd Font"
-                  pixelSize: 14
+                  pixelSize: ScalerService.s(14)
                 }
                 Layout.alignment: Qt.AlignHCenter
               }
@@ -172,7 +172,7 @@ Rectangle {
                 color: theme.primary.foreground
                 font {
                   family: "ComicShannsMono Nerd Font"
-                  pixelSize: 12
+                  pixelSize: ScalerService.s(12)
                   bold: true
                 }
                 Layout.alignment: Qt.AlignHCenter

@@ -9,8 +9,8 @@ import qs.services.cpu
 
 PanelWindow {
   id: root
-  implicitWidth: 1300
-  implicitHeight: 600
+  implicitWidth: ScalerService.s(1300)
+  implicitHeight: ScalerService.s(600)
 
   property real animationProgress: 0
   PackageService{
@@ -44,13 +44,13 @@ PanelWindow {
 
     RowLayout {
       anchors.fill: parent
-      spacing: 15
+      spacing: ScalerService.s(15)
 
       // Left Column - Staggered animation
       ColumnLayout {
-        Layout.preferredWidth: 240
+        Layout.preferredWidth: ScalerService.s(240)
         Layout.fillHeight: true
-        spacing: 15
+        spacing: ScalerService.s(15)
 
         Com.UserProfileCard {
           animationProgress: root.animationProgress
@@ -91,17 +91,17 @@ PanelWindow {
       ColumnLayout {
         Layout.fillHeight: true
         Layout.fillWidth: true
-        spacing: 15
+        spacing: ScalerService.s(15)
 
         // Top Row
         RowLayout {
           Layout.fillHeight: true
           Layout.fillWidth: true
-          spacing: 15
+          spacing: ScalerService.s(15)
 
           ColumnLayout {
             Layout.fillHeight: true
-            Layout.preferredWidth: 100
+            Layout.preferredWidth: ScalerService.s(100)
 
             Com.TimeCard {
               opacity: root.animationProgress > 0.25 ? 1 : 0
@@ -130,17 +130,17 @@ PanelWindow {
         RowLayout {
           Layout.fillHeight: true
           Layout.fillWidth: true
-          spacing: 15
+          spacing: ScalerService.s(15)
 
           // Left side: Media Player + App Grid + Social Icons
           ColumnLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            spacing: 15
+            spacing: ScalerService.s(15)
 
             RowLayout {
               Layout.fillWidth: true
-              spacing: 15
+              spacing: ScalerService.s(15)
 
               Com.MediaPlayerCard {
                 animationProgress: root.animationProgress
@@ -156,7 +156,7 @@ PanelWindow {
 
             RowLayout {
               Layout.fillWidth: true
-              spacing: 15
+              spacing: ScalerService.s(15)
 
               Com.SocialIcon {
                 image: "lockscreen/appicons/youtube.png"
@@ -202,7 +202,7 @@ PanelWindow {
 
           // Right side: File Browser
           Com.FileBrowserCard {
-            Layout.preferredWidth: 300
+            Layout.preferredWidth: ScalerService.s(300)
             Layout.fillHeight: true
             animationProgress: root.animationProgress
             opacity: root.animationProgress > 0.65 ? 1 : 0

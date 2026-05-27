@@ -7,17 +7,17 @@ import qs.services
 Item {
   ScrollView {
     anchors.fill: parent
-    anchors.margins: 20
+    anchors.margins: ScalerService.s(20)
     clip: true
 
     ColumnLayout {
       width: parent.width
-      spacing: 20
+      spacing: ScalerService.s(20)
 
       // Tiêu đề
       RowLayout {
         Layout.fillWidth: true
-        spacing: 10
+        spacing: ScalerService.s(10)
 
         // Button Nâng cao ở góc trái
 
@@ -29,7 +29,7 @@ Item {
         Text {
           text: "Audio Settings"
           color: theme.primary.foreground
-          font.pixelSize: 24
+          font.pixelSize: ScalerService.s(24)
           font.bold: true
           font.family: "ComicShannsMono Nerd Font"
         }
@@ -37,7 +37,7 @@ Item {
 
       Rectangle {
         Layout.fillWidth: true
-        height: 1
+        height: ScalerService.s(1)
         color: theme.primary.foreground
       }
     }

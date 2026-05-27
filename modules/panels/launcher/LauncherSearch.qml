@@ -8,11 +8,11 @@ import qs.commons
 Rectangle {
   id: root
   Layout.fillWidth: true
-  Layout.preferredHeight: 45
-  radius: Settings.appearance.radius2
+  Layout.preferredHeight: ScalerService.s(45)
+  radius: ScalerService.s(Settings.appearance.radius2)
   color: theme.primary.dim_background
   border.color: theme.button.border
-  border.width: Settings.appearance.enableBorder ? 2 : 0
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
 
   signal searchChanged(string text) // phát ra khi cần tìm (sau debounce)
   signal accepted(string text)      // khi nhấn Enter
@@ -21,8 +21,8 @@ Rectangle {
 
   RowLayout {
     anchors.fill: parent
-    anchors.margins: 8
-    spacing: 8
+    anchors.margins: ScalerService.s(8)
+    spacing: ScalerService.s(8)
 
     IconImage {
       path: "launcher/search.png"
@@ -36,7 +36,7 @@ Rectangle {
       placeholderText: "Tìm kiếm ứng dụng..."
       palette.text: theme.primary.foreground       // màu chữ chính
       palette.placeholderText: theme.primary.dim_foreground  // sửa thành dim_foreground
-      font.pixelSize: 14
+      font.pixelSize: ScalerService.s(14)
       font.family: "ComicShannsMono Nerd Font"
       background: Rectangle {
         color: "transparent"

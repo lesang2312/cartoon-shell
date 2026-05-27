@@ -8,21 +8,21 @@ import qs.commons
 Rectangle {
   id: root
 
-  Layout.preferredWidth: 220
-  Layout.preferredHeight: 220
+  Layout.preferredWidth: ScalerService.s(220)
+  Layout.preferredHeight: ScalerService.s(220)
   color: theme.primary.background
   border.color: theme.button.border
-  radius: Settings.appearance.radius1
-  border.width: Settings.appearance.enableBorder ? 3 : 0
+  radius: ScalerService.s(Settings.appearance.radius1)
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
   property real animationProgress: 0
 
   GridLayout {
     anchors.fill: parent
-    anchors.margins: 20
+    anchors.margins: ScalerService.s(20)
     columns: 3
     rows: 3
-    columnSpacing: 15
-    rowSpacing: 15
+    columnSpacing: ScalerService.s(15)
+    rowSpacing: ScalerService.s(15)
 
     Repeater {
       model: Settings.dashboard.appGrid

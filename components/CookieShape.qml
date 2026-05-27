@@ -8,7 +8,7 @@ Item {
   id: sineCookie
   property real sides: 5
   property color color: theme.button.text
-  property real amplitude: root.width / 50
+  property real amplitude: root.width / ScalerService.s(50)
   property int renderPoints: 360
 
   Shape {

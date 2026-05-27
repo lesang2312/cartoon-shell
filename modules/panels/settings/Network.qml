@@ -7,45 +7,45 @@ import qs.services
 Item {
   ScrollView {
     anchors.fill: parent
-    anchors.margins: 20
+    anchors.margins: ScalerService.s(20)
     clip: true
 
     ColumnLayout {
-      width: parent.width - 40
-      spacing: 20
+      width: parent.width - ScalerService.s(40)
+      spacing: ScalerService.s(20)
 
       Text {
         text: "Network Settings"
         color: theme.primary.foreground
-        font.pixelSize: 24
+        font.pixelSize: ScalerService.s(24)
         font.bold: true
         font.family: "ComicShannsMono Nerd Font"
-        Layout.topMargin: 10
+        Layout.topMargin: ScalerService.s(10)
       }
 
       Rectangle {
         Layout.fillWidth: true
-        height: 1
+        height: ScalerService.s(1)
         color: theme.primary.foreground
       }
 
       // Thông báo phần đã bị xóa
       Rectangle {
         Layout.fillWidth: true
-        Layout.preferredHeight: 100
-        radius: 8
+        Layout.preferredHeight: ScalerService.s(100)
+        radius: ScalerService.s(8)
         color: theme.primary.background
         border.color: theme.normal.black
-        border.width: 1
+        border.width: ScalerService.s(1)
 
         Column {
           anchors.centerIn: parent
-          spacing: 10
+          spacing: ScalerService.s(10)
 
           Text {
             text: "Network Settings Content"
             color: theme.primary.foreground
-            font.pixelSize: 16
+            font.pixelSize: ScalerService.s(16)
             font.bold: true
             font.family: "ComicShannsMono Nerd Font"
           }
@@ -53,7 +53,7 @@ Item {
           Text {
             text: "Network information and controls have been removed."
             color: theme.primary.dim_foreground
-            font.pixelSize: 12
+            font.pixelSize: ScalerService.s(12)
             font.family: "ComicShannsMono Nerd Font"
             horizontalAlignment: Text.AlignHCenter
             width: parent.width

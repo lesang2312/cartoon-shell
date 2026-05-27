@@ -16,8 +16,8 @@ Rectangle {
   property bool isConnected: networkData.ssid === wifiManager.connectedWifi
 
   color: theme.primary.dim_background
-  radius: 12
-  border.width: 2
+  radius: ScalerService.s(12)
+  border.width: ScalerService.s(2)
   border.color: theme.button.border_select
 
   Behavior on height {
@@ -28,20 +28,20 @@ Rectangle {
 
   ColumnLayout {
     anchors.fill: parent
-    anchors.margins: 12
-    spacing: 8
+    anchors.margins: ScalerService.s(12)
+    spacing: ScalerService.s(8)
 
     Rectangle {
       Layout.fillWidth: true
-      height: 30
+      height: ScalerService.s(30)
       visible: passwordBox.hasError
       color: theme.normal.red
-      radius: 6
+      radius: ScalerService.s(6)
       Text {
         anchors.centerIn: parent
         text: "❌ " + passwordBox.errorMessage
         color: theme.primary.foreground
-        font.pixelSize: 12
+        font.pixelSize: ScalerService.s(12)
         font.family: "ComicShannsMono Nerd Font"
       }
     }
@@ -49,31 +49,31 @@ Rectangle {
     // Phần hiển thị mật khẩu đã lưu (luôn hiển thị nếu có saved password)
     RowLayout {
       Layout.fillWidth: true
-      spacing: 8
+      spacing: ScalerService.s(8)
       visible: passwordBox.hasSavedPassword || networkData.security === "--"
 
       Rectangle {
         Layout.fillWidth: true
-        height: 40
+        height: ScalerService.s(40)
         color: theme.primary.background
-        radius: 8
+        radius: ScalerService.s(8)
         border.color: theme.button.border_select
         visible: networkData.security !== "--"
-        border.width: 1
+        border.width: ScalerService.s(1)
 
         Text {
           anchors.centerIn: parent
           text: passwordBox.showPassword ? networkData.saved_password : "••••••••"
           font.family: "ComicShannsMono Nerd Font"
           color: theme.primary.foreground
-          font.pixelSize: 14
+          font.pixelSize: ScalerService.s(14)
         }
       }
 
       ButtonText {
         name: passwordBox.showPassword ? "visibility" : "visibility_off"
         size: "xs"
-        implicitHeight: 30
+        implicitHeight: ScalerService.s(30)
         fontFamily: "Material Symbols Rounded"
         visible: networkData.security !== "--"
         onClicked: {
@@ -84,7 +84,7 @@ Rectangle {
       ButtonText {
         name: lang?.wifi?.connect || "Kết nối"
         size: "xs"
-        implicitHeight: 30
+        implicitHeight: ScalerService.s(30)
         visible: !networkData.isConnected
 
         onClicked: {
@@ -106,7 +106,7 @@ Rectangle {
       ButtonText {
         name: lang?.wifi?.forget || "Quên"
         size: "xs"
-        implicitHeight: 30
+        implicitHeight: ScalerService.s(30)
         visible: networkData.isConnected
         onClicked: {
           wifiManager.forgetPassword(networkData.ssid);
@@ -121,7 +121,7 @@ Rectangle {
     // Phần nhập mật khẩu mới (khi chưa có saved password)
     RowLayout {
       Layout.fillWidth: true
-      spacing: 8
+      spacing: ScalerService.s(8)
       visible: !passwordBox.hasSavedPassword && networkData.security !== "--"
 
       TextField {
@@ -131,13 +131,14 @@ Rectangle {
         echoMode: passwordBox.showPassword ? TextInput.Normal : TextInput.Password
         enabled: networkData.security !== "Open"
         font.family: "ComicShannsMono Nerd Font"
+        font.pixelSize: ScalerService.s(14)
         horizontalAlignment: TextInput.AlignHCenter
         color: theme.primary.foreground
         background: Rectangle {
           color: theme.primary.background
-          radius: 8
+          radius: ScalerService.s(8)
           border.color: theme.button.border_select
-          border.width: 1
+          border.width: ScalerService.s(1)
         }
 
         onActiveFocusChanged: {
@@ -148,7 +149,7 @@ Rectangle {
       ButtonText {
         name: passwordBox.showPassword ? "visibility" : "visibility_off"
         size: "xs"
-        implicitHeight: 30
+        implicitHeight: ScalerService.s(30)
         fontFamily: "Material Symbols Rounded"
         onClicked: {
           passwordBox.showPassword = !passwordBox.showPassword;
@@ -158,7 +159,7 @@ Rectangle {
       ButtonText {
         name: lang?.wifi?.connect || "Kết nối"
         size: "xs"
-        implicitHeight: 30
+        implicitHeight: ScalerService.s(30)
         onClicked: {
           var password = wifiPassword.text.trim();
 

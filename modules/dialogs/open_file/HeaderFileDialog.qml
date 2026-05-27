@@ -2,10 +2,11 @@ import QtQuick
 import QtQuick.Layouts
 import qs.components
 import qs.services
+
 Item {
   id: root
   Layout.fillWidth: true
-  Layout.preferredHeight: 50
+  Layout.preferredHeight: ScalerService.s(50)
 
   // Title centered
   CustomText {

@@ -15,15 +15,15 @@ RowLayout {
   property real value: 0.5
 
   Layout.fillWidth: true
-  spacing: 10
+  spacing: ScalerService.s(10)
 
   // Icon button (left)
   Rectangle {
-    Layout.preferredWidth: 50
-    Layout.preferredHeight: 50
+    Layout.preferredWidth: ScalerService.s(50)
+    Layout.preferredHeight: ScalerService.s(50)
     color: root.iconColor
-    radius: Settings.appearance.radius1
-    border.width: Settings.appearance.enableBorder ? 3 : 0
+    radius: ScalerService.s(Settings.appearance.radius1)
+    border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
     border.color: theme.button.border
     opacity: root.animationProgress > root.revealThreshold - 0.1 ? 1 : 0
 
@@ -56,17 +56,17 @@ RowLayout {
   // Slider bar (right)
   Rectangle {
     Layout.fillWidth: true
-    Layout.preferredHeight: 50
+    Layout.preferredHeight: ScalerService.s(50)
     color: theme.primary.background
-    radius: Settings.appearance.radius1
-    border.width: Settings.appearance.enableBorder ? 3 : 0
+    radius: ScalerService.s(Settings.appearance.radius1)
+    border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
     border.color: theme.button.border
     opacity: root.animationProgress > root.revealThreshold - 0.05 ? 1 : 0
 
     Rectangle {
       anchors.fill: parent
-      anchors.margins: 8
-      radius: 17
+      anchors.margins: ScalerService.s(8)
+      radius: ScalerService.s(17)
       color: theme.primary.background
 
       Rectangle {

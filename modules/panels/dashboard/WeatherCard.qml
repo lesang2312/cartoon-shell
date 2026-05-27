@@ -10,11 +10,11 @@ Rectangle {
   id: root
   property real animationProgress: 0
 
-  Layout.preferredWidth: 400
-  Layout.preferredHeight: 240
+  Layout.preferredWidth: ScalerService.s(400)
+  Layout.preferredHeight: ScalerService.s(240)
 
-  radius: Settings.appearance.radius1
-  border.width: Settings.appearance.enableBorder ? 3 : 0
+  radius: ScalerService.s(Settings.appearance.radius1)
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
   border.color: theme.button.border
   color: theme.primary.background
   clip: true
@@ -26,13 +26,13 @@ Rectangle {
 
   ColumnLayout {
     anchors.fill: parent
-    anchors.margins: 20
-    spacing: 12
+    anchors.margins: ScalerService.s(20)
+    spacing: ScalerService.s(12)
 
     // Current weather display
     RowLayout {
       Layout.fillWidth: true
-      spacing: 15
+      spacing: ScalerService.s(15)
       Layout.alignment: Qt.AlignHCenter
 
       IconImage {
@@ -48,7 +48,7 @@ Rectangle {
 
       ColumnLayout {
         Layout.fillWidth: true
-        spacing: 5
+        spacing: ScalerService.s(5)
 
         CustomText {
           name: WeatherService.temperature || "Đang tải..."
@@ -84,7 +84,7 @@ Rectangle {
     RowLayout {
       Layout.fillWidth: true
       Layout.fillHeight: true
-      spacing: 8
+      spacing: ScalerService.s(8)
 
       Repeater {
         model: WeatherService.forecastDays
@@ -95,8 +95,8 @@ Rectangle {
 
           ColumnLayout {
             anchors.fill: parent
-            anchors.margins: 8
-            spacing: 4
+            anchors.margins: ScalerService.s(8)
+            spacing: ScalerService.s(4)
 
             // Day name
             CustomText{
@@ -145,7 +145,7 @@ Rectangle {
             // Temperature range
             RowLayout {
               Layout.alignment: Qt.AlignHCenter
-              spacing: 2
+              spacing: ScalerService.s(2)
 
               CustomText {
                 name: `${modelData.minTemp}°`

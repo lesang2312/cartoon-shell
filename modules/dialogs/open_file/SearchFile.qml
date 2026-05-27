@@ -2,21 +2,22 @@ import QtQuick
 import qs.components
 import QtQuick.Layouts
 import QtQuick.Controls
+import qs.services
 
 Rectangle {
   id: root
   Layout.fillWidth: true
   Layout.fillHeight: true
-  radius: 12
+  radius: ScalerService.s(12)
   color: theme.primary.dim_background
   border.color: theme.button.border
   property string currentPath : ""
-  border.width: 2
+  border.width: ScalerService.s(2)
   RowLayout {
     anchors.fill: parent
-    anchors.margins: 2
-    anchors.leftMargin: 10
-    spacing: 8
+    anchors.margins: ScalerService.s(2)
+    anchors.leftMargin: ScalerService.s(10)
+    spacing: ScalerService.s(8)
 
     IconImage {
       path: "launcher/search.png"
@@ -29,7 +30,7 @@ Rectangle {
       placeholderText: "Tìm kiếm thư mục..."
       palette.text: theme.primary.foreground       // màu chữ chính
       palette.placeholderText: theme.primary.dim_foreground  // sửa thành dim_foreground
-      font.pixelSize: 14
+      font.pixelSize: ScalerService.s(14)
       font.family: "ComicShannsMono Nerd Font"
       text: root.currentPath.toString().replace("file://", "")
       background: Rectangle {

@@ -9,26 +9,26 @@ Rectangle {
   required property int connectedCount
 
   Layout.fillWidth: true
-  height: 82
-  radius: 12
+  height: ScalerService.s(82)
+  radius: ScalerService.s(12)
   color: theme.primary.dim_background
-  border.width: 3
+  border.width: ScalerService.s(3)
   border.color: theme.normal.black
 
   RowLayout {
     anchors.fill: parent
-    anchors.margins: 14
-    spacing: 12
+    anchors.margins: ScalerService.s(14)
+    spacing: ScalerService.s(12)
 
     // Left column: status and device count
     ColumnLayout {
       Layout.fillWidth: true
-      spacing: 4
+      spacing: ScalerService.s(4)
 
       Text {
         text: adapter?.enabled ? (lang?.bluetooth?.enabled || "Bluetooth đang bật") : (lang?.bluetooth?.disabled || "Bluetooth đang tắt")
         color: adapter?.enabled ? theme.button.text : theme.primary.dim_foreground
-        font.pixelSize: 20
+        font.pixelSize: ScalerService.s(20)
         font.family: "ComicShannsMono Nerd Font"
         font.bold: true
 
@@ -42,7 +42,7 @@ Rectangle {
       Text {
         text: `${connectedCount} ` + (lang?.bluetooth?.devices_connected || "thiết bị đã kết nối")
         color: theme.primary.dim_foreground
-        font.pixelSize: 16
+        font.pixelSize: ScalerService.s(16)
         font.family: "ComicShannsMono Nerd Font"
         visible: adapter?.enabled || false
       }
@@ -54,9 +54,9 @@ Rectangle {
 
     // Toggle button
     Rectangle {
-      width: 56
-      height: 32
-      radius: 16
+      width: ScalerService.s(56)
+      height: ScalerService.s(32)
+      radius: ScalerService.s(16)
       color: adapter?.enabled ? theme.button.text : theme.button.background
       opacity: adapter ? 1 : 0.5
 
@@ -74,11 +74,11 @@ Rectangle {
       }
 
       Rectangle {
-        x: adapter?.enabled ? parent.width - width - 4 : 4
-        y: 4
-        width: 24
-        height: 24
-        radius: 12
+        x: adapter?.enabled ? parent.width - width - ScalerService.s(4) : ScalerService.s(4)
+        y: ScalerService.s(4)
+        width: ScalerService.s(24)
+        height: ScalerService.s(24)
+        radius: ScalerService.s(12)
         color: theme.primary.dim_background
 
         Behavior on x {

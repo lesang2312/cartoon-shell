@@ -30,8 +30,8 @@ Rectangle {
   Layout.fillWidth: true
   Layout.fillHeight: true
   color: theme.primary.background
-  radius: Settings.appearance.radius1
-  border.width: Settings.appearance.enableBorder ? 3 : 0
+  radius: ScalerService.s(Settings.appearance.radius1)
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
   border.color: theme.button.border
   Behavior on opacity {
     NumberAnimation {
@@ -41,8 +41,8 @@ Rectangle {
 
   ColumnLayout {
     anchors.fill: parent
-    anchors.margins: 20
-    spacing: 15
+    anchors.margins: ScalerService.s(20)
+    spacing: ScalerService.s(15)
 
     // Avatar
     Rectangle {
@@ -50,9 +50,9 @@ Rectangle {
 
       Layout.alignment: Qt.AlignHCenter
 
-      width: 120
-      height: 120
-      radius: 60
+      width: ScalerService.s(120)
+      height: ScalerService.s(120)
+      radius: ScalerService.s(60)
 
       color: "#2a2a2a"
 
@@ -82,7 +82,7 @@ Rectangle {
 
         border.color:  theme.primary.foreground
 
-        border.width: mouseAreaAvt.containsMouse ? 2 : 1
+        border.width: mouseAreaAvt.containsMouse ? ScalerService.s(2) : ScalerService.s(1)
 
         Behavior on border.width {
           NumberAnimation {
@@ -122,7 +122,7 @@ Rectangle {
 
           anchors.centerIn: parent
 
-          font.pixelSize: mouseAreaAvt.containsMouse ? 58 : 52
+          font.pixelSize: mouseAreaAvt.containsMouse ? ScalerService.s(58) : ScalerService.s(52)
 
           Behavior on font.pixelSize {
             NumberAnimation {
@@ -149,7 +149,7 @@ Rectangle {
       Layout.alignment: Qt.AlignHCenter
       text: Settings.dashboard.fullname
       color: theme.primary.foreground
-      font.pixelSize: 40
+      font.pixelSize: ScalerService.s(40)
       font.bold: true
       font.family: "ComicShannsMono Nerd Font"
       opacity: root.animationProgress > 0.15 ? 1 : 0
@@ -165,7 +165,7 @@ Rectangle {
       Layout.alignment: Qt.AlignHCenter
       text: Settings.dashboard.username
       color: theme.primary.foreground
-      font.pixelSize: 24
+      font.pixelSize: ScalerService.s(24)
       font.family: "ComicShannsMono Nerd Font"
       opacity: root.animationProgress > 0.2 ? 1 : 0
       Behavior on opacity {

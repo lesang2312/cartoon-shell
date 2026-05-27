@@ -20,11 +20,11 @@ Rectangle {
   property int duration: 0
 
   Layout.fillWidth: true
-  Layout.preferredHeight: 220
-  Layout.preferredWidth: 350
+  Layout.preferredHeight: ScalerService.s(220)
+  Layout.preferredWidth: ScalerService.s(350)
   color: theme.primary.background
-  radius: Settings.appearance.radius1
-  border.width: Settings.appearance.enableBorder ? 3 : 0
+  radius: ScalerService.s(Settings.appearance.radius1)
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
   border.color: theme.button.border
   Behavior on opacity {
     NumberAnimation {
@@ -45,13 +45,13 @@ Rectangle {
 
   RowLayout {
     anchors.fill: parent
-    anchors.margins: 20
-    spacing: 25
+    anchors.margins: ScalerService.s(20)
+    spacing: ScalerService.s(25)
 
     // Album Art (Circular with rotation) - Left Side
     Item {
-      Layout.preferredWidth: 160
-      Layout.preferredHeight: 160
+      Layout.preferredWidth: ScalerService.s(160)
+      Layout.preferredHeight: ScalerService.s(160)
 
       // Rotating container
       Item {
@@ -72,7 +72,7 @@ Rectangle {
           radius: width / 2
           color: theme.primary.dim_background
           border.color: theme.normal.black
-          border.width: 3
+          border.width: ScalerService.s(3)
           opacity: root.animationProgress > 0.75 ? 1 : 0
           Behavior on opacity {
             NumberAnimation {
@@ -97,7 +97,7 @@ Rectangle {
             anchors.centerIn: parent
             text: "No Art"
             font.family: "ComicShannsMono Nerd Font"
-            font.pixelSize: 14
+            font.pixelSize: ScalerService.s(14)
             color: theme.primary.dim_foreground
             visible: albumImage.status !== Image.Ready
           }
@@ -109,7 +109,7 @@ Rectangle {
     ColumnLayout {
       Layout.fillWidth: true
       Layout.fillHeight: true
-      spacing: 8
+      spacing: ScalerService.s(8)
 
       // Song title with marquee
       Item {
@@ -127,7 +127,7 @@ Rectangle {
           }
           text: root.mprisPlayer ? (root.mprisPlayer.trackTitle || "No song playing") : "No song playing"
           font.family: "ComicShannsMono Nerd Font"
-          font.pixelSize: 20
+          font.pixelSize: ScalerService.s(20)
           font.bold: true
           color: theme.primary.foreground
 
@@ -173,16 +173,16 @@ Rectangle {
       // Controls Row
       RowLayout {
         Layout.fillWidth: true
-        Layout.preferredHeight: 48
-        spacing: 12
+        Layout.preferredHeight: ScalerService.s(48)
+        spacing: ScalerService.s(12)
 
         Item { Layout.fillWidth: true }
 
         // Previous button
         Rectangle {
-          Layout.preferredWidth: 48
-          Layout.preferredHeight: 48
-          radius: 24
+          Layout.preferredWidth: ScalerService.s(48)
+          Layout.preferredHeight: ScalerService.s(48)
+          radius: ScalerService.s(24)
           color: prevArea.containsMouse ? theme.button.text : theme.button.background
           opacity: root.animationProgress > 0.5 ? 1 : 0
           Behavior on opacity {
@@ -216,9 +216,9 @@ Rectangle {
 
         // Play/Pause button
         Rectangle {
-          Layout.preferredWidth: 64
-          Layout.preferredHeight: 64
-          radius: 32
+          Layout.preferredWidth: ScalerService.s(64)
+          Layout.preferredHeight: ScalerService.s(64)
+          radius: ScalerService.s(32)
           color: playArea.containsMouse ? theme.button.text : theme.button.background
           opacity: root.animationProgress > 0.6 ? 1 : 0
           Behavior on opacity {
@@ -252,9 +252,9 @@ Rectangle {
 
         // Next button
         Rectangle {
-          Layout.preferredWidth: 48
-          Layout.preferredHeight: 48
-          radius: 24
+          Layout.preferredWidth: ScalerService.s(48)
+          Layout.preferredHeight: ScalerService.s(48)
+          radius: ScalerService.s(24)
           color: nextArea.containsMouse ? theme.button.text : theme.button.background
           opacity: root.animationProgress > 0.7 ? 1 : 0
           Behavior on opacity {
@@ -292,7 +292,7 @@ Rectangle {
       // Progress bar with time
       ColumnLayout {
         Layout.fillWidth: true
-        spacing: 4
+        spacing: ScalerService.s(4)
         visible: root.mprisPlayer && root.mprisPlayer.length > 0
 
         RowLayout {
@@ -329,8 +329,8 @@ Rectangle {
 
         Rectangle {
           Layout.fillWidth: true
-          Layout.preferredHeight:6
-          radius: 3
+          Layout.preferredHeight: ScalerService.s(6)
+          radius: ScalerService.s(3)
           color: theme.primary.dim_background
           opacity: root.animationProgress > 0.7 ? 1 : 0
           Behavior on opacity {
@@ -353,7 +353,7 @@ Rectangle {
         }
       }
 
-      Item { Layout.preferredHeight: 5 }
+      Item { Layout.preferredHeight: ScalerService.s(5) }
     }
   }
   Timer {

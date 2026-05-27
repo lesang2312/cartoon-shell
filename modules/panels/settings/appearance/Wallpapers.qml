@@ -80,23 +80,23 @@ Item {
   ScrollView {
     id: scrollView
     anchors.fill: parent
-    anchors.margins: 20
+    anchors.margins: ScalerService.s(20)
     clip: true
     ScrollBar.vertical.policy: ScrollBar.AsNeeded
 
     ColumnLayout {
       width: parent.width
-      spacing: 15
+      spacing: ScalerService.s(15)
 
       // Header
       RowLayout {
         Layout.fillWidth: true
-        spacing: 10
+        spacing: ScalerService.s(10)
 
         Text {
           text: lang?.wallpapers?.title || "Quản lý hình ảnh"
           color: theme.primary.foreground
-          font.pixelSize: 24
+          font.pixelSize: ScalerService.s(24)
           font.bold: true
           font.family: "ComicShannsMono Nerd Font"
         }
@@ -110,31 +110,31 @@ Item {
 
       Rectangle {
         Layout.fillWidth: true
-        height: 1
+        height: ScalerService.s(1)
         color: theme.primary.foreground
       }
 
       // Screen selector
       RowLayout {
         Layout.fillWidth: true
-        spacing: 5
+        spacing: ScalerService.s(5)
 
         Repeater {
           model: Quickshell.screens
 
           delegate: Rectangle {
-            Layout.preferredWidth: 100
-            Layout.preferredHeight: 30
-            radius: 6
+            Layout.preferredWidth: ScalerService.s(100)
+            Layout.preferredHeight: ScalerService.s(30)
+            radius: ScalerService.s(6)
             color: systemSettings.currentScreenIndex === index ? theme.normal.blue : theme.button.background
             border.color: theme.button.border
-            border.width: 1
+            border.width: ScalerService.s(1)
 
             Text {
               anchors.centerIn: parent
               text: modelData.name || `Screen ${index + 1}`
               color: systemSettings.currentScreenIndex === index ? theme.primary.background : theme.primary.foreground
-              font.pixelSize: 12
+              font.pixelSize: ScalerService.s(12)
               font.family: "ComicShannsMono Nerd Font"
             }
 
@@ -149,46 +149,46 @@ Item {
       // Statistics
       RowLayout {
         Layout.fillWidth: true
-        spacing: 20
+        spacing: ScalerService.s(20)
 
         Rectangle {
-          Layout.preferredHeight: 40
+          Layout.preferredHeight: ScalerService.s(40)
           Layout.fillWidth: true
-          radius: 8
+          radius: ScalerService.s(8)
           color: theme.button.background
           border.color: theme.button.border
-          border.width: 2
+          border.width: ScalerService.s(2)
 
           Row {
             anchors.centerIn: parent
-            spacing: 8
+            spacing: ScalerService.s(8)
 
             Text {
               text: lang?.wallpapers?.total_images || "Tổng số ảnh:"
               font.family: "ComicShannsMono Nerd Font"
               color: theme.primary.dim_foreground
-              font.pixelSize: 15
+              font.pixelSize: ScalerService.s(15)
             }
 
             Text {
               text: folderModel.count
               color: theme.normal.blue
               font.family: "ComicShannsMono Nerd Font"
-              font.pixelSize: 18
+              font.pixelSize: ScalerService.s(18)
               font.bold: true
             }
 
             Text {
               text: "|"
               color: theme.primary.dim_foreground
-              font.pixelSize: 15
+              font.pixelSize: ScalerService.s(15)
             }
 
             Text {
               text: homePath ? (lang?.wallpapers?.path || "Đường dẫn:") + " ~/Pictures/Wallpapers/" : (lang?.wallpapers?.loading || "Đang tải...")
               font.family: "ComicShannsMono Nerd Font"
               color: theme.primary.dim_foreground
-              font.pixelSize: 15
+              font.pixelSize: ScalerService.s(15)
               elide: Text.ElideMiddle
             }
           }
@@ -198,14 +198,14 @@ Item {
       // Wallpapers Section
       ColumnLayout {
         Layout.fillWidth: true
-        spacing: 10
+        spacing: ScalerService.s(10)
 
         Text {
           text: lang?.wallpapers?.wallpapers_label || "Hình nền:"
           color: theme.primary.foreground
           font {
             family: "ComicShannsMono Nerd Font"
-            pixelSize: 16
+            pixelSize: ScalerService.s(16)
           }
         }
 
@@ -214,8 +214,8 @@ Item {
           id: wallpapersGrid
           Layout.fillWidth: true
           columns: 3  // Đã sửa từ: !panelManager.fullsetting ? 3 : 6
-          columnSpacing: 10  // Đã sửa từ: !panelManager.fullsetting ? 8 : 10
-          rowSpacing: 10  // Đã sửa từ: !panelManager.fullsetting ? 8 : 10
+          columnSpacing: ScalerService.s(10)  // Đã sửa từ: !panelManager.fullsetting ? 8 : 10
+          rowSpacing: ScalerService.s(10)  // Đã sửa từ: !panelManager.fullsetting ? 8 : 10
 
           Repeater {
             model: FolderListModel {
@@ -229,21 +229,21 @@ Item {
             delegate: Rectangle {
               width: systemSettings.width / 4  // Đã sửa từ: !panelManager.fullsetting ? systemSettings.width/4 : systemSettings.width/7
               height: systemSettings.width / 4  // Đã sửa từ: !panelManager.fullsetting ? systemSettings.width/4 : systemSettings.width/7
-              radius: 12
+              radius: ScalerService.s(12)
               color: theme.button.background
               border.color: theme.button.border
-              border.width: 1
+              border.width: ScalerService.s(1)
 
               Column {
                 anchors.fill: parent
-                anchors.margins: 8
-                spacing: 8
+                anchors.margins: ScalerService.s(8)
+                spacing: ScalerService.s(8)
 
                 // Thumbnail
                 Rectangle {
                   width: parent.width
-                  height: parent.height - 70
-                  radius: 8
+                  height: parent.height - ScalerService.s(70)
+                  radius: ScalerService.s(8)
                   clip: true
                   color: "transparent"
 
@@ -277,16 +277,16 @@ Item {
                     visible: isVideoFile(fileName)
                     anchors.bottom: parent.bottom
                     anchors.left: parent.left
-                    anchors.margins: 5
-                    width: 24
-                    height: 24
-                    radius: 12
+                    anchors.margins: ScalerService.s(5)
+                    width: ScalerService.s(24)
+                    height: ScalerService.s(24)
+                    radius: ScalerService.s(12)
                     color: theme.normal.magenta
 
                     Text {
                       text: "▶"
                       color: theme.primary.background
-                      font.pixelSize: 12
+                      font.pixelSize: ScalerService.s(12)
                       font.bold: true
                       anchors.centerIn: parent
                     }
@@ -297,16 +297,16 @@ Item {
                     visible: systemSettings.currentWallpaper === filePath
                     anchors.top: parent.top
                     anchors.right: parent.right
-                    anchors.margins: 5
-                    width: 24
-                    height: 24
-                    radius: 12
+                    anchors.margins: ScalerService.s(5)
+                    width: ScalerService.s(24)
+                    height: ScalerService.s(24)
+                    radius: ScalerService.s(12)
                     color: theme.normal.green
 
                     Text {
                       text: "✓"
                       color: theme.primary.background
-                      font.pixelSize: 12
+                      font.pixelSize: ScalerService.s(12)
                       font.bold: true
                       anchors.centerIn: parent
                     }
@@ -316,47 +316,47 @@ Item {
                 // File Info & Actions
                 Column {
                   width: parent.width
-                  spacing: 6
+                  spacing: ScalerService.s(6)
 
                   Text {
                     text: fileName
                     color: theme.primary.foreground
-                    font.pixelSize: 12
+                    font.pixelSize: ScalerService.s(12)
                     elide: Text.ElideMiddle
                     width: parent.width
                   }
 
                   Row {
                     width: parent.width
-                    spacing: 8
+                    spacing: ScalerService.s(8)
                     Text {
                       text: Math.round(fileSize / 1024) + " KB"
                       color: theme.primary.dim_foreground
-                      font.pixelSize: 9
+                      font.pixelSize: ScalerService.s(9)
                     }
                     Text {
                       text: new Date(fileModified).toLocaleDateString(Qt.locale(), "dd/MM/yyyy")
                       color: theme.primary.dim_foreground
-                      font.pixelSize: 9
+                      font.pixelSize: ScalerService.s(9)
                     }
                   }
 
                   Row {
                     width: parent.width
-                    spacing: 6
+                    spacing: ScalerService.s(6)
 
                     // Set Wallpaper
                     Rectangle {
-                      width: (parent.width - 6) / 2
-                      height: 28
-                      radius: 6
+                      width: (parent.width - ScalerService.s(6)) / 2
+                      height: ScalerService.s(28)
+                      radius: ScalerService.s(6)
                       color: systemSettings.currentWallpaper === filePath ? theme.normal.green : theme.normal.blue
 
                       Text {
                         anchors.centerIn: parent
                         text: systemSettings.currentWallpaper === filePath ? (lang?.wallpapers?.already_set || "Đã đặt") : (lang?.wallpapers?.set_wallpaper || "Đặt nền")
                         color: theme.primary.background
-                        font.pixelSize: 10
+                        font.pixelSize: ScalerService.s(10)
                         font.bold: true
                       }
 
@@ -372,16 +372,16 @@ Item {
 
                     // Delete Button
                     Rectangle {
-                      width: (parent.width - 6) / 2
-                      height: 28
-                      radius: 6
+                      width: (parent.width - ScalerService.s(6)) / 2
+                      height: ScalerService.s(28)
+                      radius: ScalerService.s(6)
                       color: theme.normal.red
 
                       Text {
                         anchors.centerIn: parent
                         text: lang?.wallpapers?.delete || "Xóa"
                         color: theme.primary.background
-                        font.pixelSize: 10
+                        font.pixelSize: ScalerService.s(10)
                         font.bold: true
                       }
 
@@ -403,7 +403,7 @@ Item {
           visible: folderModel.count === 0 && homePath
           text: lang?.wallpapers?.no_images || "Không tìm thấy ảnh nào trong thư mục ~/Pictures/Wallpapers"
           color: theme.primary.dim_foreground
-          font.pixelSize: 14
+          font.pixelSize: ScalerService.s(14)
           Layout.alignment: Qt.AlignCenter
         }
 
@@ -412,7 +412,7 @@ Item {
           visible: !homePath
           text: lang?.wallpapers?.loading_info || "Đang tải thông tin..."
           color: theme.primary.dim_foreground
-          font.pixelSize: 14
+          font.pixelSize: ScalerService.s(14)
           Layout.alignment: Qt.AlignCenter
         }
       }
@@ -428,12 +428,12 @@ Item {
     id: deleteDialog
     visible: false
     anchors.centerIn: parent
-    width: 300
-    height: 160
-    radius: 12
+    width: ScalerService.s(300)
+    height: ScalerService.s(160)
+    radius: ScalerService.s(12)
     color: theme.primary.background
     border.color: theme.normal.red
-    border.width: 2
+    border.width: ScalerService.s(2)
     z: 1000
 
     property string fileNameToDelete: ""
@@ -441,26 +441,26 @@ Item {
 
     Column {
       anchors.fill: parent
-      anchors.margins: 20
-      spacing: 15
+      anchors.margins: ScalerService.s(20)
+      spacing: ScalerService.s(15)
 
       Text {
         text: (lang?.wallpapers?.delete_confirm || "Xác nhận xóa") + "\n" + deleteDialog.fileNameToDelete
         color: theme.normal.red
-        font.pixelSize: 16
+        font.pixelSize: ScalerService.s(16)
         font.bold: true
         horizontalAlignment: Text.AlignHCenter
       }
 
       Row {
-        spacing: 15
+        spacing: ScalerService.s(15)
         anchors.horizontalCenter: parent.horizontalCenter
 
         // Cancel
         Rectangle {
-          width: 100
-          height: 35
-          radius: 6
+          width: ScalerService.s(100)
+          height: ScalerService.s(35)
+          radius: ScalerService.s(6)
           color: theme.button.background
           border.color: theme.button.border
 
@@ -468,7 +468,7 @@ Item {
             anchors.centerIn: parent
             text: lang?.wallpapers?.cancel || "Hủy"
             color: theme.primary.foreground
-            font.pixelSize: 14
+            font.pixelSize: ScalerService.s(14)
           }
 
           MouseArea {
@@ -479,16 +479,16 @@ Item {
 
         // Confirm delete
         Rectangle {
-          width: 100
-          height: 35
-          radius: 6
+          width: ScalerService.s(100)
+          height: ScalerService.s(35)
+          radius: ScalerService.s(6)
           color: theme.normal.red
 
           Text {
             anchors.centerIn: parent
             text: lang?.wallpapers?.delete || "Xóa"
             color: theme.primary.background
-            font.pixelSize: 14
+            font.pixelSize: ScalerService.s(14)
           }
 
           MouseArea {
@@ -509,28 +509,28 @@ Item {
     visible: false
     anchors.top: parent.top
     anchors.horizontalCenter: parent.horizontalCenter
-    anchors.topMargin: 20
-    width: 250
-    height: 50
-    radius: 8
+    anchors.topMargin: ScalerService.s(20)
+    width: ScalerService.s(250)
+    height: ScalerService.s(50)
+    radius: ScalerService.s(8)
     color: theme.normal.green
     z: 1001
 
     Row {
       anchors.centerIn: parent
-      spacing: 10
+      spacing: ScalerService.s(10)
       Text {
         text: "✓"
         color: theme.primary.background
         font.bold: true
-        font.pixelSize: 16
+        font.pixelSize: ScalerService.s(16)
       }
       Text {
         id: notificationText
         color: theme.primary.background
         text: ""
         font.bold: true
-        font.pixelSize: 16
+        font.pixelSize: ScalerService.s(16)
       }
     }
 

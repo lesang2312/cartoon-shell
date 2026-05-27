@@ -9,8 +9,8 @@ import "." as Com
 PanelWindow {
   id: root
 
-  implicitWidth: root.animationProgress > 0.1 ? 450 : 100
-  implicitHeight: root.animationProgress > 0.1 ?  800 : 100
+  implicitWidth: ScalerService.s(450)
+  implicitHeight: ScalerService.s(800)
   property real animationProgress: 0
   SequentialAnimation on animationProgress {
     running: true
@@ -20,18 +20,6 @@ PanelWindow {
       to: 1
       duration: 500
       easing.type: Easing.Linear
-    }
-  }
-  Behavior on implicitHeight {
-    NumberAnimation {
-      duration: 60
-      easing.type: Easing.OutCubic
-    }
-  }
-  Behavior on implicitWidth {
-    NumberAnimation {
-      duration: 60
-      easing.type: Easing.OutCubic
     }
   }
 
@@ -44,10 +32,10 @@ PanelWindow {
   }
 
   margins {
-    top: Settings.bar.position === "top" ? 10 : 0
-    bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? 10 : 0
-    left: Settings.bar.position === "left" ? 10 : 0
-    right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ?  10 : 0
+    top: Settings.bar.position === "top" ? ScalerService.s(10) : 0
+    bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? ScalerService.s(10) : 0
+    left: Settings.bar.position === "left" ? ScalerService.s(10) : 0
+    right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? ScalerService.s(10) : 0
   }
 
   color: "transparent"
@@ -59,15 +47,15 @@ PanelWindow {
   Rectangle {
     anchors.fill: parent
     color: theme.primary.background
-    radius: Settings.appearance.radius1
-    border.width: Settings.appearance.enableBorder ? 3 : 0
+    radius: ScalerService.s(Settings.appearance.radius1)
+    border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
     border.color: theme.button.border
     clip: true
 
     ColumnLayout {
       anchors.fill: parent
-      anchors.margins: 16
-      spacing: 12
+      anchors.margins: ScalerService.s(16)
+      spacing: ScalerService.s(12)
       Com.WifiHeader {
         Layout.fillWidth: true
         wifiManager: wifiManager

@@ -7,8 +7,8 @@ import qs.components
 
 Item {
   id: root
-  width: 160
-  height: 160
+  width: ScalerService.s(160)
+  height: ScalerService.s(160)
   property real animationProgress: 0
 
   // Rotating container
@@ -27,10 +27,10 @@ Item {
     ClippingRectangle {
       id: rootContainer
       anchors.fill: parent
-      radius: 80
+      radius: ScalerService.s(80)
       color: theme.primary.dim_background
       border.color: theme.normal.black
-      border.width: 3
+      border.width: ScalerService.s(3)
       opacity: root.animationProgress > 0.3 ? 1 : 0
       Behavior on opacity {
         NumberAnimation {

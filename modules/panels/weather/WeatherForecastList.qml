@@ -8,12 +8,12 @@ Item {
   id: root
   visible: WeatherService.forecastDays.length > 0
   Layout.fillWidth: true
-  Layout.preferredHeight: 200
+  Layout.preferredHeight: ScalerService.s(200)
   property real animationProgress: 0
 
   ColumnLayout {
     anchors.fill: parent
-    spacing: 12
+    spacing: ScalerService.s(12)
 
     // Forecast row - horizontal layout
     RowLayout {

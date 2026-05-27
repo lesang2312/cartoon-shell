@@ -29,8 +29,8 @@ Rectangle {
 
   color: theme.primary.dim_background
   border.color: theme.primary.foreground
-  radius: Settings.appearance.radius2
-  border.width: Settings.appearance.enableBorder ? 2 : 0
+  radius: ScalerService.s(Settings.appearance.radius2)
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
   opacity: root.animationProgress > 0.15 ? 1 : 0
   Behavior on opacity {
     NumberAnimation {
@@ -40,18 +40,18 @@ Rectangle {
 
   ScrollView {
     anchors.fill: parent
-    anchors.margins: 20
+    anchors.margins: ScalerService.s(20)
     clip: true
     ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
     ColumnLayout {
-      width: parent.parent.width - 2
-      spacing: 20
+      width: parent.parent.width - ScalerService.s(2)
+      spacing: ScalerService.s(20)
 
       // API Key Section
       ColumnLayout {
         Layout.fillWidth: true
-        spacing: 12
+        spacing: ScalerService.s(12)
 
         CustomText {
           name: lang?.weather?.apiKeyLabel || "API Key (weatherapi.com)"
@@ -68,20 +68,20 @@ Rectangle {
             }
           }
           Layout.fillWidth: true
-          height: 44
+          height: ScalerService.s(44)
           color: theme.primary.dim_background
           border.color: apiKeyInput.activeFocus ? theme.normal.blue : theme.primary.dim_foreground
-          radius: Settings.appearance.radius3
-          border.width: Settings.appearance.enableBorder ? 1 : 0
+          radius: ScalerService.s(Settings.appearance.radius3)
+          border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
 
           TextField {
             id: apiKeyInput
             anchors.fill: parent
-            anchors.margins: 5
+            anchors.margins: ScalerService.s(5)
             text: root.apiKey
             palette.text: theme.primary.foreground
             font {
-              pixelSize: 14
+              pixelSize: ScalerService.s(14)
               family: "ComicShannsMono Nerd Font"
             }
             background: Rectangle {
@@ -113,7 +113,7 @@ Rectangle {
       // Location Section
       ColumnLayout {
         Layout.fillWidth: true
-        spacing: 12
+        spacing: ScalerService.s(12)
 
         CustomText {
           name: lang?.weather?.locationLabel || "Địa điểm"
@@ -124,7 +124,7 @@ Rectangle {
 
         RowLayout {
           Layout.fillWidth: true
-          spacing: 10
+          spacing: ScalerService.s(10)
 
           Rectangle {
             opacity: root.animationProgress > 0.4 ? 1 : 0
@@ -134,20 +134,20 @@ Rectangle {
               }
             }
             Layout.fillWidth: true
-            height: 44
+            height: ScalerService.s(44)
             color: theme.primary.dim_background
             border.color: locationInput.activeFocus ? theme.normal.blue : theme.primary.dim_foreground
-            radius: Settings.appearance.radius3
-            border.width: Settings.appearance.enableBorder ? 1 : 0
+            radius: ScalerService.s(Settings.appearance.radius3)
+            border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
 
             TextField {
               id: locationInput
               anchors.fill: parent
-              anchors.margins: 5
+              anchors.margins: ScalerService.s(5)
               text: root.location
               color: theme.primary.foreground
               font {
-                pixelSize: 14
+                pixelSize: ScalerService.s(14)
                 family: "ComicShannsMono Nerd Font"
               }
               palette.text: theme.primary.foreground
@@ -171,10 +171,10 @@ Rectangle {
           }
 
           Rectangle {
-            width: 100
-            height: 44
-            radius: Settings.appearance.radius3
-            border.width: Settings.appearance.enableBorder ? 1 : 0
+            width: ScalerService.s(100)
+            height: ScalerService.s(44)
+            radius: ScalerService.s(Settings.appearance.radius3)
+            border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
             opacity: root.animationProgress > 0.45 ? 1 : 0
             Behavior on opacity {
               NumberAnimation {
@@ -208,16 +208,16 @@ Rectangle {
           id: locationResultsList
           visible: root.isUserSearching && configSection.locationSearchResults.length > 0
           Layout.fillWidth: true
-          Layout.preferredHeight: Math.min(count * 52, 208)
+          Layout.preferredHeight: Math.min(count * ScalerService.s(52), ScalerService.s(208))
           clip: true
-          spacing: 4
+          spacing: ScalerService.s(4)
           model: root.locationSearchResults
           currentIndex: root.currentLocationIndex
 
           delegate: Rectangle {
             width: ListView.view.width
-            height: 50
-            radius: 10
+            height: ScalerService.s(50)
+            radius: ScalerService.s(10)
 
             gradient: Gradient {
               GradientStop {
@@ -231,23 +231,23 @@ Rectangle {
             }
 
             border.color: (ListView.isCurrentItem || locationResultMouseArea.containsMouse) ? Qt.rgba(theme.normal.blue.r, theme.normal.blue.g, theme.normal.blue.b, 0.3) : "transparent"
-            border.width: 1
+            border.width: ScalerService.s(1)
 
             RowLayout {
               anchors.fill: parent
-              anchors.margins: 12
-              spacing: 12
+              anchors.margins: ScalerService.s(12)
+              spacing: ScalerService.s(12)
 
               Column {
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignVCenter
-                spacing: 2
+                spacing: ScalerService.s(2)
 
                 Text {
                   text: modelData.name
                   color: theme.primary.foreground
                   font {
-                    pixelSize: 14
+                    pixelSize: ScalerService.s(14)
                     family: "ComicShannsMono Nerd Font"
                     bold: true
                   }
@@ -259,7 +259,7 @@ Rectangle {
                   text: `${modelData.region}, ${modelData.country}`
                   color: theme.primary.dim_foreground
                   font {
-                    pixelSize: 12
+                    pixelSize: ScalerService.s(12)
                     family: "ComicShannsMono Nerd Font"
                   }
                   width: parent.width
@@ -290,8 +290,8 @@ Rectangle {
       Rectangle {
         visible: root.errorMessage !== ""
         Layout.fillWidth: true
-        Layout.preferredHeight: root.errorMessage !== "" ? 60 : 0
-        radius: 12
+        Layout.preferredHeight: root.errorMessage !== "" ? ScalerService.s(60) : 0
+        radius: ScalerService.s(12)
 
         gradient: Gradient {
           GradientStop {
@@ -305,16 +305,16 @@ Rectangle {
         }
 
         border.color: Qt.rgba(theme.normal.red.r, theme.normal.red.g, theme.normal.red.b, 0.3)
-        border.width: 1
+        border.width: ScalerService.s(1)
 
         RowLayout {
           anchors.fill: parent
-          anchors.margins: 12
-          spacing: 12
+          anchors.margins: ScalerService.s(12)
+          spacing: ScalerService.s(12)
 
           Text {
             text: "⚠️"
-            font.pixelSize: 18
+            font.pixelSize: ScalerService.s(18)
             color: theme.normal.red
             Layout.alignment: Qt.AlignVCenter
           }
@@ -323,7 +323,7 @@ Rectangle {
             text: root.errorMessage
             color: theme.normal.red
             font {
-              pixelSize: 13
+              pixelSize: ScalerService.s(13)
               family: "ComicShannsMono Nerd Font"
             }
             wrapMode: Text.WordWrap

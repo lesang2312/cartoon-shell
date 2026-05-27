@@ -1,4 +1,5 @@
 import QtQuick
+import qs.services
 
 Text {
   property string name: "undefined"
@@ -26,22 +27,22 @@ Text {
   font.pixelSize: {
     switch (size) {
       case "xs":
-      return 16
+      return ScalerService.s(16)
 
       case "small":
-      return 22
+      return ScalerService.s(22)
 
       case "normal":
-      return 32
+      return ScalerService.s(32)
 
       case "large":
-      return 52
+      return ScalerService.s(52)
 
       case "xl":
-      return 64
+      return ScalerService.s(64)
 
       default:
-      return 40
+      return ScalerService.s(40)
     }
   }
 }

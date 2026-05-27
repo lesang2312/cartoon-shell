@@ -8,7 +8,7 @@ import qs.services
 ColumnLayout {
   id: root
   width: parent.width
-  spacing: 15
+  spacing: ScalerService.s(15)
   property real animationProgress: 0
 
   SequentialAnimation on animationProgress {
@@ -33,7 +33,7 @@ ColumnLayout {
     }
     font {
       family: "ComicShannsMono Nerd Font"
-      pixelSize: 18
+      pixelSize: ScalerService.s(18)
       bold: true
     }
     Layout.alignment: Qt.AlignLeft
@@ -42,8 +42,8 @@ ColumnLayout {
   GridLayout {
     Layout.fillWidth: true
     columns: 3  // Đã sửa từ: panelManager.fullsetting ? 5 : 3
-    columnSpacing: 10  // Đã sửa từ: panelManager.fullsetting ? 15 : 10
-    rowSpacing: 10  // Đã sửa từ: panelManager.fullsetting ? 15 : 10
+    columnSpacing: ScalerService.s(10)  // Đã sửa từ: panelManager.fullsetting ? 15 : 10
+    rowSpacing: ScalerService.s(10)  // Đã sửa từ: panelManager.fullsetting ? 15 : 10
 
     Repeater {
       model: [
@@ -77,8 +77,8 @@ ColumnLayout {
       delegate: Rectangle {
         id: themeDelegate
         Layout.fillWidth: true
-        Layout.preferredHeight: 60
-        radius: 8
+        Layout.preferredHeight: ScalerService.s(60)
+        radius: ScalerService.s(8)
         opacity: 0
 
         SequentialAnimation on opacity {
@@ -97,7 +97,7 @@ ColumnLayout {
         color: theme.button ? theme.button.background : "#434c5e"
         border {
           color: theme.button ? theme.button.border : "#4c566a"
-          width: 2
+          width: ScalerService.s(2)
         }
 
         property var modal: ({
@@ -130,18 +130,18 @@ ColumnLayout {
         // ✔ checkmark theme đang active
         Rectangle {
           visible: Settings.appearance.theme === modal.type
-          width: 20
-          height: 20
-          radius: 10
+          width: ScalerService.s(20)
+          height: ScalerService.s(20)
+          radius: ScalerService.s(10)
           color: theme.normal ? theme.normal.blue : "#81a1c1"
           anchors.top: parent.top
           anchors.right: parent.right
-          anchors.margins: 5
+          anchors.margins: ScalerService.s(5)
 
           Text {
             text: "✓"
             color: theme.primary ? theme.primary.background : "#2e3440"
-            font.pixelSize: 12
+            font.pixelSize: ScalerService.s(12)
             font.bold: true
             anchors.centerIn: parent
           }
@@ -149,13 +149,13 @@ ColumnLayout {
 
         RowLayout {
           anchors.fill: parent
-          anchors.margins: 10
-          spacing: 10
+          anchors.margins: ScalerService.s(10)
+          spacing: ScalerService.s(10)
 
           Rectangle {
-            Layout.preferredWidth: 40
-            Layout.preferredHeight: 40
-            radius: 6
+            Layout.preferredWidth: ScalerService.s(40)
+            Layout.preferredHeight: ScalerService.s(40)
+            radius: ScalerService.s(6)
             color: modal.accent
           }
 
@@ -163,11 +163,11 @@ ColumnLayout {
             text: modal.name
             color: theme.primary ? theme.primary.foreground : "#d8dee9"
             wrapMode: Text.WordWrap
-            width: 40
+            width: ScalerService.s(40)
             horizontalAlignment: Text.AlignLeft
             font {
               family: "ComicShannsMono Nerd Font"
-              pixelSize: 12  // Đã sửa từ: panelManager.fullsetting ? 16 : 12
+              pixelSize: ScalerService.s(12)  // Đã sửa từ: panelManager.fullsetting ? 16 : 12
               bold: true
             }
           }

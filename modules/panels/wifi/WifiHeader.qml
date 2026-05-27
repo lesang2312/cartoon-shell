@@ -8,12 +8,12 @@ RowLayout {
   property var wifiManager
   property real animationProgress: 0
 
-  spacing: 20
+  spacing: ScalerService.s(20)
 
   Rectangle {
-    width: 70
-    height: 70
-    radius: 12
+    width: ScalerService.s(70)
+    height: ScalerService.s(70)
+    radius: ScalerService.s(12)
     color: "transparent"
 
     IconImage{
@@ -36,9 +36,9 @@ RowLayout {
 
   Rectangle {
     id: scanButton
-    Layout.preferredWidth: 55
-    Layout.preferredHeight: 55
-    radius: 28
+    Layout.preferredWidth: ScalerService.s(55)
+    Layout.preferredHeight: ScalerService.s(55)
+    radius: ScalerService.s(28)
     visible: wifiManager.wifiEnabled || false
     color: {
       if (wifiManager.isScanning)
@@ -72,18 +72,18 @@ RowLayout {
     // Sử dụng icon search giống Bluetooth
     Image {
       source: "../../../assets/launcher/search.png"
-      width: 40
-      height: 40
-      sourceSize: Qt.size(40, 40)
+      width: ScalerService.s(40)
+      height: ScalerService.s(40)
+      sourceSize: Qt.size(ScalerService.s(40), ScalerService.s(40))
       anchors.centerIn: parent
     }
 
     // Animation khi đang quét mạng - giống hệt Bluetooth
     Rectangle {
       anchors.fill: parent
-      radius: 28
+      radius: ScalerService.s(28)
       color: "transparent"
-      border.width: 2
+      border.width: ScalerService.s(2)
       border.color: theme.normal.green
       visible: wifiManager.isScanning
       rotation: scanRotation
@@ -98,13 +98,13 @@ RowLayout {
       }
 
       Rectangle {
-        width: 4
-        height: 4
-        radius: 2
+        width: ScalerService.s(4)
+        height: ScalerService.s(4)
+        radius: ScalerService.s(2)
         color: theme.normal.green
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.topMargin: -2
+        anchors.topMargin: ScalerService.s(-2)
       }
     }
 

@@ -7,14 +7,14 @@ import qs.services
 Item {
   ScrollView {
     anchors.fill: parent
-    anchors.margins: 20
+    anchors.margins: ScalerService.s(20)
     clip: true
     ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
     ScrollBar.vertical.policy: ScrollBar.AsNeeded
 
     ColumnLayout {
-      width: parent.parent.width - 40
-      spacing: 20
+      width: parent.parent.width - ScalerService.s(40)
+      spacing: ScalerService.s(20)
 
       // Header
       Text {
@@ -22,15 +22,15 @@ Item {
         color: theme.primary.foreground
         font {
           family: "ComicShannsMono Nerd Font"
-          pixelSize: 24
+          pixelSize: ScalerService.s(24)
           bold: true
         }
-        Layout.topMargin: 10
+        Layout.topMargin: ScalerService.s(10)
       }
 
       Rectangle {
         Layout.fillWidth: true
-        height: 1
+        height: ScalerService.s(1)
         color: theme.primary.foreground
       }
 
@@ -227,15 +227,15 @@ Item {
     property var shortcuts: []
 
     Layout.fillWidth: true
-    spacing: 10
+    spacing: ScalerService.s(10)
 
     // Category Header
     Rectangle {
       Layout.fillWidth: true
-      height: 50
+      height: ScalerService.s(50)
       color: theme.primary.dim_background
-      radius: 12
-      border.width: 2
+      radius: ScalerService.s(12)
+      border.width: ScalerService.s(2)
       border.color: theme.normal.black
 
       Text {
@@ -244,7 +244,7 @@ Item {
         color: theme.primary.foreground
         font {
           family: "ComicShannsMono Nerd Font"
-          pixelSize: 18
+          pixelSize: ScalerService.s(18)
           bold: true
         }
       }
@@ -253,32 +253,32 @@ Item {
     // Shortcuts List
     ColumnLayout {
       Layout.fillWidth: true
-      spacing: 8
+      spacing: ScalerService.s(8)
 
       Repeater {
         model: shortcuts
 
         Rectangle {
           Layout.fillWidth: true
-          Layout.preferredHeight: 60
+          Layout.preferredHeight: ScalerService.s(60)
           color: theme.button.background
-          radius: 10
-          border.width: 1
+          radius: ScalerService.s(10)
+          border.width: ScalerService.s(1)
           border.color: theme.button.border
 
           RowLayout {
             anchors.fill: parent
-            anchors.margins: 15
-            spacing: 20
+            anchors.margins: ScalerService.s(15)
+            spacing: ScalerService.s(20)
 
             // Key Badge (Left side)
             Rectangle {
-              Layout.preferredWidth: 220
-              Layout.minimumWidth: 220
-              Layout.maximumWidth: 280
-              Layout.preferredHeight: 35
+              Layout.preferredWidth: ScalerService.s(220)
+              Layout.minimumWidth: ScalerService.s(220)
+              Layout.maximumWidth: ScalerService.s(280)
+              Layout.preferredHeight: ScalerService.s(35)
               color: theme.normal.blue
-              radius: 8
+              radius: ScalerService.s(8)
 
               Text {
                 id: keyText
@@ -287,7 +287,7 @@ Item {
                 color: theme.primary.background
                 font {
                   family: "ComicShannsMono Nerd Font"
-                  pixelSize: 13
+                  pixelSize: ScalerService.s(13)
                   bold: true
                 }
               }
@@ -299,7 +299,7 @@ Item {
               color: theme.primary.foreground
               font {
                 family: "ComicShannsMono Nerd Font"
-                pixelSize: 15
+                pixelSize: ScalerService.s(15)
               }
               wrapMode: Text.WordWrap
               Layout.fillWidth: true

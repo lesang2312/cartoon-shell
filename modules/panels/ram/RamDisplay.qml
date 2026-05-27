@@ -23,8 +23,8 @@ Item {
   Rectangle {
     anchors.fill: parent
     color: theme.primary.background
-    radius: Settings.appearance.radius2
-    border.width: Settings.appearance.enableBorder ? 2 : 0
+    radius: ScalerService.s(Settings.appearance.radius2)
+    border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
     border.color: theme.button.border
     opacity: root.animationProgress > 0.2 ? 1 : 0
     Behavior on opacity {
@@ -37,7 +37,7 @@ Item {
       anchors.fill: parent
       color: "transparent"
       opacity: 0.1
-      radius: 12
+      radius: ScalerService.s(12)
 
       Canvas {
         anchors.fill: parent
@@ -46,13 +46,13 @@ Item {
           ctx.strokeStyle = theme.primary.foreground;
           ctx.lineWidth = 0.5;
 
-          for (var x = 0; x < width; x += 15) {
+          for (var x = 0; x < width; x += ScalerService.s(15)) {
             ctx.beginPath();
             ctx.moveTo(x, 0);
             ctx.lineTo(x, height);
             ctx.stroke();
           }
-          for (var y = 0; y < height; y += 15) {
+          for (var y = 0; y < height; y += ScalerService.s(15)) {
             ctx.beginPath();
             ctx.moveTo(0, y);
             ctx.lineTo(width, y);
@@ -65,8 +65,8 @@ Item {
 
   ColumnLayout {
     anchors.fill: parent
-    anchors.margins: 16
-    spacing: 16
+    anchors.margins: ScalerService.s(16)
+    spacing: ScalerService.s(16)
 
     RowLayout {
       Layout.fillWidth: true
@@ -88,9 +88,9 @@ Item {
       }
 
       Rectangle {
-        width: root.animationProgress > 0.25 ? 8 : 0
-        height: root.animationProgress > 0.25 ? 8 : 0
-        radius: 4
+        width: root.animationProgress > 0.25 ? ScalerService.s(8) : 0
+        height: root.animationProgress > 0.25 ? ScalerService.s(8) : 0
+        radius: ScalerService.s(4)
         color: ramService.memPercent > 80 ? theme.normal.red : ramService.memPercent > 60 ? theme.normal.yellow : theme.normal.green
         opacity: root.animationProgress > 0.2 ? 1 : 0
         Behavior on color {
@@ -111,11 +111,11 @@ Item {
 
     ColumnLayout {
       Layout.fillWidth: true
-      spacing: 6
+      spacing: ScalerService.s(6)
 
       ColumnLayout {
         Layout.fillWidth: true
-        spacing: 4
+        spacing: ScalerService.s(4)
 
         RowLayout {
           Layout.fillWidth: true
@@ -150,14 +150,14 @@ Item {
 
         Rectangle {
           Layout.fillWidth: true
-          height: 20
-          radius: 10
+          height: ScalerService.s(20)
+          radius: ScalerService.s(10)
           color: theme.primary.dim_background
 
           Rectangle {
             width: parent.width * (ramService.memPercent / 100)
             height: parent.height
-            radius: 10
+            radius: ScalerService.s(10)
             color: getUsageColor(ramService.memPercent)
             Behavior on width {
               NumberAnimation {
@@ -172,7 +172,7 @@ Item {
 
       RowLayout {
         Layout.fillWidth: true
-        spacing: 12
+        spacing: ScalerService.s(12)
         Com.RamItemMemoryMonitor{
           name: lang?.ram?.used || "Used"
           value: ramService.memUsed + " MB"
@@ -208,13 +208,13 @@ Item {
 
     Rectangle {
       Layout.fillWidth: true
-      height: 1
+      height: ScalerService.s(1)
       color: "transparent"
 
       Rectangle {
         anchors.centerIn: parent
         width: root.animationProgress > 0.9 ? parent.width * 0.8 : 0
-        height: 1
+        height: ScalerService.s(1)
         color: theme.primary.foreground
         Behavior on width {
           NumberAnimation {
@@ -226,11 +226,11 @@ Item {
 
     ColumnLayout {
       Layout.fillWidth: true
-      spacing: 6
+      spacing: ScalerService.s(6)
 
       ColumnLayout {
         Layout.fillWidth: true
-        spacing: 4
+        spacing: ScalerService.s(4)
 
         RowLayout {
           Layout.fillWidth: true
@@ -265,15 +265,15 @@ Item {
 
         Rectangle {
           Layout.fillWidth: true
-          height: 14
-          radius: 7
+          height: ScalerService.s(14)
+          radius: ScalerService.s(7)
           color: theme.primary.dim_background
           opacity: ramService.swapTotal > 0 ? 1 : 0.3
 
           Rectangle {
             width: parent.width * (ramService.swapPercent / 100)
             height: parent.height
-            radius: 7
+            radius: ScalerService.s(7)
             color: getUsageColor(ramService.swapPercent)
 
             Behavior on width {
@@ -288,7 +288,7 @@ Item {
 
       RowLayout {
         Layout.fillWidth: true
-        spacing: 12
+        spacing: ScalerService.s(12)
         Com.RamItemMemoryMonitor{
           name: lang?.ram?.used || "Used"
           value: ramService.swapFree + " MB"
@@ -326,7 +326,7 @@ Item {
   Rectangle {
     anchors.fill: parent
     color: theme.primary.background
-    radius: 12
+    radius: ScalerService.s(12)
     opacity: dataLoaded ? 0 : 1
     visible: opacity > 0
 
@@ -338,12 +338,12 @@ Item {
 
     Column {
       anchors.centerIn: parent
-      spacing: 12
+      spacing: ScalerService.s(12)
 
       Text {
         text: lang?.ram?.loading_memory || "Loading memory data..."
         color: theme.primary.foreground
-        font.pixelSize: 10
+        font.pixelSize: ScalerService.s(10)
         anchors.horizontalCenter: parent.horizontalCenter
       }
     }

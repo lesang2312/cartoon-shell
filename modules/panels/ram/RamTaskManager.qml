@@ -417,7 +417,7 @@ Item {
               textColor: theme.primary.dim_foreground
             }
             CustomText {
-              name: processListView.count
+              name: processList.length
               size: "small"
               textColor: theme.button.text
               isBold: true

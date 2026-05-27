@@ -9,19 +9,19 @@ Rectangle {
   property bool isSelected: false
   signal clicked
 
-  width: 80
-  height: 40
-  radius: 8
+  width: ScalerService.s(80)
+  height: ScalerService.s(40)
+  radius: ScalerService.s(8)
   color: isSelected ? theme.button.text : (mouseArea.containsMouse ? theme.button.background_select : theme.button.background)
   border.color: isSelected ? theme.button.text : (mouseArea.containsPress ? theme.button.border_select : theme.button.border)
-  border.width: 2
+  border.width: ScalerService.s(2)
 
   Text {
     text: label
     color: isSelected ? theme.primary.background : theme.primary.foreground
     font {
       family: "ComicShannsMono Nerd Font"
-      pixelSize: 14
+      pixelSize: ScalerService.s(14)
       bold: isSelected
     }
     anchors.centerIn: parent

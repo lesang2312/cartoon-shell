@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell.Services.Pipewire
 import qs.components
+import qs.services
 
 ColumnLayout {
   required property PwNode node
@@ -14,23 +15,23 @@ ColumnLayout {
     objects: [node]
   }
 
-  spacing: 8
+  spacing: ScalerService.s(8)
 
   // Header row với app info và controls
   RowLayout {
-    spacing: 8
+    spacing: ScalerService.s(8)
 
     // App icon với styling theme
     Rectangle {
       id: icon
-      width: 24
-      height: 24
-      radius: 4
+      width: ScalerService.s(24)
+      height: ScalerService.s(24)
+      radius: ScalerService.s(4)
       color: theme.button.background
 
       Image {
         anchors.fill: parent
-        anchors.margins: 2
+        anchors.margins: ScalerService.s(2)
         source: {
           const iconName = node.properties["application.icon-name"];
           if (iconName) {
@@ -39,8 +40,8 @@ ColumnLayout {
             return "../../../assets/volume/volume.png";
           }
         }
-        sourceSize.width: 20
-        sourceSize.height: 20
+        sourceSize.width: ScalerService.s(20)
+        sourceSize.height: ScalerService.s(20)
         fillMode: Image.PreserveAspectFit
       }
     }
@@ -48,7 +49,7 @@ ColumnLayout {
     // App và media info
     ColumnLayout {
       Layout.fillWidth: true
-      spacing: 2
+      spacing: ScalerService.s(2)
 
       Label {
         id: appLabel
@@ -58,7 +59,7 @@ ColumnLayout {
         }
         font.bold: true
         font.family: "ComicShannsMono Nerd Font"
-        font.pixelSize: 16
+        font.pixelSize: ScalerService.s(16)
         elide: Text.ElideRight
         Layout.fillWidth: true
         color: theme.primary.foreground
@@ -68,7 +69,7 @@ ColumnLayout {
         id: mediaLabel
         text: node.properties["media.name"] ?? ""
         font.family: "ComicShannsMono Nerd Font"
-        font.pixelSize: 14
+        font.pixelSize: ScalerService.s(14)
         opacity: 0.8
         elide: Text.ElideRight
         Layout.fillWidth: true
@@ -81,8 +82,8 @@ ColumnLayout {
     Button {
       id: muteButton
       text: ""
-      width: 28
-      height: 28
+      width: ScalerService.s(28)
+      height: ScalerService.s(28)
       opacity: hovered ? 1.0 : 0.8
 
       background: Item {
@@ -104,11 +105,11 @@ ColumnLayout {
 
   // Volume control section
   RowLayout {
-    spacing: 8
+    spacing: ScalerService.s(8)
 
     // Volume percentage
     CustomText {
-      Layout.preferredWidth: 40
+      Layout.preferredWidth: ScalerService.s(40)
       name: `${Math.round(node.audio.volume * 100)}%`
       isBold: true
       size: "small"
@@ -131,11 +132,11 @@ ColumnLayout {
       background: Rectangle {
         x: volumeSlider.leftPadding
         y: volumeSlider.topPadding + volumeSlider.availableHeight / 2 - height / 2
-        implicitWidth: 200
-        implicitHeight: 6
+        implicitWidth: ScalerService.s(200)
+        implicitHeight: ScalerService.s(6)
         width: volumeSlider.availableWidth
         height: implicitHeight
-        radius: 3
+        radius: ScalerService.s(3)
         color: theme.button.background
 
         // Progress fill
@@ -152,7 +153,7 @@ ColumnLayout {
             return theme.normal.yellow;
             return theme.normal.blue;
           }
-          radius: 3
+          radius: ScalerService.s(3)
           Behavior on color {
             ColorAnimation {
               duration: 200
@@ -165,31 +166,31 @@ ColumnLayout {
         Rectangle {
           visible: node.audio.volume > 1.0
           x: parent.width - width
-          width: 3
-          height: parent.height + 2
-          radius: 1.5
+          width: ScalerService.s(3)
+          height: parent.height + ScalerService.s(2)
+          radius: ScalerService.s(1.5)
           color: theme.normal.red
           border.color: theme.bright.red
-          border.width: 1
+          border.width: ScalerService.s(1)
         }
       }
 
       handle: Rectangle {
         x: volumeSlider.leftPadding + volumeSlider.visualPosition * (volumeSlider.availableWidth - width)
         y: volumeSlider.topPadding + volumeSlider.availableHeight / 2 - height / 2
-        implicitWidth: 16
-        implicitHeight: 16
-        radius: 8
+        implicitWidth: ScalerService.s(16)
+        implicitHeight: ScalerService.s(16)
+        radius: ScalerService.s(8)
         color: volumeSlider.pressed ? theme.normal.blue : theme.primary.background
         border.color: node.audio.muted ? theme.normal.black : node.audio.volume > 1.0 ? theme.normal.red : node.audio.volume > 0.8 ? theme.normal.yellow : theme.normal.blue
-        border.width: 2
+        border.width: ScalerService.s(2)
 
         // Inner dot
         Rectangle {
           anchors.centerIn: parent
-          width: 4
-          height: 4
-          radius: 2
+          width: ScalerService.s(4)
+          height: ScalerService.s(4)
+          radius: ScalerService.s(2)
           color: theme.primary.foreground
           opacity: volumeSlider.pressed ? 1.0 : 0.7
         }
@@ -214,14 +215,14 @@ ColumnLayout {
   Rectangle {
     visible: node.audio.peak > 0.01
     Layout.fillWidth: true
-    Layout.preferredHeight: 2
-    radius: 1
+    Layout.preferredHeight: ScalerService.s(2)
+    radius: ScalerService.s(1)
     color: theme.button.background
 
     Rectangle {
       width: parent.width * Math.min(node.audio.peak, 1.0)
       height: parent.height
-      radius: 1
+      radius: ScalerService.s(1)
       color: {
         const peak = node.audio.peak;
         if (peak > 0.9)

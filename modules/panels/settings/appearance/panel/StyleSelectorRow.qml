@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import qs.components
+import qs.services
 
 RowLayout {
   id: root
@@ -18,8 +19,8 @@ RowLayout {
 
   GridLayout {
     columns: 4
-    rowSpacing: 12
-    columnSpacing: 12
+    rowSpacing: ScalerService.s(12)
+    columnSpacing: ScalerService.s(12)
 
     Repeater {
       model: root.styleModel
@@ -30,8 +31,8 @@ RowLayout {
         property int styleIndex: index + 1
         property bool selected: root.currentStyle === styleIndex
 
-        Layout.preferredHeight: 40
-        Layout.preferredWidth: 80
+        Layout.preferredHeight: ScalerService.s(40)
+        Layout.preferredWidth: ScalerService.s(80)
 
         name: `Style ${index+1}`
         size: "xs"

@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import qs.components
+import qs.services
 
 Item {
   id: root
@@ -8,7 +9,7 @@ Item {
   property string name: ""
   property string value: ""
 
-  implicitWidth: contentRamUsed.implicitWidth + 20
+  implicitWidth: contentRamUsed.implicitWidth + ScalerService.s(20)
   implicitHeight: contentRamUsed.implicitHeight
 
   Layout.preferredWidth: implicitWidth
@@ -18,7 +19,7 @@ Item {
     id: contentRamUsed
 
     anchors.centerIn: parent
-    spacing: 2
+    spacing: ScalerService.s(2)
 
     CustomText {
       name: root.name

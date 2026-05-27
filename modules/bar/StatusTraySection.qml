@@ -13,8 +13,8 @@ import "./widget/" as Com
 Rectangle {
   id: root
   border.color: theme.button.border
-  border.width: Settings.appearance.enableBorder ? 3 : 0
-  radius: Settings.appearance.radius2
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
+  radius: ScalerService.s(Settings.appearance.radius2)
   color: theme.primary.background
 
   property string bluetooth_icon: Directories.assetsPath + "/settings/bluetooth.png"
@@ -104,7 +104,7 @@ Rectangle {
   // UI Layout
   Loader {
     anchors.fill: parent
-    anchors.margins: isVertical ? 6 : 5
+    anchors.margins: isVertical ? ScalerService.s(6) : ScalerService.s(5)
     sourceComponent: isVertical ? verticalLayout : horizontalLayout
   }
 
@@ -113,7 +113,7 @@ Rectangle {
 
     RowLayout {
       anchors.fill: parent
-      spacing: 5
+      spacing: ScalerService.s(5)
 
       // System Tray Icons
       Repeater {
@@ -122,10 +122,10 @@ Rectangle {
 
         Rectangle {
           id: trayItemContainer
-          Layout.preferredWidth: 35
+          Layout.preferredWidth: ScalerService.s(35)
           Layout.fillHeight: true
           color: "transparent"
-          radius: 6
+          radius: ScalerService.s(6)
           transformOrigin: Item.Center
 
           visible: modelData.icon !== ""
@@ -134,8 +134,8 @@ Rectangle {
           Image {
             id: trayIcon
             anchors.centerIn: parent
-            width: 25
-            height: 25
+            width: ScalerService.s(25)
+            height: ScalerService.s(25)
             source: trayItemContainer.trayItem?.icon || ""
 
             ToolTip {
@@ -189,7 +189,7 @@ Rectangle {
       }
 
       Item {
-        Layout.preferredWidth: trayRepeater.count > 0 ? 5 : 0
+        Layout.preferredWidth: trayRepeater.count > 0 ? ScalerService.s(5) : 0
       }
 
       // Bluetooth
@@ -241,26 +241,26 @@ Rectangle {
         Layout.preferredWidth: batteryContent.width
         Layout.fillHeight: true
         color: "transparent"
-        radius: 6
+        radius: ScalerService.s(6)
         transformOrigin: Item.Center
 
         RowLayout {
           id: batteryContent
           anchors.centerIn: parent
-          spacing: 8
+          spacing: ScalerService.s(8)
 
           Image {
             id: batteryIcon
             source: Directories.assetsPath + '/battery/full.png'
-            width: 30
-            height: 30
-            sourceSize: Qt.size(30, 30)
+            width: ScalerService.s(30)
+            height: ScalerService.s(30)
+            sourceSize: Qt.size(ScalerService.s(30), ScalerService.s(30))
           }
           Text {
             text: root.capacity_battery + "%"
             color: theme.primary.foreground
             font {
-              pixelSize: 16
+              pixelSize: ScalerService.s(16)
               bold: true
             }
             verticalAlignment: Text.AlignVCenter
@@ -294,15 +294,15 @@ Rectangle {
         Layout.preferredWidth: powerIcon.width
         Layout.fillHeight: true
         color: "transparent"
-        radius: 6
+        radius: ScalerService.s(6)
         transformOrigin: Item.Center
 
         Image {
           id: powerIcon
           source: Directories.assetsPath + '/system/poweroff.png'
-          width: 30
-          height: 30
-          sourceSize: Qt.size(30, 30)
+          width: ScalerService.s(30)
+          height: ScalerService.s(30)
+          sourceSize: Qt.size(ScalerService.s(30), ScalerService.s(30))
           anchors.centerIn: parent
         }
 
@@ -333,7 +333,7 @@ Rectangle {
 
     ColumnLayout {
       anchors.fill: parent
-      spacing: 8
+      spacing: ScalerService.s(8)
 
       // System Tray Icons (vertical)
       Item {
@@ -350,25 +350,25 @@ Rectangle {
           ColumnLayout {
             id: contentVerticalTray
             anchors.centerIn: parent
-            spacing: 4
+            spacing: ScalerService.s(4)
 
             Repeater {
               model: SystemTray.items
 
               Rectangle {
                 id: trayItemContainerVertical
-                Layout.preferredWidth: 25
-                Layout.preferredHeight: 25
+                Layout.preferredWidth: ScalerService.s(25)
+                Layout.preferredHeight: ScalerService.s(25)
                 color: "transparent"
-                radius: 4
+                radius: ScalerService.s(4)
 
                 visible: modelData.icon !== ""
                 property var trayItem: modelData
 
                 Image {
                   anchors.centerIn: parent
-                  width: 20
-                  height: 20
+                  width: ScalerService.s(20)
+                  height: ScalerService.s(20)
                   source: trayItemContainerVertical.trayItem?.icon || ""
                 }
 
@@ -438,8 +438,8 @@ Rectangle {
         }
       }      // Battery (vertical)
       Item {
-        width: 25
-        height: 25
+        width: ScalerService.s(25)
+        height: ScalerService.s(25)
 
         Item {
           anchors.centerIn: parent
@@ -449,14 +449,14 @@ Rectangle {
 
           ColumnLayout {
             anchors.centerIn: parent
-            spacing: 2
+            spacing: ScalerService.s(2)
 
             Image {
               id: batteryIconVertical
               source: Directories.assetsPath + '/battery/full.png'
-              width: 25
-              height: 25
-              sourceSize: Qt.size(25, 25)
+              width: ScalerService.s(25)
+              height: ScalerService.s(25)
+              sourceSize: Qt.size(ScalerService.s(25), ScalerService.s(25))
               Layout.alignment: Qt.AlignHCenter
             }
           }
@@ -480,8 +480,8 @@ Rectangle {
 
       // Power (vertical)
       Item {
-        width: 25
-        height: 25
+        width: ScalerService.s(25)
+        height: ScalerService.s(25)
 
         Item {
           anchors.centerIn: parent
@@ -493,9 +493,9 @@ Rectangle {
             id: powerIconVertical
             anchors.centerIn: parent
             source: Directories.assetsPath + '/system/poweroff.png'
-            width: 25
-            height: 25
-            sourceSize: Qt.size(25, 25)
+            width: ScalerService.s(25)
+            height: ScalerService.s(25)
+            sourceSize: Qt.size(ScalerService.s(25), ScalerService.s(25))
           }
         }
 

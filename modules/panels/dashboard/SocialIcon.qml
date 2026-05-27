@@ -19,8 +19,8 @@ Rectangle {
   Layout.fillHeight: true
   Layout.preferredWidth: height
   color: bgColor
-  radius: Settings.appearance.radius1
-  border.width: Settings.appearance.enableBorder ? 3 : 0
+  radius: ScalerService.s(Settings.appearance.radius1)
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
   border.color: theme.button.border
   Behavior on opacity {
     NumberAnimation {

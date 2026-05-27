@@ -12,8 +12,8 @@ import qs.services
 PanelWindow {
   id: root
 
-  implicitWidth: root.animationProgress > 0.1 ? 450 : 100
-  implicitHeight: root.animationProgress > 0.1 ?  600 : 100
+  implicitWidth: ScalerService.s(450)
+  implicitHeight: ScalerService.s(600)
   property real animationProgress: 0
   SequentialAnimation on animationProgress {
     running: true
@@ -48,10 +48,10 @@ PanelWindow {
   }
 
   margins {
-    top: Settings.bar.position === "top" ? 10 : 0
-    bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? 10 : 0
-    left: Settings.bar.position === "left" ? 10 : 0
-    right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? 10 : 0
+    top: Settings.bar.position === "top" ? ScalerService.s(10) : 0
+    bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? ScalerService.s(10) : 0
+    left: Settings.bar.position === "left" ? ScalerService.s(10) : 0
+    right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? ScalerService.s(10) : 0
   }
   color: "transparent"
 
@@ -59,18 +59,18 @@ PanelWindow {
     anchors.fill: parent
     color: theme.primary.background
     border.color: theme.button.border
-    radius: Settings.appearance.radius1
-    border.width: Settings.appearance.enableBorder ? 3 : 0
+    radius: ScalerService.s(Settings.appearance.radius1)
+    border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
 
     ColumnLayout {
       anchors.fill: parent
-      anchors.margins: 16
-      spacing: 20
+      anchors.margins: ScalerService.s(16)
+      spacing: ScalerService.s(20)
 
       // Header với icon và title
       RowLayout {
         Layout.fillWidth: true
-        spacing: 12
+        spacing: ScalerService.s(12)
 
         IconImage {
           path: "system/mixer.png"
@@ -88,21 +88,21 @@ PanelWindow {
       // Default sink section
       Rectangle {
         Layout.fillWidth: true
-        Layout.preferredHeight: 120
+        Layout.preferredHeight: ScalerService.s(120)
         color: theme.primary.dim_background
         border.color: theme.button.border_select
-        radius: Settings.appearance.radius2
-        border.width: Settings.appearance.enableBorder ? 2 : 0
+        radius: ScalerService.s(Settings.appearance.radius2)
+        border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
 
         ColumnLayout {
           anchors.fill: parent
-          anchors.margins: 12
-          spacing: 8
+          anchors.margins: ScalerService.s(12)
+          spacing: ScalerService.s(8)
 
           Label {
             text: lang.mixer.output_device
             font.bold: true
-            font.pixelSize: 16
+            font.pixelSize: ScalerService.s(16)
             font.family: "ComicShannsMono Nerd Font"
 
             color: theme.normal.blue
@@ -125,13 +125,13 @@ PanelWindow {
         Layout.fillHeight: true
         color: theme.primary.dim_background
         border.color: theme.button.border_select
-        radius: Settings.appearance.radius2
-        border.width: Settings.appearance.enableBorder ? 2 : 0
+        radius: ScalerService.s(Settings.appearance.radius2)
+        border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
 
         ColumnLayout {
           anchors.fill: parent
-          anchors.margins: 8
-          spacing: 8
+          anchors.margins: ScalerService.s(8)
+          spacing: ScalerService.s(8)
 
           // Section header
           Label {
@@ -139,11 +139,11 @@ PanelWindow {
             font.bold: true
 
             font.family: "ComicShannsMono Nerd Font"
-            font.pixelSize: 16
+            font.pixelSize: ScalerService.s(16)
             color: theme.primary.foreground
             Layout.fillWidth: true
-            Layout.leftMargin: 8
-            Layout.topMargin: 4
+            Layout.leftMargin: ScalerService.s(8)
+            Layout.topMargin: ScalerService.s(4)
           }
 
           // Applications list
@@ -154,8 +154,8 @@ PanelWindow {
 
             ColumnLayout {
               width: parent.width
-              spacing: 8
-              anchors.margins: 8
+              spacing: ScalerService.s(8)
+              anchors.margins: ScalerService.s(8)
 
               Repeater {
                 model: linkTracker.linkGroups
@@ -175,7 +175,7 @@ PanelWindow {
                 font.italic: true
                 horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
-                Layout.topMargin: 20
+                Layout.topMargin: ScalerService.s(20)
               }
             }
           }
@@ -185,11 +185,11 @@ PanelWindow {
       // Footer với status info
       RowLayout {
         Layout.fillWidth: true
-        spacing: 8
+        spacing: ScalerService.s(8)
 
         Rectangle {
           Layout.fillWidth: true
-          Layout.preferredHeight: 20
+          Layout.preferredHeight: ScalerService.s(20)
           color: "transparent"
           CustomText{
             anchors.centerIn: parent
@@ -200,16 +200,16 @@ PanelWindow {
         }
 
         Rectangle {
-          Layout.preferredWidth: 20
-          Layout.preferredHeight: 20
-          radius: width/2
+          Layout.preferredWidth: ScalerService.s(20)
+          Layout.preferredHeight: ScalerService.s(20)
+          radius: ScalerService.s(10)
           color: theme.normal.green
           opacity: 0.7
 
           Label {
             anchors.centerIn: parent
             text: "●"
-            font.pixelSize: 8
+            font.pixelSize: ScalerService.s(8)
             color: theme.primary.background
           }
         }

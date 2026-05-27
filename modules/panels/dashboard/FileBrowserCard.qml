@@ -8,14 +8,14 @@ import qs.commons
 Rectangle {
   id: root
 
-  Layout.preferredWidth: 200
-  Layout.preferredHeight: 220
+  Layout.preferredWidth: ScalerService.s(200)
+  Layout.preferredHeight: ScalerService.s(220)
 
   color: theme.primary.background
   border.color: theme.button.border
   property real animationProgress: 0
-  radius: Settings.appearance.radius1
-  border.width: Settings.appearance.enableBorder ? 3 : 0
+  radius: ScalerService.s(Settings.appearance.radius1)
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
   Behavior on opacity {
     NumberAnimation {
       duration: 200
@@ -24,8 +24,8 @@ Rectangle {
 
   ColumnLayout {
     anchors.fill: parent
-    anchors.margins: 15
-    spacing: 8
+    anchors.margins: ScalerService.s(15)
+    spacing: ScalerService.s(8)
 
     Com.FileItem {
       icon: "filebrowser/documents.png"

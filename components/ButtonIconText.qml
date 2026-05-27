@@ -1,4 +1,5 @@
 import QtQuick
+import qs.services
 
 Item {
   id: root
@@ -17,12 +18,12 @@ Item {
   // Calculate max size to prevent layout shifting
   readonly property int maxSize: {
     switch (size) {
-      case "xs": return 20     // Max hovered size
-      case "small": return 26  // Max hovered size
-      case "normal": return 40 // Max hovered size
-      case "large": return 58  // Max hovered size
-      case "xl": return 72     // Max hovered size
-      default: return 46       // Max hovered size
+      case "xs": return ScalerService.s(20)     // Max hovered size
+      case "small": return ScalerService.s(26)  // Max hovered size
+      case "normal": return ScalerService.s(40) // Max hovered size
+      case "large": return ScalerService.s(58)  // Max hovered size
+      case "xl": return ScalerService.s(72)     // Max hovered size
+      default: return ScalerService.s(46)       // Max hovered size
     }
   }
 
@@ -55,17 +56,17 @@ Item {
     font.pixelSize: {
       switch (root.size) {
         case "xs":
-        return root.hovered ? 20 : 16
+        return root.hovered ? ScalerService.s(20) : ScalerService.s(16)
         case "small":
-        return root.hovered ? 26 : 22
+        return root.hovered ? ScalerService.s(26) : ScalerService.s(22)
         case "normal":
-        return root.hovered ? 42 : 38
+        return root.hovered ? ScalerService.s(42) : ScalerService.s(38)
         case "large":
-        return root.hovered ? 58 : 52
+        return root.hovered ? ScalerService.s(58) : ScalerService.s(52)
         case "xl":
-        return root.hovered ? 72 : 64
+        return root.hovered ? ScalerService.s(72) : ScalerService.s(64)
         default:
-        return root.hovered ? 46 : 40
+        return root.hovered ? ScalerService.s(46) : ScalerService.s(40)
       }
     }
 

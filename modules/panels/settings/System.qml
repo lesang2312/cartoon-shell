@@ -7,24 +7,24 @@ import qs.services
 Item {
   ScrollView {
     anchors.fill: parent
-    anchors.margins: 20
+    anchors.margins: ScalerService.s(20)
     clip: true
 
     ColumnLayout {
       width: parent.width
-      spacing: 15
+      spacing: ScalerService.s(15)
 
       Text {
         text: "System Settings"
         color: theme.primary.foreground
-        font.pixelSize: 24
+        font.pixelSize: ScalerService.s(24)
         font.bold: true
-        Layout.topMargin: 10
+        Layout.topMargin: ScalerService.s(10)
       }
 
       Rectangle {
         Layout.fillWidth: true
-        height: 1
+        height: ScalerService.s(1)
         color: theme.primary.foreground
       }
 
@@ -32,7 +32,7 @@ Item {
       Text {
         text: "Cài đặt System Settings sẽ được hiển thị ở đây"
         color: theme.primary.dim_foreground
-        font.pixelSize: 14
+        font.pixelSize: ScalerService.s(14)
         Layout.alignment: Qt.AlignCenter
         Layout.fillHeight: true
       }

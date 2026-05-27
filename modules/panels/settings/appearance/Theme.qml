@@ -24,7 +24,7 @@ Item {
     id: scrollView
     anchors.fill: parent
     clip: true
-    anchors.margins: 20
+    anchors.margins: ScalerService.s(20)
 
     // Cấu hình scrollbar
     ScrollBar.vertical.policy: ScrollBar.AsNeeded
@@ -43,7 +43,7 @@ Item {
     ColumnLayout {
       id: contentLayout
       width: scrollView.availableWidth
-      spacing: 25
+      spacing: ScalerService.s(25)
       // Tiêu đề chính
       HeaderSettings {
         opacity: root.animationProgress > 0.1 ? 1 : 0
@@ -58,7 +58,7 @@ Item {
       // Đường phân cách
       Rectangle {
         Layout.fillWidth: true
-        height: 1
+        height: ScalerService.s(1)
         color: theme.primary.foreground
         opacity: root.animationProgress > 0.15 ? 0.2 : 0
         Behavior on opacity {
@@ -66,7 +66,7 @@ Item {
             duration: 200
           }
         }
-        Layout.bottomMargin: 5
+        Layout.bottomMargin: ScalerService.s(5)
       }
 
       // Container chính cho nội dung
@@ -77,7 +77,7 @@ Item {
 
         ColumnLayout {
           width: parent.width
-          spacing: 25
+          spacing: ScalerService.s(25)
 
           // Phần chọn theme
           Com.ThemeSelection {
@@ -94,7 +94,7 @@ Item {
       // Spacer để đảm bảo nội dung không bị che ở dưới
       Item {
         Layout.fillHeight: true
-        Layout.minimumHeight: 20
+        Layout.minimumHeight: ScalerService.s(20)
       }
     }
   }
@@ -105,8 +105,8 @@ Item {
 
     Rectangle {
       id: scrollBar
-      width: 8
-      radius: 4
+      width: ScalerService.s(8)
+      radius: ScalerService.s(4)
       color: theme.normal.blue
       opacity: 0.5
 
@@ -122,7 +122,7 @@ Item {
         PropertyChanges {
           target: scrollBar
           opacity: 0.8
-          width: 10
+          width: ScalerService.s(10)
         }
       }
     }
@@ -134,13 +134,13 @@ Item {
     anchors.fill: scrollView
     color: "transparent"
     border.color: "red"
-    border.width: 1
+    border.width: ScalerService.s(1)
 
     Text {
       anchors.centerIn: parent
       text: `SV: ${scrollView.width}x${scrollView.height}\nContent: ${scrollView.contentWidth}x${scrollView.contentHeight}`
       color: "red"
-      font.pixelSize: 10
+      font.pixelSize: ScalerService.s(10)
     }
   }
 }

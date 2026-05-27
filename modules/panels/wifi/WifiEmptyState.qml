@@ -8,31 +8,31 @@ Rectangle {
 
   Column {
     anchors.centerIn: parent
-    spacing: 16
+    spacing: ScalerService.s(16)
 
     Rectangle {
-      width: 80
-      height: 80
-      radius: 16
+      width: ScalerService.s(80)
+      height: ScalerService.s(80)
+      radius: ScalerService.s(16)
       color: theme.normal.red
       anchors.horizontalCenter: parent.horizontalCenter
       Text {
         text: "📶"
-        font.pixelSize: 40
+        font.pixelSize: ScalerService.s(40)
         anchors.centerIn: parent
       }
     }
 
     Text {
       text: lang?.wifi?.disabled || "WiFi đang tắt"
-      font.pixelSize: 18
+      font.pixelSize: ScalerService.s(18)
       color: theme.primary.foreground
       font.family: "ComicShannsMono Nerd Font"
     }
 
     Text {
       text: lang?.wifi?.turn_on || "Bật WiFi để xem mạng khả dụng"
-      font.pixelSize: 14
+      font.pixelSize: ScalerService.s(14)
       color: theme.primary.dim_foreground
       font.family: "ComicShannsMono Nerd Font"
     }

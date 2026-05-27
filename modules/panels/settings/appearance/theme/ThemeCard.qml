@@ -15,32 +15,32 @@ Rectangle {
 
   signal clicked
 
-  width: 100
-  height: 80
-  radius: 12
+  width: ScalerService.s(100)
+  height: ScalerService.s(80)
+  radius: ScalerService.s(12)
 
   color: type === "light" ? "#f5eee6" : "#24273a"
   border.color: isSelected ? theme.button.text : theme.button.border
-  border.width: isSelected ? 3 : 2
+  border.width: isSelected ? ScalerService.s(3) : ScalerService.s(2)
 
   // 👇 hiệu ứng xám
   opacity: isEnabled ? 1.0 : 0.45
 
   Column {
     anchors.centerIn: parent
-    spacing: 6
+    spacing: ScalerService.s(6)
 
     Rectangle {
-      width: 60
-      height: 24
-      radius: 8
+      width: ScalerService.s(60)
+      height: ScalerService.s(24)
+      radius: ScalerService.s(8)
       color: type === "light" ? "#2b2530" : "#cad3f5"
     }
 
     Rectangle {
-      width: 60
-      height: 10
-      radius: 3
+      width: ScalerService.s(60)
+      height: ScalerService.s(10)
+      radius: ScalerService.s(3)
       color: type === "light" ? "#b0a89e" : "#494d64"
     }
   }
@@ -59,23 +59,23 @@ Rectangle {
     opacity: isEnabled ? 1 : 0.6
     font {
       family: "ComicShannsMono Nerd Font"
-      pixelSize: 12
+      pixelSize: ScalerService.s(12)
       bold: true
     }
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.bottom: parent.bottom
-    anchors.bottomMargin: 8
+    anchors.bottomMargin: ScalerService.s(8)
   }
 
   Rectangle {
     visible: isSelected && isEnabled
-    width: 20
-    height: 20
-    radius: 10
+    width: ScalerService.s(20)
+    height: ScalerService.s(20)
+    radius: ScalerService.s(10)
     color: theme.button.text
     anchors.top: parent.top
     anchors.right: parent.right
-    anchors.margins: 5
+    anchors.margins: ScalerService.s(5)
 
     IconText {
       name: "check"

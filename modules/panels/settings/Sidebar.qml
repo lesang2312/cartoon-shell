@@ -12,13 +12,13 @@ Rectangle {
   signal categoryChanged(int index)
   signal backRequested
 
-  Layout.preferredWidth:  root.animationProgress > 0.1 ? 200 : 0
+  Layout.preferredWidth:  root.animationProgress > 0.1 ? ScalerService.s(200) : 0
   Layout.fillHeight: true
   color: theme.primary.dim_background
-  radius: Settings.appearance.radius2
+  radius: ScalerService.s(Settings.appearance.radius2)
 
   border.color: theme.button.border
-  border.width: Settings.appearance.enableBorder ? 2 : 0
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
 
   property real animationProgress: 0
   SequentialAnimation on animationProgress {
@@ -42,9 +42,9 @@ Rectangle {
 
   ColumnLayout {
     anchors.fill: parent
-    anchors.margins: 12
-    anchors.topMargin: 32
-    spacing: 10
+    anchors.margins: ScalerService.s(12)
+    anchors.topMargin: ScalerService.s(32)
+    spacing: ScalerService.s(10)
     clip: true
 
     CustomText{
@@ -119,15 +119,15 @@ Rectangle {
           }
         }
         Layout.fillWidth: true
-        Layout.preferredHeight: 50
-        radius: Settings.appearance.radius3
+        Layout.preferredHeight: ScalerService.s(50)
+        radius: ScalerService.s(Settings.appearance.radius3)
 
         property bool hovered: false
         property bool selected: root.currentIndex === index
 
         color: mouseArea.containsMouse || selected ? theme.button.background_select : theme.button.background
         border.color: mouseArea.containsMouse || selected ? theme.button.border_select : theme.button.border
-        border.width: Settings.appearance.enableBorder ? 1 : 0
+        border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
 
         // Hiệu ứng scale
         scale: mouseArea.containsMouse ? 0.98 : 1.0
@@ -151,8 +151,8 @@ Rectangle {
 
         RowLayout {
           anchors.fill: parent
-          anchors.margins:  8
-          spacing: 12
+          anchors.margins: ScalerService.s(8)
+          spacing: ScalerService.s(12)
 
           IconImage {
             path: modelData.icon
@@ -175,8 +175,8 @@ Rectangle {
             rotation: !mouseArea.containsMouse
             ? 0
             : index % 2 === 0
-            ? 20
-            : -20
+            ? ScalerService.s(20)
+            : ScalerService.s(-20)
             scale: mouseArea.containsMouse ? 1.05 : 1.0
             Behavior on rotation {
               NumberAnimation {
@@ -224,8 +224,8 @@ Rectangle {
 
           // Indicator khi selected - chỉ hiển thị khi expanded
           Rectangle {
-            Layout.preferredWidth: root.animationProgress > 0.7 ? selected ? 4 : 0 : 0
-            Layout.preferredHeight: root.animationProgress > 0.7 ? selected ? 20 : 0 : 0
+            Layout.preferredWidth: root.animationProgress > 0.7 ? selected ? ScalerService.s(4) : 0 : 0
+            Layout.preferredHeight: root.animationProgress > 0.7 ? selected ? ScalerService.s(20) : 0 : 0
             Behavior on Layout.preferredWidth {
               NumberAnimation {
                 duration: 300
@@ -236,7 +236,7 @@ Rectangle {
                 duration: 300
               }
             }
-            radius: 2
+            radius: ScalerService.s(2)
             color: theme.button.text
             visible: selected
             opacity: 0

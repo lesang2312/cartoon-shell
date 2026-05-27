@@ -12,10 +12,10 @@ Rectangle {
   signal pairError(string message)
 
   width: ListView.view.width
-  height: 70
-  radius: 10
+  height: ScalerService.s(70)
+  radius: ScalerService.s(10)
   color: deviceMouseArea.containsMouse ? theme.primary.dim_background : theme.primary.background
-  border.width: modelData?.connected ? 2 : 0
+  border.width: modelData?.connected ? ScalerService.s(2) : 0
   border.color: modelData?.connected ? theme.normal.blue : "transparent"
 
   scale: deviceMouseArea.containsPress ? 0.98 : 1.0
@@ -40,9 +40,9 @@ Rectangle {
     id: pairingIndicator
     visible: modelData?.pairing || false
     anchors.centerIn: parent
-    width: parent.width - 20
-    height: parent.height - 20
-    radius: 8
+    width: parent.width - ScalerService.s(20)
+    height: parent.height - ScalerService.s(20)
+    radius: ScalerService.s(8)
     color: theme.normal.yellow
     opacity: 0.3
 
@@ -50,40 +50,40 @@ Rectangle {
       anchors.centerIn: parent
       text: lang?.bluetooth?.pairing || "Đang ghép nối..."
       color: theme.primary.foreground
-      font.pixelSize: 14
+      font.pixelSize: ScalerService.s(14)
       font.weight: Font.Bold
     }
   }
 
   RowLayout {
     anchors.fill: parent
-    anchors.margins: 12
-    spacing: 12
+    anchors.margins: ScalerService.s(12)
+    spacing: ScalerService.s(12)
     opacity: modelData?.pairing ? 0.7 : 1.0
 
     // Device icon
     Rectangle {
-      width: 46
-      height: 46
-      radius: 23
+      width: ScalerService.s(46)
+      height: ScalerService.s(46)
+      radius: ScalerService.s(23)
       color: modelData?.connected ? theme.normal.blue : theme.button.background
 
       Text {
         anchors.centerIn: parent
         text: getDeviceIcon(modelData?.icon || "")
-        font.pixelSize: 20
+        font.pixelSize: ScalerService.s(20)
       }
     }
 
     // Device info
     ColumnLayout {
       Layout.fillWidth: true
-      spacing: 2
+      spacing: ScalerService.s(2)
 
       Text {
         text: modelData?.name || lang?.bluetooth?.no_devices || "Unknown Device"
         color: theme.primary.foreground
-        font.pixelSize: 16
+        font.pixelSize: ScalerService.s(16)
         font.family: "ComicShannsMono Nerd Font"
         font.weight: Font.Medium
         elide: Text.ElideRight
@@ -109,20 +109,20 @@ Rectangle {
           return theme.normal.blue;
           return theme.primary.dim_foreground;
         }
-        font.pixelSize: 12
+        font.pixelSize: ScalerService.s(12)
         font.family: "ComicShannsMono Nerd Font"
       }
     }
 
     // Action buttons
     RowLayout {
-      spacing: 8
+      spacing: ScalerService.s(8)
 
       // Connect/Disconnect button
       Rectangle {
-        width: 32
-        height: 32
-        radius: 8
+        width: ScalerService.s(32)
+        height: ScalerService.s(32)
+        radius: ScalerService.s(8)
         color: modelData?.connected ? theme.normal.red : modelData?.paired ? theme.normal.blue : theme.button.background
         opacity: (modelData?.paired || modelData?.connecting) ? 1 : 0.5
         enabled: !modelData?.pairing
@@ -144,7 +144,7 @@ Rectangle {
           anchors.centerIn: parent
           text: modelData?.connecting ? "🔄" : modelData?.connected ? "🔌" : "🔗"
           color: theme.primary.foreground
-          font.pixelSize: 14
+          font.pixelSize: ScalerService.s(14)
 
           rotation: modelData?.connecting ? 360 : 0
           RotationAnimator on rotation {
@@ -174,9 +174,9 @@ Rectangle {
 
       // Pair/Forget button
       Rectangle {
-        width: 32
-        height: 32
-        radius: 8
+        width: ScalerService.s(32)
+        height: ScalerService.s(32)
+        radius: ScalerService.s(8)
         color: modelData?.pairing ? theme.normal.yellow : modelData?.paired ? theme.normal.red : theme.normal.blue
         opacity: modelData?.pairing ? 0.8 : 1
         enabled: !modelData?.pairing
@@ -198,7 +198,7 @@ Rectangle {
           anchors.centerIn: parent
           text: modelData?.pairing ? "⏳" : modelData?.paired ? "🗑️" : "👥"
           color: theme.primary.foreground
-          font.pixelSize: 14
+          font.pixelSize: ScalerService.s(14)
 
           scale: pairMouseArea.containsMouse ? 1.2 : 1.0
           Behavior on scale {

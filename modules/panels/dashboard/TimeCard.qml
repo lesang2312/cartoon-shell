@@ -12,10 +12,10 @@ Rectangle {
   property real animationProgress: 0
 
   Layout.fillWidth: true
-  Layout.preferredHeight: 120
+  Layout.preferredHeight: ScalerService.s(120)
   color: theme.primary.background
-  radius: Settings.appearance.radius1
-  border.width: Settings.appearance.enableBorder ? 3 : 0
+  radius: ScalerService.s(Settings.appearance.radius1)
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
   border.color: theme.button.border
   clip: true
   Behavior on opacity {
@@ -26,12 +26,12 @@ Rectangle {
 
   RowLayout {
     anchors.fill: parent
-    anchors.margins: 20
-    spacing: 15
+    anchors.margins: ScalerService.s(20)
+    spacing: ScalerService.s(15)
 
     // Phần hiển thị thời gian (giờ và phút)
     ColumnLayout {
-      spacing: 2
+      spacing: ScalerService.s(2)
       CustomText {
         name: DateTimeService.currentHour
         size: "large"
@@ -58,10 +58,10 @@ Rectangle {
     }
 
     Rectangle {
-      Layout.preferredWidth: 4
-      Layout.preferredHeight: root.animationProgress > 0.47 ? 70 : 0
+      Layout.preferredWidth: ScalerService.s(4)
+      Layout.preferredHeight: root.animationProgress > 0.47 ? ScalerService.s(70) : 0
       color: theme.primary.foreground
-      radius: 2
+      radius: ScalerService.s(2)
       Behavior on Layout.preferredHeight {
         NumberAnimation {
           duration: 500
@@ -72,7 +72,7 @@ Rectangle {
     // Phần hiển thị ngày tháng
     ColumnLayout {
       Layout.fillWidth: true
-      spacing: 2
+      spacing: ScalerService.s(2)
       CustomText {
         name: DateTimeService.currentDay
         isBold: true

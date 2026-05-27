@@ -9,21 +9,21 @@ Item {
 
   RowLayout {
     anchors.fill: parent
-    anchors.margins: 16
-    spacing: 8
+    anchors.margins: ScalerService.s(16)
+    spacing: ScalerService.s(8)
 
     // Main chart area
     ColumnLayout {
       Layout.fillWidth: true
       Layout.fillHeight: true
-      spacing: 4
+      spacing: ScalerService.s(4)
 
       // Title row
       Rectangle {
         Layout.fillWidth: true
         color: theme.primary.background
-        Layout.preferredHeight: 50
-        radius: 8
+        Layout.preferredHeight: ScalerService.s(50)
+        radius: ScalerService.s(8)
 
         CustomText {
           anchors.centerIn: parent
@@ -50,10 +50,10 @@ Item {
 
             var width = cpuChart.width;
             var height = cpuChart.height;
-            var paddingLeft = 60;
-            var paddingRight = 20; // Extra space for percentage labels
-            var paddingTop = 30;
-            var paddingBottom = 20;
+            var paddingLeft = ScalerService.s(60);
+            var paddingRight = ScalerService.s(20); // Extra space for percentage labels
+            var paddingTop = ScalerService.s(30);
+            var paddingBottom = ScalerService.s(20);
             var chartWidth = width - paddingLeft - paddingRight;
             var chartHeight = height - paddingTop - paddingBottom;
 
@@ -65,15 +65,15 @@ Item {
 
             // Draw horizontal grid lines and percentage labels
             ctx.strokeStyle = theme.button.border;
-            ctx.lineWidth = 1;
+            ctx.lineWidth = ScalerService.s(1);
             ctx.globalAlpha = 0.6; // Có thể giảm opacity để nhìn nhẹ nhàng hơn
-            ctx.font = "17px 'ComicShannsMono Nerd Font'";
+            ctx.font = ScalerService.s(17) + "px 'ComicShannsMono Nerd Font'";
             ctx.fillStyle = theme.primary.foreground;
             ctx.textAlign = "right";
             ctx.textBaseline = "middle";
 
             // Cấu hình nét đứt cho caro
-            ctx.setLineDash([5, 5]); // [độ dài nét, khoảng trống]
+            ctx.setLineDash([ScalerService.s(5), ScalerService.s(5)]); // [độ dài nét, khoảng trống]
 
             for (var i = 0; i <= 10; i++) {
               var percentage = i * 10;
@@ -86,7 +86,7 @@ Item {
               ctx.stroke();
 
               // Text %
-              ctx.fillText(percentage + "%", paddingLeft - 5, y);
+              ctx.fillText(percentage + "%", paddingLeft - ScalerService.s(5), y);
             }
 
             // ======================
@@ -163,7 +163,7 @@ Item {
 
               // Draw smooth curve line
               ctx.strokeStyle = theme.button.text;
-              ctx.lineWidth = 3;
+              ctx.lineWidth = ScalerService.s(3);
               ctx.lineJoin = "round";
               ctx.lineCap = "round";
               ctx.beginPath();
@@ -201,14 +201,14 @@ Item {
                 var currentX = paddingLeft + chartWidth;
                 var currentY = points[points.length - 1].y;
 
-                ctx.font = "15px 'ComicShannsMono Nerd Font'";
-                ctx.fillText(currentUsage.toFixed(1) + "%", currentX + 5, currentY - 8);
+                ctx.font = ScalerService.s(15) + "px 'ComicShannsMono Nerd Font'";
+                ctx.fillText(currentUsage.toFixed(1) + "%", currentX + ScalerService.s(5), currentY - ScalerService.s(8));
               }
             }
 
             // Draw chart border
             ctx.strokeStyle = theme.normal.black;
-            ctx.lineWidth = 2;
+            ctx.lineWidth = ScalerService.s(2);
             ctx.globalAlpha = 0.5;
             ctx.strokeRect(paddingLeft, paddingTop, chartWidth, chartHeight);
             ctx.globalAlpha = 1.0;

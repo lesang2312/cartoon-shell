@@ -2,19 +2,21 @@ import QtQuick
 import QtQuick.Layouts
 import qs.components
 import qs.modules.dialogs.open_file as Com
+import qs.services
+
 Item {
   Layout.fillHeight: true
-  Layout.preferredWidth: 180
+  Layout.preferredWidth: ScalerService.s(180)
   Rectangle {
     anchors.fill: parent
-    border.width: 1
+    border.width: ScalerService.s(1)
     border.color: theme.primary.foreground
-    radius: 16
+    radius: ScalerService.s(16)
     color: theme.primary.dim_background
     ColumnLayout {
       anchors.fill: parent
-      anchors.margins: 16
-      spacing: 10
+      anchors.margins: ScalerService.s(16)
+      spacing: ScalerService.s(10)
 
       Com.ItemFolderSidebar{
         image: "filebrowser/home.png"

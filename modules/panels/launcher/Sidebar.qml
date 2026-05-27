@@ -8,7 +8,7 @@ import qs.commons
 
 Rectangle {
   id: root
-  Layout.preferredWidth: 210
+  Layout.preferredWidth: ScalerService.s(210)
   property real animationProgress: 0
 
   SequentialAnimation on animationProgress {
@@ -24,8 +24,8 @@ Rectangle {
   Layout.fillHeight: true
   color: theme.primary.dim_background
   border.color: theme.button.border
-  radius: Settings.appearance.radius2
-  border.width: Settings.appearance.enableBorder ? 2 : 0
+  radius: ScalerService.s(Settings.appearance.radius2)
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
 
   signal confirmRequested(string action, string actionLabel)
 
@@ -36,8 +36,8 @@ Rectangle {
 
   ColumnLayout {
     anchors.fill: parent
-    anchors.margins: 12
-    spacing: 10
+    anchors.margins: ScalerService.s(12)
+    spacing: ScalerService.s(10)
 
     // Tiêu đề Menu
     Rectangle {
@@ -49,11 +49,11 @@ Rectangle {
         }
       }
       Layout.fillWidth: true
-      Layout.preferredHeight: 60
+      Layout.preferredHeight: ScalerService.s(60)
       color: mouseAreaLauncher.containsMouse ? theme.button.background_select : theme.button.background
       border.color: mouseAreaLauncher.containsPress ? theme.button.border_select : theme.button.border
-      border.width: Settings.appearance.enableBorder ? 1 : 0
-      radius: Settings.appearance.radius3
+      border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
+      radius: ScalerService.s(Settings.appearance.radius3)
 
       scale: mouseAreaLauncher.containsPress ? 0.98 : 1.0
       Behavior on scale {
@@ -74,7 +74,7 @@ Rectangle {
 
       RowLayout {
         anchors.fill: parent
-        anchors.margins: 8
+        anchors.margins: ScalerService.s(8)
 
         IconImage {
           path: "launcher/dashboard"
@@ -111,9 +111,9 @@ Rectangle {
 
         // Indicator khi selected
         Rectangle {
-          Layout.preferredWidth: 4
-          Layout.preferredHeight: 20
-          radius: 2
+          Layout.preferredWidth: ScalerService.s(4)
+          Layout.preferredHeight: ScalerService.s(20)
+          radius: ScalerService.s(2)
           color: theme.normal.green
           visible: false // Sẽ được điều khiển bởi trạng thái selected
           opacity: mouseAreaLauncher.containsMouse ? 1.0 : 0.8
@@ -154,9 +154,9 @@ Rectangle {
         }
       }
       Layout.fillWidth: true
-      Layout.preferredHeight: 60
-      border.width: Settings.appearance.enableBorder ? 1 : 0
-      radius: Settings.appearance.radius3
+      Layout.preferredHeight: ScalerService.s(60)
+      border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
+      radius: ScalerService.s(Settings.appearance.radius3)
       color: mouseAreaSettings.containsMouse ? theme.button.background_select : theme.button.background
       border.color: mouseAreaSettings.containsPress ? theme.button.border_select : theme.button.border
 
@@ -179,7 +179,7 @@ Rectangle {
 
       RowLayout {
         anchors.fill: parent
-        anchors.margins: 8
+        anchors.margins: ScalerService.s(8)
 
         IconImage {
           path: "system/setting.png"
@@ -216,9 +216,9 @@ Rectangle {
 
         // Indicator khi selected
         Rectangle {
-          Layout.preferredWidth: 4
-          Layout.preferredHeight: 20
-          radius: 2
+          Layout.preferredWidth: ScalerService.s(4)
+          Layout.preferredHeight: ScalerService.s(20)
+          radius: ScalerService.s(2)
           color: theme.normal.blue
           visible: false // Sẽ được điều khiển bởi trạng thái selected
           opacity: mouseAreaSettings.containsMouse ? 1.0 : 0.8
@@ -259,11 +259,11 @@ Rectangle {
         }
       }
       Layout.fillWidth: true
-      Layout.preferredHeight: 60
+      Layout.preferredHeight: ScalerService.s(60)
       color: mouseAreaSleep.containsMouse ? theme.button.background_select : theme.button.background
       border.color: mouseAreaSleep.containsPress ? theme.button.border_select : theme.button.border
-      border.width: Settings.appearance.enableBorder ? 1 : 0
-      radius: Settings.appearance.radius3
+      border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
+      radius: ScalerService.s(Settings.appearance.radius3)
 
       scale: mouseAreaSleep.containsPress ? 0.98 : 1.0
       Behavior on scale {
@@ -284,7 +284,7 @@ Rectangle {
 
       RowLayout {
         anchors.fill: parent
-        anchors.margins: 8
+        anchors.margins: ScalerService.s(8)
 
         IconImage {
           path: "system/sys-sleep.png"
@@ -320,9 +320,9 @@ Rectangle {
 
         // Indicator khi selected
         Rectangle {
-          Layout.preferredWidth: 4
-          Layout.preferredHeight: 20
-          radius: 2
+          Layout.preferredWidth: ScalerService.s(4)
+          Layout.preferredHeight: ScalerService.s(20)
+          radius: ScalerService.s(2)
           color: theme.normal.blue
           visible: false // Sẽ được điều khiển bởi trạng thái selected
           opacity: mouseAreaSleep.containsMouse ? 1.0 : 0.8
@@ -363,11 +363,11 @@ Rectangle {
       }
       id: lockButton
       Layout.fillWidth: true
-      Layout.preferredHeight: 60
+      Layout.preferredHeight: ScalerService.s(60)
       color: mouseAreaLock.containsMouse ? theme.button.background_select : theme.button.background
       border.color: mouseAreaLock.containsPress ? theme.button.border_select : theme.button.border
-      border.width: Settings.appearance.enableBorder ? 1 : 0
-      radius: Settings.appearance.radius3
+      border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
+      radius: ScalerService.s(Settings.appearance.radius3)
 
       scale: mouseAreaLock.containsPress ? 0.98 : 1.0
       Behavior on scale {
@@ -388,7 +388,7 @@ Rectangle {
 
       RowLayout {
         anchors.fill: parent
-        anchors.margins: 8
+        anchors.margins: ScalerService.s(8)
 
         IconImage {
           path: "system/sys-lock.png"
@@ -424,9 +424,9 @@ Rectangle {
 
         // Indicator khi selected
         Rectangle {
-          Layout.preferredWidth: 4
-          Layout.preferredHeight: 20
-          radius: 2
+          Layout.preferredWidth: ScalerService.s(4)
+          Layout.preferredHeight: ScalerService.s(20)
+          radius: ScalerService.s(2)
           color: theme.normal.blue
           visible: false // Sẽ được điều khiển bởi trạng thái selected
           opacity: mouseAreaLock.containsMouse ? 1.0 : 0.8
@@ -467,11 +467,11 @@ Rectangle {
       }
       id: logoutButton
       Layout.fillWidth: true
-      Layout.preferredHeight: 60
+      Layout.preferredHeight: ScalerService.s(60)
       color: mouseAreaLogout.containsMouse ? theme.button.background_select : theme.button.background
       border.color: mouseAreaLogout.containsPress ? theme.button.border_select : theme.button.border
-      border.width: Settings.appearance.enableBorder ? 1 : 0
-      radius: Settings.appearance.radius3
+      border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
+      radius: ScalerService.s(Settings.appearance.radius3)
 
       scale: mouseAreaLogout.containsPress ? 0.98 : 1.0
       Behavior on scale {
@@ -492,7 +492,7 @@ Rectangle {
 
       RowLayout {
         anchors.fill: parent
-        anchors.margins: 8
+        anchors.margins: ScalerService.s(8)
 
         IconImage {
           path: "system/sys-exit.png"
@@ -528,9 +528,9 @@ Rectangle {
 
         // Indicator khi selected
         Rectangle {
-          Layout.preferredWidth: 4
-          Layout.preferredHeight: 20
-          radius: 2
+          Layout.preferredWidth: ScalerService.s(4)
+          Layout.preferredHeight: ScalerService.s(20)
+          radius: ScalerService.s(2)
           color: theme.normal.blue
           visible: false // Sẽ được điều khiển bởi trạng thái selected
           opacity: mouseAreaLogout.containsMouse ? 1.0 : 0.8
@@ -571,11 +571,11 @@ Rectangle {
         }
       }
       Layout.fillWidth: true
-      Layout.preferredHeight: 60
+      Layout.preferredHeight: ScalerService.s(60)
       color: mouseAreaRestart.containsMouse ? theme.button.background_select : theme.button.background
       border.color: mouseAreaRestart.containsPress ? theme.button.border_select : theme.button.border
-      border.width: Settings.appearance.enableBorder ? 1 : 0
-      radius: Settings.appearance.radius3
+      border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
+      radius: ScalerService.s(Settings.appearance.radius3)
 
       scale: mouseAreaRestart.containsPress ? 0.98 : 1.0
       Behavior on scale {
@@ -596,7 +596,7 @@ Rectangle {
 
       RowLayout {
         anchors.fill: parent
-        anchors.margins: 8
+        anchors.margins: ScalerService.s(8)
 
         IconImage {
           path: "system/sys-reboot.png"
@@ -633,9 +633,9 @@ Rectangle {
 
         // Indicator khi selected
         Rectangle {
-          Layout.preferredWidth: 4
-          Layout.preferredHeight: 20
-          radius: 2
+          Layout.preferredWidth: ScalerService.s(4)
+          Layout.preferredHeight: ScalerService.s(20)
+          radius: ScalerService.s(2)
           color: theme.normal.blue
           visible: false // Sẽ được điều khiển bởi trạng thái selected
           opacity: mouseAreaRestart.containsMouse ? 1.0 : 0.8
@@ -676,11 +676,11 @@ Rectangle {
       }
       id: shutdownButton
       Layout.fillWidth: true
-      Layout.preferredHeight: 60
+      Layout.preferredHeight: ScalerService.s(60)
       color: mouseAreaShutdown.containsMouse ? theme.button.background_select : theme.button.background
       border.color: mouseAreaShutdown.containsPress ? theme.button.border_select : theme.button.border
-      border.width: Settings.appearance.enableBorder ? 1 : 0
-      radius: Settings.appearance.radius3
+      border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
+      radius: ScalerService.s(Settings.appearance.radius3)
 
       scale: mouseAreaShutdown.containsPress ? 0.98 : 1.0
       Behavior on scale {
@@ -701,7 +701,7 @@ Rectangle {
 
       RowLayout {
         anchors.fill: parent
-        anchors.margins: 8
+        anchors.margins: ScalerService.s(8)
 
         IconImage {
           path: "system/poweroff.png"
@@ -737,9 +737,9 @@ Rectangle {
 
         // Indicator khi selected
         Rectangle {
-          Layout.preferredWidth: 4
-          Layout.preferredHeight: 20
-          radius: 2
+          Layout.preferredWidth: ScalerService.s(4)
+          Layout.preferredHeight: ScalerService.s(20)
+          radius: ScalerService.s(2)
           color: theme.normal.blue
           visible: false // Sẽ được điều khiển bởi trạng thái selected
           opacity: mouseAreaShutdown.containsMouse ? 1.0 : 0.8

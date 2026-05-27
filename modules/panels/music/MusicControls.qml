@@ -7,17 +7,17 @@ import qs.services
 RowLayout {
   id: root
   Layout.fillWidth: true
-  Layout.preferredHeight: 60
+  Layout.preferredHeight: ScalerService.s(60)
   property real animationProgress: 0
-  spacing: 24
+  spacing: ScalerService.s(24)
 
   Item { Layout.fillWidth: true }
 
   // Previous
   Rectangle {
-    Layout.preferredWidth: 48
-    Layout.preferredHeight: 48
-    radius: 24
+    Layout.preferredWidth: ScalerService.s(48)
+    Layout.preferredHeight: ScalerService.s(48)
+    radius: ScalerService.s(24)
     color: prevArea.containsMouse ? theme.button.background_select : theme.button.background
     opacity: root.animationProgress > 0.2 ? 1 : 0
     Behavior on opacity {
@@ -46,9 +46,9 @@ RowLayout {
 
   // Play/Pause
   Rectangle {
-    Layout.preferredWidth: 64
-    Layout.preferredHeight: 64
-    radius: 32
+    Layout.preferredWidth: ScalerService.s(64)
+    Layout.preferredHeight: ScalerService.s(64)
+    radius: ScalerService.s(32)
     color: playArea.containsMouse ? theme.normal.blue : theme.button.background
     opacity: root.animationProgress > 0.3 ? 1 : 0
     Behavior on opacity {
@@ -77,9 +77,9 @@ RowLayout {
 
   // Next
   Rectangle {
-    Layout.preferredWidth: 48
-    Layout.preferredHeight: 48
-    radius: 24
+    Layout.preferredWidth: ScalerService.s(48)
+    Layout.preferredHeight: ScalerService.s(48)
+    radius: ScalerService.s(24)
     color: nextArea.containsMouse ? theme.button.background_select : theme.button.background
     opacity: root.animationProgress > 0.4 ? 1 : 0
     Behavior on opacity {

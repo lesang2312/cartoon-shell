@@ -10,8 +10,8 @@ Rectangle {
   property color iconColor: "white"
 
   color: theme.primary.background
-  radius: Settings.appearance.radius1
-  border.width: Settings.appearance.enableBorder ? 3 : 0
+  radius: ScalerService.s(Settings.appearance.radius1)
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
   border.color: theme.button.border
   Behavior on opacity {
     NumberAnimation {
@@ -23,8 +23,8 @@ Rectangle {
     id: iconImage
     source: root.icon
     anchors.centerIn: parent
-    width: 50
-    height: 50
+    width: ScalerService.s(50)
+    height: ScalerService.s(50)
     fillMode: Image.PreserveAspectFit
     smooth: true
     visible: status === Image.Ready
@@ -34,7 +34,7 @@ Rectangle {
       anchors.centerIn: parent
       text: "?"
       color: theme.primary.dim_foreground
-      font.pixelSize: 24
+      font.pixelSize: ScalerService.s(24)
       font.family: "ComicShannsMono Nerd Font"
       visible: parent.status !== Image.Ready
     }

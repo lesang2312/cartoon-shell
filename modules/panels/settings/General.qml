@@ -34,7 +34,7 @@ Item {
   // Chỉ giữ lại giao diện minimal mode
   ColumnLayout {
     anchors.fill: parent
-    spacing: 10
+    spacing: ScalerService.s(10)
 
     // Top Navigation Bar
     Bar.TopNavigationBar{
@@ -79,15 +79,15 @@ Item {
 
         ColumnLayout {
           width: parent.width
-          spacing: 20
-          anchors.margins: 20
+          spacing: ScalerService.s(20)
+          anchors.margins: ScalerService.s(20)
 
           Text {
             text: lang?.general?.date_time || "Date & Time"
             color: theme.primary.foreground
             font {
               family: "ComicShannsMono Nerd Font"
-              pixelSize: 24
+              pixelSize: ScalerService.s(24)
               bold: true
             }
             Layout.alignment: Qt.AlignLeft
@@ -95,7 +95,7 @@ Item {
 
           Rectangle {
             Layout.fillWidth: true
-            height: 1
+            height: ScalerService.s(1)
             color: theme.primary.foreground
             opacity: 0.3
           }
@@ -105,6 +105,7 @@ Item {
             text: "Date & Time settings content"
             color: theme.primary.foreground
             Layout.alignment: Qt.AlignLeft
+            font.pixelSize: ScalerService.s(14)
           }
         }
       }
@@ -116,15 +117,15 @@ Item {
 
         ColumnLayout {
           width: parent.width
-          spacing: 20
-          anchors.margins: 20
+          spacing: ScalerService.s(20)
+          anchors.margins: ScalerService.s(20)
 
           Text {
             text: lang?.general?.session || "Session"
             color: theme.primary.foreground
             font {
               family: "ComicShannsMono Nerd Font"
-              pixelSize: 24
+              pixelSize: ScalerService.s(24)
               bold: true
             }
             Layout.alignment: Qt.AlignLeft
@@ -132,7 +133,7 @@ Item {
 
           Rectangle {
             Layout.fillWidth: true
-            height: 1
+            height: ScalerService.s(1)
             color: theme.primary.foreground
             opacity: 0.3
           }
@@ -142,6 +143,7 @@ Item {
             text: "Session settings content"
             color: theme.primary.foreground
             Layout.alignment: Qt.AlignLeft
+            font.pixelSize: ScalerService.s(14)
           }
         }
       }
@@ -153,15 +155,15 @@ Item {
 
         ColumnLayout {
           width: parent.width
-          spacing: 20
-          anchors.margins: 20
+          spacing: ScalerService.s(20)
+          anchors.margins: ScalerService.s(20)
 
           Text {
             text: lang?.general?.behavior || "Behavior"
             color: theme.primary.foreground
             font {
               family: "ComicShannsMono Nerd Font"
-              pixelSize: 24
+              pixelSize: ScalerService.s(24)
               bold: true
             }
             Layout.alignment: Qt.AlignLeft
@@ -169,7 +171,7 @@ Item {
 
           Rectangle {
             Layout.fillWidth: true
-            height: 1
+            height: ScalerService.s(1)
             color: theme.primary.foreground
             opacity: 0.3
           }
@@ -179,6 +181,7 @@ Item {
             text: "Behavior settings content"
             color: theme.primary.foreground
             Layout.alignment: Qt.AlignLeft
+            font.pixelSize: ScalerService.s(14)
           }
         }
       }
@@ -190,15 +193,15 @@ Item {
 
         ColumnLayout {
           width: parent.width
-          spacing: 20
-          anchors.margins: 20
+          spacing: ScalerService.s(20)
+          anchors.margins: ScalerService.s(20)
 
           Text {
             text: lang?.general?.notifications || "Notifications"
             color: theme.primary.foreground
             font {
               family: "ComicShannsMono Nerd Font"
-              pixelSize: 24
+              pixelSize: ScalerService.s(24)
               bold: true
             }
             Layout.alignment: Qt.AlignLeft
@@ -206,7 +209,7 @@ Item {
 
           Rectangle {
             Layout.fillWidth: true
-            height: 1
+            height: ScalerService.s(1)
             color: theme.primary.foreground
             opacity: 0.3
           }
@@ -216,6 +219,7 @@ Item {
             text: "Notifications settings content"
             color: theme.primary.foreground
             Layout.alignment: Qt.AlignLeft
+            font.pixelSize: ScalerService.s(14)
           }
         }
       }
@@ -227,15 +231,15 @@ Item {
 
         ColumnLayout {
           width: parent.width
-          spacing: 20
-          anchors.margins: 20
+          spacing: ScalerService.s(20)
+          anchors.margins: ScalerService.s(20)
 
           Text {
             text: lang?.general?.privacy || "Privacy"
             color: theme.primary.foreground
             font {
               family: "ComicShannsMono Nerd Font"
-              pixelSize: 24
+              pixelSize: ScalerService.s(24)
               bold: true
             }
             Layout.alignment: Qt.AlignLeft
@@ -243,7 +247,7 @@ Item {
 
           Rectangle {
             Layout.fillWidth: true
-            height: 1
+            height: ScalerService.s(1)
             color: theme.primary.foreground
             opacity: 0.3
           }
@@ -253,6 +257,7 @@ Item {
             text: "Privacy settings content"
             color: theme.primary.foreground
             Layout.alignment: Qt.AlignLeft
+            font.pixelSize: ScalerService.s(14)
           }
         }
       }

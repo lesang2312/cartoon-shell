@@ -9,9 +9,9 @@ import qs.components
 Rectangle {
   id: root
   color: theme.primary.background
-  radius: Settings.appearance.radius2
+  radius: ScalerService.s(Settings.appearance.radius2)
   border.color: theme.button.border
-  border.width: Settings.appearance.enableBorder ? 3 : 0
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
 
   property string selectedFlag: Settings.appearance.countryFlag
   property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
@@ -19,7 +19,7 @@ Rectangle {
   // UI Layout
   Loader {
     anchors.fill: parent
-    anchors.margins: isVertical ? 8 : 10
+    anchors.margins: isVertical ? ScalerService.s(8) : ScalerService.s(10)
     sourceComponent: isVertical ? verticalLayout : horizontalLayout
   }
 
@@ -29,20 +29,20 @@ Rectangle {
     RowLayout {
       anchors.fill: parent
       anchors {
-        leftMargin: 10
-        rightMargin: 10
+        leftMargin: ScalerService.s(10)
+        rightMargin: ScalerService.s(10)
       }
-      spacing: 5
+      spacing: ScalerService.s(5)
 
       // Phần datetime - căn trái
       Item {
         id: timeContainer
-        Layout.preferredWidth: textCurrentDate.implicitWidth + 20
+        Layout.preferredWidth: textCurrentDate.implicitWidth + ScalerService.s(20)
         Layout.fillHeight: true
 
         ColumnLayout {
           anchors.fill: parent
-          anchors.leftMargin: 10
+          anchors.leftMargin: ScalerService.s(10)
           spacing: 0
           CustomText{
             name: DateTimeService.currentTime
@@ -103,7 +103,7 @@ Rectangle {
           }
 
           ColumnLayout {
-            spacing: 1
+            spacing: ScalerService.s(1)
             CustomText {
               name: WeatherService.temperature || "Đang tải..."
               Layout.alignment: Qt.AlignVCenter
@@ -151,7 +151,7 @@ Rectangle {
       // Flag Selector - căn phải
       Item {
         id: flagContainer
-        Layout.preferredWidth: 32
+        Layout.preferredWidth: ScalerService.s(32)
         Layout.fillHeight: parent
 
         ButtonIconImage{
@@ -169,12 +169,12 @@ Rectangle {
 
     ColumnLayout {
       anchors.fill: parent
-      spacing: 8
-      anchors.margins: 10
+      spacing: ScalerService.s(8)
+      anchors.margins: ScalerService.s(10)
       Item {
         id: timeContainerVertical
         Layout.fillWidth: true
-        Layout.preferredHeight: 50
+        Layout.preferredHeight: ScalerService.s(50)
 
         // Xoay container để hiển thị theo chiều dọc
         Item {
@@ -185,13 +185,13 @@ Rectangle {
 
           ColumnLayout {
             anchors.centerIn: parent
-            spacing: 2
+            spacing: ScalerService.s(2)
 
             Text {
               text: DateTimeService.currentHour
               color: theme.primary.foreground
               font {
-                pixelSize: 20
+                pixelSize: ScalerService.s(20)
                 bold: true
                 family: "ComicShannsMono Nerd Font"
               }
@@ -200,7 +200,7 @@ Rectangle {
               text: DateTimeService.currentMinus
               color: theme.primary.foreground
               font {
-                pixelSize: 20
+                pixelSize: ScalerService.s(20)
                 bold: true
                 family: "ComicShannsMono Nerd Font"
               }
@@ -245,20 +245,20 @@ Rectangle {
 
           ColumnLayout {
             anchors.centerIn: parent
-            spacing: 8
+            spacing: ScalerService.s(8)
 
             IconImage {
               path: WeatherService.icon
             }
 
             ColumnLayout {
-              spacing: 1
+              spacing: ScalerService.s(1)
               Text {
                 text: WeatherService.temperature || "Đang tải..."
                 color: theme.primary.foreground
                 Layout.alignment: Qt.AlignVCenter
                 font {
-                  pixelSize: 14
+                  pixelSize: ScalerService.s(14)
                   bold: true
                   family: "ComicShannsMono Nerd Font"
                 }
@@ -294,12 +294,12 @@ Rectangle {
       Item {
         id: flagContainerVertical
         Layout.fillWidth: true
-        Layout.preferredHeight: 40
+        Layout.preferredHeight: ScalerService.s(40)
 
         Image {
           source: root.selectedFlag ? `../../assets/flags/${root.selectedFlag}.png` : ""
-          width: 30
-          height: 30
+          width: ScalerService.s(30)
+          height: ScalerService.s(30)
           fillMode: Image.PreserveAspectFit
           smooth: true
           anchors.centerIn: parent

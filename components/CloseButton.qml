@@ -1,13 +1,14 @@
 import QtQuick
 import qs.components
+import qs.services
 
 Rectangle {
   id: root
   anchors.right: parent.right
   anchors.verticalCenter: parent.verticalCenter
-  implicitWidth: 32
-  implicitHeight: 32
-  radius: 116
+  implicitWidth: ScalerService.s(32)
+  implicitHeight: ScalerService.s(32)
+  radius: ScalerService.s(116)
   color: closeArea.containsMouse ? theme.normal.red : theme.button.background
 
   Behavior on opacity {

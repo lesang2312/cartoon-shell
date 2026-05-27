@@ -11,8 +11,8 @@ import qs.commons
 PanelWindow {
   id: detailPanel
 
-  implicitWidth: 1000
-  implicitHeight: 850
+  implicitWidth: ScalerService.s(1000)
+  implicitHeight: ScalerService.s(850)
 
   anchors {
     top: Settings.bar.position === "top"
@@ -22,10 +22,10 @@ PanelWindow {
   }
 
   margins {
-    top: Settings.bar.position === "top" ? 10 : 0
-    bottom: Settings.bar.position === "bottom" ? 10 : 0
-    left: (Settings.bar.position === "top" || Settings.bar.position === "bottom") ? 400 : 10
-    right: Settings.bar.position === "right" ? 10 : 0
+    top: Settings.bar.position === "top" ? ScalerService.s(10) : 0
+    bottom: Settings.bar.position === "bottom" ? ScalerService.s(10) : 0
+    left: (Settings.bar.position === "top" || Settings.bar.position === "bottom") ? ScalerService.s(400) : ScalerService.s(10)
+    right: Settings.bar.position === "right" ? ScalerService.s(10) : 0
   }
 
   exclusiveZone: 0
@@ -38,13 +38,13 @@ PanelWindow {
     anchors.fill: parent
     color: theme.primary.background
     border.color: theme.button.border
-    radius: Settings.appearance.radius1
-    border.width: Settings.appearance.enableBorder ? 3 : 0
+    radius: ScalerService.s(Settings.appearance.radius1)
+    border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
 
     ColumnLayout {
       anchors.fill: parent
-      anchors.margins: 16
-      spacing: 16
+      anchors.margins: ScalerService.s(16)
+      spacing: ScalerService.s(16)
 
       // Header với nút đóng
       Components.CpuDetailHeader {

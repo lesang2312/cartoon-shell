@@ -8,16 +8,16 @@ Rectangle {
   id: root
   property var wifiManager
 
-  implicitHeight: 80
+  implicitHeight: ScalerService.s(80)
   color: theme.primary.dim_background
-  radius: Settings.appearance.radius2
-  border.width: Settings.appearance.enableBorder ? 2 : 0
+  radius: ScalerService.s(Settings.appearance.radius2)
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
   border.color: theme.normal.black
   property real animationProgress: 0
 
   RowLayout {
     anchors.fill: parent
-    anchors.margins: 12
+    anchors.margins: ScalerService.s(12)
 
     ColumnLayout {
       Layout.fillHeight: true

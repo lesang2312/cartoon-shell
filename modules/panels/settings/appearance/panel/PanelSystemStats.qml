@@ -7,7 +7,7 @@ import "./" as Com
 
 ColumnLayout {
   id: root
-  spacing: 32
+  spacing: ScalerService.s(32)
   Layout.fillWidth: true
 
   function changeStyle(nameSystem, style) {
@@ -67,8 +67,8 @@ ColumnLayout {
 
   Rectangle {
     Layout.preferredWidth: parent.width * 0.8
-    Layout.preferredHeight: 2
-    radius: 8
+    Layout.preferredHeight: ScalerService.s(2)
+    radius: ScalerService.s(8)
     color: theme.primary.dim_foreground
     Layout.alignment: Qt.AlignHCenter
   }
@@ -84,8 +84,8 @@ ColumnLayout {
   }
   Rectangle {
     Layout.preferredWidth: parent.width * 0.8
-    Layout.preferredHeight: 2
-    radius: 8
+    Layout.preferredHeight: ScalerService.s(2)
+    radius: ScalerService.s(8)
     color: theme.primary.dim_foreground
     Layout.alignment: Qt.AlignHCenter
   }
@@ -101,8 +101,8 @@ ColumnLayout {
   }
   Rectangle {
     Layout.preferredWidth: parent.width * 0.8
-    Layout.preferredHeight: 2
-    radius: 8
+    Layout.preferredHeight: ScalerService.s(2)
+    radius: ScalerService.s(8)
     color: theme.primary.dim_foreground
     Layout.alignment: Qt.AlignHCenter
   }
@@ -119,8 +119,8 @@ ColumnLayout {
 
   Rectangle {
     Layout.preferredWidth: parent.width * 0.8
-    Layout.preferredHeight: 2
-    radius: 8
+    Layout.preferredHeight: ScalerService.s(2)
+    radius: ScalerService.s(8)
     color: theme.primary.dim_foreground
     Layout.alignment: Qt.AlignHCenter
   }

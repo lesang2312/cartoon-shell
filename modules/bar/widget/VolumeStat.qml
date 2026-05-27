@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import qs.components
 import qs.commons
 import Quickshell.Services.Pipewire
+import qs.services
 
 RowLayout {
   id: root
@@ -17,7 +18,7 @@ RowLayout {
       return "volume_up"
     }
   }
-  spacing: 2
+  spacing: ScalerService.s(2)
 
   IconImage {
     visible: root.style === 1

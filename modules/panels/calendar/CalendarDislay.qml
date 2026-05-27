@@ -24,10 +24,10 @@ Rectangle {
     }
   }
 
-  width: 400
-  height: 400
+  width: ScalerService.s(400)
+  height: ScalerService.s(400)
   color: "transparent"
-  radius: 10
+  radius: ScalerService.s(10)
 
   property var weekdayLabels: {
     const w = lang?.calendar?.weekdays;
@@ -43,8 +43,8 @@ Rectangle {
 
   ColumnLayout {
     anchors.fill: parent
-    anchors.margins: 10
-    spacing: 15
+    anchors.margins: ScalerService.s(10)
+    spacing: ScalerService.s(15)
 
     // Header
     RowLayout {
@@ -101,8 +101,8 @@ Rectangle {
         id: calendarGrid
         width: flickable.width
         columns: 7
-        rowSpacing: 8
-        columnSpacing: 8
+        rowSpacing: ScalerService.s(8)
+        columnSpacing: ScalerService.s(8)
 
         // Week day headers
         Repeater {
@@ -128,7 +128,7 @@ Rectangle {
             size: "normal"
             horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true
-            Layout.preferredHeight: 30
+            Layout.preferredHeight: ScalerService.s(30)
 
           }
         }
@@ -140,8 +140,8 @@ Rectangle {
 
           Rectangle {
             id: dayRect
-            Layout.preferredWidth: 40
-            Layout.preferredHeight: 40
+            Layout.preferredWidth: ScalerService.s(40)
+            Layout.preferredHeight: ScalerService.s(40)
 
             opacity: 0
 
@@ -166,7 +166,7 @@ Rectangle {
               else
               return "transparent";
             }
-            radius: 20
+            radius: ScalerService.s(20)
             border.color: modelData.isCurrentMonth ? theme.button.border : "transparent"
 
             Label {
@@ -182,7 +182,7 @@ Rectangle {
               }
               font {
                 bold: modelData.isToday
-                pixelSize: 19
+                pixelSize: ScalerService.s(19)
                 family: "ComicShannsMono Nerd Font"
               }
             }

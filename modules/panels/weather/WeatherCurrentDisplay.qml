@@ -7,16 +7,16 @@ import qs.components
 
 RowLayout {
   id: root
-  spacing: 20
+  spacing: ScalerService.s(20)
   property real animationProgress: 0
 
   // Main weather card - LEFT
   Rectangle {
     visible: root.hasData
-    Layout.preferredWidth: 200
+    Layout.preferredWidth: ScalerService.s(200)
     Layout.fillHeight: true
-    radius: Settings.appearance.radius2
-    border.width: Settings.appearance.enableBorder ? 2 : 0
+    radius: ScalerService.s(Settings.appearance.radius2)
+    border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
 
     color: theme.primary.dim_background
     border.color: theme.primary.foreground
@@ -29,8 +29,8 @@ RowLayout {
 
     ColumnLayout {
       anchors.fill: parent
-      anchors.margins: 20
-      spacing: 12
+      anchors.margins: ScalerService.s(20)
+      spacing: ScalerService.s(12)
 
       IconImage{
         path: WeatherService.icon
@@ -71,8 +71,8 @@ RowLayout {
     Layout.fillWidth: true
     Layout.fillHeight: true
     columns: 3
-    columnSpacing: 5
-    rowSpacing: 5
+    columnSpacing: ScalerService.s(5)
+    rowSpacing: ScalerService.s(5)
 
     // Humidity
     Com.WeatherDetailCard {

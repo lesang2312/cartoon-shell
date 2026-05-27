@@ -6,7 +6,7 @@ import qs.commons
 
 ColumnLayout {
   id: root
-  spacing: 20
+  spacing: ScalerService.s(20)
   Layout.fillWidth: true
   RowLayout {
     CustomText{

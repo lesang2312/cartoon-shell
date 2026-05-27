@@ -6,7 +6,7 @@ import qs.components
 import qs.commons
 
 ColumnLayout {
-  spacing: 20
+  spacing: ScalerService.s(20)
   Layout.fillWidth: true
   CustomText {
     name: root.lang?.appearance?.panel_position || "Panel Position"
@@ -14,29 +14,29 @@ ColumnLayout {
   }
   GridLayout {
     columns: 2
-    rowSpacing: 15
-    columnSpacing: 15
+    rowSpacing: ScalerService.s(15)
+    columnSpacing: ScalerService.s(15)
     Layout.fillWidth: true
 
     // Top position
     Rectangle {
       id: topOption
       Layout.fillWidth: true
-      Layout.preferredHeight: 80
-      radius: 10
+      Layout.preferredHeight: ScalerService.s(80)
+      radius: ScalerService.s(10)
       color: theme.primary.dim_background
       border.color: Settings.bar.position === "top" ? theme.button.text : "transparent"
-      border.width: 2
+      border.width: ScalerService.s(2)
 
       ColumnLayout {
         anchors.centerIn: parent
-        spacing: 5
+        spacing: ScalerService.s(5)
 
         Rectangle {
           Layout.alignment: Qt.AlignHCenter
-          width: 60
-          height: 10
-          radius: 3
+          width: ScalerService.s(60)
+          height: ScalerService.s(10)
+          radius: ScalerService.s(3)
           color: Settings.bar.position === "top" ? theme.button.text : theme.primary.dim_foreground
         }
 
@@ -45,7 +45,7 @@ ColumnLayout {
           color: Settings.bar.position === "top" ? theme.button.text : theme.primary.foreground
           font {
             family: "ComicShannsMono Nerd Font"
-            pixelSize: 14
+            pixelSize: ScalerService.s(14)
           }
           Layout.alignment: Qt.AlignHCenter
         }
@@ -72,21 +72,21 @@ ColumnLayout {
     Rectangle {
       id: bottomOption
       Layout.fillWidth: true
-      Layout.preferredHeight: 80
-      radius: 10
+      Layout.preferredHeight: ScalerService.s(80)
+      radius: ScalerService.s(10)
       color: theme.primary.dim_background
       border.color: Settings.bar.position === "bottom" ? theme.button.text : "transparent"
-      border.width: 2
+      border.width: ScalerService.s(2)
 
       ColumnLayout {
         anchors.centerIn: parent
-        spacing: 5
+        spacing: ScalerService.s(5)
 
         Rectangle {
           Layout.alignment: Qt.AlignHCenter
-          width: 60
-          height: 10
-          radius: 3
+          width: ScalerService.s(60)
+          height: ScalerService.s(10)
+          radius: ScalerService.s(3)
           color: Settings.bar.position === "bottom" ? theme.button.text : theme.primary.dim_foreground
         }
 
@@ -95,7 +95,7 @@ ColumnLayout {
           color: Settings.bar.position === "bottom" ? theme.button.text : theme.primary.foreground
           font {
             family: "ComicShannsMono Nerd Font"
-            pixelSize: 14
+            pixelSize: ScalerService.s(14)
           }
           Layout.alignment: Qt.AlignHCenter
         }
@@ -122,21 +122,21 @@ ColumnLayout {
     Rectangle {
       id: leftOption
       Layout.fillWidth: true
-      Layout.preferredHeight: 80
-      radius: 10
+      Layout.preferredHeight: ScalerService.s(80)
+      radius: ScalerService.s(10)
       color: theme.primary.dim_background
       border.color: Settings.bar.position === "left" ? theme.button.text : "transparent"
-      border.width: 2
+      border.width: ScalerService.s(2)
 
       RowLayout {
         anchors.centerIn: parent
-        spacing: 10
+        spacing: ScalerService.s(10)
 
         Rectangle {
           Layout.alignment: Qt.AlignVCenter
-          width: 10
-          height: 40
-          radius: 3
+          width: ScalerService.s(10)
+          height: ScalerService.s(40)
+          radius: ScalerService.s(3)
           color: Settings.bar.position === "left" ? theme.button.text : theme.primary.dim_foreground
         }
 
@@ -145,7 +145,7 @@ ColumnLayout {
           color: Settings.bar.position === "left" ? theme.button.text : theme.primary.foreground
           font {
             family: "ComicShannsMono Nerd Font"
-            pixelSize: 14
+            pixelSize: ScalerService.s(14)
           }
           Layout.alignment: Qt.AlignVCenter
         }
@@ -172,31 +172,31 @@ ColumnLayout {
     Rectangle {
       id: rightOption
       Layout.fillWidth: true
-      Layout.preferredHeight: 80
-      radius: 10
+      Layout.preferredHeight: ScalerService.s(80)
+      radius: ScalerService.s(10)
       color: theme.primary.dim_background
       border.color: Settings.bar.position === "right" ? theme.button.text : "transparent"
-      border.width: 2
+      border.width: ScalerService.s(2)
 
       RowLayout {
         anchors.centerIn: parent
-        spacing: 10
+        spacing: ScalerService.s(10)
 
         Text {
           text: root.lang?.appearance?.right || "Right"
           color: Settings.bar.position === "right" ? theme.button.text : theme.primary.foreground
           font {
             family: "ComicShannsMono Nerd Font"
-            pixelSize: 14
+            pixelSize: ScalerService.s(14)
           }
           Layout.alignment: Qt.AlignVCenter
         }
 
         Rectangle {
           Layout.alignment: Qt.AlignVCenter
-          width: 10
-          height: 40
-          radius: 3
+          width: ScalerService.s(10)
+          height: ScalerService.s(40)
+          radius: ScalerService.s(3)
           color: Settings.bar.position === "right" ? theme.button.text : theme.primary.dim_foreground
         }
       }

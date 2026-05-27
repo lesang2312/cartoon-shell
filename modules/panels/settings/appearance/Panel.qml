@@ -12,14 +12,14 @@ Item {
     id: scrollView
     anchors.fill: parent
     clip: true
-    anchors.margins: 20
+    anchors.margins: ScalerService.s(20)
 
     ScrollBar.vertical.policy: ScrollBar.AsNeeded
     ScrollBar.horizontal.policy: ScrollBar.AsNeeded
 
     ColumnLayout {
       width: scrollView.availableWidth
-      spacing: 25
+      spacing: ScalerService.s(25)
 
       // Header
       HeaderSettings {
@@ -29,10 +29,10 @@ Item {
       // Separator
       Rectangle {
         Layout.fillWidth: true
-        height: 1
+        height: ScalerService.s(1)
         color: theme.primary.foreground
         opacity: 0.2
-        Layout.bottomMargin: 5
+        Layout.bottomMargin: ScalerService.s(5)
       }
 
       // Panel Position Settings
@@ -43,7 +43,7 @@ Item {
       // Spacer
       Item {
         Layout.fillHeight: true
-        Layout.minimumHeight: 20
+        Layout.minimumHeight: ScalerService.s(20)
       }
     }
   }

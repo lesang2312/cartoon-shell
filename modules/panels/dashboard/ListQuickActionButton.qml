@@ -8,18 +8,18 @@ import qs.commons
 import "." as Com
 
 ColumnLayout {
-  Layout.preferredWidth: 90
-  spacing: 15
+  Layout.preferredWidth: ScalerService.s(90)
+  spacing: ScalerService.s(15)
   property real animationProgress: 0
   RowLayout {
-    spacing: 15
+    spacing: ScalerService.s(15)
     Rectangle {
       Layout.fillWidth: true
-      Layout.preferredHeight: 110
+      Layout.preferredHeight: ScalerService.s(110)
       color: mouseAreaLogout.containsMouse ? theme.button.background_select : theme.primary.background
       border.color: mouseAreaLogout.containsPress ? theme.button.border_select : theme.button.border
-      radius: Settings.appearance.radius1
-      border.width: Settings.appearance.enableBorder ? 3 : 0
+      radius: ScalerService.s(Settings.appearance.radius1)
+      border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
 
       IconImage {
         path: "system/sys-exit.png"
@@ -42,11 +42,11 @@ ColumnLayout {
 
     Rectangle {
       Layout.fillWidth: true
-      Layout.preferredHeight: 110
+      Layout.preferredHeight: ScalerService.s(110)
       color: mouseAreaSleep.containsMouse ? theme.button.background_select : theme.primary.background
       border.color: mouseAreaSleep.containsPress ? theme.button.border_select : theme.button.border
-      radius: Settings.appearance.radius1
-      border.width: Settings.appearance.enableBorder ? 3 : 0
+      radius: ScalerService.s(Settings.appearance.radius1)
+      border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
 
       IconImage {
         path: "system/sys-sleep.png"
@@ -67,14 +67,14 @@ ColumnLayout {
     }
   }
   RowLayout {
-    spacing: 15
+    spacing: ScalerService.s(15)
     Rectangle {
       Layout.fillWidth: true
-      Layout.preferredHeight: 110
+      Layout.preferredHeight: ScalerService.s(110)
       color: mouseAreaRestart.containsMouse ? theme.button.background_select : theme.primary.background
       border.color: mouseAreaRestart.containsPress ? theme.button.border_select : theme.button.border
-      radius: Settings.appearance.radius1
-      border.width: Settings.appearance.enableBorder ? 3 : 0
+      radius: ScalerService.s(Settings.appearance.radius1)
+      border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
 
       IconImage {
         path: "system/sys-reboot.png"
@@ -95,11 +95,11 @@ ColumnLayout {
     }
     Rectangle {
       Layout.fillWidth: true
-      Layout.preferredHeight: 110
+      Layout.preferredHeight: ScalerService.s(110)
       color: mouseAreaShutdown.containsMouse ? theme.button.background_select : theme.primary.background
       border.color: mouseAreaShutdown.containsPress ? theme.button.border_select : theme.button.border
-      radius: Settings.appearance.radius1
-      border.width: Settings.appearance.enableBorder ? 3 : 0
+      radius: ScalerService.s(Settings.appearance.radius1)
+      border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
 
       IconImage {
         path: "system/poweroff.png"

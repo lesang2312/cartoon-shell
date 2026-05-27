@@ -11,17 +11,17 @@ Rectangle {
 
   signal clicked
 
-  width: 60
-  height: 60
-  radius: 12
+  width: ScalerService.s(60)
+  height: ScalerService.s(60)
+  radius: ScalerService.s(12)
   color: isSelected ? theme.button.text : (mouseArea.containsMouse ? theme.button.background_select : theme.button.background)
   border.color: isSelected ? theme.button.text : (mouseArea.containsPress ? theme.button.border_select : theme.button.border)
-  border.width: 3
+  border.width: ScalerService.s(3)
 
   Rectangle {
-    width: 25
-    height: 15
-    radius: 6
+    width: ScalerService.s(25)
+    height: ScalerService.s(15)
+    radius: ScalerService.s(6)
     color: isSelected ? theme.primary.dim_background : theme.button.text
 
     anchors.top: anchorConfig.top ? parent.top : undefined
@@ -31,10 +31,10 @@ Rectangle {
     anchors.horizontalCenter: anchorConfig.hCenter ? parent.horizontalCenter : undefined
     anchors.verticalCenter: anchorConfig.vCenter ? parent.verticalCenter : undefined
 
-    anchors.topMargin: anchorConfig.top ? 10 : 0
-    anchors.bottomMargin: anchorConfig.bottom ? 10 : 0
-    anchors.leftMargin: anchorConfig.left ? 10 : 0
-    anchors.rightMargin: anchorConfig.right ? 10 : 0
+    anchors.topMargin: anchorConfig.top ? ScalerService.s(10) : 0
+    anchors.bottomMargin: anchorConfig.bottom ? ScalerService.s(10) : 0
+    anchors.leftMargin: anchorConfig.left ? ScalerService.s(10) : 0
+    anchors.rightMargin: anchorConfig.right ? ScalerService.s(10) : 0
   }
 
   MouseArea {

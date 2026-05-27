@@ -5,7 +5,7 @@ import Quickshell.Io
 import qs.services
 
 Column {
-  spacing: 6
+  spacing: ScalerService.s(6)
   property string cpuName: lang.infoSection.loading
   property string cpuVendor: lang.infoSection.loading
   property string cpuArch: lang.infoSection.loading
@@ -56,7 +56,7 @@ Column {
     width: parent.width
     color: theme.primary.foreground
     text: lang.infoSection.name + ": " + cpuName
-    font.pixelSize: 18
+    font.pixelSize: ScalerService.s(18)
     font.family: "ComicShannsMono Nerd Font"
   }
 
@@ -64,7 +64,7 @@ Column {
     width: parent.width
     color: theme.primary.foreground
     text: lang.infoSection.vendor + ": " + cpuVendor
-    font.pixelSize: 18
+    font.pixelSize: ScalerService.s(18)
     font.family: "ComicShannsMono Nerd Font"
   }
 
@@ -72,7 +72,7 @@ Column {
     width: parent.width
     color: theme.primary.foreground
     text: lang.infoSection.architecture + ": " + cpuArch
-    font.pixelSize: 18
+    font.pixelSize: ScalerService.s(18)
     font.family: "ComicShannsMono Nerd Font"
   }
 
@@ -80,7 +80,7 @@ Column {
     width: parent.width
     color: theme.primary.foreground
     text: lang.infoSection.socket + ": " + cpuSocket
-    font.pixelSize: 18
+    font.pixelSize: ScalerService.s(18)
     font.family: "ComicShannsMono Nerd Font"
   }
 }

@@ -10,14 +10,14 @@ import "./open_file" as Com
 PanelWindow {
   id: root
 
-  width: 730
-  height: 700
+  width: ScalerService.s(730)
+  height: ScalerService.s(700)
 
   color: "transparent"
 
   property var theme: ThemeService.theme
   property url selectedFile: ""
-  property int gridSize: 100  // Kích thước mỗi item
+  property int gridSize: ScalerService.s(100)  // Kích thước mỗi item
   property string currentPath: "file:///home/long/"
   signal fileOpened(url fileUrl)
 
@@ -73,14 +73,14 @@ PanelWindow {
     anchors.fill: parent
 
     color: theme.primary.background
-    radius: 16
-    border.width: 3
+    radius: ScalerService.s(16)
+    border.width: ScalerService.s(3)
     border.color: theme.primary.foreground
     // Navigation buttons
     ColumnLayout {
       anchors.fill: parent
-      anchors.margins: 20
-      spacing: 16
+      anchors.margins: ScalerService.s(20)
+      spacing: ScalerService.s(16)
 
       Com.HeaderFileDialog{}
       RowLayout {
@@ -90,22 +90,22 @@ PanelWindow {
         ColumnLayout {
           Layout.fillHeight: true
           Layout.fillWidth: true
-          spacing: 10
+          spacing: ScalerService.s(10)
           RowLayout {
             id: navBar
             Layout.fillWidth: true
-            Layout.preferredHeight: 30
-            spacing: 10
+            Layout.preferredHeight: ScalerService.s(30)
+            spacing: ScalerService.s(10)
 
             Rectangle {
               Layout.fillHeight: true
-              Layout.preferredWidth: 70
+              Layout.preferredWidth: ScalerService.s(70)
               color: theme.button.background
-              border.width: 2
+              border.width: ScalerService.s(2)
               border.color: theme.button.border
-              radius: 8
+              radius: ScalerService.s(8)
               RowLayout {
-                anchors.margins: 20
+                anchors.margins: ScalerService.s(20)
                 IconText{
                   name: "arrow_back"
                   size: "small"
@@ -139,7 +139,7 @@ PanelWindow {
           // Grid View for files/folders
           Item {
             Layout.fillWidth: true
-            Layout.preferredHeight: 420
+            Layout.preferredHeight: ScalerService.s(420)
 
             Com.GridView {
               id: gridViewComponent

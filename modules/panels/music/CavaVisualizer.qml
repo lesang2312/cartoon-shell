@@ -7,8 +7,8 @@ Rectangle {
   id: visualizer
   Layout.fillWidth: true
   Layout.fillHeight: true
-  Layout.minimumHeight: 100
-  radius: 12
+  Layout.minimumHeight: ScalerService.s(100)
+  radius: ScalerService.s(12)
   color: theme.primary.dim_background
   clip: true
   property real animationProgress: 0
@@ -24,8 +24,8 @@ Rectangle {
   Row {
     id: cavaRow
     anchors.fill: parent
-    anchors.margins: 8
-    spacing: 2
+    anchors.margins: ScalerService.s(8)
+    spacing: ScalerService.s(2)
 
     Repeater {
       model: cavaService?.values.length ?? 0
@@ -47,11 +47,11 @@ Rectangle {
           }
         }
         width: cavaService && cavaService.values.length > 0
-        ? (cavaRow.width - (cavaService.values.length - 1) * 2) / cavaService.values.length
+        ? (cavaRow.width - (cavaService.values.length - 1) * ScalerService.s(2)) / cavaService.values.length
         : 0
-        height: cavaService ? Math.max(4, (cavaService.values[index] / 100) * cavaRow.height) : 0
+        height: cavaService ? Math.max(ScalerService.s(4), (cavaService.values[index] / 100) * cavaRow.height) : 0
         anchors.bottom: parent.bottom
-        radius: 2
+        radius: ScalerService.s(2)
         color: {
           if (!cavaService) return theme.normal.blue;
           var ratio = cavaService.values[index] / 100;
@@ -81,7 +81,7 @@ Rectangle {
       ? (lang.musicPanel?.notPlaying || "Not playing")
       : (lang.musicPanel?.loading || "Loading...")
       font.family: "ComicShannsMono Nerd Font"
-      font.pixelSize: 14
+      font.pixelSize: ScalerService.s(14)
       color: theme.primary.dim_foreground
     }
   }

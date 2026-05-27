@@ -8,8 +8,8 @@ import qs.services
 
 Item {
   id: batteryDisplay
-  width: 320
-  height: 400
+  width: ScalerService.s(320)
+  height: ScalerService.s(400)
 
   // Catppuccin Mocha color scheme
   property color batteryHighColor: theme.normal.green       // "#a6da95"
@@ -78,15 +78,15 @@ Item {
     anchors.fill: parent
     color: theme.primary.background
     border.color: borderColor
-    radius: Settings.appearance.radius1
-    border.width: Settings.appearance.enableBorder ? 3 : 0
+    radius: ScalerService.s(Settings.appearance.radius1)
+    border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
 
     // Background pattern nhẹ
     Rectangle {
       anchors.fill: parent
       color: "transparent"
       opacity: 0.1
-      radius: 12
+      radius: ScalerService.s(12)
 
       Canvas {
         anchors.fill: parent
@@ -96,13 +96,13 @@ Item {
           ctx.lineWidth = 0.5;
 
           // Vẽ grid pattern nhẹ
-          for (var x = 0; x < width; x += 15) {
+          for (var x = 0; x < width; x += ScalerService.s(15)) {
             ctx.beginPath();
             ctx.moveTo(x, 0);
             ctx.lineTo(x, height);
             ctx.stroke();
           }
-          for (var y = 0; y < height; y += 15) {
+          for (var y = 0; y < height; y += ScalerService.s(15)) {
             ctx.beginPath();
             ctx.moveTo(0, y);
             ctx.lineTo(width, y);
@@ -115,8 +115,8 @@ Item {
 
   ColumnLayout {
     anchors.fill: parent
-    anchors.margins: 16
-    spacing: 16
+    anchors.margins: ScalerService.s(16)
+    spacing: ScalerService.s(16)
 
     // Header với icon
     RowLayout {
@@ -127,7 +127,7 @@ Item {
         font.family: "ComicShannsMono Nerd Font"
         color: textColor
         font.bold: true
-        font.pointSize: 14
+        font.pointSize: ScalerService.s(14)
       }
 
       Item {
@@ -136,9 +136,9 @@ Item {
 
       // Status indicator
       Rectangle {
-        width: 8
-        height: 8
-        radius: 4
+        width: ScalerService.s(8)
+        height: ScalerService.s(8)
+        radius: ScalerService.s(4)
         color: getBatteryStatusColor()
       }
     }
@@ -146,29 +146,29 @@ Item {
     // Battery Level Section
     ColumnLayout {
       Layout.fillWidth: true
-      spacing: 8
+      spacing: ScalerService.s(8)
 
       // Battery icon và phần trăm
       RowLayout {
         Layout.fillWidth: true
-        spacing: 12
+        spacing: ScalerService.s(12)
 
         // Battery icon
         Rectangle {
-          Layout.preferredWidth: 40
-          Layout.preferredHeight: 20
-          radius: 3
+          Layout.preferredWidth: ScalerService.s(40)
+          Layout.preferredHeight: ScalerService.s(20)
+          radius: ScalerService.s(3)
           border.color: textColor
-          border.width: 2
+          border.width: ScalerService.s(2)
           color: "transparent"
 
           // Battery tip
           Rectangle {
-            x: parent.width + 1
-            y: parent.height / 2 - 3
-            width: 4
-            height: 6
-            radius: 1
+            x: parent.width + ScalerService.s(1)
+            y: parent.height / 2 - ScalerService.s(3)
+            width: ScalerService.s(4)
+            height: ScalerService.s(6)
+            radius: ScalerService.s(1)
             color: textColor
           }
 
@@ -178,10 +178,10 @@ Item {
               left: parent.left
               top: parent.top
               bottom: parent.bottom
-              margins: 2
+              margins: ScalerService.s(2)
             }
-            width: (parent.width - 4) * (batteryPercent / 100)
-            radius: 1
+            width: (parent.width - ScalerService.s(4)) * (batteryPercent / 100)
+            radius: ScalerService.s(1)
             color: getBatteryColor()
             Behavior on width {
               NumberAnimation {
@@ -196,26 +196,26 @@ Item {
             anchors.centerIn: parent
             text: batteryStatus === "Charging" ? "⚡" : ""
             color: theme.primary.background
-            font.pointSize: 10
+            font.pointSize: ScalerService.s(10)
             visible: batteryStatus === "Charging"
           }
         }
 
         // Percentage và status
         ColumnLayout {
-          spacing: 2
+          spacing: ScalerService.s(2)
 
           Text {
             text: batteryPercent + "%"
             color: getBatteryColor()
             font.bold: true
-            font.pointSize: 16
+            font.pointSize: ScalerService.s(16)
           }
 
           Text {
             text: getStatusText()
             color: dimTextColor
-            font.pointSize: 10
+            font.pointSize: ScalerService.s(10)
           }
         }
 
@@ -227,7 +227,7 @@ Item {
         Text {
           text: getTimeEstimate()
           color: dimTextColor
-          font.pointSize: 10
+          font.pointSize: ScalerService.s(10)
           Layout.alignment: Qt.AlignRight
         }
       }
@@ -235,14 +235,14 @@ Item {
       // Progress bar
       Rectangle {
         Layout.fillWidth: true
-        height: 12
-        radius: 6
+        height: ScalerService.s(12)
+        radius: ScalerService.s(6)
         color: batteryBackgroundColor
 
         Rectangle {
           width: parent.width * (batteryPercent / 100)
           height: parent.height
-          radius: 6
+          radius: ScalerService.s(6)
           gradient: Gradient {
             GradientStop {
               position: 0.0
@@ -266,13 +266,13 @@ Item {
     // Separator
     Rectangle {
       Layout.fillWidth: true
-      height: 1
+      height: ScalerService.s(1)
       color: "transparent"
 
       Rectangle {
         anchors.centerIn: parent
         width: parent.width * 0.8
-        height: 1
+        height: ScalerService.s(1)
         gradient: Gradient {
           GradientStop {
             position: 0.0
@@ -298,19 +298,19 @@ Item {
     GridLayout {
       Layout.fillWidth: true
       columns: 2
-      rowSpacing: 6
-      columnSpacing: 12
+      rowSpacing: ScalerService.s(6)
+      columnSpacing: ScalerService.s(12)
 
       // Energy
       Text {
         text: "Energy:"
         color: dimTextColor
-        font.pointSize: 9
+        font.pointSize: ScalerService.s(9)
       }
       Text {
         text: (energy_mWh / 1000).toFixed(2) + " / " + (energy_full_mWh / 1000).toFixed(2) + " Wh"
         color: textColor
-        font.pointSize: 9
+        font.pointSize: ScalerService.s(9)
         font.bold: true
       }
 
@@ -318,12 +318,12 @@ Item {
       Text {
         text: "Power:"
         color: dimTextColor
-        font.pointSize: 9
+        font.pointSize: ScalerService.s(9)
       }
       Text {
         text: (power_mW / 1000).toFixed(2) + " W"
         color: power_mW > 0 ? theme.normal.yellow : theme.normal.green
-        font.pointSize: 9
+        font.pointSize: ScalerService.s(9)
         font.bold: true
       }
 
@@ -331,24 +331,24 @@ Item {
       Text {
         text: "Voltage:"
         color: dimTextColor
-        font.pointSize: 9
+        font.pointSize: ScalerService.s(9)
       }
       Text {
         text: voltage_V + " V"
         color: textColor
-        font.pointSize: 9
+        font.pointSize: ScalerService.s(9)
         font.bold: true
       }
 
       Text {
         text: "Current:"
         color: dimTextColor
-        font.pointSize: 9
+        font.pointSize: ScalerService.s(9)
       }
       Text {
         text: Math.abs(current_mA) + " mA"
         color: textColor
-        font.pointSize: 9
+        font.pointSize: ScalerService.s(9)
         font.bold: true
       }
 
@@ -356,12 +356,12 @@ Item {
       Text {
         text: "Status:"
         color: dimTextColor
-        font.pointSize: 9
+        font.pointSize: ScalerService.s(9)
       }
       Text {
         text: batteryStatus
         color: getBatteryStatusColor()
-        font.pointSize: 9
+        font.pointSize: ScalerService.s(9)
         font.bold: true
       }
     }
@@ -371,7 +371,7 @@ Item {
   Rectangle {
     anchors.fill: parent
     color: theme.primary.background
-    radius: 12
+    radius: ScalerService.s(12)
     opacity: dataLoaded ? 0 : 1
     visible: opacity > 0
 
@@ -383,11 +383,11 @@ Item {
 
     Column {
       anchors.centerIn: parent
-      spacing: 12
+      spacing: ScalerService.s(12)
 
       Text {
         text: "🔋"
-        font.pointSize: 20
+        font.pointSize: ScalerService.s(20)
         color: dimTextColor
         anchors.horizontalCenter: parent.horizontalCenter
       }
@@ -395,7 +395,7 @@ Item {
       Text {
         text: "Loading battery data..."
         color: dimTextColor
-        font.pointSize: 10
+        font.pointSize: ScalerService.s(10)
         anchors.horizontalCenter: parent.horizontalCenter
       }
     }

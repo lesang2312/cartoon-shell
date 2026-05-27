@@ -93,7 +93,7 @@ Rectangle {
   ]
 
   Layout.fillWidth: true
-  Layout.preferredHeight: 50
+  Layout.preferredHeight: ScalerService.s(50)
   opacity: root.animationProgress > 0.1 ? 1 : 0
   Behavior on opacity {
     NumberAnimation {
@@ -102,12 +102,12 @@ Rectangle {
   }
 
   color: theme.button.background
-  radius: 12
+  radius: ScalerService.s(12)
 
   RowLayout {
     anchors.fill: parent
-    anchors.margins: 8
-    spacing: 16
+    anchors.margins: ScalerService.s(8)
+    spacing: ScalerService.s(16)
 
     Item {
       Layout.fillWidth: true
@@ -118,7 +118,7 @@ Rectangle {
       delegate: Item {
         id: minimalDelegate
         Layout.fillHeight: true
-        Layout.preferredWidth: 42
+        Layout.preferredWidth: ScalerService.s(42)
 
         property bool selected: root.currentTab === index
 

@@ -7,7 +7,7 @@ Item {
   id: headerCard
 
   Layout.fillWidth: true
-  height: 70
+  height: ScalerService.s(70)
 
   CustomText {
     name: lang?.weather?.title || "Thời Tiết"

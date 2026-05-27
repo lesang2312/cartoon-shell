@@ -12,8 +12,8 @@ Rectangle {
   property real animationProgress: 0
 
   Layout.fillWidth: true
-  Layout.preferredHeight: 35
-  radius: 12
+  Layout.preferredHeight: ScalerService.s(35)
+  radius: ScalerService.s(12)
   color: mouseArea.containsMouse ? theme.button.background_select : theme.primary.background
 
   Behavior on color {
@@ -25,8 +25,8 @@ Rectangle {
 
   RowLayout {
     anchors.fill: parent
-    anchors.margins: 5
-    spacing: 10
+    anchors.margins: ScalerService.s(5)
+    spacing: ScalerService.s(10)
 
     IconImage {
       path: root.icon

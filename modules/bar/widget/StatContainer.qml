@@ -2,13 +2,10 @@ import QtQuick
 import QtQuick.Layouts
 import qs.services
 
-Rectangle {
+Item {
   id: root
 
   property string panelName: ""
-
-  color: "transparent"
-  radius: 6
 
   MouseArea {
     anchors.fill: parent

@@ -27,14 +27,14 @@ Item {
   }
   ColumnLayout {
     anchors.fill: parent
-    anchors.margins: 16
-    spacing: 12
+    anchors.margins: ScalerService.s(16)
+    spacing: ScalerService.s(12)
 
     Rectangle {
       Layout.fillWidth: true
       color: theme.primary.background
-      Layout.preferredHeight: 50
-      radius: 8
+      Layout.preferredHeight: ScalerService.s(50)
+      radius: ScalerService.s(8)
 
       CustomText {
         anchors.centerIn: parent
@@ -46,7 +46,7 @@ Item {
 
     Rectangle {
       Layout.fillWidth: true
-      height: 32
+      height: ScalerService.s(32)
       color: theme.button.background
       opacity: root.animationProgress > 0.5 ? 1 : 0
       Behavior on opacity {
@@ -54,19 +54,19 @@ Item {
           duration: 200
         }
       }
-      radius: 6
+      radius: ScalerService.s(6)
 
       RowLayout {
         anchors.fill: parent
-        anchors.margins: 8
-        spacing: 8
+        anchors.margins: ScalerService.s(8)
+        spacing: ScalerService.s(8)
 
         CustomText {
           name: "PID"
           size: "small"
           isBold: true
           textColor: theme.button.text
-          Layout.preferredWidth: 70
+          Layout.preferredWidth: ScalerService.s(70)
           opacity: root.animationProgress > 1 ? 1 : 0
           Behavior on opacity {
             NumberAnimation {
@@ -92,7 +92,7 @@ Item {
           size: "small"
           isBold: true
           textColor: theme.button.text
-          Layout.preferredWidth: 80
+          Layout.preferredWidth: ScalerService.s(80)
           horizontalAlignment: Text.AlignRight
           opacity: root.animationProgress > 1.1 ? 1 : 0
           Behavior on opacity {
@@ -106,7 +106,7 @@ Item {
           size: "small"
           isBold: true
           textColor: theme.button.text
-          Layout.preferredWidth: 100
+          Layout.preferredWidth: ScalerService.s(100)
           horizontalAlignment: Text.AlignRight
           opacity: root.animationProgress > 1.15 ? 1 : 0
           Behavior on opacity {
@@ -131,33 +131,33 @@ Item {
       Column {
         id: processColumn
         width: processFlick.width
-        spacing: 2
+        spacing: ScalerService.s(2)
 
         Repeater {
           model: root.processList
 
           delegate: Rectangle {
             width: processFlick.width
-            height: 50
+            height: ScalerService.s(50)
 
             color: index % 2 === 0
             ? theme.primary.background
             : theme.primary.dim_background
 
-            radius: 6
+            radius: ScalerService.s(6)
             border.color: Qt.lighter(color, 1.1)
-            border.width: 1
+            border.width: ScalerService.s(1)
 
             RowLayout {
               anchors.fill: parent
-              anchors.margins: 10
-              spacing: 10
+              anchors.margins: ScalerService.s(10)
+              spacing: ScalerService.s(10)
 
               CustomText {
                 name: modelData.pid
                 size: "small"
                 textColor: theme.button.text
-                Layout.preferredWidth: 70
+                Layout.preferredWidth: ScalerService.s(70)
                 opacity: root.animationProgress > 1.5 ? 1 : 0
 
                 SequentialAnimation on opacity {
@@ -201,7 +201,7 @@ Item {
                 name: modelData.cpu + "%"
                 size: "small"
                 textColor: getPercentageColor(modelData.cpu)
-                Layout.preferredWidth: 80
+                Layout.preferredWidth: ScalerService.s(80)
                 horizontalAlignment: Text.AlignRight
                 opacity: root.animationProgress > 1.5 ? 1 : 0
 
@@ -224,7 +224,7 @@ Item {
                 name: modelData.mem.toFixed(1) + " MB"
                 size: "small"
                 textColor: theme.primary.foreground
-                Layout.preferredWidth: 100
+                Layout.preferredWidth: ScalerService.s(100)
                 horizontalAlignment: Text.AlignRight
                 opacity: root.animationProgress > 1.5 ? 1 : 0
 
@@ -249,11 +249,11 @@ Item {
                 left: parent.left
                 right: parent.right
                 bottom: parent.bottom
-                margins: 6
+                margins: ScalerService.s(6)
               }
 
-              height: 3
-              radius: 1.5
+              height: ScalerService.s(3)
+              radius: ScalerService.s(1.5)
               color: theme.primary.dim_background
 
               Rectangle {
@@ -262,7 +262,7 @@ Item {
                 : 0
 
                 height: parent.height
-                radius: 1.5
+                radius: ScalerService.s(1.5)
                 color: getPercentageColor(modelData.percent)
 
                 Behavior on width {
@@ -284,11 +284,11 @@ Item {
 
         Column {
           anchors.centerIn: parent
-          spacing: 12
+          spacing: ScalerService.s(12)
 
           Text {
             text: "⏳"
-            font.pixelSize: 30
+            font.pixelSize: ScalerService.s(30)
             color: theme.primary.dim_foreground
           }
 
@@ -296,7 +296,7 @@ Item {
             text: lang.ram.loading.message
             font.family: "ComicShannsMono Nerd Font"
             color: theme.primary.dim_foreground
-            font.pixelSize: 14
+            font.pixelSize: ScalerService.s(14)
           }
         }
       }

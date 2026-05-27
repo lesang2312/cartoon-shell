@@ -10,20 +10,20 @@ ColumnLayout {
   property var wifiManager
   property var networkData
 
-  spacing: 4
+  spacing: ScalerService.s(4)
 
   Rectangle {
     id: wifiItem
     width: parent.width
     Layout.fillWidth: true
-    Layout.preferredHeight: 70
+    Layout.preferredHeight: ScalerService.s(70)
     color: mouseArea.containsMouse ? theme.button.background_select : (networkData.isConnected ? theme.button.background : theme.primary.dim_background)
-    radius: Settings.appearance.radius2
-    border.width: Settings.appearance.enableBorder ? 2 : 0
+    radius: ScalerService.s(Settings.appearance.radius2)
+    border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
     border.color: networkData.isConnected ? theme.button.border : theme.normal.black
 
     RowLayout {
-      anchors.margins: 8
+      anchors.margins: ScalerService.s(8)
       anchors.fill: parent
 
       ColumnLayout {
@@ -45,7 +45,7 @@ ColumnLayout {
         color: networkData.isConnected ? theme.normal.green : theme.button.background
         Layout.preferredHeight: iconItem.height
         Layout.preferredWidth: iconItem.height
-        radius: 16
+        radius: ScalerService.s(16)
         IconText{
           anchors.centerIn: parent
           id: iconItem
@@ -75,7 +75,7 @@ ColumnLayout {
 
   Com.WifiPasswordBox {
     Layout.fillWidth: true
-    Layout.preferredHeight: 70
+    Layout.preferredHeight: ScalerService.s(70)
     visible: networkItem.networkData.ssid === wifiManager.openSsid
     networkData: networkItem.networkData
     wifiManager: networkItem.wifiManager

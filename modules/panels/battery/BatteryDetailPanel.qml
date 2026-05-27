@@ -12,8 +12,8 @@ PanelWindow {
 
   property var sizes: currentSizes.batteryDetailPanel || {}
 
-  width: 450
-  height: 400
+  width: ScalerService.s(450)
+  height: ScalerService.s(400)
   anchors {
     // Anchor theo vị trí của bar
     left: Settings.bar.position === "left"
@@ -23,24 +23,24 @@ PanelWindow {
   }
 
   margins {
-    top: Settings.bar.position === "top" ? 10 : 0
-    bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? 10 : 0
-    left: Settings.bar.position === "left" ? 10 : 0
-    right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? 10 : 0
+    top: Settings.bar.position === "top" ? ScalerService.s(10) : 0
+    bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? ScalerService.s(10) : 0
+    left: Settings.bar.position === "left" ? ScalerService.s(10) : 0
+    right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? ScalerService.s(10) : 0
   }
   color: "transparent"
 
   Rectangle {
     anchors.fill: parent
     color: theme.primary.background
-    radius: 8
+    radius: ScalerService.s(8)
     border.color: theme.normal.black
-    border.width: 3
+    border.width: ScalerService.s(3)
 
     ColumnLayout {
       anchors.fill: parent
-      anchors.margins: 16
-      spacing: 16
+      anchors.margins: ScalerService.s(16)
+      spacing: ScalerService.s(16)
 
       // Header
       Text {
@@ -48,7 +48,7 @@ PanelWindow {
         font.family: "ComicShannsMono Nerd Font"
         color: theme.primary.foreground
         font.bold: true
-        font.pixelSize: 16
+        font.pixelSize: ScalerService.s(16)
         Layout.alignment: Qt.AlignHCenter
       }
 

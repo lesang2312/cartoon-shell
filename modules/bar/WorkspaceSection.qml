@@ -10,8 +10,8 @@ import qs.components
 Rectangle {
   id: root
   border.color: theme.button.border
-  border.width: Settings.appearance.enableBorder ? 3 : 0
-  radius: Settings.appearance.radius2
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
+  radius: ScalerService.s(Settings.appearance.radius2)
 
   property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
   color: theme.primary.background
@@ -181,7 +181,7 @@ Rectangle {
 
     RowLayout {
       id: workspaceRow
-      spacing: 4
+      spacing: ScalerService.s(4)
 
       Repeater {
         model: root.uiWorkspaces
@@ -190,9 +190,9 @@ Rectangle {
           required property var modelData
           property string wsId: modelData.id
 
-          Layout.preferredWidth: 32
-          Layout.preferredHeight: 32
-          radius: 6
+          Layout.preferredWidth: ScalerService.s(32)
+          Layout.preferredHeight: ScalerService.s(32)
+          radius: ScalerService.s(6)
           color: "transparent"
 
           IconImage {
@@ -234,7 +234,7 @@ Rectangle {
 
     ColumnLayout {
       id: workspaceColumn
-      spacing: 2
+      spacing: ScalerService.s(2)
 
       Repeater {
         model: root.uiWorkspaces
@@ -243,9 +243,9 @@ Rectangle {
           required property var modelData
           property string wsId: modelData.id
 
-          Layout.preferredWidth: 24
-          Layout.preferredHeight: 24
-          radius: 6
+          Layout.preferredWidth: ScalerService.s(24)
+          Layout.preferredHeight: ScalerService.s(24)
+          radius: ScalerService.s(6)
           color: "transparent"
 
           IconImage {

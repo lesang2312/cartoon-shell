@@ -2,6 +2,8 @@ import QtQuick
 import QtQuick.Layouts
 import qs.components
 import qs.commons
+import qs.services
+
 Rectangle {
   id: root
   property var minTemp: ""
@@ -12,10 +14,10 @@ Rectangle {
   property real animationProgress: 0
   property real revealThreshold: 0.6
 
-  implicitWidth: 180
+  implicitWidth: ScalerService.s(180)
   Layout.fillHeight: true
-  radius: Settings.appearance.radius2
-  border.width: Settings.appearance.enableBorder ? 2 : 0
+  radius: ScalerService.s(Settings.appearance.radius2)
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
   color: theme.primary.dim_background
   border.color: theme.primary.foreground
   clip: true
@@ -27,8 +29,8 @@ Rectangle {
 
   ColumnLayout {
     anchors.fill: parent
-    anchors.margins: 16
-    spacing: 8
+    anchors.margins: ScalerService.s(16)
+    spacing: ScalerService.s(8)
 
     // Day name
     CustomText{
@@ -62,7 +64,7 @@ Rectangle {
     // Temperature range
     RowLayout {
       Layout.alignment: Qt.AlignHCenter
-      spacing: 0
+      spacing: ScalerService.s(0)
 
       CustomText {
         name: root.minTemp

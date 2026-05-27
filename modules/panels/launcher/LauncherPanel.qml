@@ -27,37 +27,16 @@ PanelWindow {
 
   implicitWidth: {
     if (VisibleService.setting) {
-      return 1000;
+      return ScalerService.s(1000);
     } else {
-      if (launcherPanel.animationProgress > 0.1) {
-        return 600;
-      } else {
-        return 100;
-      }
+      return ScalerService.s(600);
     }
   }
   implicitHeight: {
     if (VisibleService.setting) {
-      return 700;
+      return ScalerService.s(700);
     } else {
-      if (launcherPanel.animationProgress > 0.1) {
-        return 640;
-      } else {
-        return 100;
-      }
-    }
-  }
-  Behavior on implicitWidth {
-    NumberAnimation {
-      duration: 40
-      easing.type: Easing.OutCubic
-
-    }
-  }
-  Behavior on implicitHeight {
-    NumberAnimation {
-      duration: 40
-      easing.type: Easing.OutCubic
+      return ScalerService.s(640);
     }
   }
   color: "transparent"
@@ -97,19 +76,19 @@ PanelWindow {
   }
 
   margins {
-    top: Settings.bar.position === "top" ? 10 : 0
-    bottom: Settings.bar.position === "bottom" ? 10 : 0
-    left: (Settings.bar.position === "left" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? 10 : 0
-    right: Settings.bar.position === "right" ? 10 : 0
+    top: Settings.bar.position === "top" ? ScalerService.s(10) : 0
+    bottom: Settings.bar.position === "bottom" ? ScalerService.s(10) : 0
+    left: (Settings.bar.position === "left" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? ScalerService.s(10) : 0
+    right: Settings.bar.position === "right" ? ScalerService.s(10) : 0
   }
 
   // Focus scope để quản lý focus
   Rectangle {
     anchors.fill: parent
-    radius: Settings.appearance.radius1
+    radius: ScalerService.s(Settings.appearance.radius1)
     color: theme.primary.background
     border.color: theme.button.border
-    border.width: Settings.appearance.enableBorder ? 3 : 0
+    border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
 
     ColumnLayout {
       anchors.fill: parent
@@ -120,11 +99,11 @@ PanelWindow {
           anchors.fill: parent
           anchors.margins: {
             if (VisibleService.fullsetting && settingsPanelVisible) {
-              return 20; // Margin lớn hơn khi full screen
+              return ScalerService.s(20); // Margin lớn hơn khi full screen
             }
-            return 16;
+            return ScalerService.s(16);
           }
-          spacing: 12
+          spacing: ScalerService.s(12)
 
           LauncherComponents.Sidebar {
             id: sidebar
@@ -152,7 +131,7 @@ PanelWindow {
             visible: !VisibleService.setting
             Layout.fillWidth: true
             Layout.fillHeight: true
-            spacing: 10
+            spacing: ScalerService.s(10)
 
             CustomText{
               text: lang.system.application

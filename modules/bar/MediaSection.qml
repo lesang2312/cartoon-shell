@@ -12,15 +12,15 @@ Rectangle {
   id: root
   color: theme.primary.background
   border.color: theme.button.border
-  border.width: Settings.appearance.enableBorder ? 3 : 0
-  radius: Settings.appearance.radius2
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
+  radius: ScalerService.s(Settings.appearance.radius2)
 
   property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
 
   // UI Layout
   Loader {
     anchors.fill: parent
-    anchors.margins: isVertical ? 8 : 10
+    anchors.margins: isVertical ? ScalerService.s(8) : ScalerService.s(10)
     sourceComponent: isVertical ? verticalLayout : horizontalLayout
   }
 
@@ -29,7 +29,7 @@ Rectangle {
 
     RowLayout {
       anchors.fill: parent
-      spacing: 12
+      spacing: ScalerService.s(12)
 
       // Song info with marquee effect
       ColumnLayout {
@@ -41,7 +41,7 @@ Rectangle {
         Item {
           id: songContainer
           Layout.fillWidth: true
-          Layout.preferredHeight: 23
+          Layout.preferredHeight: ScalerService.s(23)
           clip: true
 
           MouseArea {
@@ -60,7 +60,7 @@ Rectangle {
             text: Players.mprisPlayer?.trackTitle ?? "Not Playing"
             color: theme.primary.foreground
             font.family: "ComicShannsMono Nerd Font"
-            font.pixelSize: 16
+            font.pixelSize: ScalerService.s(16)
 
             property bool needsMarquee: width > songContainer.width
 
@@ -117,13 +117,13 @@ Rectangle {
       // Controls
       Item {
         Layout.fillHeight: true
-        Layout.preferredWidth: 120
+        Layout.preferredWidth: ScalerService.s(120)
 
         RowLayout {
           id: controlsRow
 
           anchors.centerIn: parent
-          spacing: 2
+          spacing: ScalerService.s(2)
 
           ButtonIconText {
             name: "skip_previous"
@@ -162,7 +162,7 @@ Rectangle {
 
     ColumnLayout {
       anchors.fill: parent
-      spacing: 8
+      spacing: ScalerService.s(8)
       Item {
 
         Layout.fillWidth: true
@@ -187,20 +187,20 @@ Rectangle {
           // Text container bên trong (đã xoay)
           ColumnLayout {
             anchors.fill: parent
-            spacing: 2
+            spacing: ScalerService.s(2)
             clip: true
 
             // Song title
             Item {
               Layout.fillWidth: true
-              Layout.preferredHeight: 10
+              Layout.preferredHeight: ScalerService.s(10)
 
               Text {
                 id: songTextVertical
                 text: Players.mprisPlayer?.trackTitle ?? "Not Playing"
                 color: theme.primary.foreground
                 font.family: "ComicShannsMono Nerd Font"
-                font.pixelSize: 12
+                font.pixelSize: ScalerService.s(12)
                 width: parent.width
 
                 // Marquee effect ngang (sẽ thành dọc sau khi xoay)
@@ -244,7 +244,7 @@ Rectangle {
               text: Players.mprisPlayer?.trackTitle
               color: theme.primary.dim_foreground
               font.family: "ComicShannsMono Nerd Font"
-              font.pixelSize: 10
+              font.pixelSize: ScalerService.s(10)
               width: parent.width
               elide: Text.ElideRight
               horizontalAlignment: Text.AlignHCenter
@@ -254,8 +254,8 @@ Rectangle {
       }
       ColumnLayout {
         Layout.alignment: Qt.AlignHCenter
-        spacing: 8
-        Layout.preferredHeight: 24
+        spacing: ScalerService.s(8)
+        Layout.preferredHeight: ScalerService.s(24)
 
         // Play/Pause button
         IconText {

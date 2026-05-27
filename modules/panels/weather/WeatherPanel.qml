@@ -22,20 +22,8 @@ PanelWindow {
     }
   }
 
-  implicitWidth: weatherPanel.animationProgress > 0.1 ?  1000 : 100
-  implicitHeight: weatherPanel.animationProgress > 0.1 ?  550 : 100
-  Behavior on implicitHeight {
-    NumberAnimation {
-      duration: 60
-      easing.type: Easing.OutCubic
-    }
-  }
-  Behavior on implicitWidth {
-    NumberAnimation {
-      duration: 60
-      easing.type: Easing.OutCubic
-    }
-  }
+  implicitWidth: ScalerService.s(1000)
+  implicitHeight: ScalerService.s(550)
   focusable: true
 
   property string apiKey: Settings.weather.keyApi
@@ -88,10 +76,10 @@ PanelWindow {
   }
 
   margins {
-    top: Settings.bar.position === "top" ? 10 : 0
-    bottom: Settings.bar.position === "bottom" ? 10 : 0
-    left: (Settings.bar.position === "top" || Settings.bar.position === "bottom") ? 400 : 10
-    right: Settings.bar.position === "right" ? 10 : 0
+    top: Settings.bar.position === "top" ? ScalerService.s(10) : 0
+    bottom: Settings.bar.position === "bottom" ? ScalerService.s(10) : 0
+    left: (Settings.bar.position === "top" || Settings.bar.position === "bottom") ? ScalerService.s(400) : ScalerService.s(10)
+    right: Settings.bar.position === "right" ? ScalerService.s(10) : 0
   }
 
   exclusiveZone: 0
@@ -158,15 +146,15 @@ PanelWindow {
   Rectangle {
     anchors.fill: parent
     border.color: theme.button.border
-    radius: Settings.appearance.radius1
-    border.width: Settings.appearance.enableBorder ? 3 : 0
+    radius: ScalerService.s(Settings.appearance.radius1)
+    border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
 
     color: theme.primary.background
 
     ColumnLayout {
       anchors.fill: parent
-      anchors.margins: 20
-      spacing: 20
+      anchors.margins: ScalerService.s(20)
+      spacing: ScalerService.s(20)
 
       // Header
       Com.WeatherHeader {}
@@ -175,7 +163,7 @@ PanelWindow {
       RowLayout {
         Layout.fillWidth: true
         Layout.fillHeight: true
-        spacing: 20
+        spacing: ScalerService.s(20)
 
         // Left: Config
         Com.WeatherConfigSection {
@@ -226,13 +214,13 @@ PanelWindow {
           Layout.fillWidth: true
           Layout.fillHeight: true
           Layout.preferredWidth: parent.width * 0.6
-          radius: 16
+          radius: ScalerService.s(16)
           color: theme.primary.background
 
           ColumnLayout {
             anchors.fill: parent
-            anchors.margins: 1
-            spacing: 20
+            anchors.margins: ScalerService.s(1)
+            spacing: ScalerService.s(20)
 
             // Current weather
             Com.WeatherCurrentDisplay {

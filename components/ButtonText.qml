@@ -1,4 +1,5 @@
 import QtQuick
+import qs.services
 
 Rectangle {
   id: root
@@ -10,16 +11,16 @@ Rectangle {
   property color textColor: theme.button.text
   property string fontFamily: "ComicShannsMono Nerd Font"
 
-  radius: 8
+  radius: ScalerService.s(8)
 
-  border.width: 1
+  border.width: ScalerService.s(1)
   border.color: root.hovered ? theme.button.border_select : theme.button.border
 
   color: root.hovered ? theme.button.background_select : theme.button.background
 
   // Fixed size based on the size property (no hover effect)
-  implicitWidth: iconText.width + 20
-  implicitHeight: iconText.height + 5
+  implicitWidth: iconText.width + ScalerService.s(20)
+  implicitHeight: iconText.height + ScalerService.s(5)
 
   Text {
     id: iconText
@@ -29,12 +30,12 @@ Rectangle {
     font.family: root.fontFamily
     font.pixelSize: {
       switch (root.size) {
-        case "xs": return 16
-        case "small": return 22
-        case "normal": return 38
-        case "large": return 52
-        case "xl": return 64
-        default: return 40
+        case "xs": return ScalerService.s(16)
+        case "small": return ScalerService.s(22)
+        case "normal": return ScalerService.s(38)
+        case "large": return ScalerService.s(52)
+        case "xl": return ScalerService.s(64)
+        default: return ScalerService.s(40)
       }
     }
 

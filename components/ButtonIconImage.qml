@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import QtQuick.Layouts
 import qs.commons
+import qs.services
 
 Item {
   id: root
@@ -17,12 +18,12 @@ Item {
 
   readonly property int iconSize: {
     switch (size) {
-      case "xs": return 12
-      case "small": return 16
-      case "normal": return 32
-      case "large": return 40
-      case "xl": return 50
-      default: return 32
+      case "xs": return ScalerService.s(12)
+      case "small": return ScalerService.s(16)
+      case "normal": return ScalerService.s(32)
+      case "large": return ScalerService.s(40)
+      case "xl": return ScalerService.s(50)
+      default: return ScalerService.s(32)
     }
   }
 
@@ -31,7 +32,7 @@ Item {
     property bool hovered: false
 
     anchors.fill: parent
-    anchors.margins: 2
+    anchors.margins: ScalerService.s(2)
 
     source: Directories.assetsPath + "/" + root.path
     fillMode: Image.PreserveAspectFit

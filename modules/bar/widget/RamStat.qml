@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import qs.components
 import qs.services.ram
 import qs.commons
+import qs.services
 
 RowLayout {
   id: root
@@ -11,7 +12,7 @@ RowLayout {
   property bool textBefore: style <= 4
   property bool compact: [3,4,7,8].includes(style)
 
-  spacing: 2
+  spacing: ScalerService.s(2)
 
   ColumnLayout {
     visible: textBefore

@@ -6,8 +6,8 @@ import qs.services
 
 PanelWindow {
   id: root
-  implicitWidth: 1000
-  implicitHeight: 750
+  implicitWidth: ScalerService.s(1000)
+  implicitHeight: ScalerService.s(750)
   color: "transparent"
 
   PackageService{
@@ -69,7 +69,7 @@ PanelWindow {
   }
 
   property var circlePositions: []
-  property real padding: 6
+  property real padding: ScalerService.s(6)
   property real packScale: 1.0
 
   Connections {
@@ -116,7 +116,7 @@ PanelWindow {
     const cy = root.height / 2
 
     const boundaryRadius =
-    Math.min(root.width, root.height) / 2 - 18
+    Math.min(root.width, root.height) / 2 - ScalerService.s(18)
 
     let totalSize = 0
     for (const item of items)
@@ -136,7 +136,7 @@ PanelWindow {
     const goldenAngle = 137.507764 * Math.PI / 180
     for (let i = 0; i < items.length; i++) {
       const angle = i * goldenAngle
-      const r = Math.sqrt(i + 1) * 18
+      const r = Math.sqrt(i + 1) * ScalerService.s(18)
       items[i].x = cx + Math.cos(angle) * r
       items[i].y = cy + Math.sin(angle) * r
     }
@@ -201,8 +201,8 @@ PanelWindow {
 
   Rectangle {
     anchors.fill: parent
-    radius: Settings.appearance.radius1
-    border.width: Settings.appearance.enableBorder ? 3 : 0
+    radius: ScalerService.s(Settings.appearance.radius1)
+    border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
     border.color: theme.primary.foreground
     color: theme.primary.background
 
@@ -217,7 +217,7 @@ PanelWindow {
       Item {
         visible: !isGroups
         Layout.fillWidth: true
-        Layout.preferredHeight: 50
+        Layout.preferredHeight: ScalerService.s(50)
         ButtonText{
           visible: loaded
           name: "Back"
@@ -257,10 +257,10 @@ PanelWindow {
             property var pos: root.circlePositions[index]
             property var diskColor:  getDiskColor(index)
 
-            width: pos ? pos.size : 10
-            height: pos ? pos.size : 10
+            width: pos ? pos.size : ScalerService.s(10)
+            height: pos ? pos.size : ScalerService.s(10)
             radius: width / 2
-            border.width: 2
+            border.width: ScalerService.s(2)
             border.color: theme.primary.foreground
             clip: true
 
@@ -287,14 +287,14 @@ PanelWindow {
               running: true
 
               NumberAnimation {
-                from: (pos ? pos.y : parent.height / 2 - height / 2) - 8
-                to: (pos ? pos.y : parent.height / 2 - height / 2) + 8
+                from: (pos ? pos.y : parent.height / 2 - height / 2) - ScalerService.s(8)
+                to: (pos ? pos.y : parent.height / 2 - height / 2) + ScalerService.s(8)
                 duration: 1800 + (index * 250)
                 easing.type: Easing.InOutSine
               }
               NumberAnimation {
-                from: (pos ? pos.y : parent.height / 2 - height / 2) + 8
-                to: (pos ? pos.y : parent.height / 2 - height / 2) - 8
+                from: (pos ? pos.y : parent.height / 2 - height / 2) + ScalerService.s(8)
+                to: (pos ? pos.y : parent.height / 2 - height / 2) - ScalerService.s(8)
                 duration: 1800 + (index * 250)
                 easing.type: Easing.InOutSine
               }
@@ -316,15 +316,15 @@ PanelWindow {
 
             ColumnLayout {
               anchors.centerIn: parent
-              spacing: 2
+              spacing: ScalerService.s(2)
 
               CustomText {
-                width: pos ? pos.size * 0.8 : 50
+                width: pos ? pos.size * 0.8 : ScalerService.s(50)
 
                 name: modelData.name
                 textColor: theme.primary.background
 
-                property var sizeText: Math.max(10, bubble.width * 0.1)
+                property var sizeText: Math.max(ScalerService.s(10), bubble.width * 0.1)
 
                 font.pixelSize: mouseArea.containsMouse
                 ? sizeText * 1.1
@@ -340,9 +340,9 @@ PanelWindow {
 
               CustomText {
                 visible: root.isPackages
-                width: pos ? pos.size * 0.8 : 50
+                width: pos ? pos.size * 0.8 : ScalerService.s(50)
 
-                property var sizeText: Math.max(8, bubble.width * 0.1)
+                property var sizeText: Math.max(ScalerService.s(8), bubble.width * 0.1)
 
                 font.pixelSize: mouseArea.containsMouse
                 ? sizeText * 1.1
@@ -377,41 +377,41 @@ PanelWindow {
           anchors.fill: parent
 
           contentWidth: width
-          contentHeight: infoColumn.implicitHeight + 40
+          contentHeight: infoColumn.implicitHeight + ScalerService.s(40)
 
           clip: true
 
           ColumnLayout {
             id: infoColumn
 
-            width: parent.width - 40
+            width: parent.width - ScalerService.s(40)
 
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.margins: 20
+            anchors.margins: ScalerService.s(20)
 
-            spacing: 14
+            spacing: ScalerService.s(14)
 
             // =========================
             // Header
             // =========================
             Rectangle {
               Layout.fillWidth: true
-              Layout.preferredHeight: contentHeader.implicitHeight + 20
+              Layout.preferredHeight: contentHeader.implicitHeight + ScalerService.s(20)
 
-              radius: 16
+              radius: ScalerService.s(16)
 
               color: theme.button.background
-              border.width: 2
+              border.width: ScalerService.s(2)
               border.color: theme.button.border
 
               RowLayout {
                 anchors.fill: parent
-                anchors.margins: 18
+                anchors.margins: ScalerService.s(18)
 
                 ColumnLayout {
                   id: contentHeader
-                  spacing: 6
+                  spacing: ScalerService.s(6)
 
                   CustomText {
                     name: root.infoPackage["Name"] || "Unknown"
@@ -450,21 +450,21 @@ PanelWindow {
 
                 Layout.fillWidth: true
 
-                implicitHeight: contentColumn.implicitHeight + 20
+                implicitHeight: contentColumn.implicitHeight + ScalerService.s(20)
 
-                radius: 14
+                radius: ScalerService.s(14)
 
                 color: theme.button.background
-                border.width: 1
+                border.width: ScalerService.s(1)
                 border.color: theme.button.border
 
                 ColumnLayout {
                   id: contentColumn
 
                   anchors.fill: parent
-                  anchors.margins: 14
+                  anchors.margins: ScalerService.s(14)
 
-                  spacing: 6
+                  spacing: ScalerService.s(6)
 
                   CustomText {
                     name: modelData[0]
@@ -493,21 +493,21 @@ PanelWindow {
 
               Layout.fillWidth: true
 
-              implicitHeight: depColumn.implicitHeight + 20
+              implicitHeight: depColumn.implicitHeight + ScalerService.s(20)
 
-              radius: 14
+              radius: ScalerService.s(14)
 
               color: theme.button.background
 
-              border.width: 1
+              border.width: ScalerService.s(1)
               border.color: theme.button.border
               ColumnLayout {
                 id: depColumn
 
                 anchors.fill: parent
-                anchors.margins: 14
+                anchors.margins: ScalerService.s(14)
 
-                spacing: 10
+                spacing: ScalerService.s(10)
 
                 CustomText {
                   name: "Dependencies"
@@ -535,22 +535,22 @@ PanelWindow {
 
               Layout.fillWidth: true
 
-              implicitHeight: optDepColumn.implicitHeight + 20
+              implicitHeight: optDepColumn.implicitHeight + ScalerService.s(20)
 
-              radius: 14
+              radius: ScalerService.s(14)
 
               color: theme.button.background
 
-              border.width: 1
+              border.width: ScalerService.s(1)
               border.color: theme.button.border
 
               ColumnLayout {
                 id: optDepColumn
 
                 anchors.fill: parent
-                anchors.margins: 14
+                anchors.margins: ScalerService.s(14)
 
-                spacing: 10
+                spacing: ScalerService.s(10)
 
                 CustomText {
                   name: "Optional Dependencies"

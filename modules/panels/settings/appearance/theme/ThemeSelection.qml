@@ -7,20 +7,20 @@ import qs.commons
 
 RowLayout {
   id: themeSelection
-  spacing: 12
+  spacing: ScalerService.s(12)
 
   Text {
     text: lang.appearance?.theme_label || "Chủ đề:"
     color: theme.primary.foreground
     font {
       family: "ComicShannsMono Nerd Font"
-      pixelSize: 16
+      pixelSize: ScalerService.s(16)
     }
-    Layout.preferredWidth: 150
+    Layout.preferredWidth: ScalerService.s(150)
   }
 
   Row {
-    spacing: 12
+    spacing: ScalerService.s(12)
     Layout.fillWidth: true
 
     // Light Theme Card

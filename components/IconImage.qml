@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import QtQuick.Layouts
 import qs.commons
+import qs.services
 
 Item {
   property var path: ""
@@ -26,28 +27,28 @@ Item {
   width: {
     switch (size) {
       case "xs":
-      return 12
+      return ScalerService.s(12)
 
       case "small":
-      return 16
+      return ScalerService.s(16)
 
       case "normal":
-      return 32
+      return ScalerService.s(32)
 
       case "large":
-      return 40
+      return ScalerService.s(40)
 
       case "xl":
-      return 50
+      return ScalerService.s(50)
 
       case "2xl":
-      return 64
+      return ScalerService.s(64)
 
       case "3xl":
-      return 84
+      return ScalerService.s(84)
 
       default:
-      return 32
+      return ScalerService.s(32)
     }
   }
 
@@ -58,7 +59,7 @@ Item {
 
   Image {
     anchors.fill: parent
-    anchors.margins: 2
+    anchors.margins: ScalerService.s(2)
 
     source: Directories.assetsPath + "/" + path
 

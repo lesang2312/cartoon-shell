@@ -1,12 +1,13 @@
 import QtQuick
+import qs.services
 
 Rectangle {
   id: root
-  width: 56
-  height: 32
-  implicitWidth: 56
-  implicitHeight: 32
-  radius: 16
+  width: ScalerService.s(56)
+  height: ScalerService.s(32)
+  implicitWidth: ScalerService.s(56)
+  implicitHeight: ScalerService.s(32)
+  radius: ScalerService.s(16)
   color: adapter ? theme.button.text : theme.button.background
 
   scale: toggleMouseArea.containsPress ? 0.95 : (toggleMouseArea.containsMouse ? 1.05 : 1.0)
@@ -32,13 +33,13 @@ Rectangle {
 
   Rectangle {
     id: toggleIndicator
-    x: root.adapter ? parent.width - width - 4 : 4
-    y: 4
-    width: 24
-    height: 24
-    radius: 24 / 2
+    x: root.adapter ? parent.width - width - ScalerService.s(4) : ScalerService.s(4)
+    y: ScalerService.s(4)
+    width: ScalerService.s(24)
+    height: ScalerService.s(24)
+    radius: ScalerService.s(24) / 2
     color: theme.primary.dim_background
-    border.width: 1
+    border.width: ScalerService.s(1)
     border.color: theme.normal.black
 
     Behavior on x {

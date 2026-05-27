@@ -10,7 +10,7 @@ Item {
   ScrollView {
     id: scrollView
     anchors.fill: parent
-    anchors.margins: 20
+    anchors.margins: ScalerService.s(20)
     clip: true
 
     ScrollBar.vertical.policy: ScrollBar.AsNeeded
@@ -22,8 +22,8 @@ Item {
     ColumnLayout {
       id: contentLayout
       width: scrollView.availableWidth
-      spacing: 20
-      anchors.margins: 20
+      spacing: ScalerService.s(20)
+      anchors.margins: ScalerService.s(20)
 
       HeaderSettings {
         name: "Clock Time"
@@ -31,7 +31,7 @@ Item {
 
       Rectangle {
         Layout.fillWidth: true
-        height: 1
+        height: ScalerService.s(1)
         color: theme.primary.foreground
         opacity: 0.3
       }
@@ -41,6 +41,7 @@ Item {
         text: "Clock settings content"
         color: theme.primary.foreground
         Layout.alignment: Qt.AlignLeft
+        font.pixelSize: ScalerService.s(14)
       }
 
       Com.ClockPanelToggle {

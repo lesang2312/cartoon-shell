@@ -41,34 +41,34 @@ Scope {
         bottom: true
       }
       margins {
-        bottom: 120
+        bottom: ScalerService.s(120)
       }
       exclusiveZone: 0
-      implicitWidth: 280
-      implicitHeight: 100
+      implicitWidth: ScalerService.s(280)
+      implicitHeight: ScalerService.s(100)
       color: "transparent"
       mask: Region {}
 
       Rectangle {
         anchors.fill: parent
-        radius: 15
+        radius: ScalerService.s(15)
         color: theme.primary.background
         border.color: theme.normal.black
-        border.width: 3
+        border.width: ScalerService.s(3)
 
         ColumnLayout {
           anchors {
             fill: parent
-            leftMargin: 15
-            rightMargin: 15
-            bottomMargin: 15
+            leftMargin: ScalerService.s(15)
+            rightMargin: ScalerService.s(15)
+            bottomMargin: ScalerService.s(15)
           }
-          spacing: 12
+          spacing: ScalerService.s(12)
 
           RowLayout {
             Image {
-              Layout.preferredWidth: 40
-              Layout.preferredHeight: 40
+              Layout.preferredWidth: ScalerService.s(40)
+              Layout.preferredHeight: ScalerService.s(40)
               source: root.getVolumeIcon()
               fillMode: Image.PreserveAspectFit
               smooth: true
@@ -77,7 +77,7 @@ Scope {
               text: isMuted ? (lang?.volume?.muted || "Muted") : Math.round(currentVolume * 100) + "%"
               color: theme.primary.foreground
               font.family: "ComicShannsMono Nerd Font"
-              font.pixelSize: 30
+              font.pixelSize: ScalerService.s(30)
               font.bold: true
             }
             Rectangle {
@@ -87,12 +87,12 @@ Scope {
               Layout.fillHeight: true
               Text {
                 text: " " + (lang?.volume?.title || "Âm thanh")
-                anchors.margins: 10
+                anchors.margins: ScalerService.s(10)
                 anchors.top: parent.top
                 anchors.right: parent.right
                 color: theme.primary.foreground
                 font.family: "ComicShannsMono Nerd Font"
-                font.pixelSize: 20
+                font.pixelSize: ScalerService.s(20)
                 font.bold: true
               }
             }
@@ -102,12 +102,12 @@ Scope {
           ColumnLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            spacing: 4
+            spacing: ScalerService.s(4)
 
             Rectangle {
               Layout.fillWidth: true
-              Layout.preferredHeight: 20
-              radius: 20
+              Layout.preferredHeight: ScalerService.s(20)
+              radius: ScalerService.s(20)
               color: "#333333"
 
               Rectangle {

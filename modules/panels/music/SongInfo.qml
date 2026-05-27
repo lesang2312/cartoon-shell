@@ -8,7 +8,7 @@ ColumnLayout {
   id: root
   Layout.fillWidth: true
   Layout.fillHeight: true
-  spacing: 8
+  spacing: ScalerService.s(8)
   property real animationProgress: 0
 
   Item {

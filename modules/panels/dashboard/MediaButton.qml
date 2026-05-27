@@ -5,7 +5,7 @@ import qs.services
 Rectangle {
   id: root
   property string icon: ""
-  property int size: 35
+  property int size: ScalerService.s(35)
   property color backgroundColor: "transparent"
   property var onButtonClicked: function() {}
 
@@ -15,7 +15,7 @@ Rectangle {
   color: backgroundColor
 
   border.color: theme.normal.black
-  border.width: 3
+  border.width: ScalerService.s(3)
 
   Label {
     anchors.centerIn: parent

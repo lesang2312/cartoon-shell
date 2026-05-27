@@ -25,7 +25,7 @@ Item {
 
   ColumnLayout {
     anchors.fill: parent
-    spacing: 10
+    spacing: ScalerService.s(10)
     Bar.TopNavigationBar{
       animationProgress: root.animationProgress
       indexCategoegory: 1
@@ -71,21 +71,21 @@ Item {
       // Tab 3: Fonts
       ColumnLayout {
         width: parent.width
-        spacing: 20
+        spacing: ScalerService.s(20)
 
         Text {
           text: lang?.appearance?.fonts || "Fonts"
           color: theme.primary.foreground
           font {
             family: "ComicShannsMono Nerd Font"
-            pixelSize: 24
+            pixelSize: ScalerService.s(24)
             bold: true
           }
         }
 
         Rectangle {
           Layout.fillWidth: true
-          height: 1
+          height: ScalerService.s(1)
           color: theme.primary.foreground
           opacity: 0.3
         }
@@ -94,27 +94,28 @@ Item {
         Text {
           text: "Fonts settings content"
           color: theme.primary.foreground
+          font.pixelSize: ScalerService.s(14)
         }
       }
 
       // Tab 4: Icons
       ColumnLayout {
         width: parent.width
-        spacing: 20
+        spacing: ScalerService.s(20)
 
         Text {
           text: lang?.appearance?.icons || "Icons"
           color: theme.primary.foreground
           font {
             family: "ComicShannsMono Nerd Font"
-            pixelSize: 24
+            pixelSize: ScalerService.s(24)
             bold: true
           }
         }
 
         Rectangle {
           Layout.fillWidth: true
-          height: 1
+          height: ScalerService.s(1)
           color: theme.primary.foreground
           opacity: 0.3
         }
@@ -123,27 +124,28 @@ Item {
         Text {
           text: "Icons settings content"
           color: theme.primary.foreground
+          font.pixelSize: ScalerService.s(14)
         }
       }
 
       // Tab 5: Effects
       ColumnLayout {
         width: parent.width
-        spacing: 20
+        spacing: ScalerService.s(20)
 
         Text {
           text: lang?.appearance?.effects || "Effects"
           color: theme.primary.foreground
           font {
             family: "ComicShannsMono Nerd Font"
-            pixelSize: 24
+            pixelSize: ScalerService.s(24)
             bold: true
           }
         }
 
         Rectangle {
           Layout.fillWidth: true
-          height: 1
+          height: ScalerService.s(1)
           color: theme.primary.foreground
           opacity: 0.3
         }
@@ -152,27 +154,28 @@ Item {
         Text {
           text: "Effects settings content"
           color: theme.primary.foreground
+          font.pixelSize: ScalerService.s(14)
         }
       }
 
       // Tab 6: Dashboard
       ColumnLayout {
         width: parent.width
-        spacing: 20
+        spacing: ScalerService.s(20)
 
         Text {
           text: lang?.appearance?.layout || "Layout"
           color: theme.primary.foreground
           font {
             family: "ComicShannsMono Nerd Font"
-            pixelSize: 24
+            pixelSize: ScalerService.s(24)
             bold: true
           }
         }
 
         Rectangle {
           Layout.fillWidth: true
-          height: 1
+          height: ScalerService.s(1)
           color: theme.primary.foreground
           opacity: 0.3
         }
@@ -181,6 +184,7 @@ Item {
         Text {
           text: "Layout settings content"
           color: theme.primary.foreground
+          font.pixelSize: ScalerService.s(14)
         }
       }
 
@@ -193,21 +197,21 @@ Item {
       // Tab 8: Advanced (nếu cần)
       ColumnLayout {
         width: parent.width
-        spacing: 20
+        spacing: ScalerService.s(20)
 
         Text {
           text: "Advanced"
           color: theme.primary.foreground
           font {
             family: "ComicShannsMono Nerd Font"
-            pixelSize: 24
+            pixelSize: ScalerService.s(24)
             bold: true
           }
         }
 
         Rectangle {
           Layout.fillWidth: true
-          height: 1
+          height: ScalerService.s(1)
           color: theme.primary.foreground
           opacity: 0.3
         }
@@ -216,6 +220,7 @@ Item {
         Text {
           text: "Advanced settings content"
           color: theme.primary.foreground
+          font.pixelSize: ScalerService.s(14)
         }
       }
     }

@@ -10,8 +10,8 @@ import qs.commons
 
 PanelWindow {
   id: root
-  implicitWidth: root.animationProgress > 0.1 ? 450 : 100
-  implicitHeight: root.animationProgress > 0.1 ?  600 : 100
+  implicitWidth: ScalerService.s(450)
+  implicitHeight: ScalerService.s(600)
   property real animationProgress: 0
   SequentialAnimation on animationProgress {
     running: true
@@ -44,10 +44,10 @@ PanelWindow {
   }
 
   margins {
-    top: Settings.bar.position === "top" ? 10 : 0
-    bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? 10 : 0
-    left: Settings.bar.position === "left" ? 10 : 0
-    right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? 10 : 0
+    top: Settings.bar.position === "top" ? ScalerService.s(10) : 0
+    bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? ScalerService.s(10) : 0
+    left: Settings.bar.position === "left" ? ScalerService.s(10) : 0
+    right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? ScalerService.s(10) : 0
   }
   color: "transparent"
   focusable: true
@@ -91,13 +91,13 @@ PanelWindow {
     anchors.fill: parent
     color: theme.primary.background
     border.color: theme.button.border
-    radius: Settings.appearance.radius1
-    border.width: Settings.appearance.enableBorder ? 3 : 0
+    radius: ScalerService.s(Settings.appearance.radius1)
+    border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
 
     ColumnLayout {
       anchors.fill: parent
-      anchors.margins: 10
-      spacing: 6
+      anchors.margins: ScalerService.s(10)
+      spacing: ScalerService.s(6)
 
       // Header with title and scan button
       Components.BluetoothHeader {
@@ -124,8 +124,8 @@ PanelWindow {
       // Error message
       Rectangle {
         Layout.fillWidth: true
-        height: pairErrorMessage ? 40 : 0
-        radius: 8
+        height: pairErrorMessage ? ScalerService.s(40) : 0
+        radius: ScalerService.s(8)
         color: theme.normal.red
         visible: pairErrorMessage !== ""
         clip: true
@@ -139,19 +139,19 @@ PanelWindow {
 
         RowLayout {
           anchors.fill: parent
-          anchors.margins: 8
+          anchors.margins: ScalerService.s(8)
 
           Text {
             text: "⚠️ " + pairErrorMessage
             color: theme.primary.foreground
-            font.pixelSize: 12
+            font.pixelSize: ScalerService.s(12)
             Layout.fillWidth: true
           }
 
           Text {
             text: "✕"
             color: theme.primary.foreground
-            font.pixelSize: 14
+            font.pixelSize: ScalerService.s(14)
             MouseArea {
               anchors.fill: parent
               onClicked: pairErrorMessage = ""
@@ -181,25 +181,25 @@ PanelWindow {
       Rectangle {
         Layout.fillWidth: true
         Layout.fillHeight: true
-        radius: 12
+        radius: ScalerService.s(12)
         color: theme.primary.dim_background
         visible: !adapter?.enabled
 
         Column {
           anchors.centerIn: parent
-          spacing: 16
+          spacing: ScalerService.s(16)
 
           Text {
             text: "📶"
             color: theme.primary.dim_foreground
-            font.pixelSize: 48
+            font.pixelSize: ScalerService.s(48)
             anchors.horizontalCenter: parent.horizontalCenter
           }
 
           Text {
             text: lang?.bluetooth?.disabled || "Bluetooth đã tắt"
             color: theme.primary.foreground
-            font.pixelSize: 16
+            font.pixelSize: ScalerService.s(16)
             font.weight: Font.Medium
             anchors.horizontalCenter: parent.horizontalCenter
           }
@@ -207,7 +207,7 @@ PanelWindow {
           Text {
             text: lang?.bluetooth?.turn_on || "Bật Bluetooth để kết nối với thiết bị"
             color: theme.primary.dim_foreground
-            font.pixelSize: 12
+            font.pixelSize: ScalerService.s(12)
             anchors.horizontalCenter: parent.horizontalCenter
           }
         }

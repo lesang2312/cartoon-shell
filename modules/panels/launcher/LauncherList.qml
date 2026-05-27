@@ -9,10 +9,10 @@ import qs.commons
 
 Rectangle {
   id: container
-  radius: Settings.appearance.radius2
+  radius: ScalerService.s(Settings.appearance.radius2)
   color: theme.primary.dim_background
   border.color: theme.button.border
-  border.width: Settings.appearance.enableBorder ? 2 : 0
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
 
   property real animationProgress: 0
   property var apps: []
@@ -51,15 +51,15 @@ Rectangle {
   ColumnLayout {
     id: rootLayout
     anchors.fill: parent
-    anchors.margins: 8
-    spacing: 6
+    anchors.margins: ScalerService.s(8)
+    spacing: ScalerService.s(6)
 
     ListView {
       id: appList
       Layout.fillWidth: true
       Layout.fillHeight: true
       clip: true
-      spacing: 4
+      spacing: ScalerService.s(4)
       model: container.apps
       currentIndex: container.currentIndex
       focus: true
@@ -67,11 +67,11 @@ Rectangle {
 
       delegate: Rectangle {
         width: ListView.view.width
-        height: 56
-        radius: Settings.appearance.radius3
+        height: ScalerService.s(56)
+        radius: ScalerService.s(Settings.appearance.radius3)
         color: (ListView.isCurrentItem || mouseArea.containsMouse) ? theme.button.background_select : "transparent"
         border.color: (ListView.isCurrentItem || mouseArea.containsMouse) ? theme.button.border_select : "transparent"
-        border.width: Settings.appearance.enableBorder ? 1 : 0
+        border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
 
         opacity: 0
 
@@ -91,12 +91,12 @@ Rectangle {
 
         RowLayout {
           anchors.fill: parent
-          anchors.margins: 8
-          spacing: 10
+          anchors.margins: ScalerService.s(8)
+          spacing: ScalerService.s(10)
 
           Image {
-            Layout.preferredWidth: 36
-            Layout.preferredHeight: 36
+            Layout.preferredWidth: ScalerService.s(36)
+            Layout.preferredHeight: ScalerService.s(36)
             fillMode: Image.PreserveAspectFit
             source: modelData.icon ? "image://icon/" + modelData.icon : ""
             asynchronous: true
@@ -118,7 +118,7 @@ Rectangle {
           }
 
           ColumnLayout {
-            spacing: 2
+            spacing: ScalerService.s(2)
 
             CustomText{
               name: modelData.name || "Unknown"

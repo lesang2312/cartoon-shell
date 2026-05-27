@@ -14,8 +14,8 @@ Rectangle {
 
   color: theme.primary.dim_background
   border.color: theme.primary.foreground
-  radius: Settings.appearance.radius2
-  border.width: Settings.appearance.enableBorder ? 2 : 0
+  radius: ScalerService.s(Settings.appearance.radius2)
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
   Behavior on opacity {
     NumberAnimation {
       duration: 200
@@ -24,8 +24,8 @@ Rectangle {
 
   ColumnLayout {
     anchors.fill: parent
-    anchors.margins: 15
-    spacing: 10
+    anchors.margins: ScalerService.s(15)
+    spacing: ScalerService.s(10)
 
     IconImage{
       path: root.image

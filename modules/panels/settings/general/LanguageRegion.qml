@@ -24,17 +24,17 @@ Item {
 
   ScrollView {
     anchors.fill: parent
-    anchors.margins: 20
+    anchors.margins: ScalerService.s(20)
     clip: true
     ScrollBar.vertical.policy: ScrollBar.AsNeeded
 
     ColumnLayout {
       width: parent.width
-      spacing: 15
+      spacing: ScalerService.s(15)
 
       RowLayout {
         Layout.fillWidth: true
-        spacing: 10
+        spacing: ScalerService.s(10)
 
         // Tiêu đề
         HeaderSettings {
@@ -50,7 +50,7 @@ Item {
 
       Rectangle {
         Layout.fillWidth: true
-        height: 1
+        height: ScalerService.s(1)
         color: theme.primary.foreground
         opacity: root.animationProgress > 0.2 ? 1 : 0
         Behavior on opacity {
@@ -63,7 +63,7 @@ Item {
       // Language Selection
       ColumnLayout {
         Layout.fillWidth: true
-        spacing: 10
+        spacing: ScalerService.s(10)
 
         CustomText {
           name: lang.general?.language_label || "Ngôn ngữ:"
@@ -79,8 +79,8 @@ Item {
         Grid {
           Layout.fillWidth: true
           columns: 6
-          columnSpacing: 6
-          rowSpacing: 6
+          columnSpacing: ScalerService.s(6)
+          rowSpacing: ScalerService.s(6)
 
           Repeater {
             model: [
@@ -252,16 +252,16 @@ Item {
                   easing.type: Easing.OutCubic
                 }
               }
-              width: root.width / 7  // Đã sửa từ !panelManager.fullsetting ? root.width/6 : root.width/12
-              height: root.width / 7  // Đã sửa từ !panelManager.fullsetting ? root.width/6 : root.width/12
-              radius: 10
+              width: root.width / ScalerService.s(7)  // Đã sửa từ !panelManager.fullsetting ? root.width/6 : root.width/12
+              height: root.width / ScalerService.s(7)  // Đã sửa từ !panelManager.fullsetting ? root.width/6 : root.width/12
+              radius: ScalerService.s(10)
               color: Settings.general.lang === modelData.code ? theme.normal.blue : (langMouseArea.containsMouse ? theme.button.background_select : theme.button.background)
               border.color: Settings.general.lang === modelData.code ? theme.normal.blue : (langMouseArea.containsPress ? theme.button.border_select : theme.button.border)
-              border.width: 2
+              border.width: ScalerService.s(2)
 
               ColumnLayout {
                 anchors.centerIn: parent
-                spacing: 4
+                spacing: ScalerService.s(4)
 
                 IconImage {
                   path: `flags/${modelData.flagImg}.png`
@@ -321,18 +321,18 @@ Item {
               // Checkmark for selected language
               Rectangle {
                 visible: Settings.general.lang === modelData.code
-                width: 18
-                height: 18
-                radius: 9
+                width: ScalerService.s(18)
+                height: ScalerService.s(18)
+                radius: ScalerService.s(9)
                 color: theme.normal.blue
                 anchors.top: parent.top
                 anchors.right: parent.right
-                anchors.margins: 4
+                anchors.margins: ScalerService.s(4)
 
                 Text {
                   text: "✓"
                   color: theme.primary.background
-                  font.pixelSize: 12
+                  font.pixelSize: ScalerService.s(12)
                   font.bold: true
                   anchors.centerIn: parent
                 }

@@ -12,10 +12,10 @@ Rectangle {
 
   Layout.fillWidth: true
   Layout.fillHeight: true
-  radius: 18
+  radius: ScalerService.s(18)
   color: bgColor
   border.color: theme.button.border
-  border.width: 3
+  border.width: ScalerService.s(3)
   opacity: root.animationProgress > revealThreshold ? 1 : 0
   Behavior on opacity {
     NumberAnimation {
@@ -25,7 +25,7 @@ Rectangle {
 
   Image {
     anchors.centerIn: parent
-    anchors.margins: 8
+    anchors.margins: ScalerService.s(8)
     width: parent.width * 0.6
     height: parent.height * 0.6
     source: "image://icon/" + root.iconSource
@@ -44,7 +44,7 @@ Rectangle {
       anchors.centerIn: parent
       text: "?"
       color: theme.primary.dim_foreground
-      font.pixelSize: 24
+      font.pixelSize: ScalerService.s(24)
       font.family: "ComicShannsMono Nerd Font"
       visible: parent.status !== Image.Ready
     }

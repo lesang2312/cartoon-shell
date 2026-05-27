@@ -25,10 +25,10 @@ Item {
         color: theme.primary.foreground
         font {
           family: "ComicShannsMono Nerd Font"
-          pixelSize: 18
+          pixelSize: ScalerService.s(18)
           bold: true
         }
-        Layout.preferredWidth: 200
+        Layout.preferredWidth: ScalerService.s(200)
       }
 
       Item {
@@ -40,7 +40,7 @@ Item {
     Rectangle {
       id: positionContainer
       Layout.fillWidth: true
-      Layout.preferredHeight: Math.min(parent.width * 0.8, 400)
+      Layout.preferredHeight: Math.min(parent.width * 0.8, ScalerService.s(400))
       color: "transparent"
 
       Grid {
@@ -48,12 +48,12 @@ Item {
         anchors.centerIn: parent
         columns: 3
         rows: 3
-        spacing: 25
+        spacing: ScalerService.s(25)
 
         // Hàng 1
         Com.ClockPositionButton {
-          width: 80
-          height: 80
+          width: ScalerService.s(80)
+          height: ScalerService.s(80)
           position: "topLeft"
           isSelected: Settings.clock.positionWidget === "topLeft"
           anchorConfig: ({
@@ -66,8 +66,8 @@ Item {
         }
 
         Com.ClockPositionButton {
-          width: 80
-          height: 80
+          width: ScalerService.s(80)
+          height: ScalerService.s(80)
           position: "top"
           isSelected: Settings.clock.positionWidget === "top"
           anchorConfig: ({
@@ -80,8 +80,8 @@ Item {
         }
 
         Com.ClockPositionButton {
-          width: 80
-          height: 80
+          width: ScalerService.s(80)
+          height: ScalerService.s(80)
           position: "topRight"
           isSelected: Settings.clock.positionWidget === "topRight"
           anchorConfig: ({
@@ -95,8 +95,8 @@ Item {
 
         // Hàng 2
         Com.ClockPositionButton {
-          width: 80
-          height: 80
+          width: ScalerService.s(80)
+          height: ScalerService.s(80)
           position: "left"
           isSelected: Settings.clock.positionWidget === "left"
           anchorConfig: ({
@@ -109,8 +109,8 @@ Item {
         }
 
         Com.ClockPositionButton {
-          width: 80
-          height: 80
+          width: ScalerService.s(80)
+          height: ScalerService.s(80)
           position: "center"
           isSelected: Settings.clock.positionWidget === "center"
           anchorConfig: ({
@@ -123,8 +123,8 @@ Item {
         }
 
         Com.ClockPositionButton {
-          width: 80
-          height: 80
+          width: ScalerService.s(80)
+          height: ScalerService.s(80)
           position: "right"
           isSelected: Settings.clock.positionWidget === "right"
           anchorConfig: ({
@@ -138,8 +138,8 @@ Item {
 
         // Hàng 3
         Com.ClockPositionButton {
-          width: 80
-          height: 80
+          width: ScalerService.s(80)
+          height: ScalerService.s(80)
           position: "bottomLeft"
           isSelected: Settings.clock.positionWidget === "bottomLeft"
           anchorConfig: ({
@@ -152,8 +152,8 @@ Item {
         }
 
         Com.ClockPositionButton {
-          width: 80
-          height: 80
+          width: ScalerService.s(80)
+          height: ScalerService.s(80)
           position: "bottom"
           isSelected: Settings.clock.positionWidget === "bottom"
           anchorConfig: ({
@@ -166,8 +166,8 @@ Item {
         }
 
         Com.ClockPositionButton {
-          width: 80
-          height: 80
+          width: ScalerService.s(80)
+          height: ScalerService.s(80)
           position: "bottomRight"
           isSelected: Settings.clock.positionWidget === "bottomRight"
           anchorConfig: ({
@@ -185,7 +185,7 @@ Item {
     Item {
       id: positionDescription
       Layout.fillWidth: true
-      Layout.preferredHeight: 40
+      Layout.preferredHeight: ScalerService.s(40)
 
       Text {
         anchors.centerIn: parent
@@ -207,7 +207,7 @@ Item {
         color: theme.primary.foreground
         font {
           family: "ComicShannsMono Nerd Font"
-          pixelSize: 18
+          pixelSize: ScalerService.s(18)
         }
       }
     }

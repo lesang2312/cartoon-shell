@@ -13,8 +13,8 @@ Rectangle {
   Layout.fillWidth: true
   Layout.fillHeight: true
   color: theme.primary.background
-  radius: Settings.appearance.radius1
-  border.width: Settings.appearance.enableBorder ? 3 : 0
+  radius: ScalerService.s(Settings.appearance.radius1)
+  border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
   border.color: theme.button.border
   opacity: 0
 
@@ -40,7 +40,7 @@ Rectangle {
 
   RowLayout {
     anchors.centerIn: parent
-    spacing: 20
+    spacing: ScalerService.s(20)
 
     IconImage {
       path: "workspace/pacman.png"

@@ -30,20 +30,8 @@ PanelWindow {
     }
   }
 
-  implicitWidth: root.animationProgress > 0.1 ?  500 : 100
-  implicitHeight: root.animationProgress > 0.1 ?  500 : 100
-  Behavior on implicitHeight {
-    NumberAnimation {
-      duration: 60
-      easing.type: Easing.OutCubic
-    }
-  }
-  Behavior on implicitWidth {
-    NumberAnimation {
-      duration: 60
-      easing.type: Easing.OutCubic
-    }
-  }
+  implicitWidth: ScalerService.s(500)
+  implicitHeight: ScalerService.s(500)
   focusable: true
 
   anchors {
@@ -54,10 +42,10 @@ PanelWindow {
   }
 
   margins {
-    top: Settings.bar.position === "top" ? 10 : 0
-    bottom: Settings.bar.position === "bottom" ? 10 : 0
-    left: (Settings.bar.position === "top" || Settings.bar.position === "bottom") ? 400 : 10
-    right: Settings.bar.position === "right" ? 10 : 0
+    top: Settings.bar.position === "top" ? ScalerService.s(10) : 0
+    bottom: Settings.bar.position === "bottom" ? ScalerService.s(10) : 0
+    left: (Settings.bar.position === "top" || Settings.bar.position === "bottom") ? ScalerService.s(400) : ScalerService.s(10)
+    right: Settings.bar.position === "right" ? ScalerService.s(10) : 0
   }
 
   exclusiveZone: 0
@@ -80,15 +68,15 @@ PanelWindow {
   // Main content
   Rectangle {
     anchors.fill: parent
-    radius: Settings.appearance.radius1
-    border.width: Settings.appearance.enableBorder ? 3 : 0
+    radius: ScalerService.s(Settings.appearance.radius1)
+    border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
     color: theme.primary.background
     border.color: theme.button.border
 
     ColumnLayout {
       anchors.fill: parent
-      anchors.margins: 20
-      spacing: 16
+      anchors.margins: ScalerService.s(20)
+      spacing: ScalerService.s(16)
 
       // Header
       Com.MusicHeader {
@@ -98,8 +86,8 @@ PanelWindow {
       // Album art and info section
       RowLayout {
         Layout.fillWidth: true
-        Layout.preferredHeight: 180
-        spacing: 20
+        Layout.preferredHeight: ScalerService.s(180)
+        spacing: ScalerService.s(20)
 
         // Album art
         Com.AlbumArt {

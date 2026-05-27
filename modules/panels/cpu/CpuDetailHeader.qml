@@ -7,12 +7,12 @@ Item {
 
   Row {
     anchors.centerIn: parent
-    spacing: 20
+    spacing: ScalerService.s(20)
 
     Text {
       text: lang.CpuPane.title
       color: theme.primary.foreground
-      font.pixelSize: 40
+      font.pixelSize: ScalerService.s(40)
       font.bold: true
       font.family: "ComicShannsMono Nerd Font"
     }

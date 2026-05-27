@@ -12,40 +12,40 @@ Rectangle {
   signal scanClicked
 
   Layout.fillWidth: true
-  height: 100
-  radius: 12
+  height: ScalerService.s(100)
+  radius: ScalerService.s(12)
   color: theme.primary.background
 
   RowLayout {
     anchors.fill: parent
-    anchors.margins: 12
-    spacing: 12
+    anchors.margins: ScalerService.s(12)
+    spacing: ScalerService.s(12)
 
     // Bluetooth icon
     Rectangle {
-      width: 64
-      height: 64
-      radius: 20
+      width: ScalerService.s(64)
+      height: ScalerService.s(64)
+      radius: ScalerService.s(20)
       color: theme.primary.background
 
       Image {
         source: Directories.assetsPath + "/settings/bluetooth.png"
-        width: 64
-        height: 64
-        sourceSize: Qt.size(64, 64)
+        width: ScalerService.s(64)
+        height: ScalerService.s(64)
+        sourceSize: Qt.size(ScalerService.s(64), ScalerService.s(64))
         anchors.centerIn: parent
       }
     }
 
     // Title
     ColumnLayout {
-      spacing: 4
+      spacing: ScalerService.s(4)
       Layout.fillWidth: true
 
       Text {
         text: "Bluetooth"
         color: theme.primary.foreground
-        font.pixelSize: 40
+        font.pixelSize: ScalerService.s(40)
         font.family: "ComicShannsMono Nerd Font"
         font.weight: Font.Bold
       }
@@ -58,9 +58,9 @@ Rectangle {
     // Scan button
     Rectangle {
       id: scanButton
-      Layout.preferredWidth: 55
-      Layout.preferredHeight: 55
-      radius: 28
+      Layout.preferredWidth: ScalerService.s(55)
+      Layout.preferredHeight: ScalerService.s(55)
+      radius: ScalerService.s(28)
       visible: adapter?.enabled || false
       color: {
         if (isDiscovering)
@@ -85,18 +85,18 @@ Rectangle {
 
       Image {
         source: Directories.assetsPath + "/launcher/search.png"
-        width: 40
-        height: 40
-        sourceSize: Qt.size(40, 40)
+        width: ScalerService.s(40)
+        height: ScalerService.s(40)
+        sourceSize: Qt.size(ScalerService.s(40), ScalerService.s(40))
         anchors.centerIn: parent
       }
 
       // Scanning animation
       Rectangle {
         anchors.fill: parent
-        radius: 28
+        radius: ScalerService.s(28)
         color: "transparent"
-        border.width: 2
+        border.width: ScalerService.s(2)
         border.color: theme.normal.green
         visible: isDiscovering
         rotation: scanRotation
@@ -111,13 +111,13 @@ Rectangle {
         }
 
         Rectangle {
-          width: 4
-          height: 4
-          radius: 2
+          width: ScalerService.s(4)
+          height: ScalerService.s(4)
+          radius: ScalerService.s(2)
           color: theme.normal.green
           anchors.top: parent.top
           anchors.horizontalCenter: parent.horizontalCenter
-          anchors.topMargin: -2
+          anchors.topMargin: ScalerService.s(-2)
         }
       }
 

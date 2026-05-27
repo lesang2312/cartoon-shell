@@ -19,7 +19,7 @@ Rectangle {
 
   RowLayout {
     anchors.fill: parent
-    spacing: 20
+    spacing: ScalerService.s(20)
 
     // Sidebar
     Com.Sidebar {
@@ -38,15 +38,15 @@ Rectangle {
       Layout.fillWidth: true
       Layout.fillHeight: true
       color: theme.primary.dim_background
-      radius: Settings.appearance.radius2
+      radius: ScalerService.s(Settings.appearance.radius2)
       border {
         color: theme.button.border
-        width: Settings.appearance.enableBorder ? 2 : 0
+        width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
       }
       StackLayout {
         id: settingsStack
         anchors.fill: parent
-        anchors.margins: 8
+        anchors.margins: ScalerService.s(8)
         currentIndex: 0
         Loader {
           id: settingsGeneral
