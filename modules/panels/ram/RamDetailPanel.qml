@@ -44,8 +44,8 @@ PanelWindow {
 
   Rectangle {
     anchors.centerIn: parent
-    implicitWidth: root.animationProgress > 0 ? parent.width : parent.width * 0.2
-    implicitHeight: root.animationProgress > 0 ? parent.height : parent.height * 0.2
+    implicitWidth: root.animationProgress > 0 ? parent.width : 0
+    implicitHeight: root.animationProgress > 0 ? parent.height : 0
     Behavior on implicitHeight {
       NumberAnimation {
         duration: 500

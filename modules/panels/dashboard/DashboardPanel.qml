@@ -54,8 +54,6 @@ PanelWindow {
 
         Com.UserProfileCard {
           animationProgress: root.animationProgress
-          opacity: root.animationProgress > 0.05 ? 1 : 0
-
         }
 
         Com.SystemSlider {
@@ -104,24 +102,20 @@ PanelWindow {
             Layout.preferredWidth: ScalerService.s(100)
 
             Com.TimeCard {
-              opacity: root.animationProgress > 0.25 ? 1 : 0
               animationProgress: root.animationProgress
             }
 
             Com.SleepTimerCard {
-              opacity: root.animationProgress > 0.3 ? 1 : 0
               animationProgress: root.animationProgress
             }
           }
 
           Com.WeatherCard {
-            opacity: root.animationProgress > 0.35 ? 1 : 0
             animationProgress: root.animationProgress
 
           }
 
           Com.ListQuickActionButton {
-            opacity: root.animationProgress > 0.4 ? 1 : 0
             animationProgress: root.animationProgress
           }
         }
@@ -144,12 +138,9 @@ PanelWindow {
 
               Com.MediaPlayerCard {
                 animationProgress: root.animationProgress
-                opacity: root.animationProgress > 0.3 ? 1 : 0
-
               }
 
               Com.AppGridCard {
-                opacity: root.animationProgress > 0.35 ? 1 : 0
                 animationProgress: root.animationProgress
               }
             }
@@ -195,7 +186,6 @@ PanelWindow {
               Com.PackageCard {
                 count: packageService.totalPackage
                 animationProgress: root.animationProgress
-                opacity: root.animationProgress > 0.6 ? 1 : 0
               }
             }
           }
@@ -205,7 +195,6 @@ PanelWindow {
             Layout.preferredWidth: ScalerService.s(300)
             Layout.fillHeight: true
             animationProgress: root.animationProgress
-            opacity: root.animationProgress > 0.65 ? 1 : 0
           }
         }
       }

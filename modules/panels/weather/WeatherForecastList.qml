@@ -26,7 +26,7 @@ Item {
         icon: WeatherService.forecastDays[0]?.icon ?? ""
         minTemp: (WeatherService.forecastDays[0]?.minTemp ?? "") + "℃ "
         maxTemp: (WeatherService.forecastDays[0]?.maxTemp ?? "") + "℃ "
-        animationProgress: weatherPanel.animationProgress
+        animationProgress: root.animationProgress
         revealThreshold: 0.9
         opacity: root.animationProgress > 0.6 ? 1 : 0
       }
@@ -37,7 +37,7 @@ Item {
         icon: WeatherService.forecastDays[1]?.icon ?? ""
         minTemp: (WeatherService.forecastDays[1]?.minTemp ?? "") + "℃ "
         maxTemp: (WeatherService.forecastDays[1]?.maxTemp ?? "") + "℃ "
-        animationProgress: weatherPanel.animationProgress
+        animationProgress: root.animationProgress
         revealThreshold: 1
         opacity: root.animationProgress > 0.7 ? 1 : 0
       }
@@ -50,7 +50,7 @@ Item {
         icon: WeatherService.forecastDays[2]?.icon ?? ""
         minTemp: (WeatherService.forecastDays[2]?.minTemp ?? "") + "℃ "
         maxTemp: (WeatherService.forecastDays[2]?.maxTemp ?? "") + "℃ "
-        animationProgress: weatherPanel.animationProgress
+        animationProgress: root.animationProgress
         revealThreshold: 1.1
         opacity: root.animationProgress > 0.8 ? 1 : 0
       }

@@ -5,18 +5,13 @@ import qs.services
 import qs.components
 import qs.commons
 
-Rectangle {
+Item {
   id: root
   property int count: 230
   property int index: 0
 
   Layout.fillWidth: true
   Layout.fillHeight: true
-  color: theme.primary.background
-  radius: ScalerService.s(Settings.appearance.radius1)
-  border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
-  border.color: theme.button.border
-  opacity: 0
 
   SequentialAnimation on index {
     running: root.animationProgress > 0.9
@@ -32,35 +27,51 @@ Rectangle {
     }
   }
   property real animationProgress: 0
-  Behavior on opacity {
-    NumberAnimation {
-      duration: 200
-    }
-  }
 
-  RowLayout {
+  Rectangle {
     anchors.centerIn: parent
-    spacing: ScalerService.s(20)
-
-    IconImage {
-      path: "workspace/pacman.png"
-      size: "xl"
-      opacity: root.animationProgress > 0.8 ? 1 : 0
+    implicitWidth: root.animationProgress > 0.6 ? parent.width : 0
+    implicitHeight: root.animationProgress > 0.6 ? parent.height : 0
+    Behavior on implicitHeight {
+      NumberAnimation {
+        duration: 500
+        easing.type: Easing.OutCubic
+      }
     }
-
-    CustomText{
-      name: index
-      isBold: true
-      opacity: root.animationProgress > 0.85 ? 1 : 0
+    Behavior on implicitWidth {
+      NumberAnimation {
+        duration: 500
+        easing.type: Easing.OutCubic
+      }
     }
-  }
-  MouseArea {
-    anchors.fill: parent
-    hoverEnabled: true
-    cursorShape: Qt.PointingHandCursor
+    color: theme.primary.background
+    radius: ScalerService.s(Settings.appearance.radius1)
+    border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
+    border.color: theme.button.border
+    RowLayout {
+      anchors.centerIn: parent
+      spacing: ScalerService.s(20)
 
-    onClicked: {
-      VisibleService.togglePanel("packagePanel")
+      IconImage {
+        path: "workspace/pacman.png"
+        size: "xl"
+        opacity: root.animationProgress > 0.8 ? 1 : 0
+      }
+
+      CustomText{
+        name: index
+        isBold: true
+        opacity: root.animationProgress > 0.85 ? 1 : 0
+      }
+    }
+    MouseArea {
+      anchors.fill: parent
+      hoverEnabled: true
+      cursorShape: Qt.PointingHandCursor
+
+      onClicked: {
+        VisibleService.togglePanel("packagePanel")
+      }
     }
   }
 }
