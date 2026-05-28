@@ -73,7 +73,7 @@ PanelWindow {
       // Header với nút đóng
       Components.CpuDetailHeader {
         Layout.fillWidth: true
-        Layout.preferredHeight: parent.height * 0.1
+        Layout.preferredHeight: ScalerService.s(40)
       }
       // Thông tin CPU
       Components.CpuInfoSection {

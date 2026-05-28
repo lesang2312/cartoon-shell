@@ -104,6 +104,8 @@ PanelWindow {
 
       Com.FlagHeader {
         animationProgress: root.animationProgress
+        Layout.fillWidth: true
+        Layout.preferredHeight: ScalerService.s(40)
       }
 
       Com.FlagGrid {

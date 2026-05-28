@@ -94,6 +94,8 @@ PanelWindow {
 
       // Header
       Com.MusicHeader {
+        Layout.fillWidth: true
+        Layout.preferredHeight: ScalerService.s(40)
         animationProgress : root.animationProgress
       }
 

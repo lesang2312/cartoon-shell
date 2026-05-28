@@ -1,20 +1,18 @@
 import QtQuick
 import qs.services
+import qs.components
 
 Item {
   id: header
   signal closeClicked
 
-  Row {
+  CustomText {
     anchors.centerIn: parent
-    spacing: ScalerService.s(20)
-
-    Text {
-      text: lang.CpuPane.title
-      color: theme.primary.foreground
-      font.pixelSize: ScalerService.s(40)
-      font.bold: true
-      font.family: "ComicShannsMono Nerd Font"
-    }
+    name: lang.CpuPane.title
+    size: "large"
+    isBold: true
+  }
+  CloseButton{
+    onClicked: VisibleService.togglePanel("cpu")
   }
 }

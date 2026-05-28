@@ -72,6 +72,7 @@ PanelWindow {
       spacing: ScalerService.s(12)
       Com.WifiHeader {
         Layout.fillWidth: true
+        Layout.preferredHeight: ScalerService.s(40)
         wifiManager: wifiManager
         animationProgress: root.animationProgress
       }

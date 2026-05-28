@@ -12,7 +12,7 @@ Item {
     anchors.centerIn: parent
 
     name: lang?.ram?.panel_title || "Quản lí Ram"
-    size: "2xl"
+    size: "large"
     isBold: true
     opacity: root.animationProgress > 0.1 ? 1 : 0
   }

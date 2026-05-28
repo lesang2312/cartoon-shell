@@ -6,12 +6,9 @@ import qs.services
 Item {
   id: headerCard
 
-  Layout.fillWidth: true
-  height: ScalerService.s(70)
-
   CustomText {
     name: lang?.weather?.title || "Thời Tiết"
-    size: "2xl"
+    size: "large"
     isBold: true
     anchors.centerIn: parent
   }

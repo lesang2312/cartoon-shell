@@ -68,7 +68,7 @@ PanelWindow {
 
       Com.CalendarHeader {
         Layout.fillWidth: true
-        Layout.preferredHeight: ScalerService.s(70)
+        Layout.preferredHeight: ScalerService.s(40)
       }
 
       Com.CalendarDislay {

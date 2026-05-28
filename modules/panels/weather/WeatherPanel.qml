@@ -171,7 +171,10 @@ PanelWindow {
       spacing: ScalerService.s(20)
 
       // Header
-      Com.WeatherHeader {}
+      Com.WeatherHeader {
+        Layout.fillWidth: true
+        Layout.preferredHeight: ScalerService.s(40)
+      }
 
       // Main content - 2 columns
       RowLayout {

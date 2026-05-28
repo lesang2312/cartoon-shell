@@ -6,8 +6,6 @@ import qs.services
 
 Item {
   id: root
-  Layout.fillWidth: true
-  Layout.preferredHeight: ScalerService.s(50)
   property real animationProgress: 0
 
   // Title centered
