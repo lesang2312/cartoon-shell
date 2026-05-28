@@ -8,7 +8,7 @@ import qs.commons
 import "." as Com
 
 PanelWindow {
-  id: weatherPanel
+  id: root
 
   property real animationProgress: 0
   SequentialAnimation on animationProgress {
@@ -40,8 +40,8 @@ PanelWindow {
     interval: 500
     repeat: false
     onTriggered: {
-      if (weatherPanel.apiKey !== Settings.weather.keyApi) {
-        saveAndValidateApiKey(weatherPanel.apiKey);
+      if (root.apiKey !== Settings.weather.keyApi) {
+        saveAndValidateApiKey(root.apiKey);
       }
     }
   }
@@ -51,8 +51,8 @@ PanelWindow {
     interval: 300
     repeat: false
     onTriggered: {
-      if (weatherPanel.location.length >= 2 && weatherPanel.isUserSearching) {
-        searchLocation(weatherPanel.location);
+      if (root.location.length >= 2 && weatherPanel.isUserSearching) {
+        searchLocation(root.location);
       }
     }
   }
@@ -63,8 +63,8 @@ PanelWindow {
     interval: 200
     repeat: false
     onTriggered: {
-      weatherPanel.locationSearchResults = [];
-      weatherPanel.isUserSearching = false;
+      root.locationSearchResults = [];
+      root.isUserSearching = false;
     }
   }
 
@@ -91,15 +91,15 @@ PanelWindow {
     running: false
     stdout: StdioCollector {
       onStreamFinished: {
-        weatherPanel.isSearchingLocation = false;
-        weatherPanel.locationSearchResults = [];
+        root.isSearchingLocation = false;
+        root.locationSearchResults = [];
         if (text && text.length > 0) {
           try {
             const data = JSON.parse(text);
             if (!data.error) {
-              weatherPanel.locationSearchResults = data;
+              root.locationSearchResults = data;
               if (data.length > 0) {
-                weatherPanel.currentLocationIndex = 0;
+                root.currentLocationIndex = 0;
               }
             }
           } catch (e) {}
@@ -114,7 +114,7 @@ PanelWindow {
       return;
     }
     Settings.weather.keyApi = key;
-    weatherPanel.apiKey = key;
+    root.apiKey = key;
     updateWeather();
   }
 
@@ -144,7 +144,21 @@ PanelWindow {
 
   // Main UI
   Rectangle {
-    anchors.fill: parent
+    anchors.centerIn: parent
+    implicitWidth: root.animationProgress > 0 ? parent.width : parent.width * 0.2
+    implicitHeight: root.animationProgress > 0 ? parent.height : parent.height * 0.2
+    Behavior on implicitHeight {
+      NumberAnimation {
+        duration: 500
+        easing.type: Easing.OutCubic
+      }
+    }
+    Behavior on implicitWidth {
+      NumberAnimation {
+        duration: 500
+        easing.type: Easing.OutCubic
+      }
+    }
     border.color: theme.button.border
     radius: ScalerService.s(Settings.appearance.radius1)
     border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
@@ -167,45 +181,45 @@ PanelWindow {
 
         // Left: Config
         Com.WeatherConfigSection {
-          apiKey: weatherPanel.apiKey
-          location: weatherPanel.location
-          isSearchingLocation: weatherPanel.isSearchingLocation
-          locationSearchResults: weatherPanel.locationSearchResults
-          currentLocationIndex: weatherPanel.currentLocationIndex
-          isUserSearching: weatherPanel.isUserSearching
-          animationProgress: weatherPanel.animationProgress
-          errorMessage: weatherPanel.errorMessage
+          apiKey: root.apiKey
+          location: root.location
+          isSearchingLocation: root.isSearchingLocation
+          locationSearchResults: root.locationSearchResults
+          currentLocationIndex: root.currentLocationIndex
+          isUserSearching: root.isUserSearching
+          animationProgress: root.animationProgress
+          errorMessage: root.errorMessage
 
           onApiKeyEdited: function (newKey) {
-            weatherPanel.apiKey = newKey;
-            weatherPanel.apiKeyValidateTimer.restart();
+            root.apiKey = newKey;
+            root.apiKeyValidateTimer.restart();
           }
 
           onLocationTextEdited: function (newText) {
-            weatherPanel.location = newText;
-            weatherPanel.searchDebounceTimer.stop();
+            root.location = newText;
+            root.searchDebounceTimer.stop();
             if (newText.length >= 2) {
-              weatherPanel.searchDebounceTimer.restart();
+              root.searchDebounceTimer.restart();
             } else {
-              weatherPanel.locationSearchResults = [];
-              weatherPanel.currentLocationIndex = 0;
+              root.locationSearchResults = [];
+              root.currentLocationIndex = 0;
             }
           }
 
           onLocationFocusStatusChanged: function (hasFocus) {
             if (hasFocus) {
-              weatherPanel.isUserSearching = true;
+              root.isUserSearching = true;
             } else {
               hideResultsTimer.restart();
             }
           }
 
           onSearchLocationRequested: function (query) {
-            weatherPanel.searchLocation(query);
+            root.searchLocation(query);
           }
 
           onLocationSelected: function (locationName) {
-            weatherPanel.selectLocation(locationName);
+            root.selectLocation(locationName);
           }
         }
 
@@ -226,14 +240,14 @@ PanelWindow {
             Com.WeatherCurrentDisplay {
               Layout.fillWidth: true
               Layout.preferredHeight: parent.height / 2
-              animationProgress: weatherPanel.animationProgress
+              animationProgress: root.animationProgress
 
             }
 
             // 3-day forecast
             Com.WeatherForecastList {
               Layout.preferredHeight: parent.height / 2
-              animationProgress: weatherPanel.animationProgress
+              animationProgress: root.animationProgress
             }
           }
         }

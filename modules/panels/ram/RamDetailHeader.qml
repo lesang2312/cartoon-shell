@@ -15,20 +15,9 @@ Item {
     size: "2xl"
     isBold: true
     opacity: root.animationProgress > 0.1 ? 1 : 0
-    Behavior on opacity {
-      NumberAnimation {
-        duration: 200
-      }
-    }
-
   }
   CloseButton{
     onClicked: VisibleService.togglePanel("ram")
     opacity: root.animationProgress > 0.15 ? 1 : 0
-    Behavior on opacity {
-      NumberAnimation {
-        duration: 200
-      }
-    }
   }
 }

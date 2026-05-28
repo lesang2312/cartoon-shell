@@ -8,7 +8,7 @@ import qs.commons
 import "." as Com
 
 PanelWindow {
-  id: wtDetailPanel
+  id: root
 
   property real animationProgress: 0
   SequentialAnimation on animationProgress {
@@ -41,7 +41,21 @@ PanelWindow {
   color: "transparent"
 
   Rectangle {
-    anchors.fill: parent
+    anchors.centerIn: parent
+    implicitWidth: root.animationProgress > 0 ? parent.width : parent.width * 0.2
+    implicitHeight: root.animationProgress > 0 ? parent.height : parent.height * 0.2
+    Behavior on implicitHeight {
+      NumberAnimation {
+        duration: 500
+        easing.type: Easing.OutCubic
+      }
+    }
+    Behavior on implicitWidth {
+      NumberAnimation {
+        duration: 500
+        easing.type: Easing.OutCubic
+      }
+    }
     color: theme.primary.background
     border.color: theme.button.border
     radius: ScalerService.s(Settings.appearance.radius1)

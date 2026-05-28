@@ -9,7 +9,7 @@ import qs.services
 import qs.commons
 
 PanelWindow {
-  id: detailPanel
+  id: root
 
   implicitWidth: ScalerService.s(1000)
   implicitHeight: ScalerService.s(850)
@@ -28,18 +28,42 @@ PanelWindow {
     right: Settings.bar.position === "right" ? ScalerService.s(10) : 0
   }
 
-  exclusiveZone: 0
+  property real animationProgress: 0
+  SequentialAnimation on animationProgress {
+    running: true
+
+    NumberAnimation {
+      from: 0
+      to: 2
+      duration: 1000
+      easing.type: Easing.Linear
+    }
+  }
 
   color: "transparent"
 
   signal closeRequested
 
   Rectangle {
-    anchors.fill: parent
     color: theme.primary.background
     border.color: theme.button.border
     radius: ScalerService.s(Settings.appearance.radius1)
     border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
+    anchors.centerIn: parent
+    implicitWidth: root.animationProgress > 0 ? parent.width : parent.width * 0.2
+    implicitHeight: root.animationProgress > 0 ? parent.height : parent.height * 0.2
+    Behavior on implicitHeight {
+      NumberAnimation {
+        duration: 500
+        easing.type: Easing.OutCubic
+      }
+    }
+    Behavior on implicitWidth {
+      NumberAnimation {
+        duration: 500
+        easing.type: Easing.OutCubic
+      }
+    }
 
     ColumnLayout {
       anchors.fill: parent

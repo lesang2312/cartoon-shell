@@ -12,7 +12,7 @@ import "../../../components/" as Components
 import "./" as LauncherComponents
 
 PanelWindow {
-  id: launcherPanel
+  id: root
   property real animationProgress: 0
   SequentialAnimation on animationProgress {
     running: true
@@ -56,13 +56,13 @@ PanelWindow {
   }
 
   property bool settingsPanelVisible: false
-  property bool launcherPanelVisible: true
+  property bool rootVisible: true
 
   // Sửa hàm closePanel
 
   function togglePanel() {
-    launcherPanel.visible = !launcherPanel.visible;
-    if (launcherPanel.visible) {
+    root.visible = !launcherPanel.visible;
+    if (root.visible) {
       openLauncher();
     }
   }
@@ -84,7 +84,21 @@ PanelWindow {
 
   // Focus scope để quản lý focus
   Rectangle {
-    anchors.fill: parent
+    anchors.centerIn: parent
+    implicitWidth: root.animationProgress > 0 ? parent.width : parent.width * 0.2
+    implicitHeight: root.animationProgress > 0 ? parent.height : parent.height * 0.2
+    Behavior on implicitHeight {
+      NumberAnimation {
+        duration: 500
+        easing.type: Easing.OutCubic
+      }
+    }
+    Behavior on implicitWidth {
+      NumberAnimation {
+        duration: 500
+        easing.type: Easing.OutCubic
+      }
+    }
     radius: ScalerService.s(Settings.appearance.radius1)
     color: theme.primary.background
     border.color: theme.button.border
@@ -109,7 +123,7 @@ PanelWindow {
             id: sidebar
             visible: !(VisibleService.fullsetting && VisibleService.setting)
             onConfirmRequested: (action, actionLabel) => {
-              launcherPanel.confirmRequested(action, actionLabel);
+              root.confirmRequested(action, actionLabel);
             }
           }
 
@@ -120,7 +134,7 @@ PanelWindow {
             active: VisibleService.setting
             source: "../settings/SettingsPanel.qml"
             onLoaded: {
-              item.launcherPanel = launcherPanel;
+              item.root = launcherPanel;
               item.visible = Qt.binding(function () {
                   return VisibleService.setting;
               });
@@ -138,7 +152,7 @@ PanelWindow {
               isBold: true
               Layout.alignment: Qt.AlignHCenter
               size: "2xl"
-              opacity: launcherPanel.animationProgress > 0.2 ? 1 : 0
+              opacity: root.animationProgress > 0.2 ? 1 : 0
               Behavior on opacity {
                 NumberAnimation {
                   duration: 200
@@ -151,7 +165,7 @@ PanelWindow {
               id: searchBox
               onSearchChanged: text => launcherList.runSearch(text)
               onAccepted: text => launcherList.runSearch(text)
-              opacity: launcherPanel.animationProgress > 0.3 ? 1 : 0
+              opacity: root.animationProgress > 0.3 ? 1 : 0
               Behavior on opacity {
                 NumberAnimation {
                   duration: 200
@@ -163,8 +177,8 @@ PanelWindow {
               id: launcherList
               Layout.fillWidth: true
               Layout.fillHeight: true
-              opacity: launcherPanel.animationProgress > 0.4 ? 1 : 0
-              animationProgress : launcherPanel.animationProgress
+              opacity: root.animationProgress > 0.4 ? 1 : 0
+              animationProgress : root.animationProgress
               Behavior on opacity {
                 NumberAnimation {
                   duration: 200
@@ -179,7 +193,7 @@ PanelWindow {
 
   // Khi panel trở nên visible, focus vào search field
   onVisibleChanged: {
-    if (visible && launcherPanelVisible) {
+    if (visible && rootVisible) {
       Qt.callLater(function () {
           if (searchBox && searchBox.searchField) {
             searchBox.searchField.forceActiveFocus();

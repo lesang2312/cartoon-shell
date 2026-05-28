@@ -7,7 +7,7 @@ import Quickshell
 import qs.services
 
 Item {
-  id: batteryDisplay
+  id: root
   width: ScalerService.s(320)
   height: ScalerService.s(400)
 
@@ -20,6 +20,18 @@ Item {
   property color dimTextColor: theme.primary.dim_foreground // "#8087a2"
   property color borderColor: theme.bright.black            // "#5b6078"
   property color separatorColor: theme.normal.black         // "#494d64"
+
+  property real animationProgress: 0
+  SequentialAnimation on animationProgress {
+    running: true
+
+    NumberAnimation {
+      from: 0
+      to: 1
+      duration: 500
+      easing.type: Easing.Linear
+    }
+  }
 
   property int batteryPercent: 0
   property string batteryStatus: "Discharging"
@@ -57,25 +69,39 @@ Item {
         var txt = outputCollector.text ? outputCollector.text.trim() : "";
         if (txt !== "") {
           const data = JSON.parse(txt);
-          batteryDisplay.batteryPercent = data.capacity;
-          batteryDisplay.batteryStatus = data.status;
+          root.batteryPercent = data.capacity;
+          root.batteryStatus = data.status;
 
           // Lấy thông tin chi tiết
-          batteryDisplay.capacity = data.capacity;
-          batteryDisplay.energy_mWh = data.energy_mWh;
-          batteryDisplay.energy_full_mWh = data.energy_full_mWh;
-          batteryDisplay.power_mW = data.power_mW;
-          batteryDisplay.voltage_V = data.voltage_V;
-          batteryDisplay.current_mA = data.current_mA;
+          root.capacity = data.capacity;
+          root.energy_mWh = data.energy_mWh;
+          root.energy_full_mWh = data.energy_full_mWh;
+          root.power_mW = data.power_mW;
+          root.voltage_V = data.voltage_V;
+          root.current_mA = data.current_mA;
 
-          batteryDisplay.dataLoaded = true;
+          root.dataLoaded = true;
         } else {}
       } catch (e) {}
     }
   }
 
   Rectangle {
-    anchors.fill: parent
+    anchors.centerIn: parent
+    implicitWidth: root.animationProgress > 0 ? parent.width : parent.width * 0.2
+    implicitHeight: root.animationProgress > 0 ? parent.height : parent.height * 0.2
+    Behavior on implicitHeight {
+      NumberAnimation {
+        duration: 500
+        easing.type: Easing.OutCubic
+      }
+    }
+    Behavior on implicitWidth {
+      NumberAnimation {
+        duration: 500
+        easing.type: Easing.OutCubic
+      }
+    }
     color: theme.primary.background
     border.color: borderColor
     radius: ScalerService.s(Settings.appearance.radius1)
