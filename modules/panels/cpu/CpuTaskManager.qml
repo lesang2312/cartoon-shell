@@ -30,11 +30,9 @@ Item {
     anchors.margins: ScalerService.s(16)
     spacing: ScalerService.s(12)
 
-    Rectangle {
+    Item {
       Layout.fillWidth: true
-      color: theme.primary.background
       Layout.preferredHeight: ScalerService.s(50)
-      radius: ScalerService.s(8)
 
       CustomText {
         anchors.centerIn: parent

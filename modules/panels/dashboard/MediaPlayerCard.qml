@@ -37,6 +37,7 @@ Item {
     anchors.centerIn: parent
     implicitWidth: root.animationProgress > 0.3 ? parent.width : 0
     implicitHeight: root.animationProgress > 0.3 ? parent.height : 0
+    clip: true
     Behavior on implicitHeight {
       NumberAnimation {
         duration: 500
@@ -53,6 +54,16 @@ Item {
     radius: ScalerService.s(Settings.appearance.radius1)
     border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
     border.color: theme.button.border
+    FloatingCircles {
+      circleColor: theme.button.text
+      circleCount: 4  // Số lượng hình tròn
+      minRadius: 80
+      maxRadius: 250
+      minOpacity: 0.03
+      maxOpacity: 0.12
+      minDuration: 40000
+      maxDuration: 80000
+    }
     RowLayout {
       anchors.fill: parent
       anchors.margins: ScalerService.s(20)

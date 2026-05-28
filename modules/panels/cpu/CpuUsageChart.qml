@@ -19,11 +19,9 @@ Item {
       spacing: ScalerService.s(4)
 
       // Title row
-      Rectangle {
+      Item {
         Layout.fillWidth: true
-        color: theme.primary.background
         Layout.preferredHeight: ScalerService.s(50)
-        radius: ScalerService.s(8)
 
         CustomText {
           anchors.centerIn: parent

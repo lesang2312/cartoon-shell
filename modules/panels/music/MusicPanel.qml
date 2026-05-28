@@ -87,6 +87,17 @@ PanelWindow {
     color: theme.primary.background
     border.color: theme.button.border
 
+    FloatingCircles {
+      circleColor: theme.button.text
+      circleCount: 2  // Số lượng hình tròn
+      minRadius: 80
+      maxRadius: 250
+      minOpacity: 0.03
+      maxOpacity: 0.12
+      minDuration: 40000
+      maxDuration: 80000
+    }
+
     ColumnLayout {
       anchors.fill: parent
       anchors.margins: ScalerService.s(20)
@@ -130,5 +141,16 @@ PanelWindow {
         animationProgress : root.animationProgress
       }
     }
+    StarField {
+      starCount: 10
+      shootingStarCount: 5
+      starColor: theme.button.text
+      shootingStarColor: theme.button.text
+      starMinOpacity: 0.2
+      starMaxOpacity: 0.6
+      shootingStarMinSpeed: 0.8
+      shootingStarMaxSpeed: 1.3
+    }
+
   }
 }

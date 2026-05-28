@@ -51,6 +51,17 @@ Item {
     border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
     border.color: theme.button.border
 
+    FloatingCircles {
+      circleColor: theme.button.text
+      circleCount: 2  // Số lượng hình tròn
+      minRadius: 80
+      maxRadius: 250
+      minOpacity: 0.03
+      maxOpacity: 0.12
+      minDuration: 40000
+      maxDuration: 80000
+    }
+
     ColumnLayout {
       anchors.fill: parent
       anchors.margins: ScalerService.s(20)

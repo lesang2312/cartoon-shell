@@ -7,6 +7,7 @@ import Quickshell.Io
 import "./" as Components
 import qs.services
 import qs.commons
+import qs.components
 
 PanelWindow {
   id: root
@@ -64,6 +65,16 @@ PanelWindow {
         easing.type: Easing.OutCubic
       }
     }
+    FloatingCircles {
+      circleColor: theme.button.text
+      circleCount: 4  // Số lượng hình tròn
+      minRadius: 80
+      maxRadius: 250
+      minOpacity: 0.03
+      maxOpacity: 0.12
+      minDuration: 40000
+      maxDuration: 80000
+    }
 
     ColumnLayout {
       anchors.fill: parent
@@ -110,5 +121,16 @@ PanelWindow {
       }
 
     }
+    StarField {
+      starCount: 10
+      shootingStarCount: 5
+      starColor: theme.button.text
+      shootingStarColor: theme.button.text
+      starMinOpacity: 0.2
+      starMaxOpacity: 0.6
+      shootingStarMinSpeed: 0.4
+      shootingStarMaxSpeed: 1
+    }
+
   }
 }

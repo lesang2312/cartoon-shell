@@ -26,7 +26,7 @@ Item {
     radius: ScalerService.s(Settings.appearance.radius2)
     border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
     border.color: theme.button.border
-    opacity: root.animationProgress > 0.2 ? 1 : 0
+    opacity: root.animationProgress > 0.2 ? 0.5 : 0
     Behavior on opacity {
       NumberAnimation {
         duration: 200

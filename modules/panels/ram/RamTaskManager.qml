@@ -56,7 +56,12 @@ Item {
 
   Rectangle {
     anchors.fill: parent
-    color: theme.primary.background
+    color: Qt.rgba(
+      theme.primary.background.r,
+      theme.primary.background.g,
+      theme.primary.background.b,
+      0.4  // Alpha = 0 (trong suốt)
+    )
     radius: Settings.appearance.radius2
     border.width: Settings.appearance.enableBorder ? 2 : 0
     border.color: theme.primary.foreground
@@ -72,12 +77,9 @@ Item {
       anchors.margins: 16
       spacing: 12
 
-      Rectangle {
+      Item {
         Layout.fillWidth: true
-        color: theme.primary.background
         height: 50
-        radius: 8
-
         RowLayout {
           anchors.fill: parent
           anchors.margins: 12

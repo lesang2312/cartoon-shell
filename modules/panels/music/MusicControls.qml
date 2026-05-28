@@ -18,7 +18,7 @@ RowLayout {
     Layout.preferredWidth: ScalerService.s(48)
     Layout.preferredHeight: ScalerService.s(48)
     radius: ScalerService.s(24)
-    color: prevArea.containsMouse ? theme.button.background_select : theme.button.background
+    color: prevArea.containsMouse ? theme.button.text : theme.button.background
     opacity: root.animationProgress > 0.2 ? 1 : 0
     Behavior on opacity {
       NumberAnimation {
@@ -49,7 +49,7 @@ RowLayout {
     Layout.preferredWidth: ScalerService.s(64)
     Layout.preferredHeight: ScalerService.s(64)
     radius: ScalerService.s(32)
-    color: playArea.containsMouse ? theme.normal.blue : theme.button.background
+    color: playArea.containsMouse ? theme.button.text : theme.button.background
     opacity: root.animationProgress > 0.3 ? 1 : 0
     Behavior on opacity {
       NumberAnimation {
@@ -80,7 +80,7 @@ RowLayout {
     Layout.preferredWidth: ScalerService.s(48)
     Layout.preferredHeight: ScalerService.s(48)
     radius: ScalerService.s(24)
-    color: nextArea.containsMouse ? theme.button.background_select : theme.button.background
+    color: nextArea.containsMouse ? theme.button.text : theme.button.background
     opacity: root.animationProgress > 0.4 ? 1 : 0
     Behavior on opacity {
       NumberAnimation {
