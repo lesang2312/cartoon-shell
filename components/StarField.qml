@@ -4,30 +4,25 @@ import QtQuick
 Item {
   id: root
 
-  // Properties cho sao cố định
   property int starCount: 50
   property real starMinSize: 2
   property real starMaxSize: 5
-  property color starColor: "white"
+  property color starColor: theme.button.text
   property real starMinOpacity: 0.3
   property real starMaxOpacity: 1.0
   property int starFadeDuration: 1000
 
-  // Properties cho sao băng
   property int shootingStarCount: 10
-  property color shootingStarColor: "white"
-  property real shootingStarMinSpeed: 0.7
-  property real shootingStarMaxSpeed: 1.5
+  property color shootingStarColor: theme.button.text
+  property real shootingStarMinSpeed: 0.4
+  property real shootingStarMaxSpeed: 1
   property int shootingStarMinDelay: 0
-  property int shootingStarMaxDelay: 500
+  property int shootingStarMaxDelay: 1000
   property int shootingStarTrailMinLength: 80
   property int shootingStarTrailMaxLength: 230
 
-  property bool firstRun: true
-
   anchors.fill: parent
 
-  // Layer chứa sao cố định
   Item {
     id: starsLayer
     anchors.fill: parent
@@ -114,14 +109,6 @@ Item {
           id: shootingStarAnimation
           loops: Animation.Infinite
           running: true
-
-          PauseAnimation {
-            duration: root.firstRun
-            ? 0
-            : Math.random() *
-            (root.shootingStarMaxDelay - root.shootingStarMinDelay)
-            + root.shootingStarMinDelay
-          }
 
           ScriptAction {
             script: {

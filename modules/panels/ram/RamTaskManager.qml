@@ -54,24 +54,8 @@ Item {
     }
   }
 
-  Rectangle {
+  Item {
     anchors.fill: parent
-    color: Qt.rgba(
-      theme.primary.background.r,
-      theme.primary.background.g,
-      theme.primary.background.b,
-      0.4  // Alpha = 0 (trong suốt)
-    )
-    radius: Settings.appearance.radius2
-    border.width: Settings.appearance.enableBorder ? 2 : 0
-    border.color: theme.primary.foreground
-    opacity: root.animationProgress > 0.4 ? 1 : 0
-    Behavior on opacity {
-      NumberAnimation {
-        duration: 200
-      }
-    }
-
     ColumnLayout {
       anchors.fill: parent
       anchors.margins: 16

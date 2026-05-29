@@ -12,7 +12,6 @@ Item {
   property real maxOpacity: 0.15
   property real minDuration: 40000
   property real maxDuration: 80000
-  property bool startFromCenter: true  // Thêm property để điều khiển
 
   anchors.fill: parent
   clip: true
@@ -28,7 +27,6 @@ Item {
       property real circleRadius: Math.random() * (root.maxRadius - root.minRadius) + root.minRadius
       property real circleOpacity: Math.random() * (root.maxOpacity - root.minOpacity) + root.minOpacity
       property real moveDuration: Math.random() * (root.maxDuration - root.minDuration) + root.minDuration
-      property bool hasStarted: false  // Đánh dấu đã bắt đầu di chuyển chưa
 
       width: circleRadius * 2
       height: circleRadius * 2
@@ -36,18 +34,17 @@ Item {
       color: root.circleColor
       opacity: circleOpacity
 
-      // Vị trí ban đầu: từ chính giữa
-      x: (parent.width / 2) - (width / 2)
-      y: (parent.height / 2) - (height / 2)
+      // Vị trí ban đầu ngẫu nhiên
+      x: Math.random() * (parent.width - width)
+      y: Math.random() * (parent.height - height)
 
-      // Animation di chuyển - chỉ bắt đầu sau khi khởi tạo
+      // Animation di chuyển
       ParallelAnimation {
         id: moveAnimation
         loops: Animation.Infinite
-        running: false  // Tạm thời chưa chạy
+        running: true
 
         NumberAnimation {
-          id: xAnimation
           target: circle
           property: "x"
           to: Math.random() * (circle.parent.width - circle.width)
@@ -56,7 +53,6 @@ Item {
         }
 
         NumberAnimation {
-          id: yAnimation
           target: circle
           property: "y"
           to: Math.random() * (circle.parent.height - circle.height)
@@ -67,9 +63,8 @@ Item {
 
       // Animation scale
       SequentialAnimation {
-        id: scaleSeqAnimation
         loops: Animation.Infinite
-        running: false  // Tạm thời chưa chạy
+        running: true
 
         NumberAnimation {
           target: circle
@@ -88,46 +83,30 @@ Item {
         }
       }
 
-      // Delay trước khi bắt đầu di chuyển để tạo hiệu ứng tuần tự
-      Timer {
-        id: startDelay
-        interval: index * 2000  // Mỗi circle delay khác nhau
-        running: true
-        repeat: false
-        onTriggered: {
-          moveAnimation.running = true
-          scaleSeqAnimation.running = true
-          hasStarted = true
-        }
-      }
-
       // Thay đổi hướng di chuyển định kỳ
       Timer {
         interval: circle.moveDuration
-        running: moveAnimation.running
+        running: true
         repeat: true
 
         onTriggered: {
-          if (hasStarted) {
-            // Cập nhật thời gian mới
-            circle.moveDuration = Math.random() * (root.maxDuration - root.minDuration) + root.minDuration
+          // Lưu vị trí hiện tại
+          var currentX = circle.x
+          var currentY = circle.y
 
-            // Cập nhật target mới
-            xAnimation.to = Math.random() * (circle.parent.width - circle.width)
-            yAnimation.to = Math.random() * (circle.parent.height - circle.height)
-            xAnimation.duration = circle.moveDuration
-            yAnimation.duration = circle.moveDuration
+          // Cập nhật thời gian mới
+          circle.moveDuration = Math.random() * (root.maxDuration - root.minDuration) + root.minDuration
 
-            // Khởi tạo lại animation
-            moveAnimation.stop()
-            moveAnimation.start()
-          }
+          // Tạo target mới
+          var newX = Math.random() * (circle.parent.width - circle.width)
+          var newY = Math.random() * (circle.parent.height - circle.height)
+
+          // Khởi tạo lại animation
+          moveAnimation.stop()
+          moveAnimation.restart()
         }
       }
 
-      Component.onCompleted: {
-        console.log("Circle created at center - Radius:", circleRadius, "Opacity:", circleOpacity)
-      }
     }
   }
 }
