@@ -76,7 +76,7 @@ PanelWindow {
   }
 
   margins {
-    top: Settings.bar.position === "top" ? ScalerService.s(10) : 0
+    top: Settings.bar.position === "top" || Settings.bar.position === "left" || Settings.bar.position === "right" ? ScalerService.s(10) : 0
     bottom: Settings.bar.position === "bottom" ? ScalerService.s(10) : 0
     left: (Settings.bar.position === "left" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? ScalerService.s(10) : 0
     right: Settings.bar.position === "right" ? ScalerService.s(10) : 0
@@ -84,7 +84,10 @@ PanelWindow {
 
   // Focus scope để quản lý focus
   Rectangle {
-    anchors.centerIn: parent
+    anchors.top: Settings.bar.position == "top" ? parent.top : false
+    anchors.left: Settings.bar.position == "left" ? parent.left : false
+    anchors.bottom: Settings.bar.position === "bottom" ? parent.bottom : false
+    anchors.right: Settings.bar.position === "right" ? parent.right : false
     implicitWidth: root.animationProgress > 0 ? parent.width : 0
     implicitHeight: root.animationProgress > 0 ? parent.height : 0
     Behavior on implicitHeight {

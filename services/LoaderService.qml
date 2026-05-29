@@ -152,16 +152,8 @@ Item {
     id: ipc
     target: "rect"
     function getToggle() {
-      if (launcherPanelLoader.status == Loader.Ready) {
-        VisibleService.launcher = !VisibleService.launcher;
-        if (VisibleService.launcher && launcherPanelLoader.item) {
-          launcherPanelLoader.item.forceActiveFocus();
-          launcherPanelLoader.item.openLauncher();
-        }
-      } else {
-        VisibleService.launcher = true;
-      }
-      return 0;
+      VisibleService.togglePanel("launcher")
+
     }
   }
 }
