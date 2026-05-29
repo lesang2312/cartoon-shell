@@ -56,8 +56,6 @@ Item {
             var chartHeight = height - paddingTop - paddingBottom;
 
             // Draw background
-            ctx.fillStyle = theme.primary.dim_background;
-            ctx.fillRect(paddingLeft, paddingTop, chartWidth, chartHeight);
 
             ctx.globalAlpha = 1.0;
 

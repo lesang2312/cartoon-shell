@@ -45,7 +45,7 @@ Item {
     Rectangle {
       Layout.fillWidth: true
       height: ScalerService.s(32)
-      color: theme.button.background
+      color: Qt.alpha(theme.button.background, 0.5)
       opacity: root.animationProgress > 0.5 ? 1 : 0
       Behavior on opacity {
         NumberAnimation {
@@ -139,8 +139,8 @@ Item {
             height: ScalerService.s(50)
 
             color: index % 2 === 0
-            ? theme.primary.background
-            : theme.primary.dim_background
+            ? Qt.alpha(theme.primary.background, 0.5)
+            :  Qt.alpha(theme.primary.dim_background, 0.5)
 
             radius: ScalerService.s(6)
             border.color: Qt.lighter(color, 1.1)

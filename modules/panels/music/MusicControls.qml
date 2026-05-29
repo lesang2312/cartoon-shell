@@ -49,7 +49,7 @@ RowLayout {
     Layout.preferredWidth: ScalerService.s(64)
     Layout.preferredHeight: ScalerService.s(64)
     radius: ScalerService.s(32)
-    color: playArea.containsMouse ? theme.button.text : theme.button.background
+    color: playArea.containsMouse ? Qt.alpha(theme.button.text, 0.5) : Qt.alpha(theme.button.background, 0.5)
     opacity: root.animationProgress > 0.3 ? 1 : 0
     Behavior on opacity {
       NumberAnimation {

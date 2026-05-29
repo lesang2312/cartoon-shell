@@ -9,7 +9,8 @@ Rectangle {
   Layout.fillHeight: true
   Layout.minimumHeight: ScalerService.s(100)
   radius: ScalerService.s(12)
-  color: theme.primary.dim_background
+  color: Qt.alpha(theme.primary.dim_background, 0.3)
+
   clip: true
   property real animationProgress: 0
 

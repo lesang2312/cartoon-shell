@@ -18,7 +18,7 @@ PanelWindow {
     NumberAnimation {
       from: 0
       to: 1
-      duration: 500
+      duration: 1000
       easing.type: Easing.Linear
     }
   }
