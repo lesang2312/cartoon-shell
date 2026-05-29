@@ -20,6 +20,16 @@ Text {
       duration: 150
     }
   }
+  Behavior on scale {
+    NumberAnimation {
+      duration: 200
+    }
+  }
+  Behavior on font.pixelSize {
+    ColorAnimation {
+      duration: 200
+    }
+  }
 
   text: name
   color: textColor
@@ -29,6 +39,8 @@ Text {
 
   font.pixelSize: {
     switch (size) {
+      case "4sx":
+      return ScalerService.s(4)
       case "2xs":
       return ScalerService.s(8)
       case "xs":

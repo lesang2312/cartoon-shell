@@ -20,7 +20,7 @@ Item {
   }
   Behavior on rotation {
     NumberAnimation {
-      duration: 200
+      duration: 500
     }
   }
 

@@ -236,107 +236,140 @@ Item {
             },
             ]
 
-            delegate: Rectangle {
-              opacity: 0
+            delegate: Item {
+              id: parentItem
+              width: root.width / ScalerService.s(7)
+              height: root.width / ScalerService.s(7)
+              CustomRectangle {
+                implicitWidth: 0
+                implicitHeight: 0
+                anchors.centerIn: parentItem
+                SequentialAnimation on implicitWidth {
+                  running: root.animationProgress > 0.2
 
-              SequentialAnimation on opacity {
-                running: root.animationProgress > 0.2
+                  PauseAnimation {
+                    duration: index * 15
+                  }
 
-                PauseAnimation {
-                  duration: index * 15
-                }
-
-                NumberAnimation {
-                  to: 1
-                  duration: 200
-                  easing.type: Easing.OutCubic
-                }
-              }
-              width: root.width / ScalerService.s(7)  // Đã sửa từ !panelManager.fullsetting ? root.width/6 : root.width/12
-              height: root.width / ScalerService.s(7)  // Đã sửa từ !panelManager.fullsetting ? root.width/6 : root.width/12
-              radius: ScalerService.s(10)
-              color: Settings.general.lang === modelData.code ? theme.normal.blue : (langMouseArea.containsMouse ? theme.button.background_select : theme.button.background)
-              border.color: Settings.general.lang === modelData.code ? theme.normal.blue : (langMouseArea.containsPress ? theme.button.border_select : theme.button.border)
-              border.width: ScalerService.s(2)
-
-              ColumnLayout {
-                anchors.centerIn: parent
-                spacing: ScalerService.s(4)
-
-                IconImage {
-                  path: `flags/${modelData.flagImg}.png`
-                  size : "large"
-                  Layout.alignment: Qt.AlignHCenter
-                  opacity: 0
-
-                  SequentialAnimation on opacity {
-                    running: root.animationProgress > 0.4
-
-                    PauseAnimation {
-                      duration: index * 15
-                    }
-
-                    NumberAnimation {
-                      to: 1
-                      duration: 200
-                      easing.type: Easing.OutCubic
-                    }
+                  NumberAnimation {
+                    to: parentItem.width
+                    duration: 500
+                    easing.type: Easing.OutCubic
                   }
                 }
+                SequentialAnimation on implicitHeight {
+                  running: root.animationProgress > 0.2
 
-                CustomText {
-                  name: modelData.name
-                  textColor: Settings.general.lang === modelData.code ? theme.primary.background : theme.primary.foreground
-                  isBold: Settings.general.lang === modelData.code
-                  size: "xs"
-                  Layout.alignment: Qt.AlignHCenter
-                  opacity: 0
+                  PauseAnimation {
+                    duration: index * 15
+                  }
 
-                  SequentialAnimation on opacity {
-                    running: root.animationProgress > 0.5
-
-                    PauseAnimation {
-                      duration: index * 15
-                    }
-
-                    NumberAnimation {
-                      to: 1
-                      duration: 200
-                      easing.type: Easing.OutCubic
-                    }
+                  NumberAnimation {
+                    to: parentItem.height
+                    duration: 500
+                    easing.type: Easing.OutCubic
                   }
                 }
-              }
+                radius: ScalerService.s(10)
+                color: Settings.general.lang === modelData.code ? theme.normal.blue : (langMouseArea.containsMouse ? theme.button.background_select : theme.button.background)
+                border.color: Settings.general.lang === modelData.code ? theme.normal.blue : (langMouseArea.containsPress ? theme.button.border_select : theme.button.border)
+                border.width: ScalerService.s(2)
 
-              MouseArea {
-                id: langMouseArea
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-                onClicked: {
-                  setLanguageEditor(modelData.code);
-                }
-              }
-
-              // Checkmark for selected language
-              Rectangle {
-                visible: Settings.general.lang === modelData.code
-                width: ScalerService.s(18)
-                height: ScalerService.s(18)
-                radius: ScalerService.s(9)
-                color: theme.normal.blue
-                anchors.top: parent.top
-                anchors.right: parent.right
-                anchors.margins: ScalerService.s(4)
-
-                Text {
-                  text: "✓"
-                  color: theme.primary.background
-                  font.pixelSize: ScalerService.s(12)
-                  font.bold: true
+                ColumnLayout {
                   anchors.centerIn: parent
+                  spacing: ScalerService.s(4)
+
+                  IconImage {
+                    path: `flags/${modelData.flagImg}.png`
+                    size : "large"
+                    Layout.alignment: Qt.AlignHCenter
+                    opacity: 0
+
+                    SequentialAnimation on opacity {
+                      running: root.animationProgress > 0.8
+
+                      PauseAnimation {
+                        duration: index * 15
+                      }
+
+                      NumberAnimation {
+                        to: 1
+                        duration: 500
+                        easing.type: Easing.OutCubic
+                      }
+                    }
+                  }
+
+                  CustomText {
+                    name: modelData.name
+                    textColor: Settings.general.lang === modelData.code ? theme.primary.background : theme.primary.foreground
+                    isBold: Settings.general.lang === modelData.code
+                    size: "xs"
+                    Layout.alignment: Qt.AlignHCenter
+                    opacity: 0
+
+                    SequentialAnimation on opacity {
+                      running: root.animationProgress > 0.9
+
+                      PauseAnimation {
+                        duration: index * 15
+                      }
+
+                      NumberAnimation {
+                        to: 1
+                        duration: 500
+                        easing.type: Easing.OutCubic
+                      }
+                    }
+                  }
+                }
+
+                MouseArea {
+                  id: langMouseArea
+                  anchors.fill: parent
+                  hoverEnabled: true
+                  cursorShape: Qt.PointingHandCursor
+                  onClicked: {
+                    setLanguageEditor(modelData.code);
+                  }
+                }
+
+                // Checkmark for selected language
+                Rectangle {
+                  visible: Settings.general.lang === modelData.code
+                  width: ScalerService.s(18)
+                  height: ScalerService.s(18)
+                  radius: ScalerService.s(9)
+                  color: theme.normal.blue
+                  anchors.top: parent.top
+                  anchors.right: parent.right
+                  anchors.margins: ScalerService.s(4)
+                  opacity: 0
+
+                  SequentialAnimation on opacity {
+                    running: root.animationProgress > 0.9
+
+                    PauseAnimation {
+                      duration: index * 15
+                    }
+
+                    NumberAnimation {
+                      to: 1
+                      duration: 500
+                      easing.type: Easing.OutCubic
+                    }
+                  }
+
+                  Text {
+                    text: "✓"
+                    color: theme.primary.background
+                    font.pixelSize: ScalerService.s(12)
+                    font.bold: true
+                    anchors.centerIn: parent
+                  }
                 }
               }
+
             }
           }
         }
