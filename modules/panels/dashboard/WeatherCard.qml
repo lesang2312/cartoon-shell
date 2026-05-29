@@ -19,16 +19,30 @@ Item {
     anchors.centerIn: parent
     implicitWidth: root.animationProgress > 0.35 ? parent.width : 0
     implicitHeight: root.animationProgress > 0.35 ? parent.height : 0
+    clip: true
     Behavior on implicitHeight {
       NumberAnimation {
+        id: heightAnim
         duration: 500
         easing.type: Easing.OutCubic
       }
     }
     Behavior on implicitWidth {
       NumberAnimation {
+        id: widthAnim
         duration: 500
         easing.type: Easing.OutCubic
+      }
+    }
+    Loader {
+      anchors.fill: parent
+
+      active: !heightAnim.running && !widthAnim.running
+
+      sourceComponent: FloatingCircles {
+        circleColor: theme.button.text
+        anchors.fill: parent
+        circleCount: 2
       }
     }
     radius: ScalerService.s(Settings.appearance.radius1)

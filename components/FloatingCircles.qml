@@ -9,7 +9,7 @@ Item {
   property real minRadius: 80
   property real maxRadius: 250
   property real minOpacity: 0.03
-  property real maxOpacity: 0.15
+  property real maxOpacity: 0.08
   property real minDuration: 40000
   property real maxDuration: 80000
 

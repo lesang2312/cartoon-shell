@@ -131,7 +131,7 @@ PanelWindow {
 
       sourceComponent:     StarField {
         starCount: 10
-        shootingStarCount: 5
+        shootingStarCount: 2
       }
     }
 

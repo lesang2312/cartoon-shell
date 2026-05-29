@@ -77,7 +77,9 @@ PanelWindow {
       sourceComponent: FloatingCircles {
         circleColor: theme.button.text
         anchors.fill: parent
-        circleCount: 4
+        circleCount: 2
+        minOpacity: 0.02
+        maxOpacity: 0.04
       }
     }
 
@@ -102,7 +104,7 @@ PanelWindow {
 
       sourceComponent: StarField {
         starCount: 10
-        shootingStarCount: 5
+        shootingStarCount: 2
       }
     }
   }

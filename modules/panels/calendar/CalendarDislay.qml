@@ -160,30 +160,23 @@ Rectangle {
             }
             color: {
               if (modelData.isToday && modelData.isCurrentMonth)
-              return theme.button.background;
-              else if (modelData.fullDate.toDateString() === selectedDate.toDateString())
-              return theme.button.background_select;
+              return theme.button.text;
               else
               return "transparent";
             }
             radius: ScalerService.s(20)
-            border.color: modelData.isCurrentMonth ? theme.button.border : "transparent"
 
-            Label {
-              text: modelData.day
+            CustomText {
+              name: modelData.day
               anchors.centerIn: parent
-              color: {
+              size: "small"
+              textColor: {
                 if (!modelData.isCurrentMonth)
                 return theme.primary.dim_foreground;
                 else if (modelData.isToday)
-                return "white";
+                return theme.button.background;
                 else
-                return theme.primary.foreground;
-              }
-              font {
-                bold: modelData.isToday
-                pixelSize: ScalerService.s(19)
-                family: "ComicShannsMono Nerd Font"
+                return theme.button.text;
               }
             }
 

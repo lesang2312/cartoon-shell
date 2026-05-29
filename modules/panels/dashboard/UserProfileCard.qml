@@ -34,32 +34,35 @@ Item {
     anchors.centerIn: parent
     implicitWidth: root.animationProgress > 0.05 ? parent.width : 0
     implicitHeight: root.animationProgress > 0.05 ? parent.height : 0
+    color: theme.primary.background
+    radius: ScalerService.s(Settings.appearance.radius1)
+    border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
+    border.color: theme.button.border
+
     Behavior on implicitHeight {
       NumberAnimation {
+        id: heightAnim
         duration: 500
         easing.type: Easing.OutCubic
       }
     }
     Behavior on implicitWidth {
       NumberAnimation {
+        id: widthAnim
         duration: 500
         easing.type: Easing.OutCubic
       }
     }
-    color: theme.primary.background
-    radius: ScalerService.s(Settings.appearance.radius1)
-    border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
-    border.color: theme.button.border
+    Loader {
+      anchors.fill: parent
 
-    FloatingCircles {
-      circleColor: theme.button.text
-      circleCount: 2  // Số lượng hình tròn
-      minRadius: 80
-      maxRadius: 250
-      minOpacity: 0.03
-      maxOpacity: 0.12
-      minDuration: 40000
-      maxDuration: 80000
+      active: !heightAnim.running && !widthAnim.running
+
+      sourceComponent: FloatingCircles {
+        circleColor: theme.button.text
+        anchors.fill: parent
+        circleCount: 1
+      }
     }
 
     ColumnLayout {

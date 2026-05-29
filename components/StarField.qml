@@ -16,22 +16,27 @@ Item {
   property color shootingStarColor: theme.button.text
   property real shootingStarMinSpeed: 0.4
   property real shootingStarMaxSpeed: 1
-  property int shootingStarMinDelay: 0
-  property int shootingStarMaxDelay: 1000
+  property int shootingStarMinDelay: 2000  // Tăng delay để tránh spam
+  property int shootingStarMaxDelay: 7000
   property int shootingStarTrailMinLength: 80
   property int shootingStarTrailMaxLength: 230
 
   anchors.fill: parent
 
+  // Layer sao cố định
   Item {
     id: starsLayer
     anchors.fill: parent
 
     Repeater {
+      id: starsRepeater
       model: root.starCount
 
       Rectangle {
         id: star
+
+        property real starOpacity: Math.random() * (root.starMaxOpacity - root.starMinOpacity) + root.starMinOpacity
+
         x: Math.random() * root.width
         y: Math.random() * root.height
         width: Math.random() * (root.starMaxSize - root.starMinSize) + root.starMinSize
@@ -41,6 +46,7 @@ Item {
         opacity: 0
 
         SequentialAnimation on opacity {
+          id: starAnimation
           loops: Animation.Infinite
           running: true
 
@@ -48,7 +54,7 @@ Item {
             duration: Math.random() * 2000
           }
           NumberAnimation {
-            to: Math.random() * (root.starMaxOpacity - root.starMinOpacity) + root.starMinOpacity
+            to: star.starOpacity
             duration: root.starFadeDuration
           }
           NumberAnimation {
@@ -60,23 +66,24 @@ Item {
     }
   }
 
-  // Layer chứa sao băng
+  // Layer sao băng
   Item {
     id: shootingStarsLayer
     anchors.fill: parent
 
     Repeater {
+      id: shootingStarsRepeater
       model: root.shootingStarCount
 
       Item {
         id: shootingStar
 
-        property real speed: Math.random() * (root.shootingStarMaxSpeed - root.shootingStarMinSpeed) + root.shootingStarMinSpeed
+        property real speed: 0
         property real startX: 0
         property real startY: 0
         property real endX: 0
         property real endY: 0
-        property int trailLength: Math.random() * (root.shootingStarTrailMaxLength - root.shootingStarTrailMinLength) + root.shootingStarTrailMinLength
+        property int trailLength: 0
 
         visible: opacity > 0
         opacity: 0
@@ -104,29 +111,43 @@ Item {
           }
         }
 
+        // Hàm random giá trị
+        function randomRange(min, max) {
+          return Math.random() * (max - min) + min
+        }
+
+        // Hàm khởi tạo lại sao băng
+        function resetShootingStar() {
+          var offsetX = randomRange(-300, 300)
+          var offsetY = randomRange(-200, 200)
+
+          startX = root.width + 400 + offsetX
+          startY = -300 + offsetY
+          endX = -1000 + randomRange(-500, 500)
+          endY = root.height + 800 + randomRange(-400, 400)
+
+          x = startX
+          y = startY
+          speed = randomRange(root.shootingStarMinSpeed, root.shootingStarMaxSpeed)
+          trailLength = randomRange(root.shootingStarTrailMinLength, root.shootingStarTrailMaxLength)
+        }
+
         // Animation cho sao băng
         SequentialAnimation {
           id: shootingStarAnimation
           loops: Animation.Infinite
           running: true
 
+          // Delay ngẫu nhiên trước khi bay
+          PauseAnimation {
+            id: delayPause
+            duration: randomRange(root.shootingStarMinDelay, root.shootingStarMaxDelay)
+          }
+
+          // Reset vị trí
           ScriptAction {
             script: {
-              // Tính toán vị trí bắt đầu và kết thúc ngẫu nhiên
-              var offsetX = Math.random() * 600 - 300
-              var offsetY = Math.random() * 400 - 200
-
-              shootingStar.startX = root.width + 400 + offsetX
-              shootingStar.startY = -300 + offsetY
-              shootingStar.endX = -1000 + (Math.random() * 1000 - 500)
-              shootingStar.endY = root.height + 800 + (Math.random() * 800 - 400)
-
-              shootingStar.x = shootingStar.startX
-              shootingStar.y = shootingStar.startY
-
-              // Random lại speed mỗi lần
-              shootingStar.speed = Math.random() * (root.shootingStarMaxSpeed - root.shootingStarMinSpeed) + root.shootingStarMinSpeed
-              shootingStar.trailLength = Math.random() * (root.shootingStarTrailMaxLength - root.shootingStarTrailMinLength) + root.shootingStarTrailMinLength
+              shootingStar.resetShootingStar()
             }
           }
 
@@ -164,6 +185,10 @@ Item {
             to: 0
             duration: 200
           }
+        }
+
+        Component.onCompleted: {
+          resetShootingStar()
         }
       }
     }

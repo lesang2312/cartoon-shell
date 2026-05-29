@@ -98,6 +98,8 @@ PanelWindow {
         circleColor: theme.button.text
         anchors.fill: parent
         circleCount: 2
+        minOpacity: 0.02
+        maxOpacity: 0.04
       }
     }
 
@@ -151,7 +153,7 @@ PanelWindow {
 
       sourceComponent:     StarField {
         starCount: 10
-        shootingStarCount: 3
+        shootingStarCount: 2
       }
     }
 
