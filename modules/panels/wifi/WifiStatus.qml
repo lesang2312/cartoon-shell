@@ -9,7 +9,7 @@ Rectangle {
   property var wifiManager
 
   implicitHeight: ScalerService.s(80)
-  color: theme.primary.dim_background
+  color: Qt.alpha(theme.primary.dim_background,0.6)
   radius: ScalerService.s(Settings.appearance.radius2)
   border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
   border.color: theme.normal.black

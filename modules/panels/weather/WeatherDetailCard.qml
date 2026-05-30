@@ -1,44 +1,45 @@
 import QtQuick
 import QtQuick.Layouts
 import qs.services
-import qs.components
 import qs.commons
+import qs.components
 
 Rectangle {
   id: root
-
-  property string image: ""
-  property string value: "Value"
+  property string icon: ""
+  property string label: ""
+  property string value: ""
   property real animationProgress: 0
-  property real revealThreshold: 0.6
 
-  color: theme.primary.dim_background
-  border.color: theme.primary.foreground
-  radius: ScalerService.s(Settings.appearance.radius2)
-  border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
-  Behavior on opacity {
-    NumberAnimation {
-      duration: 200
-    }
-  }
+  Layout.preferredWidth: ScalerService.s(150)
+  Layout.preferredHeight: ScalerService.s(80)
+  radius: ScalerService.s(Settings.appearance.radius3)
+  color: Qt.alpha(theme.button.background,0.4)
 
-  ColumnLayout {
+  RowLayout {
     anchors.fill: parent
-    anchors.margins: ScalerService.s(15)
-    spacing: ScalerService.s(10)
+    anchors.margins: ScalerService.s(12)
+    spacing: ScalerService.s(8)
 
-    IconImage{
-      path: root.image
-      size: "large"
-      Layout.alignment: Qt.AlignHCenter
-      opacity: root.animationProgress > root.revealThreshold ? 1 : 0
+    IconText {
+      name: root.icon
+      textColor: theme.button.text
     }
-    CustomText{
-      name: root.value
-      isBold: true
-      size: "small"
-      Layout.alignment: Qt.AlignHCenter
-      opacity: root.animationProgress > root.revealThreshold + 0.05 ? 1 : 0
+
+    ColumnLayout {
+      spacing: 0
+
+      CustomText {
+        name: root.label
+        size: "xs"
+        textColor: theme.primary.dim_foreground
+      }
+
+      CustomText {
+        name: root.value
+        size: "small"
+        isBold: true
+      }
     }
   }
 }

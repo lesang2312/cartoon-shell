@@ -7,7 +7,6 @@ Item {
   // Properties
   property string name: "undefined"
   property string size: "normal"  // xs | small | normal | large | xl
-  property bool hovered: false
   property color textColor: theme.primary.foreground
   property string fontFamily: "Material Symbols Rounded"
 
@@ -47,6 +46,12 @@ Item {
         easing.type: Easing.OutQuad
       }
     }
+    Behavior on rotation {
+      NumberAnimation {
+        duration: 500
+        easing.type: Easing.OutQuad
+      }
+    }
 
     Behavior on color {
       ColorAnimation { duration: 150 }
@@ -56,29 +61,27 @@ Item {
     font.pixelSize: {
       switch (root.size) {
         case "xs":
-        return root.hovered ? ScalerService.s(20) : ScalerService.s(16)
+        return mouseArea.containsMouse ? ScalerService.s(20) : ScalerService.s(16)
         case "small":
-        return root.hovered ? ScalerService.s(26) : ScalerService.s(22)
+        return mouseArea.containsMouse ? ScalerService.s(26) : ScalerService.s(22)
         case "normal":
-        return root.hovered ? ScalerService.s(42) : ScalerService.s(38)
+        return mouseArea.containsMouse ? ScalerService.s(42) : ScalerService.s(38)
         case "large":
-        return root.hovered ? ScalerService.s(58) : ScalerService.s(52)
+        return mouseArea.containsMouse ? ScalerService.s(58) : ScalerService.s(52)
         case "xl":
-        return root.hovered ? ScalerService.s(72) : ScalerService.s(64)
+        return mouseArea.containsMouse ? ScalerService.s(72) : ScalerService.s(64)
         default:
-        return root.hovered ? ScalerService.s(46) : ScalerService.s(40)
+        return mouseArea.containsMouse ? ScalerService.s(46) : ScalerService.s(40)
       }
     }
 
   }
 
   MouseArea {
+    id: mouseArea
     anchors.fill: parent
     hoverEnabled: true
     cursorShape: Qt.PointingHandCursor
-
-    onEntered: root.hovered = true
-    onExited: root.hovered = false
 
     onClicked: {
       root.clicked()

@@ -31,6 +31,12 @@ Text {
     }
   }
 
+  Behavior on rotation {
+    NumberAnimation {
+      duration: 500
+    }
+  }
+
   text: name
   color: textColor
 

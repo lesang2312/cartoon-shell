@@ -98,21 +98,21 @@ Rectangle {
           id: contentWeather
           anchors.centerIn: parent
           IconImage {
-            path: WeatherService.icon
+            path: WeatherService.getWeatherIcon(WeatherService.dataModel.current.condition.code,WeatherService.dataModel.current.is_day)
             size: "normal"
           }
 
           ColumnLayout {
             spacing: ScalerService.s(1)
             CustomText {
-              name: WeatherService.temperature || "Đang tải..."
+              name:  `${WeatherService.dataModel.current.temp_c}°C` || "Đang tải..."
               Layout.alignment: Qt.AlignVCenter
               size: "small"
             }
             CustomText {
               id: textCondition
 
-              name: WeatherService.condition.slice(0, 15) || "..."
+              name: WeatherService.dataModel.current.condition.text.slice(0, 15) || "..."
               size: "xs"
               elide: Text.ElideRight
               maximumLineCount: 1

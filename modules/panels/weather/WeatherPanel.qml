@@ -2,9 +2,11 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
+import Qt5Compat.GraphicalEffects
 import Quickshell.Io
 import qs.services
 import qs.commons
+import qs.components
 import "." as Com
 
 PanelWindow {
@@ -13,7 +15,6 @@ PanelWindow {
   property real animationProgress: 0
   SequentialAnimation on animationProgress {
     running: true
-
     NumberAnimation {
       from: 0
       to: 2
@@ -22,51 +23,9 @@ PanelWindow {
     }
   }
 
-  implicitWidth: ScalerService.s(1000)
-  implicitHeight: ScalerService.s(550)
+  implicitWidth: ScalerService.s(1200)
+  implicitHeight: ScalerService.s(800)
   focusable: true
-
-  property string apiKey: Settings.weather.keyApi
-  property string location: Settings.weather.location
-  property bool isLoading: false
-  property string errorMessage: ""
-  property bool isSearchingLocation: false
-  property var locationSearchResults: []
-  property int currentLocationIndex: 0
-  property bool isUserSearching: false
-
-  // Timer auto-validate API key
-  property Timer apiKeyValidateTimer: Timer {
-    interval: 500
-    repeat: false
-    onTriggered: {
-      if (root.apiKey !== Settings.weather.keyApi) {
-        saveAndValidateApiKey(root.apiKey);
-      }
-    }
-  }
-
-  // Timer debounce location search
-  property Timer searchDebounceTimer: Timer {
-    interval: 300
-    repeat: false
-    onTriggered: {
-      if (root.location.length >= 2 && weatherPanel.isUserSearching) {
-        searchLocation(root.location);
-      }
-    }
-  }
-
-  // Timer ẩn location results
-  Timer {
-    id: hideResultsTimer
-    interval: 200
-    repeat: false
-    onTriggered: {
-      root.locationSearchResults = [];
-      root.isUserSearching = false;
-    }
-  }
 
   anchors {
     top: Settings.bar.position === "top"
@@ -85,63 +44,6 @@ PanelWindow {
   exclusiveZone: 0
   color: "transparent"
 
-  // Process tìm kiếm địa điểm
-  Process {
-    id: searchLocationProcess
-    running: false
-    stdout: StdioCollector {
-      onStreamFinished: {
-        root.isSearchingLocation = false;
-        root.locationSearchResults = [];
-        if (text && text.length > 0) {
-          try {
-            const data = JSON.parse(text);
-            if (!data.error) {
-              root.locationSearchResults = data;
-              if (data.length > 0) {
-                root.currentLocationIndex = 0;
-              }
-            }
-          } catch (e) {}
-        }
-      }
-    }
-  }
-
-  function saveAndValidateApiKey(key) {
-    if (key === "") {
-      errorMessage = "Vui lòng nhập API key";
-      return;
-    }
-    Settings.weather.keyApi = key;
-    root.apiKey = key;
-    updateWeather();
-  }
-
-  function searchLocation(query) {
-    if (query === "" || apiKey === "") {
-      locationSearchResults = [];
-      isSearchingLocation = false;
-      return;
-    }
-    try {
-      searchLocationProcess.running = false;
-    } catch (e) {}
-    isSearchingLocation = true;
-    const url = `https://api.weatherapi.com/v1/search.json?key=${apiKey}&q=${encodeURIComponent(query)}`;
-    searchLocationProcess.command = ["curl", "-s", url];
-    searchLocationProcess.running = true;
-  }
-
-  function selectLocation(locationName) {
-    Settings.weather.location = locationName;
-    location = locationName;
-    locationSearchResults = [];
-    currentLocationIndex = 0;
-    isUserSearching = false;
-    updateWeather();
-  }
-
   // Main UI
   Rectangle {
     anchors.centerIn: parent
@@ -149,20 +51,32 @@ PanelWindow {
     implicitHeight: root.animationProgress > 0 ? parent.height : 0
     Behavior on implicitHeight {
       NumberAnimation {
+        id: heightAnim
         duration: 500
         easing.type: Easing.OutCubic
       }
     }
     Behavior on implicitWidth {
       NumberAnimation {
+        id: widthAnim
         duration: 500
         easing.type: Easing.OutCubic
+      }
+    }
+    Loader {
+      anchors.fill: parent
+
+      active: !heightAnim.running && !widthAnim.running
+
+      sourceComponent: FloatingCircles {
+        circleColor: theme.button.text
+        anchors.fill: parent
+        circleCount: 4
       }
     }
     border.color: theme.button.border
     radius: ScalerService.s(Settings.appearance.radius1)
     border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
-
     color: theme.primary.background
 
     ColumnLayout {
@@ -170,129 +84,26 @@ PanelWindow {
       anchors.margins: ScalerService.s(20)
       spacing: ScalerService.s(20)
 
-      // Header
       Com.WeatherHeader {
         Layout.fillWidth: true
         Layout.preferredHeight: ScalerService.s(40)
       }
 
-      // Main content - 2 columns
-      RowLayout {
+      Com.WeatherMainInfo {
         Layout.fillWidth: true
         Layout.fillHeight: true
-        spacing: ScalerService.s(20)
-
-        // Left: Config
-        Com.WeatherConfigSection {
-          apiKey: root.apiKey
-          location: root.location
-          isSearchingLocation: root.isSearchingLocation
-          locationSearchResults: root.locationSearchResults
-          currentLocationIndex: root.currentLocationIndex
-          isUserSearching: root.isUserSearching
-          animationProgress: root.animationProgress
-          errorMessage: root.errorMessage
-
-          onApiKeyEdited: function (newKey) {
-            root.apiKey = newKey;
-            root.apiKeyValidateTimer.restart();
-          }
-
-          onLocationTextEdited: function (newText) {
-            root.location = newText;
-            root.searchDebounceTimer.stop();
-            if (newText.length >= 2) {
-              root.searchDebounceTimer.restart();
-            } else {
-              root.locationSearchResults = [];
-              root.currentLocationIndex = 0;
-            }
-          }
-
-          onLocationFocusStatusChanged: function (hasFocus) {
-            if (hasFocus) {
-              root.isUserSearching = true;
-            } else {
-              hideResultsTimer.restart();
-            }
-          }
-
-          onSearchLocationRequested: function (query) {
-            root.searchLocation(query);
-          }
-
-          onLocationSelected: function (locationName) {
-            root.selectLocation(locationName);
-          }
-        }
-
-        // Right: Weather Display
-        Rectangle {
-          Layout.fillWidth: true
-          Layout.fillHeight: true
-          Layout.preferredWidth: parent.width * 0.6
-          radius: ScalerService.s(16)
-          color: theme.primary.background
-
-          ColumnLayout {
-            anchors.fill: parent
-            anchors.margins: ScalerService.s(1)
-            spacing: ScalerService.s(20)
-
-            // Current weather
-            Com.WeatherCurrentDisplay {
-              Layout.fillWidth: true
-              Layout.preferredHeight: parent.height / 2
-              animationProgress: root.animationProgress
-
-            }
-
-            // 3-day forecast
-            Com.WeatherForecastList {
-              Layout.preferredHeight: parent.height / 2
-              animationProgress: root.animationProgress
-            }
-          }
-        }
+        animationProgress: root.animationProgress
       }
     }
-  }
+    Loader {
+      anchors.fill: parent
 
-  // Keyboard shortcuts
-  Shortcut {
-    sequence: "Up"
-    enabled: locationSearchResults.length > 0
-    onActivated: {
-      if (currentLocationIndex > 0)
-      currentLocationIndex--;
-      else
-      currentLocationIndex = locationSearchResults.length - 1;
-    }
-  }
+      active: !heightAnim.running && !widthAnim.running
 
-  Shortcut {
-    sequence: "Down"
-    enabled: locationSearchResults.length > 0
-    onActivated: {
-      if (currentLocationIndex < locationSearchResults.length - 1)
-      currentLocationIndex++;
-      else
-      currentLocationIndex = 0;
-    }
-  }
-
-  Shortcut {
-    sequence: "Return"
-    enabled: locationSearchResults.length > 0
-    onActivated: {
-      var item = locationSearchResults[currentLocationIndex];
-      if (item)
-      selectLocation(`${item.name},${item.country}`);
-    }
-  }
-  Component.onCompleted: {
-    if (apiKey && location) {
-      updateWeather();
+      sourceComponent: StarField {
+        starCount: 20
+        shootingStarCount: 4
+      }
     }
   }
 }

@@ -47,6 +47,9 @@ Item {
       case "3xl":
       return ScalerService.s(84)
 
+      case "4xl":
+      return ScalerService.s(100)
+
       default:
       return ScalerService.s(32)
     }

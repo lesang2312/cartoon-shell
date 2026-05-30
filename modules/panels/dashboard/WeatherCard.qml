@@ -62,7 +62,7 @@ Item {
         Layout.alignment: Qt.AlignHCenter
 
         IconImage {
-          path: WeatherService.icon
+          path: WeatherService.getWeatherIcon(WeatherService.dataModel.current.condition.code,WeatherService.dataModel.current.is_day)
           size: "3xl"
           opacity: root.animationProgress > 0.75 ? 1 : 0
           Behavior on opacity {
@@ -77,7 +77,7 @@ Item {
           spacing: ScalerService.s(5)
 
           CustomText {
-            name: WeatherService.temperature || "Đang tải..."
+            name: `${WeatherService.dataModel.current.temp_c}°C` || "Đang tải..."
             Layout.alignment: Qt.AlignVCenter
             size: "2xl"
             isBold: true
@@ -91,7 +91,7 @@ Item {
           CustomText {
             id: textCondition
 
-            name: WeatherService.condition.slice(0, 15) || "..."
+            name: WeatherService.dataModel.current.condition.text.slice(0, 15) || "..."
             size: "large"
             elide: Text.ElideRight
             maximumLineCount: 1
@@ -113,7 +113,7 @@ Item {
         spacing: ScalerService.s(8)
 
         Repeater {
-          model: WeatherService.forecastDays
+          model: WeatherService.dataModel.forecast.forecastday
 
           Item {
             Layout.fillWidth: true
@@ -126,7 +126,7 @@ Item {
 
               // Day name
               CustomText{
-                name: modelData.dayName
+                name: modelData.date
                 isBold: true
                 size: "small"
                 Layout.alignment: Qt.AlignHCenter
@@ -149,7 +149,7 @@ Item {
 
               // Weather icon
               IconImage{
-                path: modelData.icon
+                path: WeatherService.getWeatherIcon(modelData.day.condition.code)
                 size: "normal"
                 Layout.alignment: Qt.AlignHCenter
                 opacity: 0
@@ -174,7 +174,7 @@ Item {
                 spacing: ScalerService.s(2)
 
                 CustomText {
-                  name: `${modelData.minTemp}°`
+                  name: `${modelData.day.mintemp_c}°`
                   textColor: theme.normal.cyan
 
                   size: "small"
@@ -217,7 +217,7 @@ Item {
                 }
 
                 CustomText {
-                  name: `${modelData.maxTemp}°`
+                  name: `${modelData.day.maxtemp_c}°`
                   textColor: theme.normal.red
 
                   size: "small"

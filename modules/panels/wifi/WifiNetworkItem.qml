@@ -17,7 +17,11 @@ ColumnLayout {
     width: parent.width
     Layout.fillWidth: true
     Layout.preferredHeight: ScalerService.s(70)
-    color: mouseArea.containsMouse ? theme.button.background_select : (networkData.isConnected ? theme.button.background : theme.primary.dim_background)
+    color: mouseArea.containsMouse
+    ? Qt.alpha(theme.button.background_select, 0.5)
+    : (networkData.isConnected
+      ? Qt.alpha(theme.button.background, 0.5)
+      : Qt.alpha(theme.primary.dim_background, 0.5))
     radius: ScalerService.s(Settings.appearance.radius2)
     border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
     border.color: networkData.isConnected ? theme.button.border : theme.normal.black
