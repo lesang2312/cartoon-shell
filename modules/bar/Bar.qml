@@ -41,47 +41,83 @@ PanelWindow {
     id: horizontalLayout
 
     RowLayout {
+      id: horizontal
+      property real animationProgress: 0
+      SequentialAnimation on animationProgress {
+        running: true
+        NumberAnimation {
+          from: 0
+          to: 0.6
+          duration: 100
+          easing.type: Easing.Linear
+        }
+      }
       anchors.fill: parent
-      LauncherSection {
+      Item {
         Layout.preferredWidth: ScalerService.s(60)
         Layout.fillHeight: true
+        LauncherSection {
+          animationProgress: horizontal.animationProgress
+        }
       }
+
       Item {
         Layout.fillWidth: true
       }
-      WorkspaceSection {
-        visible: true
+
+      Item {
         Layout.preferredWidth: ScalerService.s(380)
         Layout.fillHeight: true
+        WorkspaceSection {
+          animationProgress: horizontal.animationProgress
+        }
       }
+
       Item {
         Layout.fillWidth: true
       }
-      MediaSection {
+      Item {
         Layout.preferredWidth: ScalerService.s(340)
         Layout.fillHeight: true
+        MediaSection {
+          animationProgress: horizontal.animationProgress
+        }
       }
+
       Item {
         Layout.fillWidth: true
       }
-      InfoSection {
+
+      Item {
         Layout.preferredWidth: ScalerService.s(400)
         Layout.fillHeight: true
+        InfoSection {
+          animationProgress: horizontal.animationProgress
+        }
       }
       Item {
         Layout.fillWidth: true
       }
-      SystemStatsSection {
+      Item {
         Layout.preferredWidth: ScalerService.s(200)
         Layout.fillHeight: true
+        SystemStatsSection {
+          animationProgress: horizontal.animationProgress
+        }
       }
+
       Item {
         Layout.fillWidth: true
       }
-      StatusTraySection {
+      Item {
         Layout.preferredWidth: ScalerService.s(430)
         Layout.fillHeight: true
+        StatusTraySection {
+          animationProgress: horizontal.animationProgress
+        }
+
       }
+
     }
   }
 
@@ -90,46 +126,106 @@ PanelWindow {
     id: verticalLayout
 
     ColumnLayout {
+      id: vertical
+      property real animationProgress: 0
+      SequentialAnimation on animationProgress {
+        running: true
+        NumberAnimation {
+          from: 0
+          to: 0.6
+          duration: 100
+          easing.type: Easing.Linear
+        }
+      }
       anchors.fill: parent
-      LauncherSection {
+
+      // Top spacer
+      Item {
+        Layout.fillHeight: true
+      }
+
+      // LauncherSection (top section)
+      Item {
         Layout.preferredHeight: ScalerService.s(40)
         Layout.fillWidth: true
+        LauncherSection {
+          animationProgress: vertical.animationProgress
+        }
       }
+
+      // Spacer
       Item {
         Layout.fillHeight: true
       }
-      WorkspaceSection {
-        visible: true
+
+      // WorkspaceSection
+      Item {
         Layout.preferredHeight: ScalerService.s(280)
         Layout.fillWidth: true
+        WorkspaceSection {
+          animationProgress: vertical.animationProgress
+        }
       }
+
+      // Spacer
       Item {
         Layout.fillHeight: true
       }
-      MediaSection {
+
+      // MediaSection
+      Item {
         Layout.preferredHeight: ScalerService.s(180)
         Layout.fillWidth: true
+        MediaSection {
+          animationProgress: vertical.animationProgress
+        }
       }
+
+      // Spacer
       Item {
         Layout.fillHeight: true
       }
-      InfoSection {
+
+      // InfoSection
+      Item {
         Layout.preferredHeight: ScalerService.s(180)
         Layout.fillWidth: true
+        InfoSection {
+          animationProgress: vertical.animationProgress
+        }
       }
+
+      // Spacer
       Item {
         Layout.fillHeight: true
       }
-      SystemStatsSection {
+
+      // SystemStatsSection
+      Item {
         Layout.preferredHeight: ScalerService.s(100)
         Layout.fillWidth: true
+        SystemStatsSection {
+          animationProgress: vertical.animationProgress
+        }
       }
+
+      // Spacer
       Item {
         Layout.fillHeight: true
       }
-      StatusTraySection {
+
+      // StatusTraySection (bottom section)
+      Item {
         Layout.preferredHeight: ScalerService.s(230)
         Layout.fillWidth: true
+        StatusTraySection {
+          animationProgress: vertical.animationProgress
+        }
+      }
+
+      // Bottom spacer
+      Item {
+        Layout.fillHeight: true
       }
     }
   }

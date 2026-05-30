@@ -14,6 +14,33 @@ Rectangle {
   border.color: theme.button.border
   border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
   radius: ScalerService.s(Settings.appearance.radius2)
+  anchors.centerIn: parent
+  property real animationProgress: 0
+  SequentialAnimation on animationProgress {
+    running: true
+    NumberAnimation {
+      from: 0
+      to: 1
+      duration: 1000
+      easing.type: Easing.Linear
+    }
+  }
+  implicitWidth: root.animationProgress > 0.2 ? parent.width : 0
+  implicitHeight: root.animationProgress > 0.2 ? parent.height : 0
+  Behavior on implicitHeight {
+    NumberAnimation {
+      id: heightAnim
+      duration: 500
+      easing.type: Easing.OutCubic
+    }
+  }
+  Behavior on implicitWidth {
+    NumberAnimation {
+      id: widthAnim
+      duration: 500
+      easing.type: Easing.OutCubic
+    }
+  }
 
   property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
 
@@ -258,28 +285,15 @@ Rectangle {
         Layout.preferredHeight: ScalerService.s(24)
 
         // Play/Pause button
-        IconText {
-          name: Players.mprisPlayer.isPlaying ? "pause" : "play_arrow"
+        ButtonIconText {
+          name: Players.mprisPlayer && Players.mprisPlayer.isPlaying
+          ? "pause"
+          : "play_arrow"
           size: "small"
 
           Layout.alignment: Qt.AlignVCenter
+          onClicked: Players?.mprisPlayer.togglePlaying()
 
-          MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
-
-            onClicked: Players?.mprisPlayer.togglePlaying()
-
-            onEntered: parent.scale = 1.1
-            onExited: parent.scale = 1.0
-          }
-
-          Behavior on scale {
-            NumberAnimation {
-              duration: 100
-            }
-          }
         }
 
       }

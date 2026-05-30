@@ -12,6 +12,24 @@ Rectangle {
   radius: ScalerService.s(Settings.appearance.radius2)
   border.color: theme.button.border
   border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
+  anchors.centerIn: parent
+  property real animationProgress: 0
+  implicitWidth: root.animationProgress > 0.3 ? parent.width : 0
+  implicitHeight: root.animationProgress > 0.3 ? parent.height : 0
+  Behavior on implicitHeight {
+    NumberAnimation {
+      id: heightAnim
+      duration: 500
+      easing.type: Easing.OutCubic
+    }
+  }
+  Behavior on implicitWidth {
+    NumberAnimation {
+      id: widthAnim
+      duration: 500
+      easing.type: Easing.OutCubic
+    }
+  }
 
   property string selectedFlag: Settings.appearance.countryFlag
   property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
@@ -248,20 +266,20 @@ Rectangle {
             spacing: ScalerService.s(8)
 
             IconImage {
-              path: WeatherService.icon
+              path: WeatherService.getWeatherIcon(
+                WeatherService.dataModel.current.condition.code,
+                WeatherService.dataModel.current.is_day
+              )
+              size: "large"
+              Layout.alignment: Qt.AlignHCenter
             }
 
             ColumnLayout {
               spacing: ScalerService.s(1)
-              Text {
-                text: WeatherService.temperature || "Đang tải..."
-                color: theme.primary.foreground
-                Layout.alignment: Qt.AlignVCenter
-                font {
-                  pixelSize: ScalerService.s(14)
-                  bold: true
-                  family: "ComicShannsMono Nerd Font"
-                }
+              CustomText {
+                name: `${WeatherService.dataModel.current.temp_c}°C` || "Đang tải..."
+                Layout.alignment: Qt.AlignHCenter
+                size: "xs"
               }
             }
           }
