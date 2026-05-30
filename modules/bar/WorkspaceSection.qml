@@ -225,21 +225,8 @@ Rectangle {
           IconImage {
             path: modelData.isActive ? "workspace/pacman.png" : modelData.exists ? "workspace/ghost.png" : "workspace/empty.png"
             size: "large"
-            opacity: 0
             anchors.centerIn: parent
-            SequentialAnimation on opacity{
-              running: true
 
-              PauseAnimation {
-                duration: index * 15
-              }
-
-              NumberAnimation {
-                to: 1
-                duration: 250
-                easing.type: Easing.OutCubic
-              }
-            }
           }
 
           MouseArea {
