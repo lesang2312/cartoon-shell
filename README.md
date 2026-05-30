@@ -62,7 +62,6 @@ hyprland              # Wayland compositor
 hyprctl               # Hyprland control (bundled with hyprland)
 
 # Wallpaper (Required)
-mpvpaper              # Video wallpaper support
 ffmpeg                # Video thumbnail generation
 
 # Media player (Required)
@@ -89,15 +88,10 @@ python3               # Python scripts
 
 #### Font
 ```bash
-# Nerd Font (required for icons)
-ttf-comicshannsmono-nerd  # or similar name in your distro
+ttf-comicshannsmono-nerd
+ttf-material-symbols-variable-git
 ```
 
-### Weather API
-- **weatherapi.com** API key (free: 1M calls/month)
-- Sign up at: https://www.weatherapi.com/signup.aspx
-
----
 
 ## 🔧 Installation
 
@@ -115,36 +109,24 @@ chmod +x setup.sh
 #### Or manual installation
 ```bash
 # Install main packages (Arch Linux)
-sudo pacman -S hyprland hyprpaper playerctl networkmanager \
+sudo pacman -S hyprland hyprpaper networkmanager \
                bluez bluez-utils pipewire wireplumber curl python \
                jq ffmpeg
 
 # Install AUR packages
-yay -S quickshell-git cava mpvpaper ttf-comicshannsmono-nerd
+yay -S quickshell-git cava ttf-comicshannsmono-nerd ttf-material-symbols-variable-git
 ```
 
 ### 2. Clone Cartoon Shell
 ```bash
 # Clone to QuickShell config directory
-git clone git@github.com:mailong2401/cartoon-shell.git \
+git clone https://github.com:mailong2401/cartoon-shell.git \
     ~/.config/quickshell/cartoon-shell
 
 cd ~/.config/quickshell/cartoon-shell
 ```
 
-### 3. Configure Weather API (Optional)
-```bash
-# Edit config file
-nano config/configs/default.json
-
-# Change:
-{
-  "weatherApiKey": "YOUR_API_KEY_HERE",
-  "weatherLocation": "Your City,Country"
-}
-```
-
-### 4. Run QuickShell
+### 3. Run QuickShell
 ```bash
 # Run directly
 quickshell --path ~/.config/quickshell/cartoon-shell
