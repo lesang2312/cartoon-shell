@@ -51,12 +51,25 @@ Rectangle {
   // Workspace UI data - lưu 10 workspace đầu (1-10)
   property var uiWorkspaces: []
 
+  // Accumulated scroll delta for smooth, threshold-based switching
+  property real scrollAccumulator: 0
+
   // Debounce timer cho updates
   Timer {
     id: updateTimer
     interval: 100
     repeat: false
     onTriggered: updateUIWorkspaces()
+  }
+
+  // Reset accumulator when user stops scrolling (no events for 80ms).
+  // This replaces the old cooldown-block approach — instead of freezing
+  // all input after a switch, we just drain leftover inertia naturally
+  Timer {
+    id: idleResetTimer
+    interval: 80
+    repeat: false
+    onTriggered: root.scrollAccumulator = 0
   }
 
   // Khởi tạo
@@ -124,7 +137,11 @@ Rectangle {
       var wsData = wsMap[uiWs.id];
 
       var newExists = wsData ? (wsData.isOccupied || false) : false;
-      var newIsActive = wsData ? (wsData.id.toString() === activeWorkspace) : false;
+
+      // Fix pacman sync: use activeWorkspace as the single source of truth
+      // instead of relying on ws.isActive from the model, which may arrive
+      // late after a scroll switch and cause the icon to lag behind
+      var newIsActive = (uiWs.id === root.activeWorkspace);
 
       if (uiWs.exists !== newExists || uiWs.isActive !== newIsActive) {
         uiWs.exists = newExists;
@@ -174,9 +191,58 @@ Rectangle {
 
     try {
       CompositorService.switchToWorkspace(workspaceObj);
+
+      // Update activeWorkspace immediately so the pacman icon moves
+      // right away without waiting for the compositor signal round-trip
       activeWorkspace = wsId.toString();
+
+      // Force a UI sync instantly so icon state reflects the new active ws
+      syncWorkspaces();
     } catch (e) {
       console.log("Failed to switch workspace:", e);
+    }
+  }
+
+  // Smooth scroll using a pure accumulator
+  function handleScroll(angleDeltaY, angleDeltaX) {
+    if (!initialized) return;
+
+    // Keep restarting idle timer on every event so accumulator only
+    // resets after a real pause in scrolling
+    idleResetTimer.restart();
+
+    // Pick the dominant axis
+    var raw = isVertical
+      ? (angleDeltaX !== 0 ? angleDeltaX : angleDeltaY)
+      : (angleDeltaY !== 0 ? angleDeltaY : angleDeltaX);
+
+    var current = parseInt(activeWorkspace);
+
+    // Block accumulation at hard boundaries to avoid phantom delta buildup
+    if ((raw < 0 && current >= 10) || (raw > 0 && current <= 1)) {
+      scrollAccumulator = 0;
+      return;
+    }
+
+    // Invert: scroll-up (positive angleDelta) = previous workspace
+    scrollAccumulator -= raw;
+
+    // 120 = one standard mouse notch; feels immediate on mouse,
+    // requires a deliberate swipe on touchpad
+    var threshold = 120;
+
+    if (scrollAccumulator >= threshold) {
+      var next = current + 1;
+      if (next > 10) { scrollAccumulator = 0; return; }
+      switchWs(next.toString());
+      // Subtract threshold so fast flicks chain smoothly
+      scrollAccumulator -= threshold;
+
+    } else if (scrollAccumulator <= -threshold) {
+      var prev = current - 1;
+      if (prev < 1) { scrollAccumulator = 0; return; }
+      switchWs(prev.toString());
+      scrollAccumulator += threshold;
     }
   }
 
@@ -226,7 +292,6 @@ Rectangle {
             path: modelData.isActive ? "workspace/pacman.png" : modelData.exists ? "workspace/ghost.png" : "workspace/empty.png"
             size: "large"
             anchors.centerIn: parent
-
           }
 
           MouseArea {
@@ -244,6 +309,10 @@ Rectangle {
             onExited: {
               if (wsId !== root.activeWorkspace)
               parent.scale = 1.0;
+            }
+            // Forward wheel events to the shared accumulator-based handler
+            onWheel: (event) => {
+              root.handleScroll(event.angleDelta.y, event.angleDelta.x);
             }
           }
 
@@ -295,6 +364,10 @@ Rectangle {
             onExited: {
               if (wsId !== root.activeWorkspace)
               parent.scale = 1.0;
+            }
+            // Forward wheel events to the shared accumulator-based handler
+            onWheel: (event) => {
+              root.handleScroll(event.angleDelta.y, event.angleDelta.x);
             }
           }
 
