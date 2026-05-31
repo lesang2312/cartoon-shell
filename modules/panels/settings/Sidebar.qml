@@ -14,7 +14,7 @@ Rectangle {
 
   Layout.preferredWidth:  ScalerService.s(200)
   Layout.fillHeight: true
-  color: theme.primary.dim_background
+  color: Qt.alpha(theme.primary.dim_background,0.6)
   radius: ScalerService.s(Settings.appearance.radius2)
 
   border.color: theme.button.border
@@ -63,7 +63,7 @@ Rectangle {
         anchors.centerIn: parent
         implicitWidth: root.animationProgress > 0.3 ? parent.width : 0
         implicitHeight: root.animationProgress > 0.3 ? parent.height : 0
-        color: mouseAreaGeneral.containsMouse || root.currentIndex === 0 ? theme.button.background_select : theme.button.background
+        color: mouseAreaGeneral.containsMouse || root.currentIndex === 0 ? Qt.alpha(theme.button.background_select,0.6) : Qt.alpha(theme.button.background,0.6)
         border.color: mouseAreaGeneral.containsMouse || root.currentIndex === 0 ? theme.button.border_select : theme.button.border
         border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
         radius: ScalerService.s(Settings.appearance.radius3)
@@ -129,7 +129,7 @@ Rectangle {
         anchors.centerIn: parent
         implicitWidth: root.animationProgress > 0.35 ? parent.width : 0
         implicitHeight: root.animationProgress > 0.35 ? parent.height : 0
-        color: mouseAreaAppearance.containsMouse || root.currentIndex === 1 ? theme.button.background_select : theme.button.background
+        color: mouseAreaAppearance.containsMouse || root.currentIndex === 1 ? Qt.alpha(theme.button.background_select,0.6) : Qt.alpha(theme.button.background,0.6)
         border.color: mouseAreaAppearance.containsMouse || root.currentIndex === 1 ? theme.button.border_select : theme.button.border
         border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
         radius: ScalerService.s(Settings.appearance.radius3)
@@ -195,7 +195,7 @@ Rectangle {
         anchors.centerIn: parent
         implicitWidth: root.animationProgress > 0.4 ? parent.width : 0
         implicitHeight: root.animationProgress > 0.4 ? parent.height : 0
-        color: mouseAreaNetwork.containsMouse || root.currentIndex === 2 ? theme.button.background_select : theme.button.background
+        color: mouseAreaNetwork.containsMouse || root.currentIndex === 2 ? Qt.alpha(theme.button.background_select,0.6) : Qt.alpha(theme.button.background,0.6)
         border.color: mouseAreaNetwork.containsMouse || root.currentIndex === 2 ? theme.button.border_select : theme.button.border
         border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
         radius: ScalerService.s(Settings.appearance.radius3)
@@ -261,7 +261,7 @@ Rectangle {
         anchors.centerIn: parent
         implicitWidth: root.animationProgress > 0.45 ? parent.width : 0
         implicitHeight: root.animationProgress > 0.45 ? parent.height : 0
-        color: mouseAreaAudio.containsMouse || root.currentIndex === 3 ? theme.button.background_select : theme.button.background
+        color: mouseAreaAudio.containsMouse || root.currentIndex === 3 ? Qt.alpha(theme.button.background_select,0.6) : Qt.alpha(theme.button.background,0.6)
         border.color: mouseAreaAudio.containsMouse || root.currentIndex === 3 ? theme.button.border_select : theme.button.border
         border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
         radius: ScalerService.s(Settings.appearance.radius3)
@@ -327,7 +327,7 @@ Rectangle {
         anchors.centerIn: parent
         implicitWidth: root.animationProgress > 0.5 ? parent.width : 0
         implicitHeight: root.animationProgress > 0.5 ? parent.height : 0
-        color: mouseAreaPerformance.containsMouse || root.currentIndex === 4 ? theme.button.background_select : theme.button.background
+        color: mouseAreaPerformance.containsMouse || root.currentIndex === 4 ? Qt.alpha(theme.button.background_select,0.6) : Qt.alpha(theme.button.background,0.6)
         border.color: mouseAreaPerformance.containsMouse || root.currentIndex === 4 ? theme.button.border_select : theme.button.border
         border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
         radius: ScalerService.s(Settings.appearance.radius3)
@@ -393,7 +393,7 @@ Rectangle {
         anchors.centerIn: parent
         implicitWidth: root.animationProgress > 0.55 ? parent.width : 0
         implicitHeight: root.animationProgress > 0.55 ? parent.height : 0
-        color: mouseAreaShortcuts.containsMouse || root.currentIndex === 5 ? theme.button.background_select : theme.button.background
+        color: mouseAreaShortcuts.containsMouse || root.currentIndex === 5 ? Qt.alpha(theme.button.background_select,0.6) : Qt.alpha(theme.button.background,0.6)
         border.color: mouseAreaShortcuts.containsMouse || root.currentIndex === 5 ? theme.button.border_select : theme.button.border
         border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
         radius: ScalerService.s(Settings.appearance.radius3)
@@ -459,7 +459,7 @@ Rectangle {
         anchors.centerIn: parent
         implicitWidth: root.animationProgress > 0.6 ? parent.width : 0
         implicitHeight: root.animationProgress > 0.6 ? parent.height : 0
-        color: mouseAreaSystem.containsMouse || root.currentIndex === 6 ? theme.button.background_select : theme.button.background
+        color: mouseAreaSystem.containsMouse || root.currentIndex === 6 ? Qt.alpha(theme.button.background_select,0.6) : Qt.alpha(theme.button.background,0.6)
         border.color: mouseAreaSystem.containsMouse || root.currentIndex === 6 ? theme.button.border_select : theme.button.border
         border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
         radius: ScalerService.s(Settings.appearance.radius3)

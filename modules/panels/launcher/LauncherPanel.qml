@@ -92,14 +92,27 @@ PanelWindow {
     implicitHeight: root.animationProgress > 0 ? parent.height : 0
     Behavior on implicitHeight {
       NumberAnimation {
+        id: heightAnim
         duration: 500
         easing.type: Easing.OutCubic
       }
     }
     Behavior on implicitWidth {
       NumberAnimation {
+        id: widthAnim
         duration: 500
         easing.type: Easing.OutCubic
+      }
+    }
+    Loader {
+      anchors.fill: parent
+
+      active: !heightAnim.running && !widthAnim.running
+
+      sourceComponent: FloatingCircles {
+        circleColor: theme.button.text
+        anchors.fill: parent
+        circleCount: 4
       }
     }
     radius: ScalerService.s(Settings.appearance.radius1)

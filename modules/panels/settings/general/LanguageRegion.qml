@@ -271,8 +271,8 @@ Item {
                   }
                 }
                 radius: ScalerService.s(10)
-                color: Settings.general.lang === modelData.code ? theme.normal.blue : (langMouseArea.containsMouse ? theme.button.background_select : theme.button.background)
-                border.color: Settings.general.lang === modelData.code ? theme.normal.blue : (langMouseArea.containsPress ? theme.button.border_select : theme.button.border)
+                color: Settings.general.lang === modelData.code ? Qt.alpha(theme.button.text,0.6) : (langMouseArea.containsMouse ? Qt.alpha(theme.button.background_select,0.6) : Qt.alpha(theme.button.background,0.6))
+                border.color: Settings.general.lang === modelData.code ? Qt.alpha(theme.button.text,0.6) : (langMouseArea.containsPress ? Qt.alpha(theme.button.border_select,0.6) : Qt.alpha(theme.button.border,0.6))
                 border.width: ScalerService.s(2)
 
                 ColumnLayout {

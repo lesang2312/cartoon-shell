@@ -6,16 +6,11 @@ import "." as Com
 import qs.services
 import qs.commons
 
-Rectangle {
+Item {
   id: rootSettings
   property var launcherPanel: null  // Reference to LauncherPanel
   property int currentTab: 0
   signal backRequested
-
-  color: theme.primary.background
-
-  // Shadow effect
-  layer.enabled: true
 
   RowLayout {
     anchors.fill: parent
@@ -37,7 +32,7 @@ Rectangle {
     Rectangle {
       Layout.fillWidth: true
       Layout.fillHeight: true
-      color: theme.primary.dim_background
+      color: Qt.alpha(theme.primary.dim_background,0.6)
       radius: ScalerService.s(Settings.appearance.radius2)
       border {
         color: theme.button.border

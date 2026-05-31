@@ -101,7 +101,7 @@ Rectangle {
     }
   }
 
-  color: theme.button.background
+  color: Qt.alpha(theme.button.background,0.6)
   radius: ScalerService.s(12)
 
   RowLayout {

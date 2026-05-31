@@ -10,7 +10,7 @@ import qs.commons
 Rectangle {
   id: container
   radius: ScalerService.s(Settings.appearance.radius2)
-  color: theme.primary.dim_background
+  color:  Qt.alpha(theme.primary.dim_background,0.6)
   border.color: theme.button.border
   border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
 
