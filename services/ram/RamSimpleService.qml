@@ -16,38 +16,23 @@ Singleton {
 
   Process {
     id: ramProcess
+    running: useSimpleCalculation
 
-    command: [
-    "sh",
-    "-c",
-    "vmstat 1 2 | awk 'NR==4 {print 100-$15}'"
-    ]
-
-    running: false
+    command: ["bash", "-c", "awk '/MemTotal/{t=$2}/MemFree/{f=$2}/Buffers/{b=$2}/^Cached:/{c=$2} END{print int(((t-f-b-c)/t)*100)}' /proc/meminfo"]
 
     stdout: StdioCollector {
       onTextChanged: {
-        const value = parseFloat(text.trim());
-
-        if (isNaN(value))
-        return;
-
-        root.ramPercent = value;
-
-        const history = root.ramHistory.slice();
-
-        history.push({
-            usage: value
-        });
-
-        if (history.length > root.maxHistoryLength)
-        history.shift();
-
-        root.ramHistory = history;
+        const value = parseInt(text.trim());
+        if (!isNaN(value)) {
+          root.ramPercent = value;   // %
+        }
       }
     }
   }
 
+  // ===== Top CPU Processes =====
+
+  // ===== Update Timer =====
   Timer {
     interval: 1000
     repeat: true
