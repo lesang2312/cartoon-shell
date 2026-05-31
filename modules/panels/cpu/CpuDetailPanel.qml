@@ -4,7 +4,7 @@ import Quickshell
 import QtQuick.Controls
 import Quickshell.Wayland
 import Quickshell.Io
-import "./" as Components
+import "./" as Com
 import qs.services
 import qs.commons
 import qs.components
@@ -28,6 +28,7 @@ PanelWindow {
     left: (Settings.bar.position === "top" || Settings.bar.position === "bottom") ? ScalerService.s(400) : ScalerService.s(10)
     right: Settings.bar.position === "right" ? ScalerService.s(10) : 0
   }
+  exclusiveZone: 0
 
   property real animationProgress: 0
   SequentialAnimation on animationProgress {
@@ -85,17 +86,16 @@ PanelWindow {
       spacing: ScalerService.s(16)
 
       // Header với nút đóng
-      Components.CpuDetailHeader {
+      Com.CpuDetailHeader {
         Layout.fillWidth: true
         Layout.preferredHeight: ScalerService.s(40)
       }
       // Thông tin CPU
-      Components.CpuInfoSection {
+      Com.CpuInfoSection {
         Layout.fillWidth: true
         Layout.preferredHeight: parent.height * 0.2
       }
 
-      // chia đôi ra
       Item {
         Layout.fillHeight: true
         Layout.fillWidth: true
@@ -105,16 +105,13 @@ PanelWindow {
           ColumnLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
-
-            // BIỂU ĐỒ CPU USAGE
-            Components.CpuUsageChart {
+            Com.CpuUsageChart {
               Layout.fillWidth: true
               Layout.fillHeight: true
             }
           }
 
-          // List app CPU
-          Components.CpuTaskManager {
+          Com.CpuTaskManager {
             Layout.preferredWidth: parent.width * 0.5
             Layout.fillHeight: true
 
