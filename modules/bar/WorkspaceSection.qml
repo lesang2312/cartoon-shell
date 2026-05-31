@@ -63,8 +63,6 @@ Rectangle {
   }
 
   // Reset accumulator when user stops scrolling (no events for 80ms).
-  // This replaces the old cooldown-block approach — instead of freezing
-  // all input after a switch, we just drain leftover inertia naturally
   Timer {
     id: idleResetTimer
     interval: 80
@@ -137,10 +135,6 @@ Rectangle {
       var wsData = wsMap[uiWs.id];
 
       var newExists = wsData ? (wsData.isOccupied || false) : false;
-
-      // Fix pacman sync: use activeWorkspace as the single source of truth
-      // instead of relying on ws.isActive from the model, which may arrive
-      // late after a scroll switch and cause the icon to lag behind
       var newIsActive = (uiWs.id === root.activeWorkspace);
 
       if (uiWs.exists !== newExists || uiWs.isActive !== newIsActive) {
