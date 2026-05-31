@@ -47,12 +47,6 @@ Rectangle {
   property string bluetooth_icon: Directories.assetsPath + "/settings/bluetooth.png"
   property string status_battery: "Unknown"
   property string capacity_battery: "..."
-  property bool shouldShowOsd: false
-  property bool visibleMixerPanel: false
-  property bool visibleBatteryPanel: false
-  property bool wifiPanelVisible: false
-  property bool visibleDashboard: false
-  property bool bluetoothVisible: true
   property real currentVolume: Pipewire.defaultAudioSink?.audio.volume ?? 0
   property bool isMuted: Pipewire.defaultAudioSink?.audio.mute ?? false
   property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
@@ -282,15 +276,6 @@ Rectangle {
             width: ScalerService.s(30)
             height: ScalerService.s(30)
             sourceSize: Qt.size(ScalerService.s(30), ScalerService.s(30))
-          }
-          Text {
-            text: root.capacity_battery + "%"
-            color: theme.primary.foreground
-            font {
-              pixelSize: ScalerService.s(16)
-              bold: true
-            }
-            verticalAlignment: Text.AlignVCenter
           }
         }
 
