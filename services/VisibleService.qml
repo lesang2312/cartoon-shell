@@ -199,6 +199,10 @@ Singleton {
           calendar = false;
           launcher = false;
           weather = true;
+          mixer = false;
+          wifi = false;
+          bluetooth = false;
+          battery = false;
           cpu = false;
           music = false;
           dashboard = false;
@@ -234,6 +238,7 @@ Singleton {
           mixer = false;
           battery = false;
           bluetooth = true;
+          weather = false
           dashboard = false;
           setting = false;
           fullsetting = false;
@@ -251,6 +256,7 @@ Singleton {
           battery = false;
           dashboard = false;
           setting = false;
+          weather = false;
           fullsetting = false;
         } else {
           wifi = false;
@@ -266,6 +272,7 @@ Singleton {
           battery = false;
           dashboard = false;
           setting = false;
+          weather = false;
           fullsetting = false;
         } else {
           mixer = false;
@@ -280,6 +287,7 @@ Singleton {
           wifi = false;
           battery = true;
           dashboard = false;
+          weather = false;
           setting = false;
           fullsetting = false;
         } else {

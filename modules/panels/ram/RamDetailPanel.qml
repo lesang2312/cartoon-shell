@@ -34,7 +34,6 @@ PanelWindow {
   property real animationProgress: 0
   SequentialAnimation on animationProgress {
     running: true
-
     NumberAnimation {
       from: 0
       to: 2

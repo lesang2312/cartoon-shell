@@ -138,6 +138,16 @@ echo "quickshell --path ~/.config/quickshell/cartoon-shell" \
 
 
 ---
+## Contributors
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="25%"><a href="https://github.com/mailong2401"><img src="https://avatars.githubusercontent.com/u/57983253?v=4?s=100" width="100px;" alt="Mai Mai Dương Long"/><br /><sub><b>Mai Dương Long</b></sub></a><br /></td>
+      <td align="center" valign="top" width="25%"><a href="https://github.com/crystalforceix"><img src="https://avatars.githubusercontent.com/u/171352546?v=4?s=100" width="100px;" alt="Anh Ba Phu"/><br /><sub><b>Anh Ba Phu</b></sub></a><br /></td>
+    </tr>
+  </tbody>
+</table>
 
 ## Star History
 
