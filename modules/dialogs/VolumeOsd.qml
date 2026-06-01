@@ -94,7 +94,7 @@ Scope {
             }
             CustomText {
               name: Math.round(currentVolume * 100) + "%"
-              color: "#ff6b6b" : currentVolume > 1.0 ? theme.normal.red : theme.primary.foreground
+              color:  currentVolume > 1.0 ? theme.normal.red : theme.primary.foreground
               size: "large"
               isBold: true
               Behavior on color {
