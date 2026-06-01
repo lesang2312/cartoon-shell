@@ -33,6 +33,27 @@ Scope {
     onTriggered: root.shouldShowOsd = false
   }
 
+  function lerpColor(a, b, t) {
+    const ar = parseInt(a.slice(1,3),16), ag = parseInt(a.slice(3,5),16), ab = parseInt(a.slice(5,7),16);
+    const br = parseInt(b.slice(1,3),16), bg = parseInt(b.slice(3,5),16), bb = parseInt(b.slice(5,7),16);
+    const r  = Math.round(ar + (br-ar)*t);
+    const g  = Math.round(ag + (bg-ag)*t);
+    const bl = Math.round(ab + (bb-ab)*t);
+    return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${bl.toString(16).padStart(2,'0')}`;
+  }
+
+  // Color run from purple → blue → cyan → green → yellow → sun orange → red :)
+  function barColor() {
+    if (isMuted) return "#7a1010";
+    const v = Math.min(currentVolume / 1.5, 1.0);
+    if (v < 0.20) return lerpColor("#5b2d8e", "#2255cc", v / 0.20);
+    if (v < 0.40) return lerpColor("#2255cc", "#0d9e8a", (v-0.20) / 0.20);
+    if (v < 0.58) return lerpColor("#0d9e8a", "#2a8c2a", (v-0.40) / 0.18);
+    if (v < 0.73) return lerpColor("#2a8c2a", "#c8a800", (v-0.58) / 0.15);
+    if (v < 0.88) return lerpColor("#c8a800", "#cc4e00", (v-0.73) / 0.15);
+    return lerpColor("#cc4e00", "#aa0000", (v-0.88) / 0.12);
+  }
+
   LazyLoader {
     active: root.shouldShowOsd
 
@@ -75,14 +96,16 @@ Scope {
             }
             Text {
               text: isMuted ? (lang?.volume?.muted || "Muted") : Math.round(currentVolume * 100) + "%"
-              color: theme.primary.foreground
+              color: isMuted ? "#ff6b6b" : currentVolume > 1.0 ? theme.normal.red : theme.primary.foreground
               font.family: "ComicShannsMono Nerd Font"
               font.pixelSize: ScalerService.s(30)
               font.bold: true
+              Behavior on color {
+                ColorAnimation { duration: 150 }
+              }
             }
             Rectangle {
               color: "transparent"
-
               Layout.fillWidth: true
               Layout.fillHeight: true
               Text {
@@ -108,7 +131,7 @@ Scope {
               Layout.fillWidth: true
               Layout.preferredHeight: ScalerService.s(20)
               radius: ScalerService.s(20)
-              color: "#333333"
+              color: "#1e1e1e"
 
               Rectangle {
                 anchors {
@@ -116,14 +139,26 @@ Scope {
                   top: parent.top
                   bottom: parent.bottom
                 }
-                width: parent.width * currentVolume
+                width: parent.width * Math.min(currentVolume / 1.5, 1.0)
                 radius: parent.radius
-                color: isMuted ? "#ff6b6b" : "#4a86e8"
+                color: root.barColor()
                 Behavior on width {
-                  NumberAnimation {
-                    duration: 200
-                  }
+                  NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
                 }
+                Behavior on color {
+                  ColorAnimation { duration: 100 }
+                }
+              }
+
+              // 100% marker
+              Rectangle {
+                visible: currentVolume > 1.0
+                x: parent.width * (1.0 / 1.5) - width / 2
+                width: ScalerService.s(3)
+                height: parent.height
+                radius: ScalerService.s(1.5)
+                color: "white"
+                opacity: 0.6
               }
             }
           }
@@ -134,15 +169,15 @@ Scope {
 
   function getVolumeIcon() {
     if (isMuted || currentVolume == 0)
-    return "../../assets/volume/volume_0.png";
+      return "../../assets/volume/volume_0.png";
     if (currentVolume <= 0.25)
-    return "../../assets/volume/volume_1.png";
+      return "../../assets/volume/volume_1.png";
     if (currentVolume <= 0.50)
-    return "../../assets/volume/volume_2.png";
+      return "../../assets/volume/volume_2.png";
     if (currentVolume <= 0.75)
-    return "../../assets/volume/volume_3.png";
-    if (currentVolume <= 1)
-    return "../../assets/volume/volume_4.png";
+      return "../../assets/volume/volume_3.png";
+    if (currentVolume <= 1.0)
+      return "../../assets/volume/volume_4.png";
     return "../../assets/volume/volume_5.png";
   }
 }
