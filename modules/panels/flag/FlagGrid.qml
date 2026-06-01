@@ -5,21 +5,31 @@ import qs.services
 import qs.commons
 import "." as Com
 
-ScrollView {
+Flickable {
   id: flagGridView
 
   property var flagList: []
   property string selectedFlag: ""
-
-  clip: true
-  ScrollBar.vertical.policy: ScrollBar.AlwaysOff
-  ScrollBar.horizontal.policy: ScrollBar.AlwaysOn
   property real animationProgress: 0
 
+  width: parent.width
+  height: ScalerService.s(234)
+  contentWidth: flowContainer.width
+  contentHeight: flowContainer.height
+  clip: true
+
+  // Cho phép kéo thả và quán tính
+  flickableDirection: Flickable.HorizontalFlick
+  boundsBehavior: Flickable.DragAndOvershootBounds
+  rebound: Transition {
+    NumberAnimation { properties: "x"; duration: 300; easing.type: Easing.OutQuad }
+  }
+
   Flow {
-    height: 234
-    width: parent.width
-    spacing: 12
+    id: flowContainer
+    width: Math.max(flagGridView.width, implicitWidth)  // Quan trọng: đảm bảo width đủ lớn
+    height: ScalerService.s(234)
+    spacing: ScalerService.s(12)
     flow: Flow.TopToBottom
 
     Repeater {
