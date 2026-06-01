@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Pipewire
+import Quickshell.Services.UPower
 import QtQuick.Controls
 import Quickshell.Services.SystemTray
 import qs.services
@@ -45,11 +46,55 @@ Rectangle {
   }
 
   property string bluetooth_icon: Directories.assetsPath + "/settings/bluetooth.png"
-  property string status_battery: "Unknown"
-  property string capacity_battery: "..."
   property real currentVolume: Pipewire.defaultAudioSink?.audio.volume ?? 0
   property bool isMuted: Pipewire.defaultAudioSink?.audio.mute ?? false
   property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
+  property bool shouldShowOsd: false
+
+  // UPower battery display – using displayDevice (always available)
+  property string batteryPercent: "…"
+  property bool batteryCharging: false
+  property string batteryIconSource: Directories.assetsPath + '/battery/full.png'
+  property string batteryIconVerticalSource: Directories.assetsPath + '/battery/full.png'
+
+  function refreshBatteryDisplay() {
+    var dev = UPower.displayDevice;
+    if (!dev || !dev.ready) return;
+    root.batteryPercent = Math.round(dev.percentage * 100) + "%";
+    root.batteryCharging = (dev.state === UPowerDeviceState.Charging);
+    var icon = getBatteryIcon(Math.round(dev.percentage * 100));
+    root.batteryIconSource = icon;
+    root.batteryIconVerticalSource = icon;
+  }
+
+  function getBatteryIcon(percent) {
+    if (root.batteryCharging) return Directories.assetsPath + '/battery/battery-1.png';
+    if (percent <= 20) return Directories.assetsPath + '/battery/battery-2.png';
+    if (percent <= 50) return Directories.assetsPath + '/battery/battery-3.png';
+    if (percent <= 80) return Directories.assetsPath + '/battery/battery-3.png';
+    return Directories.assetsPath + '/battery/full.png';
+  }
+
+  // Wait for displayDevice to become ready, then start listening
+  Timer {
+    id: initTimer
+    interval: 500
+    running: true
+    repeat: true
+    onTriggered: {
+      if (UPower.displayDevice && UPower.displayDevice.ready) {
+        stop();
+        refreshBatteryDisplay();
+      }
+    }
+  }
+
+  Connections {
+    target: UPower.displayDevice
+    enabled: UPower.displayDevice && UPower.displayDevice.ready
+    function onPercentageChanged() { refreshBatteryDisplay(); }
+    function onStateChanged() { refreshBatteryDisplay(); }
+  }
 
   PwObjectTracker {
     objects: [Pipewire.defaultAudioSink]
@@ -57,59 +102,6 @@ Rectangle {
 
   Connections {
     target: Pipewire.defaultAudioSink?.audio ?? null
-  }
-
-  // Battery processes
-  Process {
-    id: batteryCapacityProcess
-    command: ["cat", "/sys/class/power_supply/BAT*/capacity"]
-    running: false
-    stdout: StdioCollector {}
-    onRunningChanged: {
-      if (!running && stdout.text) {
-        var result = stdout.text.trim();
-        root.capacity_battery = result;
-        updateBatteryIcon();
-      }
-    }
-  }
-
-  Process {
-    id: batteryStatusProcess
-    command: ["cat", "/sys/class/power_supply/BAT*/status"]
-    running: false
-    stdout: StdioCollector {}
-    onRunningChanged: {
-      if (!running && stdout.text) {
-        var result = stdout.text.trim();
-        root.status_battery = result;
-        updateBatteryIcon();
-      }
-    }
-  }
-
-  // Functions
-  function updateBatteryCappacityProcess() {
-    if (!batteryCapacityProcess.running) {
-      batteryCapacityProcess.running = true;
-    }
-  }
-
-  function updateBatteryIcon() {
-    var capacity = parseInt(root.capacity_battery) || 0;
-    var status = root.status_battery;
-
-    if (status === "Charging") {
-      batteryIcon.source = Directories.assetsPath + '/battery/battery-1.png';
-    } else if (capacity <= 20) {
-      batteryIcon.source = Directories.assetsPath + '/battery/battery-2.png';
-    } else if (capacity <= 50) {
-      batteryIcon.source = Directories.assetsPath + '/battery/battery-2.png';
-    } else if (capacity <= 80) {
-      batteryIcon.source = Directories.assetsPath + '/battery/battery-3.png';
-    } else {
-      batteryIcon.source = Directories.assetsPath + '/battery/full.png';
-    }
   }
 
   // UI Layout
@@ -227,6 +219,7 @@ Rectangle {
           anchors.centerIn: parent
         }
       }
+
       Item {
         Layout.fillWidth: true
       }
@@ -246,7 +239,7 @@ Rectangle {
         Layout.fillWidth: true
       }
 
-      // Battery
+      // Battery (UPower displayDevice)
       Rectangle {
         id: batteryContainer
         Layout.preferredWidth: batteryContent.width
@@ -262,10 +255,19 @@ Rectangle {
 
           Image {
             id: batteryIcon
-            source: Directories.assetsPath + '/battery/full.png'
+            source: root.batteryIconSource
             width: ScalerService.s(30)
             height: ScalerService.s(30)
             sourceSize: Qt.size(ScalerService.s(30), ScalerService.s(30))
+          }
+
+          // Battery percentage text (bold)
+          Text {
+            text: root.batteryPercent
+            color: theme.primary.foreground
+            font.pixelSize: ScalerService.s(13)
+            font.bold: true
+            verticalAlignment: Text.AlignVCenter
           }
         }
 
@@ -279,6 +281,7 @@ Rectangle {
           onReleased: batteryContainer.scale = 1.1
           onClicked: VisibleService.togglePanel("battery")
         }
+
         Behavior on scale {
           NumberAnimation {
             duration: 100
@@ -342,7 +345,6 @@ Rectangle {
         Layout.fillWidth: true
         Layout.preferredHeight: contentVerticalTray.height
 
-        // Xoay container cho tray icons
         Item {
           anchors.centerIn: parent
           width: parent.height
@@ -425,11 +427,12 @@ Rectangle {
           anchors.centerIn: parent
         }
       }
+
       Item {
         Layout.fillWidth: true
       }
 
-      // Volume
+      // Volume (vertical)
       Com.StatContainer {
         Layout.fillWidth: true
         Layout.fillHeight: true
@@ -438,10 +441,12 @@ Rectangle {
         Com.VolumeStat {
           anchors.centerIn: parent
         }
-      }      // Battery (vertical)
+      }
+
+      // Battery (vertical, UPower displayDevice)
       Item {
-        width: ScalerService.s(25)
-        height: ScalerService.s(25)
+        Layout.fillWidth: true
+        Layout.preferredHeight: ScalerService.s(50)
 
         Item {
           anchors.centerIn: parent
@@ -455,10 +460,19 @@ Rectangle {
 
             Image {
               id: batteryIconVertical
-              source: Directories.assetsPath + '/battery/full.png'
+              source: root.batteryIconVerticalSource
               width: ScalerService.s(25)
               height: ScalerService.s(25)
               sourceSize: Qt.size(ScalerService.s(25), ScalerService.s(25))
+              Layout.alignment: Qt.AlignHCenter
+            }
+
+            // Battery percentage text (bold)
+            Text {
+              text: root.batteryPercent
+              color: theme.primary.foreground
+              font.pixelSize: ScalerService.s(10)
+              font.bold: true
               Layout.alignment: Qt.AlignHCenter
             }
           }
@@ -515,32 +529,6 @@ Rectangle {
             duration: 100
           }
         }
-      }
-    }
-  }
-
-  // Initialization & Timers
-  Component.onCompleted: {
-    updateBatteryCappacityProcess();
-    if (!batteryStatusProcess.running) {
-      batteryStatusProcess.running = true;
-    }
-  }
-
-  Timer {
-    interval: 30000
-    running: true
-    repeat: true
-    onTriggered: updateBatteryCappacityProcess()
-  }
-
-  Timer {
-    interval: 10000
-    running: true
-    repeat: true
-    onTriggered: {
-      if (!batteryStatusProcess.running) {
-        batteryStatusProcess.running = true;
       }
     }
   }
