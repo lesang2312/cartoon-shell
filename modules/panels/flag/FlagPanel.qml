@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import Quickshell
 import qs.services
 import qs.commons
+import qs.components
 import "." as Com
 
 PanelWindow {
@@ -23,8 +24,8 @@ PanelWindow {
     }
   }
 
-  implicitWidth:  600
-  implicitHeight: 420
+  implicitWidth: ScalerService.s(600)
+  implicitHeight: ScalerService.s(380)
 
   property var flagList: [
   { name: "britain", displayName: "Britain" },
@@ -67,10 +68,10 @@ PanelWindow {
   }
 
   margins {
-    top: Settings.bar.position === "top" ? 10 : 0
-    bottom: Settings.bar.position === "bottom" ? 10 : 0
-    left: (Settings.bar.position === "top" || Settings.bar.position === "bottom") ? 720 : 10
-    right: Settings.bar.position === "right" ? 10 : 0
+    top: Settings.bar.position === "top" ? ScalerService.s(10) : 0
+    bottom: Settings.bar.position === "bottom" ? ScalerService.s(10) : 0
+    left: (Settings.bar.position === "top" || Settings.bar.position === "bottom") ? ScalerService.s(720) : ScalerService.s(10)
+    right: Settings.bar.position === "right" ? ScalerService.s(10) : 0
   }
 
   exclusiveZone: 0
@@ -82,25 +83,40 @@ PanelWindow {
     implicitHeight: root.animationProgress > 0 ? parent.height : 0
     Behavior on implicitHeight {
       NumberAnimation {
+        id: heightAnim
         duration: 500
         easing.type: Easing.OutCubic
       }
     }
     Behavior on implicitWidth {
       NumberAnimation {
+        id: widthAnim
         duration: 500
         easing.type: Easing.OutCubic
       }
     }
+    Loader {
+      anchors.fill: parent
+
+      active: !heightAnim.running && !widthAnim.running
+
+      sourceComponent: FloatingCircles {
+        circleColor: theme.button.text
+        anchors.fill: parent
+        circleCount: 2
+        minOpacity: 0.02
+        maxOpacity: 0.04
+      }
+    }
     color: theme.primary.background
     border.color: theme.button.border
-    radius: Settings.appearance.radius1
-    border.width: Settings.appearance.enableBorder ? 3 : 0
+    radius: ScalerService.s(Settings.appearance.radius1)
+    border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
 
     ColumnLayout {
       anchors.fill: parent
-      anchors.margins: 20
-      spacing: 15
+      anchors.margins: ScalerService.s(20)
+      spacing: ScalerService.s(15)
 
       Com.FlagHeader {
         animationProgress: root.animationProgress
@@ -119,6 +135,16 @@ PanelWindow {
       Com.FlagFooter {
         selectedFlag: root.selectedFlag
         animationProgress: root.animationProgress
+      }
+    }
+    Loader {
+      anchors.fill: parent
+
+      active: !heightAnim.running && !widthAnim.running
+
+      sourceComponent:     StarField {
+        starCount: 10
+        shootingStarCount: 2
       }
     }
   }

@@ -6,6 +6,7 @@ import qs.services
 Item {
   property real animationProgress: 0
   CustomText {
+    anchors.centerIn: parent
     name: "Country Flag"
     isBold: true
     size: "large"
