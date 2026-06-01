@@ -12,12 +12,12 @@ Rectangle {
   property bool isSelected: false
   property real animationProgress: 0
 
-  width: 105
-  height: 70
-  color: isSelected ? theme.button.background_select : theme.primary.dim_background
+  width: ScalerService.s(105)
+  height: ScalerService.s(70)
+  color: isSelected ? Qt.alpha(theme.button.background_select,0.5) : Qt.alpha(theme.button.background,0.5)
   border.color: isSelected ? theme.button.border_select : theme.button.border
-  radius: Settings.appearance.radius3
-  border.width: Settings.appearance.enableBorder ? isSelected ? 2 : 1 : 0
+  radius: ScalerService.s(Settings.appearance.radius3)
+  border.width: Settings.appearance.enableBorder ? (isSelected ? ScalerService.s(2) : ScalerService.s(1)) : 0
 
   signal clicked()
 
@@ -33,13 +33,12 @@ Rectangle {
 
   ColumnLayout {
     anchors.centerIn: parent
-    spacing: 0
+    spacing: ScalerService.s(0)
 
     IconImage {
       path: `flags/${flagName}.png`
       size: "xl"
       Layout.alignment: Qt.AlignHCenter
-
     }
 
     CustomText {

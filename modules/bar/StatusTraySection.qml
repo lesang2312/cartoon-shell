@@ -102,16 +102,6 @@ Rectangle {
 
   Connections {
     target: Pipewire.defaultAudioSink?.audio ?? null
-    function onVolumeChanged() {
-      root.shouldShowOsd = true;
-      hideTimer.restart();
-    }
-  }
-
-  Timer {
-    id: hideTimer
-    interval: 1000
-    onTriggered: root.shouldShowOsd = false
   }
 
   // UI Layout

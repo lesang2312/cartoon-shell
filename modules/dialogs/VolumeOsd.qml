@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Services.Pipewire
 import Quickshell.Widgets
+import qs.components
 import qs.services
 
 Scope {
@@ -19,7 +20,7 @@ Scope {
   }
 
   Connections {
-    target: Pipewire.defaultAudioSink?.audio ?? null
+    target: Pipewire.defaultAudioSink.audio ?? null
 
     function onVolumeChanged() {
       root.shouldShowOsd = true;
@@ -87,19 +88,15 @@ Scope {
           spacing: ScalerService.s(12)
 
           RowLayout {
-            Image {
-              Layout.preferredWidth: ScalerService.s(40)
-              Layout.preferredHeight: ScalerService.s(40)
-              source: root.getVolumeIcon()
-              fillMode: Image.PreserveAspectFit
-              smooth: true
+            IconImage {
+              path: root.getVolumeIcon()
+              size: "large"
             }
-            Text {
-              text: isMuted ? (lang?.volume?.muted || "Muted") : Math.round(currentVolume * 100) + "%"
-              color: isMuted ? "#ff6b6b" : currentVolume > 1.0 ? theme.normal.red : theme.primary.foreground
-              font.family: "ComicShannsMono Nerd Font"
-              font.pixelSize: ScalerService.s(30)
-              font.bold: true
+            CustomText {
+              name: Math.round(currentVolume * 100) + "%"
+              color: "#ff6b6b" : currentVolume > 1.0 ? theme.normal.red : theme.primary.foreground
+              size: "large"
+              isBold: true
               Behavior on color {
                 ColorAnimation { duration: 150 }
               }
@@ -108,15 +105,11 @@ Scope {
               color: "transparent"
               Layout.fillWidth: true
               Layout.fillHeight: true
-              Text {
-                text: " " + (lang?.volume?.title || "Âm thanh")
+              CustomText {
+                name: " " + (lang?.volume?.title || "Âm thanh")
                 anchors.margins: ScalerService.s(10)
                 anchors.top: parent.top
                 anchors.right: parent.right
-                color: theme.primary.foreground
-                font.family: "ComicShannsMono Nerd Font"
-                font.pixelSize: ScalerService.s(20)
-                font.bold: true
               }
             }
           }
@@ -131,8 +124,7 @@ Scope {
               Layout.fillWidth: true
               Layout.preferredHeight: ScalerService.s(20)
               radius: ScalerService.s(20)
-              color: "#1e1e1e"
-
+              color: theme.primary.dim_background
               Rectangle {
                 anchors {
                   left: parent.left
@@ -169,15 +161,15 @@ Scope {
 
   function getVolumeIcon() {
     if (isMuted || currentVolume == 0)
-      return "../../assets/volume/volume_0.png";
+    return "volume/volume_0.png";
     if (currentVolume <= 0.25)
-      return "../../assets/volume/volume_1.png";
+    return "volume/volume_1.png";
     if (currentVolume <= 0.50)
-      return "../../assets/volume/volume_2.png";
+    return "volume/volume_2.png";
     if (currentVolume <= 0.75)
-      return "../../assets/volume/volume_3.png";
-    if (currentVolume <= 1.0)
-      return "../../assets/volume/volume_4.png";
-    return "../../assets/volume/volume_5.png";
+    return "volume/volume_3.png";
+    if (currentVolume <= 1)
+    return "volume/volume_4.png";
+    return "volume/volume_5.png";
   }
 }
