@@ -153,7 +153,6 @@ Item {
     target: "rect"
     function getToggle() {
       VisibleService.togglePanel("launcher")
-
     }
   }
 }

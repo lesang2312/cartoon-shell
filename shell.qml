@@ -12,6 +12,7 @@ import qs.modules.panels
 import qs.modules.bar
 import qs.modules.background
 import qs.services
+import qs.modules.lockscreen
 import qs.commons
 
 ShellRoot {
@@ -55,6 +56,7 @@ ShellRoot {
       root.settingsLoaded = true;
     }
   }
+  Lock{}
 
   Loader {
     active: root.settingsLoaded && Directories.ready

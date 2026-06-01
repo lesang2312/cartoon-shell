@@ -19,6 +19,7 @@ Singleton {
 
   property bool cpu: false
 
+  property bool lockscreen: false
   property bool packagePanel: false
 
   property bool ram: false

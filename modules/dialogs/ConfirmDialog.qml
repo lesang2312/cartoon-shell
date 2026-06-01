@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 import qs.services
+import qs.commons
 
 PanelWindow {
   id: root
@@ -64,7 +65,15 @@ PanelWindow {
       sleepProcess.startDetached();
       break;
       case "lock":
-      lockProcess.command = ["hyprlock"];
+      lockProcess.command = [
+      "qs",
+      "ipc",
+      "--path",
+      Directories.home + "/.config/quickshell/cartoon-shell/",
+      "call",
+      "lock",
+      "lock"
+      ]
       lockProcess.startDetached();
       break;
       case "logout":

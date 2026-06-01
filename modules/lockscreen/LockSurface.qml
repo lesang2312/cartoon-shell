@@ -2,31 +2,81 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Fusion
 import Qt5Compat.GraphicalEffects
+import qs.services
 import Quickshell.Wayland
 import Quickshell.Io
+import QtMultimedia
+import qs.components
+import qs.modules.lockscreen
 
-Rectangle {
+Item {
   id: root
   required property LockContext context
 
-  property string backgroundImagePath: "/home/crystalforceix/Pictures/Wallpapers/default-wallpaper.jpg"
-
-  color: "#0a0e27"
-
-  gradient: Gradient {
-    GradientStop { position: 0.0; color: "#0a0e27" }
-    GradientStop { position: 0.5; color: "#1a1f3a" }
-    GradientStop { position: 1.0; color: "#0f1329" }
+  // Sửa cách lấy current screen
+  property var currentScreen: {
+    // Cách 1: Nếu có sẵn screen property
+    if (typeof screen !== 'undefined' && screen) return screen
+    // Cách 2: Lấy screen đầu tiên
+    if (Quickshell && Quickshell.screens && Quickshell.screens.length > 0) return Quickshell.screens[0]
+    // Cách 3: Trả về null
+    return null
   }
 
+  property string backgroundPath: {
+    if (!currentScreen) return ""
+    return WallpaperService.getWallpaper(currentScreen.name)
+  }
+
+  property bool isVideo: {
+    if (!backgroundPath) return false
+    const videoExtensions = ["mp4", "webm", "mkv", "avi", "mov", "flv", "wmv", "m4v", "mpg", "mpeg"]
+    const extension = backgroundPath.toString().split('.').pop().toLowerCase()
+    return videoExtensions.includes(extension)
+  }
+
+  // Background Image cho ảnh tĩnh
   Image {
     id: backgroundImage
     anchors.fill: parent
-    source: root.backgroundImagePath
+    source: isVideo ? "" : backgroundPath
     fillMode: Image.PreserveAspectCrop
-    visible: false
     asynchronous: true
     cache: true
+    visible: !isVideo && status === Image.Ready
+    opacity: 1
+
+    onStatusChanged: {
+      if (status === Image.Error || status === Image.Null) {
+        console.log("Failed to load image wallpaper:", backgroundPath)
+        backgroundImage.visible = false
+      }
+    }
+  }
+
+  // Background Video cho video wallpaper
+  Video {
+    id: backgroundVideo
+    anchors.fill: parent
+    source: isVideo ? "file://" + backgroundPath : ""
+    fillMode: VideoOutput.PreserveAspectCrop
+    muted: true  // Video wallpaper thường không có âm thanh
+    loops: MediaPlayer.Infinite  // Lặp vô hạn
+    autoPlay: isVideo
+    visible: isVideo && playbackState === MediaPlayer.PlayingState
+    volume: 0  // Tắt âm thanh
+
+    onErrorOccurred: function(error, errorString) {
+      console.error("Video wallpaper error:", error, errorString)
+      // Fallback to color background
+      visible = false
+    }
+
+    onPlaybackStateChanged: {
+      if (isVideo && playbackState === MediaPlayer.PlayingState) {
+        console.log("Video wallpaper playing:", backgroundPath)
+      }
+    }
   }
 
   FastBlur {
@@ -35,7 +85,6 @@ Rectangle {
     source: backgroundImage
     radius: 64
     visible: root.backgroundImagePath !== ""
-    opacity: 1
     cached: true
 
     Rectangle {
@@ -43,8 +92,22 @@ Rectangle {
       color: "black"
       opacity: 0.4
     }
+
   }
 
+  Loader {
+    anchors.fill: parent
+
+    active: true
+
+    sourceComponent: FloatingCircles {
+      circleColor: theme.button.text
+      anchors.fill: parent
+      circleCount: 6
+      minOpacity: 0.06
+      maxOpacity: 0.15
+    }
+  }
   // --- PASSWORD INPUT ---
   Item {
     id: passwordSection
@@ -122,7 +185,7 @@ Rectangle {
           color: "white"
           font.pixelSize: 18
           verticalAlignment: TextInput.AlignVCenter
-          placeholderText: "Tell me your password:33"
+          placeholderText: "Tell me your password"
           focus: true
           enabled: !root.context.unlockInProgress
           echoMode: TextInput.Password
@@ -217,6 +280,22 @@ Rectangle {
         font.pointSize: 10
         font.bold: true
       }
+    }
+  }
+  Loader {
+    anchors.fill: parent
+
+    active:  true
+    sourceComponent: StarField {
+      starCount: 10
+      shootingStarCount: 2
+    }
+  }
+
+  // Dọn dẹp video khi component bị hủy
+  Component.onDestruction: {
+    if (backgroundVideo.playbackState === MediaPlayer.PlayingState) {
+      backgroundVideo.stop()
     }
   }
 }
