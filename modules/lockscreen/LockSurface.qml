@@ -63,10 +63,10 @@ Item {
     // Step 1: show ripple, particles, and start bubbles from right to left
     PauseAnimation { duration: 20 }
     ScriptAction { script: {
-      ripple.visible = true;
-      particleSystem.burst();
-      exitBubbles.start();   // start bubble animation right->left
-    } }
+        ripple.visible = true;
+        particleSystem.burst();
+        exitBubbles.start();   // start bubble animation right->left
+      } }
 
     // Step 2: let the ripple + particles + bubbles play for a moment
     PauseAnimation { duration: 320 }
@@ -187,14 +187,14 @@ Item {
           }
           // After reaching left edge, restart from right edge (if still running)
           ScriptAction { script: {
-            if (exitBubbles.isRunning) {
-              bubble.x = bubble.startX;
-              bubble.y = bubble.yPos;
-              bubbleAnim.restart();
-            } else {
-              bubbleAnim.stop();
-            }
-          } }
+              if (exitBubbles.isRunning) {
+                bubble.x = bubble.startX;
+                bubble.y = bubble.yPos;
+                bubbleAnim.restart();
+              } else {
+                bubbleAnim.stop();
+              }
+            } }
         }
 
         ParallelAnimation {
@@ -247,7 +247,6 @@ Item {
     }
   }
 
-  // Sửa cách lấy current screen
   property var currentScreen: {
     if (typeof screen !== 'undefined' && screen) return screen
     if (Quickshell && Quickshell.screens && Quickshell.screens.length > 0) return Quickshell.screens[0]
@@ -363,7 +362,7 @@ Item {
         height: 10
         radius: width / 2
         color: "transparent"
-        border.color: Qt.rgba(255, 255, 255, 0.25)
+        border.color: theme.button.border
         border.width: 2 + (index * 1.5)
 
         SequentialAnimation on width {
@@ -489,13 +488,19 @@ Item {
     // Floating circles background (these are not the exit bubbles)
     Loader {
       anchors.fill: parent
-      active: true
+      active: wallpaperReady ? 1 : 0
       sourceComponent: FloatingCircles {
         circleColor: theme.button.text
         anchors.fill: parent
+        opacity: wallpaperReady ? 1 : 0
         circleCount: 8
         minOpacity: 0.04
         maxOpacity: 0.12
+        Behavior on rotation {
+          NumberAnimation {
+            duration: 500
+          }
+        }
       }
     }
 
@@ -827,3 +832,4 @@ Item {
     }
   }
 }
+
