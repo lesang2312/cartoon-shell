@@ -147,6 +147,7 @@ Singleton {
     property string light: "light"
     property string dark: "dark"
     property string matugenType: "scheme-tonal-spot"
+    property string font: "ComicShannsMono Nerd Font"
   }
 
   component General: JsonObject {

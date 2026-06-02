@@ -69,32 +69,13 @@ Item {
       }
 
       // Tab 3: Fonts
-      ColumnLayout {
-        width: parent.width
-        spacing: ScalerService.s(20)
-
-        Text {
-          text: lang?.appearance?.fonts || "Fonts"
-          color: theme.primary.foreground
-          font {
-            family: "ComicShannsMono Nerd Font"
-            pixelSize: ScalerService.s(24)
-            bold: true
-          }
-        }
-
-        Rectangle {
-          Layout.fillWidth: true
-          height: ScalerService.s(1)
-          color: theme.primary.foreground
-          opacity: 0.3
-        }
-
-        // Fonts settings content
-        Text {
-          text: "Fonts settings content"
-          color: theme.primary.foreground
-          font.pixelSize: ScalerService.s(14)
+      Loader {
+        active: root.currentTab === 3
+        source: "./appearance/Fonts.qml"
+        onLoaded: {
+          item.visible = Qt.binding(function () {
+              return root.currentTab === 3;
+          });
         }
       }
 

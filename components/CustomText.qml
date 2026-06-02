@@ -1,5 +1,6 @@
 import QtQuick
 import qs.services
+import qs.commons
 
 Text {
   property string name: "undefined"
@@ -9,7 +10,7 @@ Text {
 
   property bool isBold: false
   property color textColor: theme.primary.foreground
-  property string fontFamily: "ComicShannsMono Nerd Font"
+  property string fontFamily: Settings.appearance.font
   Behavior on opacity {
     NumberAnimation {
       duration: 200
