@@ -36,7 +36,7 @@ Item {
     }
   }
 
-  // Animation cho container
+  // Animation cho container khi load vào
   SequentialAnimation on animationProgress {
     id: containerAnimation
     running: wallpaperReady
@@ -48,74 +48,76 @@ Item {
     }
   }
 
-  // Exit animation: only animate UI overlay out, keep wallpaper visible.
-  // After animation finishes, ScriptAction calls context.releaseLock() which
-  // sets showLockscreen = false → WlSessionLock releases → compositor shows desktop.
-  // This ordering prevents the black flash caused by the surface being destroyed
-  // before the compositor has composited the desktop behind it.
+  // ── EXIT ANIMATION ──────────────────────────────────────────────────────────
+  // Sequence:
+  //  1) Ripple ring expands from center + particles burst
+  //  2) Container implodes (scale → 0, opacity → 0)
+  //  3) Whole overlay fades out
+  //  4) PauseAnimation lets compositor prepare the desktop frame
+  //  5) ScriptAction releases WlSessionLock
+  // ────────────────────────────────────────────────────────────────────────────
   SequentialAnimation {
     id: exitAnimation
     running: false
 
-    // Brief pause so the user sees the unlock moment
-    PauseAnimation { duration: 80 }
+    // Step 1: show ripple and particles
+    PauseAnimation { duration: 60 }
+    ScriptAction { script: { ripple.visible = true; particleSystem.burst() } }
 
+    // Step 2: let the ripple + particles play for a moment
+    PauseAnimation { duration: 320 }
+
+    // Step 3: implode container + fade overlay simultaneously
     ParallelAnimation {
-      // Fade out only the UI overlay, NOT the wallpaper/root
-      NumberAnimation {
-        target: mainContent
-        property: "opacity"
-        from: 1
-        to: 0
-        duration: 400
-        easing.type: Easing.InCubic
+
+      // Container implodes with a spring-back feel
+      SequentialAnimation {
+        // Tiny scale-up "breath" before the suck-in
+        NumberAnimation {
+          target: mainContainer; property: "scale"
+          to: 1.08; duration: 120; easing.type: Easing.OutQuad
+        }
+        // Hard suck-in
+        NumberAnimation {
+          target: mainContainer; property: "scale"
+          to: 0.0; duration: 380; easing.type: Easing.InBack
+        }
       }
 
-      // Zoom the main container down (InBack gives a subtle suck-in feel)
       NumberAnimation {
-        target: mainContainer
-        property: "scale"
-        to: 0.65
-        duration: 380
-        easing.type: Easing.InBack
+        target: mainContainer; property: "opacity"
+        to: 0; duration: 420; easing.type: Easing.InQuad
       }
 
-      // Zoom the password container down slightly faster
+      // Password box zooms out faster than the container
       NumberAnimation {
-        target: passwordContainer
-        property: "scale"
-        to: 0.75
-        duration: 260
-        easing.type: Easing.InBack
+        target: passwordContainer; property: "scale"
+        to: 0.5; duration: 280; easing.type: Easing.InBack
       }
 
-      // Increase blur radius so the background softens as we exit
+      // Blur opens up — peels back to reveal wallpaper underneath
       NumberAnimation {
-        target: blurEffect
-        property: "radius"
-        to: 96
-        duration: 400
-        easing.type: Easing.InQuad
+        target: blurEffect; property: "radius"
+        to: 0; duration: 600; easing.type: Easing.InOutCubic
       }
 
-      // Fade blur overlay out so the wallpaper shows through cleanly
+      // Dim overlay fades out
       NumberAnimation {
-        target: blurEffect
-        property: "opacity"
-        from: 1
-        to: 0
-        duration: 400
-        easing.type: Easing.InQuad
+        target: blurOverlay; property: "opacity"
+        to: 0; duration: 500; easing.type: Easing.InQuad
+      }
+
+      // Floating circles + stars fade with the overlay
+      NumberAnimation {
+        target: mainContent; property: "opacity"
+        to: 0; duration: 500; easing.type: Easing.InCubic
       }
     }
 
-    // Hold the wallpaper visible for one compositor repaint cycle before releasing.
-    // This ensures the desktop frame is ready when WlSessionLock drops.
-    PauseAnimation { duration: 120 }
+    // Hold the wallpaper fully visible for one compositor repaint cycle
+    PauseAnimation { duration: 140 }
 
-    // Animation fully done — now safe to release the Wayland session lock.
-    // context.releaseLock() → Lock.qml: showLockscreen = false
-    // → WlSessionLock.locked = false → compositor dismisses surface.
+    // Safe to release — compositor has had time to prepare the desktop frame
     ScriptAction {
       script: {
         console.log("Exit animation done — releasing WlSessionLock")
@@ -124,15 +126,12 @@ Item {
     }
   }
 
-  // Watch LockContext for the unlocked() signal and play exit animation.
-  // LockContext.tryUnlock() → PamContext → onCompleted(Success) → unlocked().
-  // We intercept here BEFORE showLockscreen = false so the animation has time to run.
+  // Watch LockContext for the unlocked() signal and play exit animation
   Connections {
     target: root.context
 
-    // unlocked() fires when PAM succeeds — start exit animation immediately.
-    // Lock.qml no longer releases on this signal; we call releaseLock() ourselves
-    // at the end of exitAnimation via ScriptAction.
+    // unlocked() fires when PAM succeeds — start exit animation.
+    // Lock.qml's onUnlocked is intentionally empty; we drive teardown timing here.
     function onUnlocked() {
       console.log("LockContext.onUnlocked — starting exit animation")
       if (!root.isExiting) {
@@ -241,15 +240,147 @@ Item {
     opacity: wallpaperReady ? 1 : 0
     z: -1
 
+    // Separate dim overlay so we can animate it independently from the blur
     Rectangle {
+      id: blurOverlay
       anchors.fill: parent
       color: "black"
       opacity: 0.3
     }
   }
 
-  // Main content — this is the ONLY layer animated out on exit.
-  // Wallpaper layers stay visible so WlSessionLock releases without a black flash.
+  // ── RIPPLE RING (transparent) ─────────────────────────────────────────────────
+  // Expands from the center of the screen on unlock, like a shockwave
+  Item {
+    id: ripple
+    anchors.fill: parent
+    visible: false
+    z: 3
+
+    Repeater {
+      model: 3
+      Rectangle {
+        anchors.centerIn: parent
+        width: 10
+        height: 10
+        radius: width / 2
+        color: "transparent"
+        border.color: Qt.rgba(255, 255, 255, 0.15) // transparent white
+        border.width: 2
+
+        SequentialAnimation on width {
+          running: ripple.visible
+          PauseAnimation { duration: index * 120 }
+          NumberAnimation {
+            from: 10
+            to: Math.max(parent.parent.width, parent.parent.height) * 1.6
+            duration: 700
+            easing.type: Easing.OutCubic
+          }
+        }
+        SequentialAnimation on height {
+          running: ripple.visible
+          PauseAnimation { duration: index * 120 }
+          NumberAnimation {
+            from: 10
+            to: Math.max(parent.parent.width, parent.parent.height) * 1.6
+            duration: 700
+            easing.type: Easing.OutCubic
+          }
+        }
+        SequentialAnimation on opacity {
+          running: ripple.visible
+          PauseAnimation { duration: index * 120 }
+          NumberAnimation { from: 1; to: 0; duration: 700; easing.type: Easing.OutCubic }
+        }
+        SequentialAnimation on radius {
+          running: ripple.visible
+          PauseAnimation { duration: index * 120 }
+          NumberAnimation {
+            from: 5
+            to: Math.max(parent.parent.width, parent.parent.height) * 0.8
+            duration: 700
+            easing.type: Easing.OutCubic
+          }
+        }
+      }
+    }
+  }
+
+  // ── PARTICLE BURST (transparent stars) ──────────────────────────────────────────
+  // Small glowing dots that shoot outward from center on unlock
+  Item {
+    id: particleSystem
+    anchors.fill: parent
+    visible: false
+    z: 3
+
+    property int particleCount: 18
+
+    function burst() {
+      particleSystem.visible = true
+      for (let i = 0; i < particleRepeater.count; i++) {
+        particleRepeater.itemAt(i).launch()
+      }
+    }
+
+    Repeater {
+      id: particleRepeater
+      model: particleSystem.particleCount
+
+      Item {
+        id: particle
+        x: parent.width / 2
+        y: parent.height / 2
+        width: 0
+        height: 0
+
+        property real angle: (index / particleSystem.particleCount) * Math.PI * 2
+        property real speed: 180 + Math.random() * 220
+        property real size: 5 + Math.random() * 8
+        property real life: 550 + Math.random() * 250
+
+        function launch() {
+          dot.width = size
+          dot.height = size
+          dot.radius = size / 2
+          dot.opacity = 1
+          xAnim.to = Math.cos(angle) * speed
+          yAnim.to = Math.sin(angle) * speed
+          xAnim.duration = life
+          yAnim.duration = life
+          fadeAnim.duration = life
+          xAnim.start()
+          yAnim.start()
+          fadeAnim.start()
+        }
+
+        Rectangle {
+          id: dot
+          anchors.centerIn: parent
+          width: 0; height: 0; radius: 0
+          color: Qt.rgba(255, 255, 255, 0.5) // transparent white
+          opacity: 0
+
+          layer.enabled: true
+          layer.effect: Glow {
+            samples: 8
+            radius: dot.width
+            color: Qt.rgba(255, 255, 255, 0.3)
+            spread: 0.3
+          }
+        }
+
+        NumberAnimation { id: xAnim; target: particle; property: "x"; easing.type: Easing.OutCubic }
+        NumberAnimation { id: yAnim; target: particle; property: "y"; easing.type: Easing.OutCubic }
+        NumberAnimation { id: fadeAnim; target: dot; property: "opacity"; to: 0; easing.type: Easing.InQuad }
+      }
+    }
+  }
+
+  // ── MAIN CONTENT ─────────────────────────────────────────────────────────────
+  // Only this layer is animated out on exit.
+  // Wallpaper stays visible so WlSessionLock releases without a black flash.
   Item {
     id: mainContent
     anchors.fill: parent
@@ -257,10 +388,7 @@ Item {
     visible: opacity > 0
 
     Behavior on opacity {
-      NumberAnimation {
-        duration: 500
-        easing.type: Easing.OutQuad
-      }
+      NumberAnimation { duration: 500; easing.type: Easing.OutQuad }
     }
 
     // Floating circles background
@@ -283,22 +411,15 @@ Item {
       width: parent.width * 0.3
       height: parent.width * 0.2
 
-      // Scale animation cho container
       scale: animationProgress
       opacity: animationProgress
 
       Behavior on scale {
-        NumberAnimation {
-          duration: 600
-          easing.type: Easing.OutBack
-        }
+        NumberAnimation { duration: 600; easing.type: Easing.OutBack }
       }
 
       Behavior on opacity {
-        NumberAnimation {
-          duration: 500
-          easing.type: Easing.OutQuad
-        }
+        NumberAnimation { duration: 500; easing.type: Easing.OutQuad }
       }
 
       Rectangle {
