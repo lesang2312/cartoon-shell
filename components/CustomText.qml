@@ -66,6 +66,11 @@ Text {
 
       case "2xl":
       return ScalerService.s(48)
+      case "3xl":
+      return ScalerService.s(70)
+
+      case "4xl":
+      return ScalerService.s(100)
 
       default:
       return ScalerService.s(32)
