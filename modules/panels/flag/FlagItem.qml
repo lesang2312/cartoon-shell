@@ -12,8 +12,6 @@ Rectangle {
   property bool isSelected: false
   property real animationProgress: 0
 
-  width: ScalerService.s(105)
-  height: ScalerService.s(70)
   color: isSelected ? Qt.alpha(theme.button.background_select,0.5) : Qt.alpha(theme.button.background,0.5)
   border.color: isSelected ? theme.button.border_select : theme.button.border
   radius: ScalerService.s(Settings.appearance.radius3)
@@ -39,6 +37,21 @@ Rectangle {
       path: `flags/${flagName}.png`
       size: "xl"
       Layout.alignment: Qt.AlignHCenter
+      opacity: 0
+
+      SequentialAnimation on opacity {
+        running: root.animationProgress > 0.7
+
+        PauseAnimation {
+          duration: index * 15
+        }
+
+        NumberAnimation {
+          to: 1
+          duration: 500
+          easing.type: Easing.OutCubic
+        }
+      }
     }
 
     CustomText {
@@ -46,6 +59,21 @@ Rectangle {
       size: "small"
       isBold: isSelected
       Layout.alignment: Qt.AlignHCenter
+      opacity: 0
+
+      SequentialAnimation on opacity {
+        running: root.animationProgress > 0.8
+
+        PauseAnimation {
+          duration: index * 15
+        }
+
+        NumberAnimation {
+          to: 1
+          duration: 500
+          easing.type: Easing.OutCubic
+        }
+      }
     }
   }
 

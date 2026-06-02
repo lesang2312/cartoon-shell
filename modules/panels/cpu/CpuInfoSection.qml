@@ -3,8 +3,10 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Io
 import qs.services
+import qs.components
+import QtQuick.Layouts
 
-Column {
+ColumnLayout {
   spacing: ScalerService.s(6)
   property string cpuName: lang.infoSection.loading
   property string cpuVendor: lang.infoSection.loading
@@ -52,35 +54,19 @@ Column {
   }
 
   // Hiển thị thông tin CPU
-  Text {
-    width: parent.width
-    color: theme.primary.foreground
-    text: lang.infoSection.name + ": " + cpuName
-    font.pixelSize: ScalerService.s(18)
-    font.family: "ComicShannsMono Nerd Font"
+  CustomText {
+    name: lang.infoSection.name + ": " + cpuName
   }
 
-  Text {
-    width: parent.width
-    color: theme.primary.foreground
-    text: lang.infoSection.vendor + ": " + cpuVendor
-    font.pixelSize: ScalerService.s(18)
-    font.family: "ComicShannsMono Nerd Font"
+  CustomText {
+    name: lang.infoSection.vendor + ": " + cpuVendor
   }
 
-  Text {
-    width: parent.width
-    color: theme.primary.foreground
+  CustomText {
     text: lang.infoSection.architecture + ": " + cpuArch
-    font.pixelSize: ScalerService.s(18)
-    font.family: "ComicShannsMono Nerd Font"
   }
 
-  Text {
-    width: parent.width
-    color: theme.primary.foreground
-    text: lang.infoSection.socket + ": " + cpuSocket
-    font.pixelSize: ScalerService.s(18)
-    font.family: "ComicShannsMono Nerd Font"
+  CustomText {
+    name: lang.infoSection.socket + ": " + cpuSocket
   }
 }
