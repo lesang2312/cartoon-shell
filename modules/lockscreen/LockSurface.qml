@@ -50,21 +50,25 @@ Item {
 
   // ── EXIT ANIMATION ──────────────────────────────────────────────────────────
   // Sequence:
-  //  1) Ripple ring expands from center + particles burst
-  //  2) Container implodes (scale → 0, opacity → 0)
-  //  3) Whole overlay fades out
-  //  4) PauseAnimation lets compositor prepare the desktop frame
-  //  5) ScriptAction releases WlSessionLock
+  //  1) Ripple ring expands from center (all directions) + particles burst
+  //  2) Bubbles fly from right to left
+  //  3) Container implodes (scale → 0, opacity → 0)
+  //  4) Whole overlay fades out (blur radius → 0)
+  //  5) Hold for compositor, then release lock
   // ────────────────────────────────────────────────────────────────────────────
   SequentialAnimation {
     id: exitAnimation
     running: false
 
-    // Step 1: show ripple and particles
-    PauseAnimation { duration: 60 }
-    ScriptAction { script: { ripple.visible = true; particleSystem.burst() } }
+    // Step 1: show ripple, particles, and start bubbles from right to left
+    PauseAnimation { duration: 20 }
+    ScriptAction { script: {
+      ripple.visible = true;
+      particleSystem.burst();
+      exitBubbles.start();   // start bubble animation right->left
+    } }
 
-    // Step 2: let the ripple + particles play for a moment
+    // Step 2: let the ripple + particles + bubbles play for a moment
     PauseAnimation { duration: 320 }
 
     // Step 3: implode container + fade overlay simultaneously
@@ -126,12 +130,108 @@ Item {
     }
   }
 
+  // Bubbles from right to left (triggered on unlock)
+  Item {
+    id: exitBubbles
+    anchors.fill: parent
+    visible: false
+    z: 3
+
+    property bool isRunning: false
+    property int bubbleCount: 25
+    property var bubblesList: []
+
+    function start() {
+      visible = true
+      isRunning = true
+      // Generate bubbles dynamically if needed (repeater handles)
+    }
+
+    function stop() {
+      visible = false
+      isRunning = false
+    }
+
+    Repeater {
+      id: bubbleRepeater
+      model: exitBubbles.bubbleCount
+
+      Rectangle {
+        id: bubble
+        width: size
+        height: size
+        radius: width / 2
+        color: Qt.rgba(255, 255, 255, 0.15 + Math.random() * 0.25)
+        opacity: 0.7
+
+        property real size: 30 + Math.random() * 120
+        property real duration: 800 + Math.random() * 900
+        property real delay: Math.random() * 800
+        property real startX: parent.parent.width + width  // start from right edge
+        property real endX: -width                         // end at left edge
+        property real yPos: 20 + Math.random() * (parent.parent.height - 40)
+
+        x: startX
+        y: yPos
+
+        SequentialAnimation on x {
+          id: bubbleAnim
+          running: exitBubbles.isRunning
+          loops: Animation.Finite
+          PauseAnimation { duration: delay }
+          NumberAnimation {
+            from: startX
+            to: endX
+            duration: duration
+            easing.type: Easing.InOutQuad
+          }
+          // After reaching left edge, restart from right edge (if still running)
+          ScriptAction { script: {
+            if (exitBubbles.isRunning) {
+              bubble.x = bubble.startX;
+              bubble.y = bubble.yPos;
+              bubbleAnim.restart();
+            } else {
+              bubbleAnim.stop();
+            }
+          } }
+        }
+
+        ParallelAnimation {
+          running: exitBubbles.isRunning
+          NumberAnimation {
+            target: bubble
+            property: "opacity"
+            from: 0.7
+            to: 0
+            duration: duration
+            easing.type: Easing.InOutQuad
+          }
+          NumberAnimation {
+            target: bubble
+            property: "scale"
+            from: 1.0
+            to: 0.3
+            duration: duration
+            easing.type: Easing.InOutQuad
+          }
+        }
+      }
+    }
+
+    // Auto-stop when exit animation finishes (after main content fades)
+    Timer {
+      interval: 1500
+      running: exitBubbles.isRunning
+      repeat: false
+      onTriggered: exitBubbles.stop()
+    }
+  }
+
   // Watch LockContext for the unlocked() signal and play exit animation
   Connections {
     target: root.context
 
-    // unlocked() fires when PAM succeeds — start exit animation.
-    // Lock.qml's onUnlocked is intentionally empty; we drive teardown timing here.
     function onUnlocked() {
       console.log("LockContext.onUnlocked — starting exit animation")
       if (!root.isExiting) {
@@ -140,7 +240,6 @@ Item {
       }
     }
 
-    // Keep password field in sync with context.currentText (multi-surface support)
     function onCurrentTextChanged() {
       if (passwordBox.text !== root.context.currentText) {
         passwordBox.text = root.context.currentText
@@ -249,8 +348,7 @@ Item {
     }
   }
 
-  // ── RIPPLE RING (transparent) ─────────────────────────────────────────────────
-  // Expands from the center of the screen on unlock, like a shockwave
+  // ── RIPPLE RING (transparent, expands in all directions) ───────────────────
   Item {
     id: ripple
     anchors.fill: parent
@@ -258,48 +356,48 @@ Item {
     z: 3
 
     Repeater {
-      model: 3
+      model: 4   // more rings for fuller effect
       Rectangle {
         anchors.centerIn: parent
         width: 10
         height: 10
         radius: width / 2
         color: "transparent"
-        border.color: Qt.rgba(255, 255, 255, 0.15) // transparent white
-        border.width: 2
+        border.color: Qt.rgba(255, 255, 255, 0.25)
+        border.width: 2 + (index * 1.5)
 
         SequentialAnimation on width {
           running: ripple.visible
-          PauseAnimation { duration: index * 120 }
+          PauseAnimation { duration: index * 100 }
           NumberAnimation {
             from: 10
-            to: Math.max(parent.parent.width, parent.parent.height) * 1.6
-            duration: 700
+            to: Math.max(parent.parent.width, parent.parent.height) * 1.8
+            duration: 800
             easing.type: Easing.OutCubic
           }
         }
         SequentialAnimation on height {
           running: ripple.visible
-          PauseAnimation { duration: index * 120 }
+          PauseAnimation { duration: index * 100 }
           NumberAnimation {
             from: 10
-            to: Math.max(parent.parent.width, parent.parent.height) * 1.6
-            duration: 700
+            to: Math.max(parent.parent.width, parent.parent.height) * 1.8
+            duration: 800
             easing.type: Easing.OutCubic
           }
         }
         SequentialAnimation on opacity {
           running: ripple.visible
-          PauseAnimation { duration: index * 120 }
-          NumberAnimation { from: 1; to: 0; duration: 700; easing.type: Easing.OutCubic }
+          PauseAnimation { duration: index * 100 }
+          NumberAnimation { from: 0.8; to: 0; duration: 800; easing.type: Easing.OutCubic }
         }
         SequentialAnimation on radius {
           running: ripple.visible
-          PauseAnimation { duration: index * 120 }
+          PauseAnimation { duration: index * 100 }
           NumberAnimation {
             from: 5
-            to: Math.max(parent.parent.width, parent.parent.height) * 0.8
-            duration: 700
+            to: Math.max(parent.parent.width, parent.parent.height) * 0.9
+            duration: 800
             easing.type: Easing.OutCubic
           }
         }
@@ -308,14 +406,13 @@ Item {
   }
 
   // ── PARTICLE BURST (transparent stars) ──────────────────────────────────────────
-  // Small glowing dots that shoot outward from center on unlock
   Item {
     id: particleSystem
     anchors.fill: parent
     visible: false
     z: 3
 
-    property int particleCount: 18
+    property int particleCount: 24
 
     function burst() {
       particleSystem.visible = true
@@ -336,15 +433,15 @@ Item {
         height: 0
 
         property real angle: (index / particleSystem.particleCount) * Math.PI * 2
-        property real speed: 180 + Math.random() * 220
-        property real size: 5 + Math.random() * 8
-        property real life: 550 + Math.random() * 250
+        property real speed: 160 + Math.random() * 240
+        property real size: 4 + Math.random() * 9
+        property real life: 500 + Math.random() * 300
 
         function launch() {
           dot.width = size
           dot.height = size
           dot.radius = size / 2
-          dot.opacity = 1
+          dot.opacity = 0.8
           xAnim.to = Math.cos(angle) * speed
           yAnim.to = Math.sin(angle) * speed
           xAnim.duration = life
@@ -359,15 +456,15 @@ Item {
           id: dot
           anchors.centerIn: parent
           width: 0; height: 0; radius: 0
-          color: Qt.rgba(255, 255, 255, 0.5) // transparent white
+          color: Qt.rgba(255, 255, 255, 0.7)
           opacity: 0
 
           layer.enabled: true
           layer.effect: Glow {
-            samples: 8
+            samples: 12
             radius: dot.width
-            color: Qt.rgba(255, 255, 255, 0.3)
-            spread: 0.3
+            color: Qt.rgba(255, 255, 255, 0.5)
+            spread: 0.4
           }
         }
 
@@ -379,8 +476,6 @@ Item {
   }
 
   // ── MAIN CONTENT ─────────────────────────────────────────────────────────────
-  // Only this layer is animated out on exit.
-  // Wallpaper stays visible so WlSessionLock releases without a black flash.
   Item {
     id: mainContent
     anchors.fill: parent
@@ -391,7 +486,7 @@ Item {
       NumberAnimation { duration: 500; easing.type: Easing.OutQuad }
     }
 
-    // Floating circles background
+    // Floating circles background (these are not the exit bubbles)
     Loader {
       anchors.fill: parent
       active: true
@@ -536,7 +631,6 @@ Item {
                   scaleResetTimer.restart()
                 }
 
-                // Enter key: delegate to LockContext which owns the PamContext
                 onAccepted: root.context.tryUnlock()
 
                 Timer {
@@ -558,7 +652,6 @@ Item {
                   anchors.centerIn: parent
                   name: "arrow_forward"
                   color: root.context.currentText !== "" ? theme.button.text : Qt.alpha(theme.button.text, 0.3)
-                  // Spin the arrow while PAM is processing
                   rotation: root.context.unlockInProgress ? 360 : 0
                   Behavior on rotation { NumberAnimation { duration: 500 } }
                 }
@@ -575,7 +668,7 @@ Item {
             }
           }
 
-          // Error badge: driven by LockContext.showFailure
+          // Error badge
           Rectangle {
             Layout.preferredHeight: errorLabel.implicitHeight + ScalerService.s(15)
             Layout.fillWidth: true
@@ -623,7 +716,7 @@ Item {
     }
   }
 
-  // Loading effect
+  // Loading effect (only visible while wallpaper not ready)
   Item {
     id: loadingEffect
     anchors.fill: parent
@@ -683,6 +776,7 @@ Item {
       }
     }
 
+    // Loading bubbles (left to right) - unchanged
     Repeater {
       model: 20
       Rectangle {
