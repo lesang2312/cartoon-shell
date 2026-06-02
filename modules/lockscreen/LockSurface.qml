@@ -17,6 +17,7 @@ Item {
   // Property để kiểm soát trạng thái load
   property bool wallpaperReady: false
   property bool contentVisible: false
+  property real animationProgress: 0
 
   // Timer fallback nếu wallpaper load quá lâu
   Timer {
@@ -29,6 +30,18 @@ Item {
         console.log("Wallpaper load timeout, showing UI anyway")
         wallpaperReady = true
       }
+    }
+  }
+
+  // Animation cho container
+  SequentialAnimation on animationProgress {
+    id: containerAnimation
+    running: wallpaperReady
+    NumberAnimation {
+      from: 0
+      to: 1
+      duration: 300
+      easing.type: Easing.OutCubic
     }
   }
 
@@ -131,6 +144,7 @@ Item {
     }
   }
 
+  // Main content
   Item {
     id: mainContent
     anchors.fill: parent
@@ -144,6 +158,7 @@ Item {
       }
     }
 
+    // Floating circles background
     Loader {
       anchors.fill: parent
       active: true
@@ -156,227 +171,235 @@ Item {
       }
     }
 
-    // Main container với hiệu ứng glassmorphism
-    Rectangle {
+    // Main container với animation scale và opacity
+    Item {
       id: mainContainer
       anchors.centerIn: parent
       width: parent.width * 0.4
-      implicitHeight: parent.width * 0.2
-      color: Qt.alpha(theme.primary.background, 0.5)
-      radius: ScalerService.s(Settings.appearance.radius1)
+      height: parent.width * 0.25
 
-      // Border gradient
-      Rectangle {
-        anchors.fill: parent
-        radius: parent.radius
-        color: "transparent"
-        border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
-        border.color: Qt.alpha(theme.button.border, 0.5)
+      // Scale animation cho container
+      scale: animationProgress
+      opacity: animationProgress
 
-        // Gradient border effect
-        Rectangle {
-          anchors.fill: parent
-          radius: parent.radius
-          gradient: Gradient {
-            GradientStop { position: 0.0; color: Qt.alpha(theme.accent, 0.3) }
-            GradientStop { position: 0.5; color: Qt.alpha(theme.button.text, 0.1) }
-            GradientStop { position: 1.0; color: Qt.alpha(theme.accent, 0.3) }
-          }
-          visible: Settings.appearance.enableBorder
+      Behavior on scale {
+        NumberAnimation {
+          duration: 600
+          easing.type: Easing.OutBack
         }
       }
 
-      ColumnLayout {
+      Behavior on opacity {
+        NumberAnimation {
+          duration: 500
+          easing.type: Easing.OutQuad
+        }
+      }
+
+      Rectangle {
+        id: containerRect
         anchors.fill: parent
-        anchors.margins: ScalerService.s(30)
-        spacing: ScalerService.s(20)
+        color: Qt.alpha(theme.primary.background, 0.5)
+        radius: ScalerService.s(Settings.appearance.radius2)
 
-        // Time Section
-        Item {
-          Layout.fillWidth: true
-          Layout.preferredHeight: ScalerService.s(200)
-
-          ColumnLayout {
-            anchors.centerIn: parent
-            spacing: ScalerService.s(10)
-
-            // Time
-            CustomText {
-              text: DateTimeService.currentHour + ":" + DateTimeService.currentMinus
-              size: "4xl"
-              isBold: true
-              Layout.alignment: Qt.AlignCenter
-              color: theme.button.text
-
-              SequentialAnimation on scale {
-                loops: Animation.Infinite
-                NumberAnimation { from: 1.0; to: 1.02; duration: 2000; easing.type: Easing.InOutSine }
-                NumberAnimation { from: 1.02; to: 1.0; duration: 2000; easing.type: Easing.InOutSine }
-              }
-            }
-
-            // Date
-            CustomText {
-              text: DateTimeService.currentDay + ", " + DateTimeService.currentDate
-              size: "xl"
-              isBold: true
-              Layout.alignment: Qt.AlignCenter
-              color: Qt.alpha(theme.button.text, 0.8)
-            }
-          }
+        // Border gradient
+        Rectangle {
+          anchors.fill: parent
+          radius: parent.radius
+          color: "transparent"
+          border.width: Settings.appearance.enableBorder ? ScalerService.s(2) : 0
+          border.color: Qt.alpha(theme.accent, animationProgress * 0.5)
         }
 
-        // Password Section với thiết kế đẹp hơn
-        Rectangle {
-          id: passwordContainer
-          Layout.preferredWidth: ScalerService.s(500)
-          Layout.preferredHeight: ScalerService.s(70)
-          Layout.alignment: Qt.AlignHCenter
-          radius: ScalerService.s(35)
-          color: Qt.alpha(theme.button.background, 0.5)
+        ColumnLayout {
+          anchors.fill: parent
+          anchors.margins: ScalerService.s(30)
+          spacing: ScalerService.s(20)
 
-          // Glow effect khi focus
-          Rectangle {
-            anchors.fill: parent
-            radius: parent.radius
-            color: "transparent"
-            border.color: passwordBox.activeFocus ? theme.accent : "transparent"
-            border.width: ScalerService.s(2)
-            opacity: passwordBox.activeFocus ? 0.8 : 0
+          // Time Section
+          Item {
+            Layout.fillWidth: true
+            Layout.preferredHeight: ScalerService.s(180)
 
-            Behavior on opacity { NumberAnimation { duration: 200 } }
-          }
+            ColumnLayout {
+              anchors.centerIn: parent
+              spacing: ScalerService.s(10)
 
-          RowLayout {
-            anchors.fill: parent
-            anchors.margins: ScalerService.s(5)
-            spacing: ScalerService.s(10)
+              // Time
+              CustomText {
+                text: DateTimeService.currentHour + ":" + DateTimeService.currentMinus
+                size: "4xl"
+                isBold: true
+                Layout.alignment: Qt.AlignCenter
+                color: theme.button.text
 
-            // Icon
-            Rectangle {
-              Layout.preferredWidth: ScalerService.s(50)
-              Layout.preferredHeight: ScalerService.s(50)
-              radius: ScalerService.s(25)
-              color: Qt.alpha(theme.button.background, root.context.unlockInProgress ? 0.3 : 0.1)
+                SequentialAnimation on scale {
+                  loops: Animation.Infinite
+                  NumberAnimation { from: 1.0; to: 1.02; duration: 2000; easing.type: Easing.InOutSine }
+                  NumberAnimation { from: 1.02; to: 1.0; duration: 2000; easing.type: Easing.InOutSine }
+                }
+              }
 
-              IconText {
-                anchors.centerIn: parent
-                name: root.context.unlockInProgress ? "lock_open" : "lock"
-                textColor: theme.button.text
+              // Date
+              CustomText {
+                text: DateTimeService.currentDay + ", " + DateTimeService.currentDate
+                size: "xl"
+                isBold: true
+                Layout.alignment: Qt.AlignCenter
+                color: Qt.alpha(theme.button.text, 0.8)
               }
             }
+          }
 
-            // Password Input
-            TextField {
-              id: passwordBox
-              Layout.fillWidth: true
-              Layout.fillHeight: true
-              background: Rectangle { color: "transparent" }
-              color: theme.button.text
-              font.pixelSize: ScalerService.s(18)
-              font.family: "JetBrains Mono"
-              verticalAlignment: TextInput.AlignVCenter
-              placeholderText: "Enter your password"
-              placeholderTextColor: Qt.alpha(theme.button.text, 0.5)
-              focus: true
-              enabled: !root.context.unlockInProgress
-              echoMode: TextInput.Password
-              inputMethodHints: Qt.ImhSensitiveData
+          // Password Section
+          Rectangle {
+            id: passwordContainer
+            Layout.preferredWidth: ScalerService.s(450)
+            Layout.preferredHeight: ScalerService.s(65)
+            Layout.alignment: Qt.AlignHCenter
+            radius: ScalerService.s(32)
+            color: Qt.alpha(theme.button.background, 0.3)
 
-              onTextChanged: {
-                root.context.currentText = this.text;
-                passwordContainer.scale = 1.02;
-                scaleResetTimer.restart();
+            // Glow effect khi focus
+            Rectangle {
+              anchors.fill: parent
+              radius: parent.radius
+              color: "transparent"
+              border.color: passwordBox.activeFocus ? theme.accent : "transparent"
+              border.width: ScalerService.s(2)
+              opacity: passwordBox.activeFocus ? 0.8 : 0
+              Behavior on opacity { NumberAnimation { duration: 200 } }
+            }
+
+            RowLayout {
+              anchors.fill: parent
+              anchors.margins: ScalerService.s(5)
+              spacing: ScalerService.s(10)
+
+              // Icon
+              Item {
+                Layout.preferredWidth: ScalerService.s(45)
+                Layout.preferredHeight: ScalerService.s(45)
+                IconText {
+                  anchors.centerIn: parent
+                  name: root.context.unlockInProgress ? "lock_open" : "lock"
+                  textColor: theme.button.text
+                }
               }
-              onAccepted: root.context.tryUnlock();
 
-              Timer {
-                id: scaleResetTimer
-                interval: 100
-                onTriggered: passwordContainer.scale = 1.0
+              // Password Input
+              TextField {
+                id: passwordBox
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                background: Rectangle { color: "transparent" }
+                color: theme.button.text
+                font.pixelSize: ScalerService.s(16)
+                font.family: "JetBrains Mono"
+                verticalAlignment: TextInput.AlignVCenter
+                placeholderText: "Enter your password"
+                placeholderTextColor: Qt.alpha(theme.button.text, 0.5)
+                focus: true
+                enabled: !root.context.unlockInProgress
+                echoMode: TextInput.Password
+                inputMethodHints: Qt.ImhSensitiveData
+
+                onTextChanged: {
+                  root.context.currentText = this.text;
+                  passwordContainer.scale = 1.02;
+                  scaleResetTimer.restart();
+                }
+                onAccepted: root.context.tryUnlock();
+
+                Timer {
+                  id: scaleResetTimer
+                  interval: 100
+                  onTriggered: passwordContainer.scale = 1.0
+                }
+
+                Connections {
+                  target: root.context
+                  function onCurrentTextChanged() {
+                    passwordBox.text = root.context.currentText;
+                  }
+                }
               }
 
-              Connections {
-                target: root.context
-                function onCurrentTextChanged() {
-                  passwordBox.text = root.context.currentText;
+              // Unlock Button
+              Item {
+                Layout.preferredWidth: ScalerService.s(50)
+                Layout.preferredHeight: ScalerService.s(50)
+                scale: unlockMouseArea.pressed ? 0.95 : (unlockMouseArea.containsMouse ? 1.05 : 1.0)
+
+                Behavior on scale { NumberAnimation { duration: 150 } }
+
+                IconText {
+                  anchors.centerIn: parent
+                  name: "arrow_forward"
+                  color: root.context.currentText !== "" ? theme.button.text : Qt.alpha(theme.button.text, 0.3)
+                  rotation: root.context.unlockInProgress ? 360 : 0
+                  Behavior on rotation { NumberAnimation { duration: 500 } }
+                }
+
+                MouseArea {
+                  id: unlockMouseArea
+                  anchors.fill: parent
+                  hoverEnabled: true
+                  enabled: !root.context.unlockInProgress && root.context.currentText !== ""
+                  onClicked: root.context.tryUnlock()
+                  cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
                 }
               }
             }
+          }
 
-            // Unlock Button
-            Item {
-              Layout.preferredWidth: ScalerService.s(50)
-              Layout.preferredHeight: ScalerService.s(50)
-              scale: unlockMouseArea.pressed ? 0.95 : (unlockMouseArea.containsMouse ? 1.05 : 1.0)
+          // Error Message
+          Rectangle {
+            Layout.preferredHeight: errorLabel.implicitHeight + ScalerService.s(15)
+            Layout.fillWidth: true
+            Layout.maximumWidth: ScalerService.s(400)
+            Layout.alignment: Qt.AlignHCenter
+            radius: ScalerService.s(8)
+            color: Qt.alpha("#ff4757", 0.9)
+            visible: root.context.showFailure
+            opacity: root.context.showFailure ? 1 : 0
+            scale: root.context.showFailure ? 1 : 0.8
 
-              Behavior on scale { NumberAnimation { duration: 150 } }
+            Behavior on opacity { NumberAnimation { duration: 200 } }
+            Behavior on scale { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
 
-              IconText {
-                anchors.centerIn: parent
-                name: "arrow_forward"
-                color: root.context.currentText !== "" ? theme.button.text : Qt.alpha(theme.button.text, 0.3)
-                rotation: root.context.unlockInProgress ? 360 : 0
-                Behavior on rotation { NumberAnimation { duration: 500 } }
-              }
+            SequentialAnimation on x {
+              running: root.context.showFailure
+              NumberAnimation { to: 10; duration: 50 }
+              NumberAnimation { to: -10; duration: 50 }
+              NumberAnimation { to: 5; duration: 50 }
+              NumberAnimation { to: -5; duration: 50 }
+              NumberAnimation { to: 0; duration: 50 }
+            }
 
-              MouseArea {
-                id: unlockMouseArea
-                anchors.fill: parent
-                hoverEnabled: true
-                enabled: !root.context.unlockInProgress && root.context.currentText !== ""
-                onClicked: root.context.tryUnlock()
-                cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-              }
+            Label {
+              id: errorLabel
+              anchors.centerIn: parent
+              text: "✕ Authentication failed. Please try again."
+              color: "white"
+              font.pixelSize: ScalerService.s(11)
+              font.weight: Font.Medium
             }
           }
-        }
 
-        // Error Message
-        Rectangle {
-          Layout.preferredHeight: errorLabel.implicitHeight + ScalerService.s(20)
-          Layout.fillWidth: true
-          Layout.maximumWidth: ScalerService.s(400)
-          Layout.alignment: Qt.AlignHCenter
-          radius: ScalerService.s(10)
-          color: Qt.alpha("#ff4757", 0.9)
-          visible: root.context.showFailure
-          opacity: root.context.showFailure ? 1 : 0
-          scale: root.context.showFailure ? 1 : 0.8
-
-          Behavior on opacity { NumberAnimation { duration: 200 } }
-          Behavior on scale { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
-
-          SequentialAnimation on x {
-            running: root.context.showFailure
-            NumberAnimation { to: 10; duration: 50 }
-            NumberAnimation { to: -10; duration: 50 }
-            NumberAnimation { to: 5; duration: 50 }
-            NumberAnimation { to: -5; duration: 50 }
-            NumberAnimation { to: 0; duration: 50 }
-          }
-
+          // Hint text
           Label {
-            id: errorLabel
-            anchors.centerIn: parent
-            text: "✕ Authentication failed. Please try again."
-            color: "white"
-            font.pixelSize: ScalerService.s(12)
-            font.weight: Font.Medium
+            text: "Press ESC to cancel"
+            color: Qt.alpha(theme.button.text, 0.4)
+            font.pixelSize: ScalerService.s(10)
+            Layout.alignment: Qt.AlignHCenter
+            visible: !root.context.showFailure
           }
-        }
-
-        // Hint text
-        Label {
-          text: "Press ESC to cancel"
-          color: Qt.alpha(theme.button.text, 0.4)
-          font.pixelSize: ScalerService.s(10)
-          Layout.alignment: Qt.AlignHCenter
-          visible: !root.context.showFailure
         }
       }
     }
 
+    // Star field effect
     Loader {
       anchors.fill: parent
       active: true
@@ -386,6 +409,8 @@ Item {
       }
     }
   }
+
+  // Loading effect
   Item {
     id: loadingEffect
     anchors.fill: parent
@@ -397,13 +422,53 @@ Item {
       NumberAnimation { duration: 500; easing.type: Easing.OutQuad }
     }
 
-    // Background mờ khi loading
     Rectangle {
       anchors.fill: parent
       color: theme.primary.background
-      opacity: 0.85
+      opacity: 0.95
     }
 
+    ColumnLayout {
+      anchors.centerIn: parent
+      spacing: ScalerService.s(20)
+
+      Item {
+        Layout.alignment: Qt.AlignCenter
+        width: ScalerService.s(80)
+        height: ScalerService.s(80)
+
+        Rectangle {
+          anchors.centerIn: parent
+          width: ScalerService.s(60)
+          height: ScalerService.s(60)
+          radius: ScalerService.s(30)
+          color: "transparent"
+          border.color: Qt.alpha(theme.button.text, 0.5)
+          border.width: ScalerService.s(3)
+
+          RotationAnimation on rotation {
+            loops: Animation.Infinite
+            from: 0
+            to: 360
+            duration: 1000
+          }
+        }
+
+        Rectangle {
+          anchors.centerIn: parent
+          width: ScalerService.s(40)
+          height: ScalerService.s(40)
+          radius: ScalerService.s(20)
+          color: Qt.alpha(theme.button.text, 0.5)
+
+          SequentialAnimation on scale {
+            loops: Animation.Infinite
+            NumberAnimation { from: 0.8; to: 1.2; duration: 500; easing.type: Easing.InOutQuad }
+            NumberAnimation { from: 1.2; to: 0.8; duration: 500; easing.type: Easing.InOutQuad }
+          }
+        }
+      }
+    }
     Repeater {
       model: 20
       Rectangle {
@@ -431,15 +496,6 @@ Item {
           }
         }
 
-        // Hiệu ứng xoay
-        RotationAnimator on rotation {
-          loops: Animation.Infinite
-          from: 0
-          to: 360
-          duration: 3000 + Math.random() * 2000
-        }
-
-        // Hiệu ứng scale nhẹ
         NumberAnimation on scale {
           loops: Animation.Infinite
           from: 0.8
@@ -450,8 +506,6 @@ Item {
       }
     }
   }
-
-  // Loading effect đẹp hơn
 
   // Reset state khi component được tạo lại
   Component.onCompleted: {
