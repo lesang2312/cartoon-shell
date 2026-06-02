@@ -344,31 +344,6 @@ Item {
             }
           }
         }
-
-        Rectangle {
-          visible: ramTaskManager.processList.length === 0
-          anchors.fill: parent
-          color: "transparent"
-
-          Column {
-            anchors.centerIn: parent
-            spacing: 12
-
-            Text {
-              text: "⏳"
-              font.pixelSize: 30
-              color: theme.primary.dim_foreground
-            }
-
-            Text {
-              text: lang.ram.loading.message
-              font.family: "ComicShannsMono Nerd Font"
-              color: theme.primary.dim_foreground
-              font.pixelSize: 14
-            }
-          }
-        }
-
         ScrollBar.vertical: ScrollBar {
           policy: ScrollBar.AsNeeded
         }

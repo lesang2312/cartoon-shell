@@ -347,7 +347,6 @@ Item {
     }
   }
 
-  // ── RIPPLE RING (transparent, expands in all directions) ───────────────────
   Item {
     id: ripple
     anchors.fill: parent
@@ -403,9 +402,6 @@ Item {
       }
     }
   }
-
-  // ── PARTICLE BURST (transparent stars) ──────────────────────────────────────────
-
   Item {
     id: particleSystem
     anchors.fill: parent
