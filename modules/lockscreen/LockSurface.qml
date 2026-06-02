@@ -130,7 +130,6 @@ Item {
     }
   }
 
-  // Nội dung chính - chỉ hiện khi wallpaper đã ready
   Item {
     id: mainContent
     anchors.fill: parent
@@ -157,20 +156,16 @@ Item {
       }
     }
 
-    Item {
+    Rectangle {
       id: passwordSection
       anchors.centerIn: parent
       width: 450
       height: 200
 
-      Label {
+      CustomText {
         anchors { horizontalCenter: parent.horizontalCenter; bottom: passwordContainer.top; bottomMargin: 15 }
-        text: "What's password?"
-        color: "white"
-        opacity: 0.9
-        font.pointSize: 11
-        style: Text.Outline
-        styleColor: "black"
+        name: "What's password?"
+        textColor: theme.primary.foreground
       }
 
       Rectangle {

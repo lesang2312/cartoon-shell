@@ -16,7 +16,7 @@ Item {
     opacity: root.animationProgress > 0.2 ? 1 : 0
   }
   CloseButton{
-    onClicked: VisibleService.togglePanel("ram")
+    onClicked: VisibleService.togglePanel("wifi")
     opacity: root.animationProgress > 0.15 ? 1 : 0
   }
 
