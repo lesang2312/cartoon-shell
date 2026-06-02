@@ -405,18 +405,29 @@ Item {
   }
 
   // ── PARTICLE BURST (transparent stars) ──────────────────────────────────────────
+
   Item {
     id: particleSystem
     anchors.fill: parent
     visible: false
     z: 3
 
-    property int particleCount: 24
+    property int particleCount: 48
 
     function burst() {
       particleSystem.visible = true
       for (let i = 0; i < particleRepeater.count; i++) {
         particleRepeater.itemAt(i).launch()
+      }
+      // Tự động ẩn sau 1 giây
+      hideTimer.start()
+    }
+
+    Timer {
+      id: hideTimer
+      interval: 1000
+      onTriggered: {
+        particleSystem.visible = false
       }
     }
 
@@ -428,52 +439,85 @@ Item {
         id: particle
         x: parent.width / 2
         y: parent.height / 2
-        width: 0
-        height: 0
 
         property real angle: (index / particleSystem.particleCount) * Math.PI * 2
-        property real speed: 160 + Math.random() * 240
-        property real size: 4 + Math.random() * 9
-        property real life: 500 + Math.random() * 300
+        property real distance: 300 + Math.random() * 400  // Khoảng cách bay xa
+        property real size: 3 + Math.random() * 8
+        property real life: 600 + Math.random() * 400
 
         function launch() {
           dot.width = size
           dot.height = size
           dot.radius = size / 2
           dot.opacity = 0.8
-          xAnim.to = Math.cos(angle) * speed
-          yAnim.to = Math.sin(angle) * speed
+
+          // Tính toán điểm đến dựa trên góc và khoảng cách
+          var targetX = parent.width / 2 + Math.cos(angle) * distance
+          var targetY = parent.height / 2 + Math.sin(angle) * distance
+
+          xAnim.to = targetX
+          yAnim.to = targetY
           xAnim.duration = life
           yAnim.duration = life
           fadeAnim.duration = life
           xAnim.start()
           yAnim.start()
           fadeAnim.start()
+
+          // Xóa particle sau khi animation kết thúc
+          cleanupTimer.start()
+        }
+
+        Timer {
+          id: cleanupTimer
+          interval: life + 100
+          onTriggered: {
+            dot.opacity = 0
+            dot.width = 0
+            dot.height = 0
+          }
         }
 
         Rectangle {
           id: dot
           anchors.centerIn: parent
-          width: 0; height: 0; radius: 0
-          color: Qt.rgba(255, 255, 255, 0.7)
+          width: 0
+          height: 0
+          radius: 0
+          color: Qt.alpha(theme.button.text, 0.6)
           opacity: 0
 
           layer.enabled: true
           layer.effect: Glow {
             samples: 12
             radius: dot.width
-            color: Qt.rgba(255, 255, 255, 0.5)
+            color: Qt.alpha(theme.button.text, 0.5)
             spread: 0.4
           }
         }
 
-        NumberAnimation { id: xAnim; target: particle; property: "x"; easing.type: Easing.OutCubic }
-        NumberAnimation { id: yAnim; target: particle; property: "y"; easing.type: Easing.OutCubic }
-        NumberAnimation { id: fadeAnim; target: dot; property: "opacity"; to: 0; easing.type: Easing.InQuad }
+        NumberAnimation {
+          id: xAnim
+          target: particle
+          property: "x"
+          easing.type: Easing.OutCubic
+        }
+        NumberAnimation {
+          id: yAnim
+          target: particle
+          property: "y"
+          easing.type: Easing.OutCubic
+        }
+        NumberAnimation {
+          id: fadeAnim
+          target: dot
+          property: "opacity"
+          to: 0
+          easing.type: Easing.InQuad
+        }
       }
     }
   }
-
   // ── MAIN CONTENT ─────────────────────────────────────────────────────────────
   Item {
     id: mainContent
