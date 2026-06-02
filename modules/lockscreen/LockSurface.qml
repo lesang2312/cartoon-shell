@@ -175,8 +175,8 @@ Item {
     Item {
       id: mainContainer
       anchors.centerIn: parent
-      width: parent.width * 0.4
-      height: parent.width * 0.25
+      width: parent.width * 0.3
+      height: parent.width * 0.2
 
       // Scale animation cho container
       scale: animationProgress
@@ -242,7 +242,7 @@ Item {
 
               // Date
               CustomText {
-                text: DateTimeService.currentDay + ", " + DateTimeService.currentDate
+                text: `${DateTimeService.currentDay}, ${DateTimeService.currentOfDays} ${DateTimeService.currentMonth} ${DateTimeService.currentYear}`
                 size: "xl"
                 isBold: true
                 Layout.alignment: Qt.AlignCenter
@@ -353,29 +353,19 @@ Item {
             }
           }
 
-          // Error Message
           Rectangle {
             Layout.preferredHeight: errorLabel.implicitHeight + ScalerService.s(15)
             Layout.fillWidth: true
             Layout.maximumWidth: ScalerService.s(400)
             Layout.alignment: Qt.AlignHCenter
             radius: ScalerService.s(8)
-            color: Qt.alpha("#ff4757", 0.9)
+            color: Qt.alpha(theme.normal.red, 0.5)
             visible: root.context.showFailure
             opacity: root.context.showFailure ? 1 : 0
             scale: root.context.showFailure ? 1 : 0.8
 
             Behavior on opacity { NumberAnimation { duration: 200 } }
             Behavior on scale { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
-
-            SequentialAnimation on x {
-              running: root.context.showFailure
-              NumberAnimation { to: 10; duration: 50 }
-              NumberAnimation { to: -10; duration: 50 }
-              NumberAnimation { to: 5; duration: 50 }
-              NumberAnimation { to: -5; duration: 50 }
-              NumberAnimation { to: 0; duration: 50 }
-            }
 
             Label {
               id: errorLabel
