@@ -386,6 +386,70 @@ Item {
       }
     }
   }
+  Item {
+    id: loadingEffect
+    anchors.fill: parent
+    opacity: wallpaperReady ? 0 : 1
+    visible: opacity > 0
+    z: 2
+
+    Behavior on opacity {
+      NumberAnimation { duration: 500; easing.type: Easing.OutQuad }
+    }
+
+    // Background mờ khi loading
+    Rectangle {
+      anchors.fill: parent
+      color: theme.primary.background
+      opacity: 0.85
+    }
+
+    Repeater {
+      model: 20
+      Rectangle {
+        id: circle
+        width: size
+        height: size
+        radius: width / 2
+        color: Qt.alpha(theme.button.background, Math.random() * 0.5 + 0.3)
+
+        property real size: 200 + Math.random() * 100
+        property real duration: 1000 + Math.random() * 2000
+        property real delay: Math.random() * 1000
+
+        x: -width
+        y: Math.random() * (parent.height - height)
+
+        SequentialAnimation on x {
+          loops: Animation.Infinite
+          PauseAnimation { duration: delay }
+          NumberAnimation {
+            from: -width
+            to: parent.parent.width + width
+            duration: duration
+            easing.type: Easing.InOutQuad
+          }
+        }
+
+        // Hiệu ứng xoay
+        RotationAnimator on rotation {
+          loops: Animation.Infinite
+          from: 0
+          to: 360
+          duration: 3000 + Math.random() * 2000
+        }
+
+        // Hiệu ứng scale nhẹ
+        NumberAnimation on scale {
+          loops: Animation.Infinite
+          from: 0.8
+          to: 1.2
+          duration: 1000 + Math.random() * 1000
+          easing.type: Easing.InOutSine
+        }
+      }
+    }
+  }
 
   // Loading effect đẹp hơn
 
