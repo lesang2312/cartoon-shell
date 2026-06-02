@@ -6,11 +6,20 @@ import Quickshell.Io
 Scope {
   id: root
   property bool showLockscreen: false
+
   LockContext {
     id: lockContext
 
+    // Do NOT release the lock immediately on unlock signal.
+    // LockSurface listens to this and plays an exit animation first,
+    // then calls root.releaseLock() when the animation is done.
     onUnlocked: {
-      root.showLockscreen = false;
+      // intentionally left empty — LockSurface drives the teardown timing
+    }
+
+    // Expose a function so LockSurface can release the lock after animation
+    function releaseLock() {
+      root.showLockscreen = false
     }
   }
 
@@ -25,15 +34,14 @@ Scope {
       }
     }
   }
+
   IpcHandler {
     function lock(): void {
-      root.showLockscreen= true;
+      root.showLockscreen = true;
     }
-
     function unlock(): void {
-      root.showLockscreen= false;
+      root.showLockscreen = false;
     }
-
     function isLocked(): bool {
       return root.showLockscreen;
     }

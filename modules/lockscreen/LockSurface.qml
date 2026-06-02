@@ -19,6 +19,9 @@ Item {
   property bool contentVisible: false
   property real animationProgress: 0
 
+  // Properties for exit animation state
+  property bool isExiting: false
+
   // Timer fallback nếu wallpaper load quá lâu
   Timer {
     id: fallbackTimer
@@ -42,6 +45,107 @@ Item {
       to: 1
       duration: 300
       easing.type: Easing.OutCubic
+    }
+  }
+
+  // Exit animation: only animate UI overlay out, keep wallpaper visible.
+  // After animation finishes, ScriptAction calls context.releaseLock() which
+  // sets showLockscreen = false → WlSessionLock releases → compositor shows desktop.
+  // This ordering prevents the black flash caused by the surface being destroyed
+  // before the compositor has composited the desktop behind it.
+  SequentialAnimation {
+    id: exitAnimation
+    running: false
+
+    // Brief pause so the user sees the unlock moment
+    PauseAnimation { duration: 80 }
+
+    ParallelAnimation {
+      // Fade out only the UI overlay, NOT the wallpaper/root
+      NumberAnimation {
+        target: mainContent
+        property: "opacity"
+        from: 1
+        to: 0
+        duration: 400
+        easing.type: Easing.InCubic
+      }
+
+      // Zoom the main container down (InBack gives a subtle suck-in feel)
+      NumberAnimation {
+        target: mainContainer
+        property: "scale"
+        to: 0.65
+        duration: 380
+        easing.type: Easing.InBack
+      }
+
+      // Zoom the password container down slightly faster
+      NumberAnimation {
+        target: passwordContainer
+        property: "scale"
+        to: 0.75
+        duration: 260
+        easing.type: Easing.InBack
+      }
+
+      // Increase blur radius so the background softens as we exit
+      NumberAnimation {
+        target: blurEffect
+        property: "radius"
+        to: 96
+        duration: 400
+        easing.type: Easing.InQuad
+      }
+
+      // Fade blur overlay out so the wallpaper shows through cleanly
+      NumberAnimation {
+        target: blurEffect
+        property: "opacity"
+        from: 1
+        to: 0
+        duration: 400
+        easing.type: Easing.InQuad
+      }
+    }
+
+    // Hold the wallpaper visible for one compositor repaint cycle before releasing.
+    // This ensures the desktop frame is ready when WlSessionLock drops.
+    PauseAnimation { duration: 120 }
+
+    // Animation fully done — now safe to release the Wayland session lock.
+    // context.releaseLock() → Lock.qml: showLockscreen = false
+    // → WlSessionLock.locked = false → compositor dismisses surface.
+    ScriptAction {
+      script: {
+        console.log("Exit animation done — releasing WlSessionLock")
+        root.context.releaseLock()
+      }
+    }
+  }
+
+  // Watch LockContext for the unlocked() signal and play exit animation.
+  // LockContext.tryUnlock() → PamContext → onCompleted(Success) → unlocked().
+  // We intercept here BEFORE showLockscreen = false so the animation has time to run.
+  Connections {
+    target: root.context
+
+    // unlocked() fires when PAM succeeds — start exit animation immediately.
+    // Lock.qml no longer releases on this signal; we call releaseLock() ourselves
+    // at the end of exitAnimation via ScriptAction.
+    function onUnlocked() {
+      console.log("LockContext.onUnlocked — starting exit animation")
+      if (!root.isExiting) {
+        root.isExiting = true
+        exitAnimation.start()
+      }
+    }
+
+    // Keep password field in sync with context.currentText (multi-surface support)
+    function onCurrentTextChanged() {
+      if (passwordBox.text !== root.context.currentText) {
+        passwordBox.text = root.context.currentText
+      }
     }
   }
 
@@ -144,7 +248,8 @@ Item {
     }
   }
 
-  // Main content
+  // Main content — this is the ONLY layer animated out on exit.
+  // Wallpaper layers stay visible so WlSessionLock releases without a black flash.
   Item {
     id: mainContent
     anchors.fill: parent
@@ -276,7 +381,7 @@ Item {
               anchors.margins: ScalerService.s(5)
               spacing: ScalerService.s(10)
 
-              // Icon
+              // Icon: shows lock_open while PAM is actively authenticating
               Item {
                 Layout.preferredWidth: ScalerService.s(45)
                 Layout.preferredHeight: ScalerService.s(45)
@@ -300,28 +405,23 @@ Item {
                 placeholderText: "Enter your password"
                 placeholderTextColor: Qt.alpha(theme.button.text, 0.5)
                 focus: true
-                enabled: !root.context.unlockInProgress
+                enabled: !root.context.unlockInProgress && !root.isExiting
                 echoMode: TextInput.Password
                 inputMethodHints: Qt.ImhSensitiveData
 
                 onTextChanged: {
-                  root.context.currentText = this.text;
-                  passwordContainer.scale = 1.02;
-                  scaleResetTimer.restart();
+                  root.context.currentText = this.text
+                  passwordContainer.scale = 1.02
+                  scaleResetTimer.restart()
                 }
-                onAccepted: root.context.tryUnlock();
+
+                // Enter key: delegate to LockContext which owns the PamContext
+                onAccepted: root.context.tryUnlock()
 
                 Timer {
                   id: scaleResetTimer
                   interval: 100
                   onTriggered: passwordContainer.scale = 1.0
-                }
-
-                Connections {
-                  target: root.context
-                  function onCurrentTextChanged() {
-                    passwordBox.text = root.context.currentText;
-                  }
                 }
               }
 
@@ -337,6 +437,7 @@ Item {
                   anchors.centerIn: parent
                   name: "arrow_forward"
                   color: root.context.currentText !== "" ? theme.button.text : Qt.alpha(theme.button.text, 0.3)
+                  // Spin the arrow while PAM is processing
                   rotation: root.context.unlockInProgress ? 360 : 0
                   Behavior on rotation { NumberAnimation { duration: 500 } }
                 }
@@ -345,7 +446,7 @@ Item {
                   id: unlockMouseArea
                   anchors.fill: parent
                   hoverEnabled: true
-                  enabled: !root.context.unlockInProgress && root.context.currentText !== ""
+                  enabled: !root.context.unlockInProgress && !root.isExiting && root.context.currentText !== ""
                   onClicked: root.context.tryUnlock()
                   cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
                 }
@@ -353,6 +454,7 @@ Item {
             }
           }
 
+          // Error badge: driven by LockContext.showFailure
           Rectangle {
             Layout.preferredHeight: errorLabel.implicitHeight + ScalerService.s(15)
             Layout.fillWidth: true
@@ -459,6 +561,7 @@ Item {
         }
       }
     }
+
     Repeater {
       model: 20
       Rectangle {
