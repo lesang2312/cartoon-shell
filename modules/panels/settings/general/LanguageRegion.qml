@@ -340,7 +340,7 @@ Item {
                   width: ScalerService.s(18)
                   height: ScalerService.s(18)
                   radius: ScalerService.s(9)
-                  color: theme.normal.blue
+                  color: theme.button.text
                   anchors.top: parent.top
                   anchors.right: parent.right
                   anchors.margins: ScalerService.s(4)
