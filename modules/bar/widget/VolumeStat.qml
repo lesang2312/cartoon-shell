@@ -25,12 +25,12 @@ Item {
     var newVol = Math.min(1, Math.max(0, sink.audio.volume + delta))
     sink.audio.volume = newVol
     if (sink.audio.muted && delta > 0)
-      sink.audio.muted = false
+    sink.audio.muted = false
   }
 
   function toggleMute() {
     if (sink)
-      sink.audio.muted = !sink.audio.muted
+    sink.audio.muted = !sink.audio.muted
   }
 
   RowLayout {
@@ -41,15 +41,15 @@ Item {
     IconImage {
       visible: root.style === 1
       path: sink && sink.audio.muted
-            ? "volume/mute.png"
-            : "volume/volume.png"
+      ? "volume/mute.png"
+      : "volume/volume.png"
     }
 
     IconText {
       visible: root.style === 2
       name: {
         if (!sink || sink.audio.muted)
-          return "volume_off"
+        return "volume_off"
         return getIcon(Math.round(sink.audio.volume * 100))
       }
       textColor: theme.button.text
@@ -57,11 +57,11 @@ Item {
 
     CustomText {
       visible: root.style === 1
-               && (Settings.bar.position === "top"
-                   || Settings.bar.position === "bottom")
+      && (Settings.bar.position === "top"
+        || Settings.bar.position === "bottom")
       name: sink
-            ? Math.round(sink.audio.volume * 100) + "%"
-            : "0%"
+      ? Math.round(sink.audio.volume * 100) + "%"
+      : "0%"
       isBold: true
       size: "small"
     }
@@ -71,14 +71,15 @@ Item {
     anchors.fill: parent
     acceptedButtons: Qt.RightButton
     propagateComposedEvents: true
+    cursorShape: Qt.PointingHandCursor
 
     onWheel: (wheel) => {
       let step = 0.05
 
       if (wheel.angleDelta.y > 0)
-        changeVolume(step)
+      changeVolume(step)
       else if (wheel.angleDelta.y < 0)
-        changeVolume(-step)
+      changeVolume(-step)
     }
 
     onPressed: (mouse) => {
@@ -91,3 +92,4 @@ Item {
     }
   }
 }
+
