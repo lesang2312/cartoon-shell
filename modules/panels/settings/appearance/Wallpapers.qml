@@ -232,7 +232,7 @@ Item {
                 width: systemSettings.width / 4
                 height: systemSettings.width / 4
                 radius: ScalerService.s(12)
-                color: theme.button.background
+                color: Qt.alpha(theme.button.background,0.5)
                 border.color: theme.button.border
                 border.width: ScalerService.s(1)
 
