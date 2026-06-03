@@ -40,7 +40,7 @@
 ### Operating System
 - **Linux** (developed on Arch Linux)
 - **Wayland** compositor (X11 not supported)
-- **Hyprland** window manager (required)
+- **Hyprland(Lua)** window manager (required)
 
 ### Main Dependencies
 
