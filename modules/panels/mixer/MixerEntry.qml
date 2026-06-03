@@ -51,30 +51,26 @@ ColumnLayout {
       Layout.fillWidth: true
       spacing: ScalerService.s(2)
 
-      Label {
+      CustomText {
         id: appLabel
-        text: {
+        name: {
           const appName = node.properties["application.name"] ?? (node.description != "" ? node.description : node.name);
           return appName || "Unknown Application";
         }
-        font.bold: true
-        font.family: "ComicShannsMono Nerd Font"
-        font.pixelSize: ScalerService.s(16)
+        isBold: true
+        size: "small"
         elide: Text.ElideRight
         Layout.fillWidth: true
-        color: theme.primary.foreground
       }
 
-      Label {
+      CustomText {
         id: mediaLabel
-        text: node.properties["media.name"] ?? ""
-        font.family: "ComicShannsMono Nerd Font"
-        font.pixelSize: ScalerService.s(14)
-        opacity: 0.8
+        name: node.properties["media.name"] ?? ""
+        size: "xs"
         elide: Text.ElideRight
         Layout.fillWidth: true
         visible: text !== ""
-        color: theme.primary.foreground
+        textColor: theme.primary.dim_foreground
       }
     }
 

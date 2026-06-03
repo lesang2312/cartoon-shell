@@ -89,7 +89,7 @@ PanelWindow {
       // Default sink section
       Rectangle {
         Layout.fillWidth: true
-        Layout.preferredHeight: ScalerService.s(120)
+        Layout.preferredHeight: ScalerService.s(140)
         color: theme.primary.dim_background
         border.color: theme.button.border_select
         radius: ScalerService.s(Settings.appearance.radius2)
@@ -100,13 +100,10 @@ PanelWindow {
           anchors.margins: ScalerService.s(12)
           spacing: ScalerService.s(8)
 
-          Label {
-            text: lang.mixer.output_device
-            font.bold: true
-            font.pixelSize: ScalerService.s(16)
-            font.family: "ComicShannsMono Nerd Font"
-
-            color: theme.normal.blue
+          CustomText {
+            name: lang.mixer.output_device
+            isBold: true
+            textColor: theme.button.text
             Layout.fillWidth: true
           }
 
@@ -135,13 +132,9 @@ PanelWindow {
           spacing: ScalerService.s(8)
 
           // Section header
-          Label {
-            text: lang.mixer.application_streams
-            font.bold: true
-
-            font.family: "ComicShannsMono Nerd Font"
-            font.pixelSize: ScalerService.s(16)
-            color: theme.primary.foreground
+          CustomText {
+            name: lang.mixer.application_streams
+            isBold: true
             Layout.fillWidth: true
             Layout.leftMargin: ScalerService.s(8)
             Layout.topMargin: ScalerService.s(4)
