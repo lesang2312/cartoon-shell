@@ -42,57 +42,6 @@
 - **Wayland** compositor (X11 not supported)
 - **Hyprland(Lua)** window manager (required)
 
-### Main Dependencies
-
-#### QuickShell & Qt
-```bash
-# QuickShell framework
-quickshell
-
-# Qt modules (usually bundled with QuickShell)
-qt6-base
-qt6-declarative
-qt6-wayland
-```
-
-#### System utilities
-```bash
-# Hyprland (Required)
-hyprland              # Wayland compositor
-hyprctl               # Hyprland control (bundled with hyprland)
-
-# Wallpaper (Required)
-ffmpeg                # Video thumbnail generation
-
-# Media player (Required)
-cava                  # Audio visualizer for Music Panel
-
-# Network (Required)
-networkmanager        # WiFi/Network management
-bluez                 # Bluetooth
-bluez-utils           # Bluetooth utilities
-
-# System monitoring (Usually pre-installed)
-procps-ng             # top, free commands
-iproute2              # ip command
-
-# Audio (Usually pre-installed)
-pipewire              # Audio server
-wireplumber           # PipeWire session manager
-
-# Other (Required)
-curl                  # API calls (weather)
-jq                    # JSON processing
-python3               # Python scripts
-```
-
-#### Font
-```bash
-ttf-comicshannsmono-nerd
-ttf-material-symbols-variable-git
-```
-
-
 ## 🔧 Installation
 
 ### 1. Install dependencies (Arch Linux)
@@ -109,18 +58,18 @@ chmod +x setup.sh
 #### Or manual installation
 ```bash
 # Install main packages (Arch Linux)
-sudo pacman -S hyprland hyprpaper networkmanager \
+sudo pacman -S hyprland networkmanager brightnessctl \
                bluez bluez-utils pipewire wireplumber curl python \
-               jq ffmpeg
+               jq ffmpeg qt6-multimedia bc 
 
 # Install AUR packages
-yay -S quickshell-git cava ttf-comicshannsmono-nerd ttf-material-symbols-variable-git
+yay -S quickshell-git cava sysstat qt6-5compat ttf-comicshannsmono-nerd ttf-material-symbols-variable-git
 ```
 
 ### 2. Clone Cartoon Shell
 ```bash
 # Clone to QuickShell config directory
-git clone https://github.com:mailong2401/cartoon-shell.git \
+git clone https://github.com/mailong2401/cartoon-shell.git \
     ~/.config/quickshell/cartoon-shell
 
 cd ~/.config/quickshell/cartoon-shell
