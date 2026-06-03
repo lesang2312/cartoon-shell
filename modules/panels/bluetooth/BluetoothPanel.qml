@@ -5,7 +5,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Bluetooth
 import qs.services
-import "." as Components
+import "." as Com
 import qs.commons
 
 PanelWindow {
@@ -114,25 +114,9 @@ PanelWindow {
       spacing: ScalerService.s(6)
 
       // Header with title and scan button
-      Components.BluetoothHeader {
-        adapter: root.adapter
-        isDiscovering: adapter?.discovering || false
-
-        onScanClicked: {
-          if (adapter) {
-            if (adapter.discovering) {
-              adapter.discovering = false;
-              scanTimer.stop();
-            } else {
-              adapter.discovering = true;
-              scanTimer.restart();
-
-              // Ensure adapter is discoverable
-              adapter.discoverable = true;
-              adapter.pairable = true;
-            }
-          }
-        }
+      Com.BluetoothHeader {
+        Layout.fillWidth: true
+        Layout.preferredHeight: ScalerService.s(40)
       }
 
       // Error message
@@ -175,13 +159,13 @@ PanelWindow {
       }
 
       // Status card with toggle
-      Components.BluetoothStatusCard {
+      Com.BluetoothStatusCard {
         adapter: root.adapter
         connectedCount: root.connectedCount
       }
 
       // Device list
-      Components.BluetoothDeviceList {
+      Com.BluetoothDeviceList {
         adapter: root.adapter
         connectedCount: root.connectedCount
 

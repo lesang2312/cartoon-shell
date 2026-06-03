@@ -755,8 +755,8 @@ Item {
       anchors.fill: parent
       active: true
       sourceComponent: StarField {
-        starCount: 15
-        shootingStarCount: 3
+        starCount: 20
+        shootingStarCount: 6
       }
     }
   }

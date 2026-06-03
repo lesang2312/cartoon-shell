@@ -4,7 +4,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Services.Pipewire
-import "./" as Components
+import "./" as Com
 import qs.commons
 import qs.components
 import qs.services
@@ -78,25 +78,12 @@ PanelWindow {
 
     ColumnLayout {
       anchors.fill: parent
-      anchors.margins: ScalerService.s(16)
+      anchors.margins: ScalerService.s(20)
       spacing: ScalerService.s(20)
 
-      // Header với icon và title
-      RowLayout {
+      Com.MixerHeader{
         Layout.fillWidth: true
-        spacing: ScalerService.s(12)
-
-        IconImage {
-          path: "system/mixer.png"
-          size: "xl"
-        }
-
-        CustomText {
-          name: lang.mixer.title
-          isBold: true
-          size: "large"
-        }
-
+        Layout.preferredHeight: ScalerService.s(40)
       }
 
       // Default sink section
@@ -123,7 +110,7 @@ PanelWindow {
             Layout.fillWidth: true
           }
 
-          Components.MixerEntry {
+          Com.MixerEntry {
             node: Pipewire.defaultAudioSink
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -174,7 +161,7 @@ PanelWindow {
               Repeater {
                 model: linkTracker.linkGroups
 
-                Components.MixerEntry {
+                Com.MixerEntry {
                   required property PwLinkGroup modelData
                   node: modelData.source
                   Layout.fillWidth: true

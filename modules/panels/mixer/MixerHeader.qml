@@ -5,13 +5,14 @@ import qs.services
 
 Item {
   id: root
+
   CustomText {
-    name: "Bluetooth"
+    name: lang.mixer.title
     size: "large"
     isBold: true
     anchors.centerIn: parent
   }
   CloseButton{
-    onClicked: VisibleService.togglePanel("bluetooth")
+    onClicked: VisibleService.togglePanel("mixer")
   }
 }
