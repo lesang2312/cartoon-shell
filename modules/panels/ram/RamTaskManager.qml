@@ -58,15 +58,15 @@ Item {
     anchors.fill: parent
     ColumnLayout {
       anchors.fill: parent
-      anchors.margins: 16
-      spacing: 12
+      anchors.margins: ScalerService.s(16)
+      spacing: ScalerService.s(12)
 
       Item {
         Layout.fillWidth: true
-        height: 50
+        height: ScalerService.s(50)
         RowLayout {
           anchors.fill: parent
-          anchors.margins: 12
+          anchors.margins: ScalerService.s(12)
 
           CustomText {
             name: lang.ram.title
@@ -85,7 +85,7 @@ Item {
           }
 
           ColumnLayout {
-            spacing: 2
+            spacing: ScalerService.s(2)
             CustomText {
               name: lang.ram.header_bar.last_update
               size: "small"
@@ -113,7 +113,7 @@ Item {
 
       Rectangle {
         Layout.fillWidth: true
-        height: 32
+        height: ScalerService.s(32)
         color: Qt.alpha(theme.button.background, 0.5)
 
         opacity: root.animationProgress > 0.5 ? 1 : 0
@@ -122,19 +122,19 @@ Item {
             duration: 200
           }
         }
-        radius: 6
+        radius: ScalerService.s(6)
 
         RowLayout {
           anchors.fill: parent
-          anchors.margins: 8
-          spacing: 8
+          anchors.margins: ScalerService.s(8)
+          spacing: ScalerService.s(8)
 
           CustomText {
             name: lang.ram.headers.pid
             size: "small"
             isBold: true
             textColor: theme.button.text
-            Layout.preferredWidth: 70
+            Layout.preferredWidth: ScalerService.s(70)
             opacity: root.animationProgress > 1 ? 1 : 0
             Behavior on opacity {
               NumberAnimation {
@@ -160,7 +160,7 @@ Item {
             size: "small"
             isBold: true
             textColor: theme.button.text
-            Layout.preferredWidth: 80
+            Layout.preferredWidth: ScalerService.s(80)
             horizontalAlignment: Text.AlignRight
             opacity: root.animationProgress > 1.1 ? 1 : 0
             Behavior on opacity {
@@ -174,7 +174,7 @@ Item {
             size: "small"
             isBold: true
             textColor: theme.button.text
-            Layout.preferredWidth: 100
+            Layout.preferredWidth: ScalerService.s(100)
             horizontalAlignment: Text.AlignRight
             opacity: root.animationProgress > 1.15 ? 1 : 0
             Behavior on opacity {
@@ -185,6 +185,7 @@ Item {
           }
         }
       }
+
       Flickable {
         id: processFlick
         Layout.fillWidth: true
@@ -199,33 +200,33 @@ Item {
         Column {
           id: processColumn
           width: processFlick.width
-          spacing: 2
+          spacing: ScalerService.s(2)
 
           Repeater {
             model: ramTaskManager.processList
 
             delegate: Rectangle {
               width: processFlick.width
-              height: 50
+              height: ScalerService.s(50)
 
               color: index % 2 === 0
               ? Qt.alpha(theme.primary.background, 0.5)
               : Qt.alpha(theme.primary.dim_background, 0.5)
 
-              radius: 6
+              radius: ScalerService.s(6)
               border.color: Qt.lighter(color, 1.1)
-              border.width: 1
+              border.width: ScalerService.s(1)
 
               RowLayout {
                 anchors.fill: parent
-                anchors.margins: 10
-                spacing: 10
+                anchors.margins: ScalerService.s(10)
+                spacing: ScalerService.s(10)
 
                 CustomText {
                   name: modelData.pid
                   size: "small"
                   textColor: theme.button.text
-                  Layout.preferredWidth: 70
+                  Layout.preferredWidth: ScalerService.s(70)
                   opacity: root.animationProgress > 1.5 ? 1 : 0
 
                   SequentialAnimation on opacity {
@@ -269,7 +270,7 @@ Item {
                   name: modelData.percent.toFixed(1)
                   size: "small"
                   textColor: getPercentageColor(modelData.percent)
-                  Layout.preferredWidth: 80
+                  Layout.preferredWidth: ScalerService.s(80)
                   horizontalAlignment: Text.AlignRight
                   opacity: root.animationProgress > 1.5 ? 1 : 0
 
@@ -292,7 +293,7 @@ Item {
                   name: modelData.rss_mb.toFixed(1) + " MB"
                   size: "small"
                   textColor: theme.primary.foreground
-                  Layout.preferredWidth: 100
+                  Layout.preferredWidth: ScalerService.s(100)
                   horizontalAlignment: Text.AlignRight
                   opacity: root.animationProgress > 1.5 ? 1 : 0
 
@@ -317,11 +318,11 @@ Item {
                   left: parent.left
                   right: parent.right
                   bottom: parent.bottom
-                  margins: 6
+                  margins: ScalerService.s(6)
                 }
 
-                height: 3
-                radius: 1.5
+                height: ScalerService.s(3)
+                radius: ScalerService.s(1.5)
                 color: theme.primary.dim_background
 
                 Rectangle {
@@ -330,7 +331,7 @@ Item {
                   : 0
 
                   height: parent.height
-                  radius: 1.5
+                  radius: ScalerService.s(1.5)
                   color: getPercentageColor(modelData.percent)
 
                   Behavior on width {
@@ -344,6 +345,7 @@ Item {
             }
           }
         }
+
         ScrollBar.vertical: ScrollBar {
           policy: ScrollBar.AsNeeded
         }
@@ -351,9 +353,9 @@ Item {
 
       Rectangle {
         Layout.fillWidth: true
-        height: 60
+        height: ScalerService.s(60)
         color: theme.button.background
-        radius: 8
+        radius: ScalerService.s(8)
         opacity: root.animationProgress > 0.6 ? 1 : 0
         Behavior on opacity {
           NumberAnimation {
@@ -363,10 +365,10 @@ Item {
 
         RowLayout {
           anchors.fill: parent
-          anchors.margins: 10
+          anchors.margins: ScalerService.s(10)
 
           ColumnLayout {
-            spacing: 2
+            spacing: ScalerService.s(2)
             CustomText {
               opacity: root.animationProgress > 1.55 ? 1 : 0
               Behavior on opacity {
@@ -397,7 +399,7 @@ Item {
           }
 
           ColumnLayout {
-            spacing: 2
+            spacing: ScalerService.s(2)
             CustomText {
               name: lang.ram.footer.total_ram_label
               size: "small"
@@ -424,11 +426,11 @@ Item {
           }
 
           Item {
-            Layout.preferredWidth: 20
+            Layout.preferredWidth: ScalerService.s(20)
           }
 
           ColumnLayout {
-            spacing: 2
+            spacing: ScalerService.s(2)
             CustomText {
               name: lang.ram.footer.memory_distribution_label
               size: "small"

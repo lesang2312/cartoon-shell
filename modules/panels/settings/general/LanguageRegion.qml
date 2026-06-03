@@ -238,8 +238,8 @@ Item {
 
             delegate: Item {
               id: parentItem
-              width: root.width / ScalerService.s(7)
-              height: root.width / ScalerService.s(7)
+              width: root.width / 7
+              height: root.width / 7
               CustomRectangle {
                 implicitWidth: 0
                 implicitHeight: 0
