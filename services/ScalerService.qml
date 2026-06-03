@@ -4,49 +4,34 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import qs.commons
 
 Singleton {
   id: root
-
-  // =========================
-  // Base config
-  // =========================
 
   property real baseWidth: 1920.0
   property real baseHeight: 1080.0
   property real baseScale: 1.0
 
-  // =========================
-  // Current monitor info
-  // =========================
-
-  property real screenWidth: 1920
-  property real screenHeight: 1080
-  property real screenScale: 1.0
-
-  // =========================
-  // Final calculated scale
-  // =========================
+  property real screenWidth: Settings.general.screenWidth
+  property real screenHeight: Settings.general.screenHeight
+  property real screenScale: Settings.general.scale
 
   property real scaleFactor:
   ((screenWidth / baseWidth) / screenScale) * baseScale
-
-  // =========================
-  // Helper
-  // =========================
 
   function s(val) {
     return val * scaleFactor
   }
 
-  // =========================
-  // Detect monitor scale
-  // =========================
+  function init() {
+    monitorProcess.running = true
+  }
 
   Process {
     id: monitorProcess
 
-    running: true
+    running: false
 
     command: [
     "sh",
@@ -86,6 +71,9 @@ Singleton {
           root.screenWidth = parseFloat(parts[0])
           root.screenHeight = parseFloat(parts[1])
           root.screenScale = parseFloat(parts[2])
+          Settings.general.screenWidth = parseFloat(parts[0])
+          Settings.general.screenHeight = parseFloat(parts[1])
+          Settings.general.scale = parseFloat(parts[2])
 
           console.log(
             "[ScaleService]",
@@ -98,4 +86,6 @@ Singleton {
       }
     }
   }
+
+  Component.onCompleted: init()
 }

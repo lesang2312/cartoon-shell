@@ -17,7 +17,6 @@ import qs.commons
 
 ShellRoot {
   id: root
-
   ConfirmDialog {
     id: confirmDialog
   }

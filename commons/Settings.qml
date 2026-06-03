@@ -152,6 +152,9 @@ Singleton {
 
   component General: JsonObject {
     property string lang: "vi"
+    property real screenHeight: 1080
+    property real screenWidth: 1920
+    property real scale: 1.0
   }
 
   component Wallpaper: JsonObject {

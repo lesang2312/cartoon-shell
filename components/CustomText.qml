@@ -5,12 +5,23 @@ import qs.commons
 Text {
   property string name: "undefined"
 
-  // xs | small | normal | large | xl
   property string size: "normal"
 
   property bool isBold: false
   property color textColor: theme.primary.foreground
   property string fontFamily: Settings.appearance.font
+  readonly property var sizeMap: ({
+      "4sx": 4,
+      "2xs": 8,
+      "xs": 12,
+      "small": 16,
+      "normal": 24,
+      "large": 32,
+      "xl": 40,
+      "2xl": 48,
+      "3xl": 70,
+      "4xl": 100
+  })
   Behavior on opacity {
     NumberAnimation {
       duration: 200
@@ -44,37 +55,5 @@ Text {
   font.family: fontFamily
   font.bold: isBold
 
-  font.pixelSize: {
-    switch (size) {
-      case "4sx":
-      return ScalerService.s(4)
-      case "2xs":
-      return ScalerService.s(8)
-      case "xs":
-      return ScalerService.s(12)
-
-      case "small":
-      return ScalerService.s(16)
-
-      case "normal":
-      return ScalerService.s(24)
-
-      case "large":
-      return ScalerService.s(32)
-
-      case "xl":
-      return ScalerService.s(40)
-
-      case "2xl":
-      return ScalerService.s(48)
-      case "3xl":
-      return ScalerService.s(70)
-
-      case "4xl":
-      return ScalerService.s(100)
-
-      default:
-      return ScalerService.s(32)
-    }
-  }
+  font.pixelSize: ScalerService.s(sizeMap[size] ?? 32)
 }

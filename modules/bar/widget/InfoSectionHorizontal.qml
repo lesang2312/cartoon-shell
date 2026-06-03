@@ -32,7 +32,6 @@ Item {
         }
         CustomText {
           id: textCurrentDate
-
           name : DateTimeService.currentDate
           size: "xs"
           color: theme.primary.dim_foreground
