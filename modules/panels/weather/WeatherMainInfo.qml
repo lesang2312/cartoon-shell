@@ -105,10 +105,9 @@ Item {
           CustomText {
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
-            name: "7 Days"
-            size: "small"
-            textColor: theme.normal.cyan
-            opacity: 0.8
+            name: "3 Days"
+            isBold: true
+            textColor: theme.button.text
           }
         }
 
