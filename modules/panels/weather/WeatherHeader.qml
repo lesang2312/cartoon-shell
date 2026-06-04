@@ -10,23 +10,33 @@ Item {
 
   IconText{
     anchors.left: parent.left
-    name:"settings"
-    rotation: mouseArea.containsMouse ? 90 : 0
+    name: "settings"
+    visible: !showSettings
+    rotation: mouseAreaSettings.containsMouse? 90 : 0
     Behavior on rotation {
       NumberAnimation {
         duration: 200
       }
     }
     MouseArea {
-      id: mouseArea
+      id: mouseAreaSettings
       anchors.fill: parent
       hoverEnabled: true
       cursorShape: Qt.PointingHandCursor
 
       onClicked: {
-        showSettings = !showSettings  // Toggle trạng thái
+        showSettings =  true
       }
     }
+  }
+
+  ButtonIconText {
+    name: "arrow_back"
+    visible: showSettings
+    onClicked: {
+      showSettings =  false
+    }
+
   }
 
   CustomText {

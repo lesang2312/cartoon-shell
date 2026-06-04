@@ -11,6 +11,13 @@ Item {
   property real animationProgress: 0
   property bool showSettings: false
 
+  Com.WeatherSettings {
+    id: weatherSettings
+    anchors.fill: parent
+    showSettings: root.showSettings
+    visible: root.showSettings
+  }
+
   // Nội dung chính
   RowLayout {
     id: weatherContent
@@ -20,8 +27,9 @@ Item {
 
     // Left Column - Current Weather
     Item {
-      Layout.preferredWidth: parent.width/3
+      Layout.fillWidth: true
       Layout.fillHeight: true
+      Layout.preferredWidth: root.width * 0.5
 
       ColumnLayout {
         spacing: ScalerService.s(24)
@@ -30,18 +38,22 @@ Item {
 
         Com.WeatherCurrentInfo {
           animationProgress: root.animationProgress
+          Layout.fillWidth: true
         }
 
         Com.WeatherDateTimeInfo {
           animationProgress: root.animationProgress
+          Layout.fillWidth: true
         }
 
         Com.WeatherLocationInfo {
           animationProgress: root.animationProgress
+          Layout.fillWidth: true
         }
 
         Com.WeatherDetailsGrid {
           animationProgress: root.animationProgress
+          Layout.fillWidth: true
         }
 
         Com.TemperatureChart {
@@ -69,7 +81,8 @@ Item {
     // Right Column - Forecast
     Item {
       Layout.fillHeight: true
-      Layout.preferredWidth: parent.width/2
+      Layout.fillWidth: true
+      Layout.preferredWidth: root.width * 0.5
 
       ColumnLayout {
         anchors.fill: parent
@@ -111,9 +124,10 @@ Item {
             spacing: ScalerService.s(12)
             orientation: ListView.Vertical
             model: WeatherService.dataModel.forecast.forecastday
+            width: parent.width
 
             delegate: Rectangle {
-              width: ListView.view.width - ScalerService.s(20)
+              width: forecastListView.width - ScalerService.s(20)
               height: ScalerService.s(100)
               radius: ScalerService.s(16)
               color: Qt.alpha(theme.button.background, 0.4)
@@ -127,10 +141,12 @@ Item {
                 IconImage {
                   path: WeatherService.getWeatherIcon(modelData.day.condition.code)
                   size: "2xl"
+                  Layout.preferredWidth: ScalerService.s(48)
+                  Layout.preferredHeight: ScalerService.s(48)
                 }
 
                 ColumnLayout {
-                  Layout.preferredWidth: ScalerService.s(60)
+                  Layout.preferredWidth: ScalerService.s(70)
                   spacing: ScalerService.s(4)
 
                   CustomText {
@@ -152,15 +168,18 @@ Item {
                   Layout.preferredHeight: ScalerService.s(50)
 
                   CustomText {
+                    anchors.fill: parent
+                    verticalAlignment: Text.AlignVCenter
                     name: modelData.day.condition.text.length > 12
                     ? `${modelData.day.condition.text.slice(0, 12)}...`
                     : modelData.day.condition.text
                     textColor: theme.primary.dim_foreground
+                    elide: Text.ElideRight
                   }
                 }
 
                 ColumnLayout {
-                  Layout.preferredWidth: ScalerService.s(70)
+                  Layout.preferredWidth: ScalerService.s(80)
                   spacing: ScalerService.s(4)
 
                   CustomText {
@@ -168,6 +187,7 @@ Item {
                     size: "medium"
                     isBold: true
                     textColor: theme.normal.red
+                    horizontalAlignment: Text.AlignRight
                   }
 
                   CustomText {
@@ -175,6 +195,7 @@ Item {
                     size: "medium"
                     isBold: true
                     textColor: theme.normal.blue
+                    horizontalAlignment: Text.AlignRight
                   }
                 }
               }
@@ -192,12 +213,6 @@ Item {
   }
 
   // Settings Content
-  Com.WeatherSettings {
-    id: weatherSettings
-    anchors.fill: parent
-    showSettings: root.showSettings
-    visible: root.showSettings
-  }
 
   function getDayName(dateString) {
     var date = new Date(dateString)

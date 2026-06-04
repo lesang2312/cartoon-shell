@@ -118,156 +118,106 @@ Item {
     spacing: ScalerService.s(20)
     anchors.margins: ScalerService.s(30)
 
-    // Header Settings
-    Rectangle {
-      Layout.fillWidth: true
-      Layout.preferredHeight: ScalerService.s(60)
-      color: "transparent"
+    // Scrollable Settings Content
+    ColumnLayout {
+      width: parent.width
+      spacing: ScalerService.s(25)
 
-      RowLayout {
-        anchors.fill: parent
-        spacing: ScalerService.s(15)
+      // API Key Section
+      ColumnLayout {
+        Layout.fillWidth: true
+        spacing: ScalerService.s(12)
 
-        IconText {
-          name: "settings"
-          font.pixelSize: ScalerService.s(32)
-          color: theme.normal.cyan
-        }
-
-        CustomText {
-          name: "Weather Settings"
-          size: "xlarge"
-          isBold: true
-          textColor: theme.primary.foreground
+        RowLayout {
           Layout.fillWidth: true
-        }
-
-        Rectangle {
-          width: ScalerService.s(40)
-          height: ScalerService.s(40)
-          radius: ScalerService.s(20)
-          color: theme.button.background
-          opacity: closeMouseArea.pressed ? 0.8 : 1
+          spacing: ScalerService.s(10)
 
           IconText {
-            name: "close"
-            anchors.centerIn: parent
+            name: "vpn_key"
             font.pixelSize: ScalerService.s(24)
-            color: theme.button.text
-          }
-
-          MouseArea {
-            id: closeMouseArea
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: showSettings = false
-          }
-        }
-      }
-    }
-
-    // Scrollable Settings Content
-    ScrollView {
-      Layout.fillWidth: true
-      Layout.fillHeight: true
-      clip: true
-      ScrollBar.vertical.policy: ScrollBar.AsNeeded
-
-      ColumnLayout {
-        width: parent.width - ScalerService.s(20)
-        spacing: ScalerService.s(25)
-
-        // API Key Section
-        ColumnLayout {
-          Layout.fillWidth: true
-          spacing: ScalerService.s(12)
-
-          RowLayout {
-            Layout.fillWidth: true
-            spacing: ScalerService.s(10)
-
-            IconText {
-              name: "vpn_key"
-              font.pixelSize: ScalerService.s(24)
-              color: theme.normal.green
-            }
-
-            CustomText {
-              name: lang?.weather?.apiKeyLabel || "API Key (weatherapi.com)"
-              size: "medium"
-              isBold: true
-              textColor: theme.primary.foreground
-              Layout.fillWidth: true
-            }
-          }
-
-          Rectangle {
-            Layout.fillWidth: true
-            height: ScalerService.s(48)
-            color: theme.primary.dim_background
-            border.color: apiKeyInput.activeFocus ? theme.normal.blue : theme.primary.dim_foreground
-            radius: ScalerService.s(Settings.appearance.radius3)
-            border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
-
-            TextField {
-              id: apiKeyInput
-              anchors.fill: parent
-              anchors.margins: ScalerService.s(8)
-              text: settingsRoot.apiKey
-              palette.text: theme.primary.foreground
-              font {
-                pixelSize: ScalerService.s(14)
-                family: "ComicShannsMono Nerd Font"
-              }
-              background: Rectangle {
-                color: "transparent"
-              }
-              verticalAlignment: TextInput.AlignVCenter
-              selectByMouse: true
-              clip: true
-              placeholderText: lang?.weather?.apiKeyPlaceholder || "Nhập API key của bạn..."
-              palette.placeholderText: theme.primary.dim_foreground
-
-              onTextChanged: {
-                settingsRoot.apiKey = text;
-                settingsRoot.apiKeyValidateTimer.restart();
-              }
-            }
+            color: theme.normal.green
           }
 
           CustomText {
-            name: lang?.weather?.apiKeyHint || "Nhận API key miễn phí tại: weatherapi.com"
-            size: "xsmall"
-            font.italic: true
-            wrapMode: Text.WordWrap
+            name: lang?.weather?.apiKeyLabel || "API Key (weatherapi.com)"
+            size: "medium"
+            isBold: true
+            textColor: theme.primary.foreground
             Layout.fillWidth: true
-            textColor: theme.primary.dim_foreground
           }
         }
 
-        // Location Section
-        ColumnLayout {
+        Rectangle {
           Layout.fillWidth: true
-          spacing: ScalerService.s(12)
+          height: ScalerService.s(48)
+          color: theme.primary.dim_background
+          border.color: apiKeyInput.activeFocus ? theme.normal.blue : theme.primary.dim_foreground
+          radius: ScalerService.s(Settings.appearance.radius3)
+          border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
 
-          RowLayout {
-            Layout.fillWidth: true
-            spacing: ScalerService.s(10)
-
-            IconText {
-              name: "location_on"
-              font.pixelSize: ScalerService.s(24)
-              color: theme.normal.red
+          TextField {
+            id: apiKeyInput
+            anchors.fill: parent
+            anchors.margins: ScalerService.s(8)
+            text: settingsRoot.apiKey
+            palette.text: theme.primary.foreground
+            font {
+              pixelSize: ScalerService.s(14)
+              family: "ComicShannsMono Nerd Font"
             }
+            background: Rectangle {
+              color: "transparent"
+            }
+            verticalAlignment: TextInput.AlignVCenter
+            selectByMouse: true
+            clip: true
+            placeholderText: lang?.weather?.apiKeyPlaceholder || "Nhập API key của bạn..."
+            palette.placeholderText: theme.primary.dim_foreground
 
-            CustomText {
-              name: lang?.weather?.locationLabel || "Địa điểm"
-              size: "medium"
-              isBold: true
-              textColor: theme.primary.foreground
-              Layout.fillWidth: true
+            onTextChanged: {
+              settingsRoot.apiKey = text;
+              settingsRoot.apiKeyValidateTimer.restart();
             }
           }
+        }
+
+        CustomText {
+          name: lang?.weather?.apiKeyHint || "Nhận API key miễn phí tại: weatherapi.com"
+          size: "xsmall"
+          font.italic: true
+          wrapMode: Text.WordWrap
+          Layout.fillWidth: true
+          textColor: theme.primary.dim_foreground
+        }
+      }
+
+      // Location Section
+      ColumnLayout {
+        Layout.fillWidth: true
+        spacing: ScalerService.s(12)
+
+        RowLayout {
+          Layout.fillWidth: true
+          spacing: ScalerService.s(10)
+
+          IconText {
+            name: "location_on"
+            font.pixelSize: ScalerService.s(24)
+            color: theme.normal.red
+          }
+
+          CustomText {
+            name: lang?.weather?.locationLabel || "Địa điểm"
+            size: "medium"
+            isBold: true
+            textColor: theme.primary.foreground
+            Layout.fillWidth: true
+          }
+        }
+
+        ColumnLayout {
+          Layout.fillWidth: true
+          spacing: ScalerService.s(8)
 
           RowLayout {
             Layout.fillWidth: true
@@ -323,8 +273,8 @@ Item {
             }
 
             Rectangle {
-              width: ScalerService.s(80)
-              height: ScalerService.s(48)
+              Layout.preferredWidth: ScalerService.s(80)
+              Layout.preferredHeight: ScalerService.s(48)
               radius: ScalerService.s(Settings.appearance.radius3)
               color: theme.button.background
               border.color: theme.button.border
@@ -418,61 +368,66 @@ Item {
             }
           }
         }
+      }
 
-        // Save and Cancel Buttons
-        RowLayout {
+      // Spacer để đẩy buttons xuống dưới
+      Item {
+        Layout.fillHeight: true
+      }
+
+      // Save and Cancel Buttons
+      RowLayout {
+        Layout.fillWidth: true
+        Layout.preferredHeight: ScalerService.s(50)
+        spacing: ScalerService.s(15)
+
+        // Save Button
+        Rectangle {
           Layout.fillWidth: true
-          Layout.topMargin: ScalerService.s(20)
-          spacing: ScalerService.s(15)
+          Layout.preferredHeight: ScalerService.s(50)
+          radius: ScalerService.s(12)
+          color: theme.button.text
+          opacity: saveMouseArea.pressed ? 0.8 : 1
 
-          // Save Button
-          Rectangle {
-            Layout.fillWidth: true
-            Layout.preferredHeight: ScalerService.s(50)
-            radius: ScalerService.s(12)
-            color: theme.normal.green
-            opacity: saveMouseArea.pressed ? 0.8 : 1
-
-            CustomText {
-              anchors.centerIn: parent
-              name: "Save Settings"
-              size: "medium"
-              isBold: true
-              textColor: "white"
-            }
-
-            MouseArea {
-              id: saveMouseArea
-              anchors.fill: parent
-              cursorShape: Qt.PointingHandCursor
-              onClicked: {
-                settingsRoot.saveAllSettings()
-                WeatherService.refresh()
-              }
-            }
+          CustomText {
+            anchors.centerIn: parent
+            name: "Save Settings"
+            size: "medium"
+            isBold: true
+            textColor: theme.button.background
           }
 
-          // Cancel Button
-          Rectangle {
-            Layout.fillWidth: true
-            Layout.preferredHeight: ScalerService.s(50)
-            radius: ScalerService.s(12)
-            color: theme.button.background
-            opacity: cancelMouseArea.pressed ? 0.8 : 1
-
-            CustomText {
-              anchors.centerIn: parent
-              name: "Cancel"
-              size: "medium"
-              textColor: theme.primary.foreground
+          MouseArea {
+            id: saveMouseArea
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            onClicked: {
+              settingsRoot.saveAllSettings()
+              WeatherService.refresh()
             }
+          }
+        }
 
-            MouseArea {
-              id: cancelMouseArea
-              anchors.fill: parent
-              cursorShape: Qt.PointingHandCursor
-              onClicked: settingsRoot.showSettings = false
-            }
+        // Cancel Button
+        Rectangle {
+          Layout.fillWidth: true
+          Layout.preferredHeight: ScalerService.s(50)
+          radius: ScalerService.s(12)
+          color: theme.button.background
+          opacity: cancelMouseArea.pressed ? 0.8 : 1
+
+          CustomText {
+            anchors.centerIn: parent
+            name: "Cancel"
+            size: "medium"
+            textColor: theme.primary.foreground
+          }
+
+          MouseArea {
+            id: cancelMouseArea
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            onClicked: settingsRoot.showSettings = false
           }
         }
       }
