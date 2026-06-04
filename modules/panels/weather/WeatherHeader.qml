@@ -6,6 +6,8 @@ import qs.services
 Item {
   id: headerCard
 
+  property bool showSettings: false  // Thêm property để kiểm soát trạng thái
+
   IconText{
     anchors.left: parent.left
     name:"settings"
@@ -22,6 +24,7 @@ Item {
       cursorShape: Qt.PointingHandCursor
 
       onClicked: {
+        showSettings = !showSettings  // Toggle trạng thái
       }
     }
   }
@@ -31,7 +34,9 @@ Item {
     size: "large"
     isBold: true
     anchors.centerIn: parent
+    visible: !headerCard.showSettings  // Chỉ hiển thị khi không ở chế độ settings
   }
+
   CloseButton{
     onClicked: VisibleService.togglePanel("weather")
   }

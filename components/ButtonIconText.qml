@@ -1,7 +1,7 @@
 import QtQuick
 import qs.services
 
-Item {
+Rectangle {
   id: root
 
   // Properties
@@ -9,6 +9,8 @@ Item {
   property string size: "normal"  // xs | small | normal | large | xl
   property color textColor: theme.primary.foreground
   property string fontFamily: "Material Symbols Rounded"
+
+  color: "transparent"
 
   // Fixed size based on the maximum (hovered) size
   implicitWidth: maxSize

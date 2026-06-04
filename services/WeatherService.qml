@@ -62,6 +62,9 @@ Singleton {
     return `${basePath}/rainbow.png`
   }
 
+  function refresh() {
+    root.updateWeather()
+  }
   function updateWeather() {
     if (root.apiKey === "" || root.apiKey === undefined) {
       root.errorMessage = "Vui lòng nhập API key"

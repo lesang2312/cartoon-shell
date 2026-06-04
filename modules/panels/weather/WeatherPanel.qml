@@ -12,6 +12,8 @@ PanelWindow {
   id: root
 
   property real animationProgress: 0
+  property bool showWeatherSettings: false  // Property để quản lý trạng thái settings
+
   SequentialAnimation on animationProgress {
     running: true
     NumberAnimation {
@@ -62,17 +64,17 @@ PanelWindow {
         easing.type: Easing.OutCubic
       }
     }
+
     Loader {
       anchors.fill: parent
-
       active: !heightAnim.running && !widthAnim.running
-
       sourceComponent: FloatingCircles {
         circleColor: theme.button.text
         anchors.fill: parent
         circleCount: 4
       }
     }
+
     border.color: theme.button.border
     radius: ScalerService.s(Settings.appearance.radius1)
     border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
@@ -83,22 +85,34 @@ PanelWindow {
       anchors.margins: ScalerService.s(20)
       spacing: ScalerService.s(20)
 
+      // Weather Header với kết nối signal
       Com.WeatherHeader {
+        id: weatherHeader
         Layout.fillWidth: true
         Layout.preferredHeight: ScalerService.s(40)
+
+        // Kết nối signal để thay đổi trạng thái
+        onShowSettingsChanged: {
+          root.showWeatherSettings = showSettings
+          if (weatherMainInfo) {
+            weatherMainInfo.showSettings = showSettings
+          }
+        }
       }
 
+      // Weather Main Info
       Com.WeatherMainInfo {
+        id: weatherMainInfo
         Layout.fillWidth: true
         Layout.fillHeight: true
         animationProgress: root.animationProgress
+        showSettings: root.showWeatherSettings  // Bind property
       }
     }
+
     Loader {
       anchors.fill: parent
-
       active: !heightAnim.running && !widthAnim.running
-
       sourceComponent: StarField {
         starCount: 20
         shootingStarCount: 4

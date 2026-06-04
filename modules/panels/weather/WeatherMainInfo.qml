@@ -9,10 +9,14 @@ import "." as Com
 Item {
   id: root
   property real animationProgress: 0
+  property bool showSettings: false
 
+  // Nội dung chính
   RowLayout {
+    id: weatherContent
     anchors.fill: parent
     spacing: ScalerService.s(50)
+    visible: !root.showSettings
 
     // Left Column - Current Weather
     Item {
@@ -40,7 +44,6 @@ Item {
           animationProgress: root.animationProgress
         }
 
-        // Temperature Chart
         Com.TemperatureChart {
           Layout.preferredHeight: ScalerService.s(200)
           Layout.fillWidth: true
@@ -73,7 +76,6 @@ Item {
         spacing: ScalerService.s(20)
         anchors.topMargin: ScalerService.s(16)
 
-        // Header
         Item {
           Layout.fillWidth: true
           Layout.preferredHeight: ScalerService.s(40)
@@ -97,7 +99,6 @@ Item {
           }
         }
 
-        // Scrollable Forecast Cards
         ScrollView {
           Layout.fillWidth: true
           Layout.fillHeight: true
@@ -115,7 +116,7 @@ Item {
               width: ListView.view.width - ScalerService.s(20)
               height: ScalerService.s(100)
               radius: ScalerService.s(16)
-              color: Qt.alpha(theme.button.background,0.4)
+              color: Qt.alpha(theme.button.background, 0.4)
               opacity: 0.9
 
               RowLayout {
@@ -123,12 +124,11 @@ Item {
                 anchors.margins: ScalerService.s(12)
                 spacing: ScalerService.s(12)
 
-                // Left: Day info
-
                 IconImage {
                   path: WeatherService.getWeatherIcon(modelData.day.condition.code)
                   size: "2xl"
                 }
+
                 ColumnLayout {
                   Layout.preferredWidth: ScalerService.s(60)
                   spacing: ScalerService.s(4)
@@ -147,7 +147,6 @@ Item {
                   }
                 }
 
-                // Center: Weather icon and condition
                 Item {
                   Layout.fillWidth: true
                   Layout.preferredHeight: ScalerService.s(50)
@@ -160,20 +159,16 @@ Item {
                   }
                 }
 
-                // Right: Temperature range
                 ColumnLayout {
                   Layout.preferredWidth: ScalerService.s(70)
                   spacing: ScalerService.s(4)
 
-                  // Max temp
                   CustomText {
                     name: `${Math.round(modelData.day.maxtemp_c)}°C`
                     size: "medium"
                     isBold: true
                     textColor: theme.normal.red
                   }
-
-                  // Min temp
 
                   CustomText {
                     name: `${Math.round(modelData.day.mintemp_c)}°C`
@@ -184,12 +179,10 @@ Item {
                 }
               }
 
-              // Hover effect
               MouseArea {
                 anchors.fill: parent
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
-
               }
             }
           }
@@ -198,12 +191,18 @@ Item {
     }
   }
 
-  // Helper functions
+  // Settings Content
+  Com.WeatherSettings {
+    id: weatherSettings
+    anchors.fill: parent
+    showSettings: root.showSettings
+    visible: root.showSettings
+  }
+
   function getDayName(dateString) {
     var date = new Date(dateString)
     const dayData = lang?.dateFormat?.day;
-    const days = dayData
-    ? [
+    const days = dayData ? [
     dayData.sunday || "Sunday",
     dayData.monday || "Monday",
     dayData.tuesday || "Tuesday",
@@ -211,15 +210,9 @@ Item {
     dayData.thursday || "Thursday",
     dayData.friday || "Friday",
     dayData.saturday || "Saturday"
-    ]
-    : [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
+    ] : [
+    "Sunday", "Monday", "Tuesday", "Wednesday",
+    "Thursday", "Friday", "Saturday"
     ];
     return days[date.getDay()]
   }
