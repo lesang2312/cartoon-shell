@@ -45,14 +45,14 @@ Scope {
   }
 
   function barColor() {
-    if (isMuted) return "#7a1010";
+    if (isMuted) return theme.normal.black;
     const v = Math.min(currentVolume / 1.5, 1.0);
     if (v < 0.20) return lerpColor(theme.normal.blue, theme.normal.cyan, v / 0.20);
     if (v < 0.40) return lerpColor(theme.normal.cyan, theme.normal.green, (v-0.20) / 0.20);
     if (v < 0.58) return lerpColor(theme.normal.green, theme.normal.yellow, (v-0.40) / 0.18);
     if (v < 0.73) return lerpColor(theme.normal.yellow, theme.normal.red, (v-0.58) / 0.15);
     if (v < 0.88) return lerpColor(theme.normal.red, theme.bright.red, (v-0.73) / 0.15);
-    return lerpColor(theme.bright.red, "#aa0000", (v-0.88) / 0.12);
+    return lerpColor(theme.bright.red, theme.bright.red, (v-0.88) / 0.12);
   }
 
   LazyLoader {
