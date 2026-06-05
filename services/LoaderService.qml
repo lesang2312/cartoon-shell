@@ -155,4 +155,58 @@ Item {
       VisibleService.togglePanel("launcher")
     }
   }
+  IpcHandler {
+    target: "dashboard"
+    function getToggle() {
+      VisibleService.togglePanel("dashboard")
+    }
+  }
+  IpcHandler {
+    target: "ram"
+    function getToggle() {
+      VisibleService.togglePanel("ram")
+    }
+  }
+  IpcHandler {
+    target: "cpu"
+    function getToggle() {
+      VisibleService.togglePanel("cpu")
+    }
+  }
+  IpcHandler {
+    target: "weather"
+    function getToggle() {
+      VisibleService.togglePanel("weather")
+    }
+  }
+  IpcHandler {
+    target: "calendar"
+    function getToggle() {
+      VisibleService.togglePanel("calendar")
+    }
+  }
+  IpcHandler {
+    target: "wifi"
+    function getToggle() {
+      VisibleService.togglePanel("wifi")
+    }
+  }
+  IpcHandler {
+    target: "bluetooth"
+    function getToggle() {
+      VisibleService.togglePanel("bluetooth")
+    }
+  }
+  IpcHandler {
+    target: "mixer"
+    function getToggle() {
+      VisibleService.togglePanel("mixer")
+    }
+  }
+  IpcHandler {
+    target: "battery"
+    function getToggle() {
+      VisibleService.togglePanel("battery")
+    }
+  }
 }

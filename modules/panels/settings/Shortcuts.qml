@@ -34,7 +34,7 @@ Item {
         color: theme.primary.foreground
       }
 
-      // Basic Window Management
+      // Basic Window Management section - remove the SUPER + J line since it's not standard
       ShortcutCategory {
         title: "🪟 Basic Window Management"
         shortcuts: [
@@ -69,153 +69,103 @@ Item {
         {
           key: "SUPER + P",
           action: "Pseudo Tiling"
-        },
-        {
-          key: "SUPER + J",
-          action: "Toggle Split"
         }
+        // Removed SUPER + J since it's not defined in your config
         ]
       }
 
-      // Window Focus
-      ShortcutCategory {
-        title: "🎯 Window Focus"
-        shortcuts: [
-        {
-          key: "SUPER + ←",
-          action: "Focus Left"
-        },
-        {
-          key: "SUPER + →",
-          action: "Focus Right"
-        },
-        {
-          key: "SUPER + ↑",
-          action: "Focus Up"
-        },
-        {
-          key: "SUPER + ↓",
-          action: "Focus Down"
-        }
-        ]
-      }
-
-      // Workspace Management
+      // Workspace Management - fix to 1-9 (or 1-10 if you add workspace 10)
       ShortcutCategory {
         title: "🎨 Workspace Management"
         shortcuts: [
         {
-          key: "SUPER + 1-0",
-          action: "Switch to Workspace 1-10"
+          key: "SUPER + 1-9",
+          action: "Switch to Workspace 1-9"
         },
         {
-          key: "SUPER + SHIFT + 1-0",
-          action: "Move Window to Workspace"
+          key: "SUPER + SHIFT + 1-9",
+          action: "Move Window to Workspace 1-9"
         },
         {
           key: "SUPER + S",
-          action: "Toggle Special Workspace"
+          action: "Toggle Special Workspace (magic)"
         },
         {
           key: "SUPER + SHIFT + S",
-          action: "Move to Special Workspace"
+          action: "Move Window to Special Workspace"
         }
         ]
       }
 
-      // Mouse Actions
+      // Mouse Actions - fix scroll direction
       ShortcutCategory {
         title: "🖱️ Mouse Actions"
         shortcuts: [
-        {
-          key: "SUPER + Scroll Up",
-          action: "Previous Workspace"
-        },
         {
           key: "SUPER + Scroll Down",
           action: "Next Workspace"
         },
         {
-          key: "SUPER + Left Drag",
+          key: "SUPER + Scroll Up",
+          action: "Previous Workspace"
+        },
+        {
+          key: "SUPER + Left Click + Drag",
           action: "Move Window"
         },
         {
-          key: "SUPER + Right Drag",
+          key: "SUPER + Right Click + Drag",
           action: "Resize Window"
         }
         ]
       }
 
-      // Media Control
+      // Add missing Dashboard and Panels section
       ShortcutCategory {
-        title: "🎵 Media Control"
+        title: "📊 Dashboard & Panels"
         shortcuts: [
         {
-          key: "XF86AudioPlay",
-          action: "Play/Pause"
+          key: "SUPER + D",
+          action: "Toggle Dashboard"
         },
         {
-          key: "XF86AudioPause",
-          action: "Play/Pause"
+          key: "SUPER + L",
+          action: "Lock Screen"
         },
         {
-          key: "XF86AudioNext",
-          action: "Next Track"
+          key: "SUPER + A",
+          action: "Toggle Calendar"
         },
         {
-          key: "XF86AudioPrev",
-          action: "Previous Track"
+          key: "SUPER + B",
+          action: "Toggle Bluetooth Panel"
         },
         {
-          key: "XF86AudioRaiseVolume",
-          action: "Volume Up +5%"
+          key: "SUPER + C",
+          action: "Toggle CPU Monitor"
         },
         {
-          key: "XF86AudioLowerVolume",
-          action: "Volume Down -5%"
+          key: "SUPER + R",
+          action: "Toggle RAM Monitor"
         },
         {
-          key: "XF86AudioMute",
-          action: "Toggle Mute"
+          key: "SUPER + W",
+          action: "Toggle Weather"
         },
         {
-          key: "XF86AudioMicMute",
-          action: "Toggle Mic Mute"
+          key: "SUPER + I",
+          action: "Toggle WiFi Panel"
+        },
+        {
+          key: "SUPER + U",
+          action: "Toggle Volume Mixer"
+        },
+        {
+          key: "SUPER + Y",
+          action: "Toggle Battery Info"
         }
         ]
-      }
-
-      // Brightness
-      ShortcutCategory {
-        title: "💡 Display Brightness"
-        shortcuts: [
-        {
-          key: "XF86MonBrightnessUp",
-          action: "Brightness Up +5%"
-        },
-        {
-          key: "XF86MonBrightnessDown",
-          action: "Brightness Down -5%"
-        }
-        ]
-      }
-
-      // Screenshot
-      ShortcutCategory {
-        title: "📸 Screenshots"
-        shortcuts: [
-        {
-          key: "PrintScreen",
-          action: "Fullscreen Screenshot"
-        },
-        {
-          key: "SUPER + PrintScreen",
-          action: "Area Screenshot (Select region)"
-        }
-        ]
-      }
-
-      Item {
+      }      Item {
         Layout.fillHeight: true
       } // Spacer
     }
