@@ -1,12 +1,13 @@
 // StarField.qml
 import QtQuick
+import qs.services
 
 Item {
   id: root
 
   property int starCount: 50
-  property real starMinSize: 2
-  property real starMaxSize: 5
+  property real starMinSize: ScalerService.s(2)
+  property real starMaxSize: ScalerService.s(5)
   property color starColor: theme.button.text
   property real starMinOpacity: 0.3
   property real starMaxOpacity: 1.0
@@ -91,9 +92,9 @@ Item {
 
         // Thân sao băng
         Rectangle {
-          width: 6
-          height: 6
-          radius: 3
+          width: ScalerService.s(6)
+          height: ScalerService.s(6)
+          radius: ScalerService.s(3)
           color: root.shootingStarColor
 
           // Đuôi sao băng
@@ -101,7 +102,7 @@ Item {
             anchors.right: parent.left
             anchors.verticalCenter: parent.verticalCenter
             width: shootingStar.trailLength
-            height: 3
+            height: ScalerService.s(3)
             opacity: 0.7
             gradient: Gradient {
               orientation: Gradient.Horizontal

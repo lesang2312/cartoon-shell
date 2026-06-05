@@ -21,6 +21,7 @@ Singleton {
 
   property bool lockscreen: false
   property bool packagePanel: false
+  property bool keybind: false
 
   property bool ram: false
 
@@ -111,6 +112,7 @@ Singleton {
           listLauncher = true;
           music = false;
           dashboard = false;
+          keybind= false
         } else {
           launcher = false;
           setting = false;
@@ -131,6 +133,7 @@ Singleton {
           launcher = false;
           dashboard = false;
           setting = false;
+          keybind= false
           fullsetting = false;
         } else {
           cpu = false;
@@ -148,6 +151,7 @@ Singleton {
           weather = false;
           launcher = false;
           dashboard = false;
+          keybind= false
           setting = false;
           fullsetting = false;
         } else {
@@ -161,6 +165,7 @@ Singleton {
           ram = false;
           cpu = false;
           weather = false;
+          keybind= false
           flag = false;
           music = false;
           calendar = true;
@@ -183,6 +188,7 @@ Singleton {
           flag = false;
           launcher = false;
           cpu = false;
+          keybind= false
           ram = false;
           music = true;
           setting = false;
@@ -201,6 +207,7 @@ Singleton {
           launcher = false;
           weather = true;
           mixer = false;
+          keybind= false
           wifi = false;
           bluetooth = false;
           battery = false;
@@ -225,6 +232,7 @@ Singleton {
           dashboard = false;
           ram = false;
           cpu = false;
+          keybind= false
           setting = false;
           fullsetting = false;
         } else {
@@ -241,6 +249,7 @@ Singleton {
           bluetooth = true;
           weather = false
           dashboard = false;
+          keybind= false
           setting = false;
           fullsetting = false;
         } else {
@@ -255,6 +264,7 @@ Singleton {
           mixer = false;
           bluetooth = false;
           battery = false;
+          keybind= false
           dashboard = false;
           setting = false;
           weather = false;
@@ -273,6 +283,7 @@ Singleton {
           battery = false;
           dashboard = false;
           setting = false;
+          keybind= false
           weather = false;
           fullsetting = false;
         } else {
@@ -288,6 +299,7 @@ Singleton {
           wifi = false;
           battery = true;
           dashboard = false;
+          keybind= false
           weather = false;
           setting = false;
           fullsetting = false;
@@ -308,6 +320,7 @@ Singleton {
           cpu = false;
           ram = false;
           flag = false;
+          keybind= false
           music = false;
           weather = false;
           packagePanel = true;
@@ -336,10 +349,35 @@ Singleton {
           music = false;
           weather = false;
           dashboard = true;
+          keybind= false
           setting = false;
           fullsetting = false;
         } else {
           dashboard = false;
+        }
+        break;
+      }
+      case "keybind":
+      {
+        if (!keybind) {
+          launcher = false;
+          battery = false;
+          wifi = false;
+          bluetooth = false;
+          mixer = false;
+          calendar = false;
+          cpu = false;
+          packagePanel = false;
+          ram = false;
+          flag = false;
+          music = false;
+          weather = false;
+          dashboard = false;
+          setting = false;
+          fullsetting = false;
+          keybind= true
+        } else {
+          keybind= false
         }
         break;
       }
@@ -348,6 +386,7 @@ Singleton {
         calendar = false;
         flag = false
         setting = true;
+        keybind= false
         break;
       }
       case "fullsetting":

@@ -37,6 +37,15 @@ Item {
       });
     }
   }
+  Loader {
+    source: "../modules/panels/keybind/KeyBindPanel.qml"
+    active: VisibleService.keybind
+    onLoaded: {
+      item.visible = Qt.binding(function () {
+          return VisibleService.keybind;
+      });
+    }
+  }
 
   property bool anchorsTop: Settings.clock.positionWidget === "top" || Settings.clock.positionWidget === "topLeft" || Settings.clock.positionWidget === "topRight"
   property bool anchorsBottom: Settings.clock.positionWidget === "bottom" || Settings.clock.positionWidget === "bottomLeft" || Settings.clock.positionWidget === "bottomRight"
@@ -207,6 +216,12 @@ Item {
     target: "battery"
     function getToggle() {
       VisibleService.togglePanel("battery")
+    }
+  }
+  IpcHandler {
+    target: "keybind"
+    function getToggle() {
+      VisibleService.togglePanel("keybind")
     }
   }
 }
