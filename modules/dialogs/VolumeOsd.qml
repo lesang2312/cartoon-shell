@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import qs.commons
 import Quickshell.Services.Pipewire
 import Quickshell.Widgets
 import qs.components
@@ -43,7 +44,6 @@ Scope {
     return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${bl.toString(16).padStart(2,'0')}`;
   }
 
-  // Color run from purple → blue → cyan → green → yellow → sun orange → red :)
   function barColor() {
     if (isMuted) return "#7a1010";
     const v = Math.min(currentVolume / 1.5, 1.0);
