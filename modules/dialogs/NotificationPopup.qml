@@ -3,10 +3,10 @@ import QtQuick.Window
 import Quickshell
 import Quickshell.Services.Notifications
 import qs.services
+import qs.commons
 
 PanelWindow {
   id: root
-  property var theme: ThemeService.theme
 
   implicitWidth: ScalerService.s(430)
   anchors {
@@ -40,9 +40,6 @@ PanelWindow {
     anchors.fill: parent
     color: "transparent"
 
-    // Hiệu ứng shadow
-    layer.enabled: true
-
     // Danh sách notification
     ListView {
       id: notificationList
@@ -70,21 +67,10 @@ PanelWindow {
         id: notificationDelegate
         width: notificationList.width
         height: isExpanded ? contentColumn.implicitHeight + ScalerService.s(24) : notificationHeight
-        radius: ScalerService.s(8)
-        color: {
-          switch (model.urgency) {
-            case NotificationUrgency.Critical:
-            return theme.primary.dim_background;
-            case NotificationUrgency.Normal:
-            return theme.primary.dim_background;
-            case NotificationUrgency.Low:
-            return theme.primary.dim_background;
-            default:
-            return theme.button.background;
-          }
-        }
-        border.color: Qt.darker(color, 1.1)
-        border.width: ScalerService.s(3)
+        border.color: theme.button.border
+        radius: ScalerService.s(Settings.appearance.radius1)
+        border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
+        color: theme.primary.background
 
         property bool isExpanded: false
         property bool hasLongContent: false
