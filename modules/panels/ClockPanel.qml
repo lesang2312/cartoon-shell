@@ -87,7 +87,7 @@ PanelWindow {
 
       Rectangle {
         Layout.preferredWidth: ScalerService.s(10)
-        Layout.preferredHeight: parent.height
+        Layout.preferredHeight: parent.height/2
         color: "#ffffff"
         radius: ScalerService.s(10)
       }
