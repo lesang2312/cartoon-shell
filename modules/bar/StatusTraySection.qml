@@ -239,6 +239,20 @@ Rectangle {
         Layout.fillWidth: true
       }
 
+      Com.StatContainer {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        panelName: "mixer"
+
+        Com.BrightnessStat {
+          anchors.centerIn: parent
+        }
+      }
+
+      Item {
+        Layout.fillWidth: true
+      }
+
       // Battery (UPower displayDevice)
       Rectangle {
         id: batteryContainer
@@ -439,6 +453,18 @@ Rectangle {
         panelName: "mixer"
 
         Com.VolumeStat {
+          anchors.centerIn: parent
+        }
+      }
+      Item {
+        Layout.fillWidth: true
+      }
+
+      Com.StatContainer {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+
+        Com.BrightnessStat {
           anchors.centerIn: parent
         }
       }

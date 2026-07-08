@@ -11,6 +11,27 @@ Singleton {
     property real currentBrightness: 0.5
     property bool shouldShowOsd: false
 
+    function changeBright(delta) {
+      brightnessProcess.command = [
+          "brightnessctl",
+          "-e4",
+          "-n2",
+          "set",
+          delta > 0 ? "5%+" : "5%-"
+      ];
+
+      brightnessProcess.running = true;
+    }
+
+    Process {
+      id: brightnessProcess
+      running: false
+
+      onExited: {
+          getBrightProcess.running = true;
+      }
+    }
+
     Component.onCompleted: {
         Qt.callLater(init);
     }
