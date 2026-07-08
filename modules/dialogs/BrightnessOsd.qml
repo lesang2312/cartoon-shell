@@ -13,69 +13,11 @@ Scope {
 
   property var theme: ThemeService.theme
   property var lang: LanguageService.translations
-  property bool shouldShowOsd: false
-  property real currentBrightness: 0.5
+  property bool shouldShowOsd: BrightnessService.shouldShowOsd
+  property real currentBrightness: BrightnessService.currentBrightness
   property bool isBrightnessMuted: false
 
-  // Hàm để lấy độ sáng từ hệ thống
-  function getBrightness() {
-    const result = Shell.Process.exec("brightnessctl", ["g"]);
-    if (result.success) {
-      const maxBright = Shell.Process.exec("brightnessctl", ["m"]);
-      if (maxBright.success) {
-        const current = parseInt(result.stdout.trim());
-        const max = parseInt(maxBright.stdout.trim());
-        if (max > 0) {
-          return current / max;
-        }
-      }
-    }
-    return 0.5;
-  }
 
-  // Hàm để set độ sáng
-  function setBrightness(value) {
-    const clampedValue = Math.max(0, Math.min(1, value));
-    const percent = Math.round(clampedValue * 100);
-    Shell.Process.exec("brightnessctl", ["s", percent + "%"]);
-    root.currentBrightness = clampedValue;
-    root.shouldShowOsd = true;
-    hideTimer.restart();
-  }
-
-  // Hàm tăng độ sáng
-  function increaseBrightness(step = 0.05) {
-    const newValue = Math.min(root.currentBrightness + step, 1.0);
-    setBrightness(newValue);
-  }
-
-  // Hàm giảm độ sáng
-  function decreaseBrightness(step = 0.05) {
-    const newValue = Math.max(root.currentBrightness - step, 0.0);
-    setBrightness(newValue);
-  }
-
-  // IPC Handlers cho Brightness
-  IpcHandler {
-    target: "brightness"
-    // Handler cho tăng độ sáng
-    function set(value: real) {
-      root.shouldShowOsd = true;
-      root.currentBrightness = value;
-      hideTimer.restart();
-      return;
-    }
-  }
-
-  Timer {
-    id: hideTimer
-    interval: 1500
-    onTriggered: root.shouldShowOsd = false
-  }
-
-  Component.onCompleted: {
-    root.currentBrightness = getBrightness();
-  }
 
   function lerpColor(a, b, t) {
     const ar = parseInt(a.slice(1,3),16), ag = parseInt(a.slice(3,5),16), ab = parseInt(a.slice(5,7),16);
