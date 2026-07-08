@@ -14,26 +14,67 @@ Scope {
   property var theme: ThemeService.theme
   property var lang: LanguageService.translations
   property bool shouldShowOsd: false
-  property real currentVolume: Pipewire.defaultAudioSink?.audio.volume ?? 0
-  property bool isMuted: Pipewire.defaultAudioSink?.audio.mute ?? false
+  property real currentBrightness: 0.5
+  property bool isBrightnessMuted: false
 
-  PwObjectTracker {
-    objects: [Pipewire.defaultAudioSink]
+  // Hàm để lấy độ sáng từ hệ thống
+  function getBrightness() {
+    const result = Shell.Process.exec("brightnessctl", ["g"]);
+    if (result.success) {
+      const maxBright = Shell.Process.exec("brightnessctl", ["m"]);
+      if (maxBright.success) {
+        const current = parseInt(result.stdout.trim());
+        const max = parseInt(maxBright.stdout.trim());
+        if (max > 0) {
+          return current / max;
+        }
+      }
+    }
+    return 0.5;
   }
 
-  Connections {
-    target: Pipewire.defaultAudioSink.audio ?? null
+  // Hàm để set độ sáng
+  function setBrightness(value) {
+    const clampedValue = Math.max(0, Math.min(1, value));
+    const percent = Math.round(clampedValue * 100);
+    Shell.Process.exec("brightnessctl", ["s", percent + "%"]);
+    root.currentBrightness = clampedValue;
+    root.shouldShowOsd = true;
+    hideTimer.restart();
+  }
 
-    function onVolumeChanged() {
+  // Hàm tăng độ sáng
+  function increaseBrightness(step = 0.05) {
+    const newValue = Math.min(root.currentBrightness + step, 1.0);
+    setBrightness(newValue);
+  }
+
+  // Hàm giảm độ sáng
+  function decreaseBrightness(step = 0.05) {
+    const newValue = Math.max(root.currentBrightness - step, 0.0);
+    setBrightness(newValue);
+  }
+
+  // IPC Handlers cho Brightness
+  IpcHandler {
+    target: "brightness"
+    // Handler cho tăng độ sáng
+    function set(value: real) {
       root.shouldShowOsd = true;
+      root.currentBrightness = value;
       hideTimer.restart();
+      return;
     }
   }
 
   Timer {
     id: hideTimer
-    interval: 1000
+    interval: 1500
     onTriggered: root.shouldShowOsd = false
+  }
+
+  Component.onCompleted: {
+    root.currentBrightness = getBrightness();
   }
 
   function lerpColor(a, b, t) {
@@ -46,8 +87,8 @@ Scope {
   }
 
   function barColor() {
-    if (isMuted) return theme.normal.black;
-    const v = Math.min(currentVolume / 1.5, 1.0);
+    if (isBrightnessMuted) return theme.normal.black;
+    const v = Math.min(currentBrightness / 1.0, 1.0);
     if (v < 0.20) return lerpColor(theme.normal.blue, theme.normal.cyan, v / 0.20);
     if (v < 0.40) return lerpColor(theme.normal.cyan, theme.normal.green, (v-0.20) / 0.20);
     if (v < 0.58) return lerpColor(theme.normal.green, theme.normal.yellow, (v-0.40) / 0.18);
@@ -89,13 +130,14 @@ Scope {
           spacing: ScalerService.s(12)
 
           RowLayout {
-            IconImage {
-              path: root.getVolumeIcon()
-              size: "large"
+            IconText {
+              name: root.getBrightnessIcon()
+              textColor: theme.button.text
+              size: "normal"
             }
             CustomText {
-              name: Math.round(currentVolume * 100) + "%"
-              color:  currentVolume > 1.0 ? theme.normal.red : theme.primary.foreground
+              name: Math.round(currentBrightness * 100) + "%"
+              color: currentBrightness > 1.0 ? theme.normal.red : theme.primary.foreground
               size: "large"
               isBold: true
               Behavior on color {
@@ -107,7 +149,7 @@ Scope {
               Layout.fillWidth: true
               Layout.fillHeight: true
               CustomText {
-                name: " " + (lang?.volume?.title || "Âm thanh")
+                name: " " + (lang?.brightness?.title || "Độ sáng")
                 anchors.margins: ScalerService.s(10)
                 anchors.top: parent.top
                 anchors.right: parent.right
@@ -115,7 +157,6 @@ Scope {
             }
           }
 
-          // Thanh volume
           ColumnLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -132,7 +173,7 @@ Scope {
                   top: parent.top
                   bottom: parent.bottom
                 }
-                width: parent.width * Math.min(currentVolume / 1.5, 1.0)
+                width: parent.width * Math.min(currentBrightness / 1.0, 1.0)
                 radius: parent.radius
                 color: root.barColor()
                 Behavior on width {
@@ -143,10 +184,9 @@ Scope {
                 }
               }
 
-              // 100% marker
               Rectangle {
-                visible: currentVolume > 1.0
-                x: parent.width * (1.0 / 1.5) - width / 2
+                visible: currentBrightness > 1.0
+                x: parent.width * (1.0 / 1.0) - width / 2
                 width: ScalerService.s(3)
                 height: parent.height
                 radius: ScalerService.s(1.5)
@@ -160,17 +200,19 @@ Scope {
     }
   }
 
-  function getVolumeIcon() {
-    if (isMuted || currentVolume == 0)
-    return "volume/volume_0.png";
-    if (currentVolume <= 0.25)
-    return "volume/volume_1.png";
-    if (currentVolume <= 0.50)
-    return "volume/volume_2.png";
-    if (currentVolume <= 0.75)
-    return "volume/volume_3.png";
-    if (currentVolume <= 1)
-    return "volume/volume_4.png";
-    return "volume/volume_5.png";
-  }
+  function getBrightnessIcon() {
+    if (isBrightnessMuted || currentBrightness <= 0)
+        return "brightness_1";
+    if (currentBrightness <= 1 / 7)
+        return "brightness_2";
+    if (currentBrightness <= 2 / 7)
+        return "brightness_3";
+    if (currentBrightness <= 3 / 7)
+        return "brightness_4";
+    if (currentBrightness <= 4 / 7)
+        return "brightness_5";
+    if (currentBrightness <= 5 / 7)
+        return "brightness_6";
+    return "brightness_7";
+}
 }

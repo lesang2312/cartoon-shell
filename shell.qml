@@ -71,6 +71,7 @@ ShellRoot {
       Bar {}
       NotificationPopup {}
       VolumeOsd {}
+      BrightnessOsd {}
     }
   }
 }
