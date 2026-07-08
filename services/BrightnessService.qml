@@ -13,11 +13,14 @@ Singleton {
 
     function changeBright(delta) {
       brightnessProcess.command = [
-          "brightnessctl",
-          "-e4",
-          "-n2",
-          "set",
-          delta > 0 ? "5%+" : "5%-"
+          "sh",
+          "-c",
+          `
+          brightnessctl -e4 -n2 set ${delta > 0 ? "5%+" : "5%-"}
+          qs ipc --path ~/.config/quickshell/cartoon-shell \
+              call brightness set \
+              "$(awk "BEGIN {print $(brightnessctl g)/$(brightnessctl m)}")"
+          `
       ];
 
       brightnessProcess.running = true;
