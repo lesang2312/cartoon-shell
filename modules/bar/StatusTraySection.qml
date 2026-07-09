@@ -216,8 +216,8 @@ Rectangle {
           percent: Math.round(UPower.displayDevice.percentage * 100)
           status : UPowerDeviceState.toString(UPower.displayDevice.state)
           textColor: theme.primary.foreground
-          Layout.preferredWidth: ScalerService.s(30)
-          Layout.preferredHeight: ScalerService.s(20)
+          Layout.preferredWidth: ScalerService.s(28)
+          Layout.preferredHeight: ScalerService.s(18)
           visible: UPower.displayDevice.isLaptopBattery
 
           MouseArea {
@@ -399,54 +399,25 @@ Rectangle {
       }
 
       // Battery (vertical, UPower displayDevice)
-      Item {
-        Layout.fillWidth: true
-        Layout.preferredHeight: ScalerService.s(50)
+      BatteryIcon {
+          id: batteryContainer
+          percent: Math.round(UPower.displayDevice.percentage * 100)
+          status : UPowerDeviceState.toString(UPower.displayDevice.state)
+          textColor: theme.primary.foreground
+          Layout.preferredWidth: ScalerService.s(28)
+          Layout.preferredHeight: ScalerService.s(18)
+          visible: UPower.displayDevice.isLaptopBattery
 
-        Item {
-          anchors.centerIn: parent
-          width: parent.height
-          height: parent.width
-          transformOrigin: Item.Center
-
-          ColumnLayout {
-            anchors.centerIn: parent
-            spacing: ScalerService.s(2)
-
-            Image {
-              id: batteryIconVertical
-              source: root.batteryIconVerticalSource
-              width: ScalerService.s(25)
-              height: ScalerService.s(25)
-              sourceSize: Qt.size(ScalerService.s(25), ScalerService.s(25))
-              Layout.alignment: Qt.AlignHCenter
-            }
-
-            // Battery percentage text (bold)
-            Text {
-              text: root.batteryPercent
-              color: theme.primary.foreground
-              font.pixelSize: ScalerService.s(10)
-              font.bold: true
-              Layout.alignment: Qt.AlignHCenter
-            }
+          MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            onEntered: batteryContainer.scale = 1.1
+            onExited: batteryContainer.scale = 1.0
+            onPressed: batteryContainer.scale = 0.95
+            onReleased: batteryContainer.scale = 1.1
+            onClicked: VisibleService.togglePanel("battery")
           }
-        }
-
-        MouseArea {
-          anchors.fill: parent
-          hoverEnabled: true
-          cursorShape: Qt.PointingHandCursor
-          onClicked: VisibleService.togglePanel("battery")
-          onEntered: parent.opacity = 0.8
-          onExited: parent.opacity = 1.0
-        }
-
-        Behavior on opacity {
-          NumberAnimation {
-            duration: 100
-          }
-        }
       }
 
       // Power (vertical)
