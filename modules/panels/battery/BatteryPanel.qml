@@ -2,29 +2,29 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Shapes
+import Quickshell.Services.UPower
 import Quickshell.Io
 import Quickshell
 import qs.services
+import qs.commons
+import qs.components
 
 Item {
   id: root
-  width: ScalerService.s(320)
-  height: ScalerService.s(400)
 
   // Catppuccin Mocha color scheme
-  property color batteryHighColor: theme.normal.green       // "#a6da95"
-  property color batteryMediumColor: theme.normal.yellow    // "#eed49f"
-  property color batteryLowColor: theme.normal.red          // "#ed8796"
-  property color batteryBackgroundColor: theme.normal.black // "#494d64"
-  property color textColor: theme.primary.foreground        // "#cad3f5"
-  property color dimTextColor: theme.primary.dim_foreground // "#8087a2"
-  property color borderColor: theme.bright.black            // "#5b6078"
-  property color separatorColor: theme.normal.black         // "#494d64"
+  property color batteryHighColor: theme.normal.green
+  property color batteryMediumColor: theme.normal.yellow
+  property color batteryLowColor: theme.normal.red
+  property color batteryBackgroundColor: theme.normal.black
+  property color textColor: theme.primary.foreground
+  property color dimTextColor: theme.primary.dim_foreground
+  property color borderColor: theme.bright.black
+  property color separatorColor: theme.normal.black
 
   property real animationProgress: 0
   SequentialAnimation on animationProgress {
     running: true
-
     NumberAnimation {
       from: 0
       to: 1
@@ -35,55 +35,39 @@ Item {
 
   property int batteryPercent: 0
   property string batteryStatus: "Discharging"
-  property int updateInterval: 2000
-
-  // Thông tin chi tiết từ script
-  property int capacity: 0
-  property int energy_mWh: 0
-  property int energy_full_mWh: 0
-  property int power_mW: 0
-  property int voltage_V: 0
-  property int current_mA: 0
-
-  // Biến cho animation
   property bool dataLoaded: false
 
-  Timer {
-    interval: updateInterval
-    running: true
-    repeat: true
-    onTriggered: batteryFetcher.running = true
+  // Refresh battery data from UPower
+  function refreshBatteryData() {
+    var dev = UPower.displayDevice;
+    if (!dev || !dev.ready) return;
+    
+    root.batteryPercent = Math.round(dev.percentage * 100);
+    root.batteryStatus = UPowerDeviceState.toString(dev.state);
+    root.dataLoaded = true;
   }
 
-  Process {
-    id: batteryFetcher
-    running: false
-    stdout: StdioCollector {
-      id: outputCollector
+  // Initialize and listen to UPower changes
+  Timer {
+    id: initTimer
+    interval: 100
+    running: true
+    repeat: true
+    onTriggered: {
+      if (UPower.displayDevice && UPower.displayDevice.ready) {
+        stop();
+        refreshBatteryData();
+      }
     }
+  }
 
-    command: [Qt.resolvedUrl("../../../scripts/battery_monitor.sh")]
-
-    onExited: {
-      try {
-        var txt = outputCollector.text ? outputCollector.text.trim() : "";
-        if (txt !== "") {
-          const data = JSON.parse(txt);
-          root.batteryPercent = data.capacity;
-          root.batteryStatus = data.status;
-
-          // Lấy thông tin chi tiết
-          root.capacity = data.capacity;
-          root.energy_mWh = data.energy_mWh;
-          root.energy_full_mWh = data.energy_full_mWh;
-          root.power_mW = data.power_mW;
-          root.voltage_V = data.voltage_V;
-          root.current_mA = data.current_mA;
-
-          root.dataLoaded = true;
-        } else {}
-      } catch (e) {}
-    }
+  Connections {
+    target: UPower.displayDevice
+    enabled: UPower.displayDevice && UPower.displayDevice.ready
+    function onPercentageChanged() { refreshBatteryData(); }
+    function onStateChanged() { refreshBatteryData(); }
+    function onEnergyChanged() { refreshBatteryData(); }
+    function onEnergyFullChanged() { refreshBatteryData(); }
   }
 
   Rectangle {
@@ -121,7 +105,6 @@ Item {
           ctx.strokeStyle = theme.primary.foreground;
           ctx.lineWidth = 0.5;
 
-          // Vẽ grid pattern nhẹ
           for (var x = 0; x < width; x += ScalerService.s(15)) {
             ctx.beginPath();
             ctx.moveTo(x, 0);
@@ -143,103 +126,36 @@ Item {
     anchors.fill: parent
     anchors.margins: ScalerService.s(16)
     spacing: ScalerService.s(16)
-
-    // Header với icon
-    RowLayout {
-      Layout.fillWidth: true
-
-      Text {
-        text: "🔋 Battery Monitor"
-        font.family: "ComicShannsMono Nerd Font"
-        color: textColor
-        font.bold: true
-        font.pointSize: ScalerService.s(14)
-      }
-
-      Item {
-        Layout.fillWidth: true
-      }
-
-      // Status indicator
-      Rectangle {
-        width: ScalerService.s(8)
-        height: ScalerService.s(8)
-        radius: ScalerService.s(4)
-        color: getBatteryStatusColor()
-      }
-    }
-
     // Battery Level Section
     ColumnLayout {
       Layout.fillWidth: true
       spacing: ScalerService.s(8)
 
-      // Battery icon và phần trăm
       RowLayout {
         Layout.fillWidth: true
         spacing: ScalerService.s(12)
 
-        // Battery icon
-        Rectangle {
+        BatteryIcon {
+          id: batteryIcon
+          percent: root.batteryPercent
+          status : UPowerDeviceState.toString(UPower.displayDevice.state)
+          textColor: root.textColor
           Layout.preferredWidth: ScalerService.s(40)
           Layout.preferredHeight: ScalerService.s(20)
-          radius: ScalerService.s(3)
-          border.color: textColor
-          border.width: ScalerService.s(2)
-          color: "transparent"
-
-          // Battery tip
-          Rectangle {
-            x: parent.width + ScalerService.s(1)
-            y: parent.height / 2 - ScalerService.s(3)
-            width: ScalerService.s(4)
-            height: ScalerService.s(6)
-            radius: ScalerService.s(1)
-            color: textColor
-          }
-
-          // Battery level fill
-          Rectangle {
-            anchors {
-              left: parent.left
-              top: parent.top
-              bottom: parent.bottom
-              margins: ScalerService.s(2)
-            }
-            width: (parent.width - ScalerService.s(4)) * (batteryPercent / 100)
-            radius: ScalerService.s(1)
-            color: getBatteryColor()
-            Behavior on width {
-              NumberAnimation {
-                duration: 800
-                easing.type: Easing.OutCubic
-              }
-            }
-          }
-
-          // Charging bolt icon
-          Text {
-            anchors.centerIn: parent
-            text: batteryStatus === "Charging" ? "⚡" : ""
-            color: theme.primary.background
-            font.pointSize: ScalerService.s(10)
-            visible: batteryStatus === "Charging"
-          }
         }
 
-        // Percentage và status
         ColumnLayout {
           spacing: ScalerService.s(2)
 
           Text {
-            text: batteryPercent + "%"
+            text: root.batteryPercent + "%"
             color: getBatteryColor()
             font.bold: true
             font.pointSize: ScalerService.s(16)
           }
 
           Text {
-            text: getStatusText()
+            text: root.batteryStatus
             color: dimTextColor
             font.pointSize: ScalerService.s(10)
           }
@@ -249,16 +165,15 @@ Item {
           Layout.fillWidth: true
         }
 
-        // Time estimate
         Text {
           text: getTimeEstimate()
           color: dimTextColor
           font.pointSize: ScalerService.s(10)
           Layout.alignment: Qt.AlignRight
+          visible: text !== ""
         }
       }
 
-      // Progress bar
       Rectangle {
         Layout.fillWidth: true
         height: ScalerService.s(12)
@@ -266,7 +181,7 @@ Item {
         color: batteryBackgroundColor
 
         Rectangle {
-          width: parent.width * (batteryPercent / 100)
+          width: parent.width * (root.batteryPercent / 100)
           height: parent.height
           radius: ScalerService.s(6)
           gradient: Gradient {
@@ -334,62 +249,24 @@ Item {
         font.pointSize: ScalerService.s(9)
       }
       Text {
-        text: (energy_mWh / 1000).toFixed(2) + " / " + (energy_full_mWh / 1000).toFixed(2) + " Wh"
+        text: UPower.displayDevice.energy + " / " + UPower.displayDevice.energyCapacity + " Wh"
         color: textColor
         font.pointSize: ScalerService.s(9)
         font.bold: true
       }
 
-      // Power
-      Text {
-        text: "Power:"
-        color: dimTextColor
-        font.pointSize: ScalerService.s(9)
-      }
-      Text {
-        text: (power_mW / 1000).toFixed(2) + " W"
-        color: power_mW > 0 ? theme.normal.yellow : theme.normal.green
-        font.pointSize: ScalerService.s(9)
-        font.bold: true
-      }
-
-      // Voltage & Current
-      Text {
-        text: "Voltage:"
-        color: dimTextColor
-        font.pointSize: ScalerService.s(9)
-      }
-      Text {
-        text: voltage_V + " V"
-        color: textColor
-        font.pointSize: ScalerService.s(9)
-        font.bold: true
-      }
-
-      Text {
-        text: "Current:"
-        color: dimTextColor
-        font.pointSize: ScalerService.s(9)
-      }
-      Text {
-        text: Math.abs(current_mA) + " mA"
-        color: textColor
-        font.pointSize: ScalerService.s(9)
-        font.bold: true
-      }
-
-      // Status
       Text {
         text: "Status:"
         color: dimTextColor
         font.pointSize: ScalerService.s(9)
       }
       Text {
-        text: batteryStatus
+        text: root.batteryStatus
         color: getBatteryStatusColor()
         font.pointSize: ScalerService.s(9)
         font.bold: true
       }
+
     }
   }
 
@@ -429,50 +306,60 @@ Item {
 
   // Helper functions
   function getBatteryColor() {
-    if (batteryPercent > 60)
-    return batteryHighColor;
-    if (batteryPercent > 20)
-    return batteryMediumColor;
+    if (root.batteryPercent > 60)
+      return batteryHighColor;
+    if (root.batteryPercent > 20)
+      return batteryMediumColor;
     return batteryLowColor;
   }
 
   function getBatteryStatusColor() {
-    switch (batteryStatus) {
+    switch (root.batteryStatus) {
       case "Charging":
-      return theme.normal.green;
+        return theme.normal.green;
       case "Discharging":
-      return getBatteryColor();
+        return getBatteryColor();
       case "Full":
-      return theme.normal.cyan;
+        return theme.normal.cyan;
       default:
-      return theme.normal.white;
-    }
-  }
-
-  function getStatusText() {
-    switch (batteryStatus) {
-      case "Charging":
-      return "Charging";
-      case "Discharging":
-      return "Discharging";
-      case "Full":
-      return "Full";
-      default:
-      return batteryStatus;
+        return theme.normal.white;
     }
   }
 
   function getTimeEstimate() {
-    if (batteryStatus === "Charging" && power_mW > 0) {
-      var remainingEnergy = (energy_full_mWh - energy_mWh) / 1000; // Wh
-      var hours = remainingEnergy / (power_mW / 1000);
-      return "~" + Math.ceil(hours) + "h to full";
-    } else if (batteryStatus === "Discharging" && power_mW > 0) {
-      var remainingHours = (energy_mWh / 1000) / (power_mW / 1000);
-      return "~" + Math.ceil(remainingHours) + "h remaining";
+    var dev = UPower.displayDevice;
+    if (!dev || !dev.ready) return "";
+
+    if (root.batteryStatus === "Charging") {
+      var seconds = dev.timeToFull;
+      if (seconds <= 0 || seconds === Infinity) return "";
+      
+      var hours = Math.floor(seconds / 3600);
+      var minutes = Math.floor((seconds % 3600) / 60);
+      
+      if (hours > 0)
+        return hours + "h " + minutes + "m to full";
+      return minutes + "m to full";
     }
+
+    if (root.batteryStatus === "Discharging") {
+      var seconds = dev.timeToEmpty;
+      if (seconds <= 0 || seconds === Infinity) return "";
+      
+      var hours = Math.floor(seconds / 3600);
+      var minutes = Math.floor((seconds % 3600) / 60);
+      
+      if (hours > 0)
+        return hours + "h " + minutes + "m remaining";
+      return minutes + "m remaining";
+    }
+
     return "";
   }
 
-  Component.onCompleted: batteryFetcher.running = true
+  Component.onCompleted: {
+    if (UPower.displayDevice && UPower.displayDevice.ready) {
+      refreshBatteryData();
+    }
+  }
 }

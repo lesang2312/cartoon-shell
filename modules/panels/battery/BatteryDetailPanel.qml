@@ -5,7 +5,7 @@ import Quickshell.Wayland
 import Quickshell.Io
 import qs.services
 import qs.commons
-import "./" as Components
+import "./" as Com
 
 PanelWindow {
   id: batteryDetailPanel
@@ -13,9 +13,9 @@ PanelWindow {
   property var sizes: currentSizes.batteryDetailPanel || {}
 
   width: ScalerService.s(450)
-  height: ScalerService.s(400)
+  height: ScalerService.s(290)
+  
   anchors {
-    // Anchor theo vị trí của bar
     left: Settings.bar.position === "left"
     right: Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom"
     top: Settings.bar.position === "top"
@@ -28,6 +28,7 @@ PanelWindow {
     left: Settings.bar.position === "left" ? ScalerService.s(10) : 0
     right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? ScalerService.s(10) : 0
   }
+  
   color: "transparent"
 
   Rectangle {
@@ -42,34 +43,26 @@ PanelWindow {
       anchors.margins: ScalerService.s(16)
       spacing: ScalerService.s(16)
 
-      // Header
-      Text {
-        text: "🔋 Battery Details"
-        font.family: "ComicShannsMono Nerd Font"
-        color: theme.primary.foreground
-        font.bold: true
-        font.pixelSize: ScalerService.s(16)
-        Layout.alignment: Qt.AlignHCenter
+      Com.BatteryHeader{
+        Layout.fillWidth: true
+        Layout.preferredHeight: ScalerService.s(40)
       }
 
       // Battery Panel Component
-      Components.BatteryPanel {
+      Com.BatteryPanel {
         Layout.fillWidth: true
         Layout.fillHeight: true
       }
     }
   }
 
+  // Tự động refresh khi panel hiển thị
   Timer {
     interval: 2000
     running: batteryDetailPanel.visible
     repeat: true
     onTriggered: {
-      // Refresh data khi panel hiển thị
+      // Refresh dữ liệu nếu cần
     }
-  }
-
-  Component.onCompleted: {
-    // Khởi tạo dữ liệu
   }
 }

@@ -51,50 +51,9 @@ Rectangle {
   property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
   property bool shouldShowOsd: false
 
-  // UPower battery display – using displayDevice (always available)
-  property string batteryPercent: "…"
-  property bool batteryCharging: false
-  property string batteryIconSource: Directories.assetsPath + '/battery/full.png'
-  property string batteryIconVerticalSource: Directories.assetsPath + '/battery/full.png'
 
-  function refreshBatteryDisplay() {
-    var dev = UPower.displayDevice;
-    if (!dev || !dev.ready) return;
-    root.batteryPercent = Math.round(dev.percentage * 100) + "%";
-    root.batteryCharging = (dev.state === UPowerDeviceState.Charging);
-    var icon = getBatteryIcon(Math.round(dev.percentage * 100));
-    root.batteryIconSource = icon;
-    root.batteryIconVerticalSource = icon;
-  }
 
-  function getBatteryIcon(percent) {
-    if (root.batteryCharging) return Directories.assetsPath + '/battery/battery-1.png';
-    if (percent <= 20) return Directories.assetsPath + '/battery/battery-2.png';
-    if (percent <= 50) return Directories.assetsPath + '/battery/battery-3.png';
-    if (percent <= 80) return Directories.assetsPath + '/battery/battery-3.png';
-    return Directories.assetsPath + '/battery/full.png';
-  }
 
-  // Wait for displayDevice to become ready, then start listening
-  Timer {
-    id: initTimer
-    interval: 500
-    running: true
-    repeat: true
-    onTriggered: {
-      if (UPower.displayDevice && UPower.displayDevice.ready) {
-        stop();
-        refreshBatteryDisplay();
-      }
-    }
-  }
-
-  Connections {
-    target: UPower.displayDevice
-    enabled: UPower.displayDevice && UPower.displayDevice.ready
-    function onPercentageChanged() { refreshBatteryDisplay(); }
-    function onStateChanged() { refreshBatteryDisplay(); }
-  }
 
   PwObjectTracker {
     objects: [Pipewire.defaultAudioSink]
@@ -242,7 +201,6 @@ Rectangle {
       Com.StatContainer {
         Layout.fillWidth: true
         Layout.fillHeight: true
-        panelName: "mixer"
 
         Com.BrightnessStat {
           anchors.centerIn: parent
@@ -253,54 +211,25 @@ Rectangle {
         Layout.fillWidth: true
       }
 
-      // Battery (UPower displayDevice)
-      Rectangle {
-        id: batteryContainer
-        Layout.preferredWidth: batteryContent.width
-        Layout.fillHeight: true
-        color: "transparent"
-        radius: ScalerService.s(6)
-        transformOrigin: Item.Center
+      BatteryIcon {
+          id: batteryContainer
+          percent: Math.round(UPower.displayDevice.percentage * 100)
+          status : UPowerDeviceState.toString(UPower.displayDevice.state)
+          textColor: theme.primary.foreground
+          Layout.preferredWidth: ScalerService.s(30)
+          Layout.preferredHeight: ScalerService.s(20)
+          visible: UPower.displayDevice.isLaptopBattery
 
-        RowLayout {
-          id: batteryContent
-          anchors.centerIn: parent
-          spacing: ScalerService.s(8)
-
-          Image {
-            id: batteryIcon
-            source: root.batteryIconSource
-            width: ScalerService.s(30)
-            height: ScalerService.s(30)
-            sourceSize: Qt.size(ScalerService.s(30), ScalerService.s(30))
+          MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            onEntered: batteryContainer.scale = 1.1
+            onExited: batteryContainer.scale = 1.0
+            onPressed: batteryContainer.scale = 0.95
+            onReleased: batteryContainer.scale = 1.1
+            onClicked: VisibleService.togglePanel("battery")
           }
-
-          // Battery percentage text (bold)
-          Text {
-            text: root.batteryPercent
-            color: theme.primary.foreground
-            font.pixelSize: ScalerService.s(13)
-            font.bold: true
-            verticalAlignment: Text.AlignVCenter
-          }
-        }
-
-        MouseArea {
-          anchors.fill: parent
-          hoverEnabled: true
-          cursorShape: Qt.PointingHandCursor
-          onEntered: batteryContainer.scale = 1.1
-          onExited: batteryContainer.scale = 1.0
-          onPressed: batteryContainer.scale = 0.95
-          onReleased: batteryContainer.scale = 1.1
-          onClicked: VisibleService.togglePanel("battery")
-        }
-
-        Behavior on scale {
-          NumberAnimation {
-            duration: 100
-          }
-        }
       }
 
       Item {
