@@ -62,7 +62,6 @@ Rectangle {
     target: Pipewire.defaultAudioSink?.audio ?? null
   }
 
-  // UI Layout
   Loader {
     anchors.fill: parent
     anchors.margins: isVertical ? ScalerService.s(6) : ScalerService.s(5)
@@ -120,7 +119,6 @@ Rectangle {
         Layout.fillWidth: true
       }
 
-      // Volume
       Com.StatContainer {
         Layout.fillWidth: true
         Layout.fillHeight: true
@@ -264,7 +262,6 @@ Rectangle {
         Layout.fillWidth: true
       }
 
-      // Volume (vertical)
       Com.StatContainer {
         Layout.fillWidth: true
         Layout.fillHeight: true

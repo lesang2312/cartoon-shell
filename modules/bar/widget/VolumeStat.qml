@@ -22,7 +22,7 @@ Item {
 
   function changeVolume(delta) {
     if (!sink) return
-    var newVol = Math.min(1, Math.max(0, sink.audio.volume + delta))
+    var newVol = Math.min(1.5, Math.max(0, sink.audio.volume + delta))
     sink.audio.volume = newVol
     if (sink.audio.muted && delta > 0)
     sink.audio.muted = false
