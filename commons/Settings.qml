@@ -96,6 +96,7 @@ Singleton {
 
   component Bar: JsonObject {
     property string position: "top"
+    property int workspaceCount: 9
     property var ram: {
       "style" : 1,
       "active": true

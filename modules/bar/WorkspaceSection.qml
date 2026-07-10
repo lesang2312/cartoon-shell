@@ -84,6 +84,47 @@ Rectangle {
     syncWorkspaces();
     initialized = true;
   }
+  
+  // Hàm tái khởi tạo UI workspaces khi workspaceCount thay đổi
+  function reinitializeUIWorkspaces() {
+    if (!initialized) {
+      // Nếu chưa initialized, chỉ cần gọi initialize
+      initialize();
+      return;
+    }
+    
+    // Lưu active workspace hiện tại
+    var currentActive = activeWorkspace;
+    
+    // Tái khởi tạo UI workspaces với số lượng mới
+    initUIWorkspaces();
+    
+    // Đồng bộ lại với trạng thái hiện tại
+    syncWorkspaces();
+    
+    // Đảm bảo active workspace được giữ nguyên
+    if (currentActive) {
+      // Tìm và set active workspace mới
+      for (var i = 0; i < uiWorkspaces.length; i++) {
+        if (uiWorkspaces[i].id === currentActive) {
+          uiWorkspaces[i].isActive = true;
+          break;
+        }
+      }
+      // Nếu workspace cũ không tồn tại trong danh sách mới, chuyển về workspace đầu tiên
+      var found = false;
+      for (var j = 0; j < uiWorkspaces.length; j++) {
+        if (uiWorkspaces[j].id === currentActive) {
+          found = true;
+          break;
+        }
+      }
+      if (!found && uiWorkspaces.length > 0) {
+        activeWorkspace = uiWorkspaces[0].id;
+        uiWorkspaces[0].isActive = true;
+      }
+    }
+  }
 
   Timer {
     id: backendCheckTimer
@@ -100,7 +141,8 @@ Rectangle {
   // Khởi tạo UI workspaces
   function initUIWorkspaces() {
     var arr = [];
-    for (var i = 1; i <= 10; i++) {
+    var count = Settings.bar.workspaceCount || 10; // Default 10 nếu chưa có setting
+    for (var i = 1; i <= count; i++) {
       arr.push({
           id: i.toString(),
           exists: false,
@@ -213,7 +255,8 @@ Rectangle {
     var current = parseInt(activeWorkspace);
 
     // Block accumulation at hard boundaries to avoid phantom delta buildup
-    if ((raw < 0 && current >= 10) || (raw > 0 && current <= 1)) {
+    var maxWorkspace = Settings.bar.workspaceCount || 10;
+    if ((raw < 0 && current >= maxWorkspace) || (raw > 0 && current <= 1)) {
       scrollAccumulator = 0;
       return;
     }
@@ -227,7 +270,7 @@ Rectangle {
 
     if (scrollAccumulator >= threshold) {
       var next = current + 1;
-      if (next > 10) { scrollAccumulator = 0; return; }
+      if (next > maxWorkspace) { scrollAccumulator = 0; return; }
       switchWs(next.toString());
       // Subtract threshold so fast flicks chain smoothly
       scrollAccumulator -= threshold;
@@ -254,6 +297,16 @@ Rectangle {
       if (initialized) {
         updateTimer.restart();
       }
+    }
+  }
+
+  // Theo dõi sự thay đổi của Settings.bar.workspaceCount
+  Connections {
+    target: Settings.bar
+    
+    function onWorkspaceCountChanged() {
+      // Tái khởi tạo UI workspaces khi số lượng thay đổi
+      root.reinitializeUIWorkspaces();
     }
   }
 

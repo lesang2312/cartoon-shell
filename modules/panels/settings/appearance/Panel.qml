@@ -36,6 +36,7 @@ Item {
       }
 
       // Panel Position Settings
+      Com.WorkspaceCount{}
       Com.PanelPositionSelector{}
       Com.Border{}
       Com.PanelSystemStats{}

@@ -66,7 +66,7 @@ PanelWindow {
       }
 
       Item {
-        Layout.preferredWidth: ScalerService.s(380)
+        Layout.preferredWidth: Settings.bar.workspaceCount * ScalerService.s(38)
         Layout.fillHeight: true
         WorkspaceSection {
           animationProgress: horizontal.animationProgress
@@ -160,7 +160,7 @@ PanelWindow {
 
       // WorkspaceSection
       Item {
-        Layout.preferredHeight: ScalerService.s(280)
+        Layout.preferredHeight: Settings.bar.workspaceCount * ScalerService.s(28)
         Layout.fillWidth: true
         WorkspaceSection {
           animationProgress: vertical.animationProgress
