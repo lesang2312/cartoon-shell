@@ -17,6 +17,16 @@ Item {
       });
     }
   }
+
+  Loader {
+    source: "../modules/panels/tray/trayPanel.qml"
+    active: VisibleService.tray
+    onLoaded: {
+      item.visible = Qt.binding(function () {
+          return VisibleService.tray;
+      });
+    }
+  }
   Loader {
     source: "../modules/panels/calendar/CalendarPanel.qml"
     active: VisibleService.calendar

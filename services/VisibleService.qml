@@ -13,6 +13,7 @@ Singleton {
   property bool launcher: false
   property bool setting: false
   property bool fullsetting: false
+  property bool tray: false
   property bool listLauncher: false
 
   property bool filedialog: false
@@ -93,6 +94,8 @@ Singleton {
       break;
       case "clock":
       clock = true;
+      case "tray":
+      tray = true;
       break;
     }
 
@@ -216,6 +219,7 @@ Singleton {
           dashboard = false;
           ram = false;
           setting = false;
+          tray = false;
           fullsetting = false;
         } else {
           weather = false;
@@ -246,6 +250,7 @@ Singleton {
           wifi = false;
           mixer = false;
           battery = false;
+          tray = false;
           bluetooth = true;
           weather = false
           dashboard = false;
@@ -268,6 +273,7 @@ Singleton {
           dashboard = false;
           setting = false;
           weather = false;
+          tray = false;
           fullsetting = false;
         } else {
           wifi = false;
@@ -284,6 +290,7 @@ Singleton {
           dashboard = false;
           setting = false;
           keybind= false
+          tray = false;
           weather = false;
           fullsetting = false;
         } else {
@@ -299,6 +306,7 @@ Singleton {
           wifi = false;
           battery = true;
           dashboard = false;
+          tray = false;
           keybind= false
           weather = false;
           setting = false;
@@ -381,6 +389,21 @@ Singleton {
         }
         break;
       }
+      case "tray" :
+      {
+        if (!tray) {
+          tray = true;
+          wifi = false;
+          mixer = false;
+          bluetooth = false;
+          battery = false;
+          weather = false;
+          dashboard = false;
+
+        } else {
+          tray = false
+        }
+      }
       case "setting":
       {
         calendar = false;
@@ -418,6 +441,7 @@ Singleton {
     music = false;
     weather = false;
     flag = false;
+    tray = false;
     bluetooth = false;
     wifi = false;
     mixer = false;

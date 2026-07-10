@@ -5,7 +5,6 @@ import Quickshell.Io
 import Quickshell.Services.Pipewire
 import Quickshell.Services.UPower
 import QtQuick.Controls
-import Quickshell.Services.SystemTray
 import qs.services
 import qs.commons
 import qs.components
@@ -77,78 +76,16 @@ Rectangle {
       anchors.fill: parent
       spacing: ScalerService.s(5)
 
-      // System Tray Icons
-      Repeater {
-        id: trayRepeater
-        model: SystemTray.items
+      Com.StatContainer {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        panelName: "tray"
 
-        Rectangle {
-          id: trayItemContainer
-          Layout.preferredWidth: ScalerService.s(35)
-          Layout.fillHeight: true
-          color: "transparent"
-          radius: ScalerService.s(6)
-          transformOrigin: Item.Center
-
-          visible: modelData.icon !== ""
-          property var trayItem: modelData
-
-          Image {
-            id: trayIcon
-            anchors.centerIn: parent
-            width: ScalerService.s(25)
-            height: ScalerService.s(25)
-            source: trayItemContainer.trayItem?.icon || ""
-
-            ToolTip {
-              id: trayTooltip
-              visible: trayTooltipArea.containsMouse && trayItemContainer.trayItem?.tooltipTitle
-              text: trayItemContainer.trayItem?.tooltipTitle || ""
-              delay: 1000
-            }
-          }
-
-          MouseArea {
-            id: trayTooltipArea
-            anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
-            acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-
-            onEntered: trayItemContainer.scale = 1.1
-            onExited: trayItemContainer.scale = 1.0
-            onPressed: trayItemContainer.scale = 0.95
-            onReleased: trayItemContainer.scale = containsMouse ? 1.1 : 1.0
-
-            onClicked: function (mouse) {
-              if (!trayItemContainer.trayItem)
-              return;
-              if (mouse.button === Qt.LeftButton) {
-                trayItemContainer.trayItem.activate();
-              } else if (mouse.button === Qt.RightButton) {
-                if (trayItemContainer.trayItem.hasMenu && trayItemContainer.trayItem.menu) {
-                  trayItemContainer.trayItem.display(root, mouse.x, mouse.y);
-                }
-              } else if (mouse.button === Qt.MiddleButton) {
-                trayItemContainer.trayItem.secondaryActivate();
-              }
-            }
-
-            onWheel: function (wheel) {
-              if (!trayItemContainer.trayItem)
-              return;
-              trayItemContainer.trayItem.scroll(wheel.angleDelta.y, wheel.angleDelta.x !== 0);
-            }
-          }
-
-          Behavior on scale {
-            NumberAnimation {
-              duration: 100
-              easing.type: Easing.OutCubic
-            }
-          }
+        Com.TrayStat {
+          anchors.centerIn: parent
         }
       }
+
 
       Item {
         Layout.preferredWidth: trayRepeater.count > 0 ? ScalerService.s(5) : 0
@@ -209,6 +146,7 @@ Rectangle {
 
       Item {
         Layout.fillWidth: true
+        visible: UPower.displayDevice.isLaptopBattery
       }
 
       BatteryIcon {
@@ -284,66 +222,17 @@ Rectangle {
       spacing: ScalerService.s(8)
 
       // System Tray Icons (vertical)
+      Com.StatContainer {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        panelName: "tray"
+
+        Com.TrayStat {
+          anchors.centerIn: parent
+        }
+      }
       Item {
         Layout.fillWidth: true
-        Layout.preferredHeight: contentVerticalTray.height
-
-        Item {
-          anchors.centerIn: parent
-          width: parent.height
-          height: parent.width
-          transformOrigin: Item.Center
-
-          ColumnLayout {
-            id: contentVerticalTray
-            anchors.centerIn: parent
-            spacing: ScalerService.s(4)
-
-            Repeater {
-              model: SystemTray.items
-
-              Rectangle {
-                id: trayItemContainerVertical
-                Layout.preferredWidth: ScalerService.s(25)
-                Layout.preferredHeight: ScalerService.s(25)
-                color: "transparent"
-                radius: ScalerService.s(4)
-
-                visible: modelData.icon !== ""
-                property var trayItem: modelData
-
-                Image {
-                  anchors.centerIn: parent
-                  width: ScalerService.s(20)
-                  height: ScalerService.s(20)
-                  source: trayItemContainerVertical.trayItem?.icon || ""
-                }
-
-                MouseArea {
-                  anchors.fill: parent
-                  hoverEnabled: true
-                  cursorShape: Qt.PointingHandCursor
-
-                  onEntered: trayItemContainerVertical.scale = 1.1
-                  onExited: trayItemContainerVertical.scale = 1.0
-                  onClicked: function (mouse) {
-                    if (!trayItemContainerVertical.trayItem)
-                    return;
-                    if (mouse.button === Qt.LeftButton) {
-                      trayItemContainerVertical.trayItem.activate();
-                    }
-                  }
-                }
-
-                Behavior on scale {
-                  NumberAnimation {
-                    duration: 100
-                  }
-                }
-              }
-            }
-          }
-        }
       }
 
       // Bluetooth (vertical)
@@ -396,6 +285,9 @@ Rectangle {
         Com.BrightnessStat {
           anchors.centerIn: parent
         }
+      }
+      Item {
+        Layout.fillWidth: true
       }
 
       // Battery (vertical, UPower displayDevice)
