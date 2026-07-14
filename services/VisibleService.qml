@@ -8,6 +8,8 @@ import qs.commons
 
 Singleton {
   id: panelManager
+    property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
+
 
   // Properties cho từng panel
   property bool launcher: false
@@ -111,6 +113,13 @@ Singleton {
           cpu = false;
           ram = false;
           weather = false;
+          if (isVertical){
+            flag = false;
+            calendar = false;
+            mixer = false;
+            wifi = false;
+            bluetooth = false;
+          }
           launcher = true;
           listLauncher = true;
           music = false;
@@ -171,6 +180,12 @@ Singleton {
           keybind= false
           flag = false;
           music = false;
+          if (isVertical){
+            launcher = false;
+            mixer = false;
+            wifi= false;
+            bluetooth = false;
+          }
           calendar = true;
           dashboard = false;
           if (setting) {
@@ -191,6 +206,11 @@ Singleton {
           flag = false;
           launcher = false;
           cpu = false;
+          if (isVertical){
+            mixer = false;
+            wifi= false;
+            bluetooth = false;
+          }
           keybind= false
           ram = false;
           music = true;
@@ -234,6 +254,12 @@ Singleton {
           music = false;
           flag = true;
           dashboard = false;
+          if (isVertical){
+            launcher = false;
+            wifi = false;
+            mixer = false;
+            bluetooth = false;
+          }
           ram = false;
           cpu = false;
           keybind= false
@@ -252,6 +278,12 @@ Singleton {
           battery = false;
           tray = false;
           bluetooth = true;
+          if (isVertical){
+            launcher = false;
+            music = false;
+            flag = false;
+            calendar = false;
+          }
           weather = false
           dashboard = false;
           keybind= false
@@ -270,6 +302,12 @@ Singleton {
           bluetooth = false;
           battery = false;
           keybind= false
+          if (isVertical){
+            music = false;
+            calendar = false;
+            launcher = false;
+            flag = false;
+          }
           dashboard = false;
           setting = false;
           weather = false;
@@ -286,6 +324,12 @@ Singleton {
           mixer = true;
           wifi = false;
           bluetooth = false;
+          if (isVertical){
+            launcher = false;
+            music = false;
+            calendar = false;
+            flag = false;
+          }
           battery = false;
           dashboard = false;
           setting = false;
@@ -309,6 +353,10 @@ Singleton {
           tray = false;
           keybind= false
           weather = false;
+          if (isVertical){
+            launcher = false;
+            music = false;
+          }
           setting = false;
           fullsetting = false;
         } else {
