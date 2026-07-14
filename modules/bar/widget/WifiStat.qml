@@ -18,16 +18,18 @@ RowLayout {
   IconImage {
     visible: root.style === 1
     path: networkService.wifi_icon
-    size: "large"
+    size: isVertical ? "normal" : "large"
   }
   IconText{
     visible: root.style === 2
     name: networkService.wifi_icon_text_1
+    size: isVertical ? "normal" : "large"
     textColor: theme.button.text
   }
   IconText{
     visible: root.style === 3
     name: networkService.wifi_icon_text_2
+    size: isVertical ? "normal" : "large"
     textColor: theme.button.text
   }
 

@@ -26,6 +26,8 @@ ShellRoot {
   property var theme: ThemeService.theme
   property var lang: LanguageService.translations
 
+  property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
+
   function showConfirmDialog(action, actionLabel) {
     confirmDialog.show(action, actionLabel);
   }

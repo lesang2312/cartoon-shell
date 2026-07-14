@@ -28,8 +28,6 @@ PanelWindow {
     bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? ScalerService.s(10) : 0
   }
 
-  // Xác định layout dựa trên vị trí
-  property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
 
   Loader {
     anchors.fill: parent
@@ -216,7 +214,7 @@ PanelWindow {
 
       // StatusTraySection (bottom section)
       Item {
-        Layout.preferredHeight: ScalerService.s(230)
+        Layout.preferredHeight: ScalerService.s(220)
         Layout.fillWidth: true
         StatusTraySection {
           animationProgress: vertical.animationProgress

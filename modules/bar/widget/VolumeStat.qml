@@ -40,6 +40,7 @@ Item {
 
     IconImage {
       visible: root.style === 1
+      size: isVertical ? "normal" : "large"
       path: sink && sink.audio.muted
       ? "volume/mute.png"
       : "volume/volume.png"
@@ -47,6 +48,7 @@ Item {
 
     IconText {
       visible: root.style === 2
+      size: isVertical ? "normal" : "large"
       name: {
         if (!sink || sink.audio.muted)
         return "volume_off"
@@ -63,7 +65,7 @@ Item {
       ? Math.round(sink.audio.volume * 100) + "%"
       : "0%"
       isBold: true
-      size: "small"
+      size: isVertical ? "xs" : "small"
     }
   }
 

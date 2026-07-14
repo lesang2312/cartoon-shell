@@ -12,12 +12,18 @@ ColumnLayout {
   property bool isVertical: true
   anchors.fill: parent
   spacing: ScalerService.s(8)
+  Item {
+    visible: TrayService.hasTray
+    Layout.fillHeight: true
+  }
 
   // System Tray Icons
   StatContainer {
     Layout.fillWidth: true
     Layout.fillHeight: true
     panelName: "tray"
+    visible: TrayService.hasTray
+
 
     TrayStat {
       anchors.centerIn: parent
@@ -25,7 +31,8 @@ ColumnLayout {
   }
   
   Item {
-    Layout.fillWidth: true
+    visible: TrayService.hasTray
+    Layout.fillHeight: true
   }
 
   // Bluetooth
@@ -40,7 +47,7 @@ ColumnLayout {
   }
 
   Item {
-    Layout.fillWidth: true
+    Layout.fillHeight: true
   }
 
   // Wifi
@@ -55,7 +62,7 @@ ColumnLayout {
   }
 
   Item {
-    Layout.fillWidth: true
+    Layout.fillHeight: true
   }
 
   // Volume
@@ -70,7 +77,7 @@ ColumnLayout {
   }
   
   Item {
-    Layout.fillWidth: true
+    Layout.fillHeight: true
   }
 
   // Brightness
@@ -84,7 +91,7 @@ ColumnLayout {
   }
   
   Item {
-    Layout.fillWidth: true
+    Layout.fillHeight: true
   }
 
   StatContainer {
@@ -101,8 +108,11 @@ ColumnLayout {
     }
   }
 
+  Item {
+    Layout.fillHeight: true
+  }
 
-  // Power Off
+
   StatContainer {
     Layout.fillWidth: true
     Layout.fillHeight: true
@@ -110,8 +120,11 @@ ColumnLayout {
 
     IconImage {
       path: '/system/poweroff.png'
-      size: "large"
       anchors.centerIn: parent
     }
+  }
+  Item {
+    visible: TrayService.hasTray
+    Layout.fillHeight: true
   }
 }

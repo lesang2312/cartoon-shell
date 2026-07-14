@@ -13,6 +13,9 @@ RowLayout {
   anchors.fill: parent
   spacing: ScalerService.s(5)
   
+  Item {
+    Layout.fillWidth: true
+  }
 
   // Tray
   StatContainer {
@@ -28,7 +31,8 @@ RowLayout {
   }
 
   Item {
-    Layout.preferredWidth: TrayService.hasTray ? ScalerService.s(5) : 0
+    visible: TrayService.hasTray
+    Layout.fillWidth: true
   }
 
   // Bluetooth
@@ -122,7 +126,7 @@ RowLayout {
       anchors.centerIn: parent
     }
   }
-  Component.onCompleted: {
-    console.log("trayRepeater.count =", trayRepeater.count)
-}
+  Item {
+    Layout.fillWidth: true
+  }
 }

@@ -13,12 +13,14 @@ RowLayout {
   IconImage {
     visible: [1].includes(root.style)
     path: "settings/bluetooth.png"
+    size: isVertical ? "normal" : "large"
   }
 
   IconText {
     visible: [2].includes(root.style)
     name: "bluetooth"
     textColor: theme.button.text
+    size: isVertical ? "normal" : "large"
   }
 
 }
