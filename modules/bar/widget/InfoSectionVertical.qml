@@ -14,8 +14,9 @@ Item {
     anchors.margins: ScalerService.s(10)
     Item {
       id: timeContainerVertical
-      Layout.fillWidth: true
-      Layout.preferredHeight: ScalerService.s(50)
+
+      Layout.fillWidth: parent
+      Layout.preferredHeight: ScalerService.s(60)
 
       // Xoay container để hiển thị theo chiều dọc
       Item {
@@ -24,6 +25,7 @@ Item {
         implicitHeight: parent.height
 
         ColumnLayout {
+          anchors.centerIn: parent
           id: contenTime
           spacing: ScalerService.s(2)
 
@@ -48,11 +50,13 @@ Item {
       }
     }
     Item {
-      id: weatherContainerVertical
-      Layout.fillWidth: true
       Layout.fillHeight: true
+    }
+    Item {
+      id: weatherContainerVertical
+      Layout.preferredHeight: ScalerService.s(50)
+      Layout.fillWidth: true
 
-      // Xoay container để hiển thị theo chiều dọc
       Item {
         anchors.centerIn: parent
         implicitWidth: parent.width
@@ -105,15 +109,17 @@ Item {
       }
     }
 
+    Item {
+      Layout.fillHeight: true
+    }
     // Flag ở trên cùng
     Item {
       id: flagContainer
-      Layout.preferredWidth: ScalerService.s(32)
-      Layout.fillHeight: parent
+      Layout.fillWidth: parent
+      Layout.preferredHeight: ScalerService.s(24)
 
       ButtonIconImage{
         path:  `flags/${root.selectedFlag}.png`
-        size: "large"
         anchors.centerIn: parent
         onClicked: VisibleService.togglePanel("flag");
       }
