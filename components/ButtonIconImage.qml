@@ -58,6 +58,7 @@ Item {
 
       onClicked: {
         root.clicked()
+        SoundService.playSound("pick")
       }
     }
   }

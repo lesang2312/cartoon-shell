@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import qs.services
+import qs.commons
 
 Item {
   id: root
@@ -12,7 +13,10 @@ Item {
     hoverEnabled: true
     cursorShape: Qt.PointingHandCursor
 
-    onClicked: VisibleService.togglePanel(root.panelName)
+    onClicked: {
+      VisibleService.togglePanel(root.panelName)
+      SoundService.playSound("pick")
+    }
     onEntered: root.opacity = 0.8
     onExited: root.opacity = 1.0
   }

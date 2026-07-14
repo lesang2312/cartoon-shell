@@ -107,6 +107,7 @@ Rectangle {
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
           onClicked: {
+            SoundService.playSound("pick")
             VisibleService.togglePanel("listLauncher");
           }
         }
@@ -182,6 +183,7 @@ Rectangle {
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
           onClicked: {
+            SoundService.playSound("pick")
             VisibleService.togglePanel("setting");
           }
         }
@@ -249,6 +251,7 @@ Rectangle {
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
           onClicked: {
+            SoundService.playSound("pick")
             showConfirmDialog("sleep", lang?.confirm?.sleep || "chuyển sang chế độ ngủ");
           }
         }
@@ -316,6 +319,7 @@ Rectangle {
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
           onClicked: {
+            SoundService.playSound("pick")
             showConfirmDialog("lock", lang?.confirm?.lock || "khóa màn hình");
           }
         }
@@ -383,6 +387,7 @@ Rectangle {
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
           onClicked: {
+            SoundService.playSound("pick")
             showConfirmDialog("logout", lang?.confirm?.logout || "đăng xuất");
           }
         }
@@ -450,6 +455,7 @@ Rectangle {
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
           onClicked: {
+            SoundService.playSound("pick")
             showConfirmDialog("restart", lang?.confirm?.restart || "khởi động lại");
           }
         }
@@ -517,6 +523,7 @@ Rectangle {
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
           onClicked: {
+            SoundService.playSound("pick")
             showConfirmDialog("shutdown", lang?.confirm?.shutdown || "tắt máy");
           }
         }

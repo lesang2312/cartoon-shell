@@ -1,3 +1,4 @@
+// PanelWindow cập nhật
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
@@ -10,7 +11,8 @@ import qs.services
 PanelWindow {
   id: root
 
-  property int trayCount: SystemTray.items.count
+  // Sử dụng TrayService thay vì SystemTray trực tiếp
+  property int trayCount: TrayService.validTrayCount  // Sử dụng validTrayCount
   property int maxColumns: 4
   property int actualColumns: Math.min(trayCount, maxColumns)
   property int actualRows: Math.ceil(trayCount / maxColumns)
@@ -44,7 +46,6 @@ PanelWindow {
   property real animationProgress: 0
   SequentialAnimation on animationProgress {
     running: true
-
     NumberAnimation {
       from: 0
       to: 1
@@ -66,8 +67,7 @@ PanelWindow {
     }
   }
 
-    anchors {
-    // Anchor theo vị trí của bar
+  anchors {
     left: Settings.bar.position === "left"
     right: Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom"
     top: Settings.bar.position === "top"
@@ -110,8 +110,7 @@ PanelWindow {
     radius: ScalerService.s(Settings.appearance.radius1)
     border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
     
-
-    // Grid System Tray - Windows 11 Style (Direct icons, no header)
+    // Grid System Tray - Windows 11 Style
     GridLayout {
       id: trayGrid
       anchors.fill: parent
@@ -122,7 +121,7 @@ PanelWindow {
       
       Repeater {
         id: trayRepeater
-        model: SystemTray.items
+        model: TrayService.items
 
         Rectangle {
           id: trayItemContainer
@@ -190,9 +189,13 @@ PanelWindow {
               easing.type: Easing.OutCubic
             }
           }
-
         }
       }
     }
+  }
+
+  Component.onCompleted: {
+    console.log("PanelWindow tray items:", TrayService.items.count)
+    console.log("Valid tray items:", TrayService.validTrayCount)
   }
 }

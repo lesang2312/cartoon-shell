@@ -137,8 +137,6 @@ Item {
 
         BatteryIcon {
           id: batteryIcon
-          percent: root.batteryPercent
-          status : UPowerDeviceState.toString(UPower.displayDevice.state)
           textColor: root.textColor
           Layout.preferredWidth: ScalerService.s(40)
           Layout.preferredHeight: ScalerService.s(20)

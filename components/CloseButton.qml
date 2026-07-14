@@ -33,6 +33,10 @@ Rectangle {
     hoverEnabled: true
     cursorShape: Qt.PointingHandCursor
 
-    onClicked: root.clicked()
+    onClicked: 
+    {
+      SoundService.playSound("close-ui")
+      root.clicked()
+    }
   }
 }

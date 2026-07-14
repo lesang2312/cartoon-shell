@@ -86,6 +86,7 @@ Rectangle {
     cursorShape: Qt.PointingHandCursor
 
     onClicked: {
+      SoundService.playSound("pick")
       root.clicked()
     }
   }

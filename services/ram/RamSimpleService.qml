@@ -16,7 +16,7 @@ Singleton {
 
   Process {
     id: ramProcess
-    running: useSimpleCalculation
+    running: false
 
     command: ["bash", "-c", "awk '/MemTotal/{t=$2}/MemFree/{f=$2}/Buffers/{b=$2}/^Cached:/{c=$2} END{print int(((t-f-b-c)/t)*100)}' /proc/meminfo"]
 

@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import "." as Com
+import qs.services
 
 Item {
   RowLayout {

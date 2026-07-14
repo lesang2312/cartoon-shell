@@ -1,17 +1,18 @@
 // BatteryIcon.qml - Component riêng cho icon pin
 import QtQuick
 import QtQuick.Controls
+import Quickshell.Services.UPower
 import QtQuick.Layouts
 import Quickshell
 import qs.services
 
 Item {
   id: root
-  property int percent: 0
+  property int percent: Math.round(UPower.displayDevice.percentage * 100)
   property bool batteryCharging: false
   property color textColor: theme.primary.foreground
 
-  property var status: "Charging"
+  property var status: UPowerDeviceState.toString(UPower.displayDevice.state)
   
   // Kích thước có thể tùy chỉnh
   property real iconWidth: ScalerService.s(40)

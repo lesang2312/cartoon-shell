@@ -60,6 +60,7 @@ Item {
     onWheel: (wheel) => {
       let step = 0.05
 
+      SoundService.playSound("pop")
       if (wheel.angleDelta.y > 0)
       BrightnessService.changeBright(step)
       else if (wheel.angleDelta.y < 0)
