@@ -38,7 +38,7 @@ Item {
     IconText {
       name: root.getBrightnessIcon()
       textColor: theme.button.text
-      size: "normal"
+      size: isVertical ? "normal" : "normal"
     }
 
     CustomText {

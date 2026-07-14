@@ -36,7 +36,7 @@ Text {
       return ScalerService.s(32)
 
       case "large":
-      return ScalerService.s(52)
+      return ScalerService.s(38)
 
       case "xl":
       return ScalerService.s(64)
