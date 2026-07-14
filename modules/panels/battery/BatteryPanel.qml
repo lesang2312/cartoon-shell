@@ -86,10 +86,10 @@ Item {
         easing.type: Easing.OutCubic
       }
     }
-    color: theme.primary.background
-    border.color: borderColor
     radius: ScalerService.s(Settings.appearance.radius1)
-    border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
+    border.width: Settings.appearance.enableBorder ? ScalerService.s(1) : 0
+    color: theme.primary.background
+    border.color: theme.button.border
 
     // Background pattern nhẹ
     Rectangle {

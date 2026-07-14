@@ -33,10 +33,10 @@ PanelWindow {
 
   Rectangle {
     anchors.fill: parent
+    radius: ScalerService.s(Settings.appearance.radius1)
+    border.width: Settings.appearance.enableBorder ? ScalerService.s(3) : 0
     color: theme.primary.background
-    radius: ScalerService.s(8)
-    border.color: theme.normal.black
-    border.width: ScalerService.s(3)
+    border.color: theme.button.border
 
     ColumnLayout {
       anchors.fill: parent

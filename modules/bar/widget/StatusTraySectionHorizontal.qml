@@ -105,8 +105,8 @@ RowLayout {
     BatteryIcon {
       anchors.centerIn: parent
       textColor: theme.primary.foreground
-      Layout.preferredWidth: ScalerService.s(28)
-      Layout.preferredHeight: ScalerService.s(18)
+      iconWidth: ScalerService.s(35)
+      iconHeight: ScalerService.s(20)
     }
   }
 

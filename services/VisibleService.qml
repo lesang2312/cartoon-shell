@@ -184,6 +184,7 @@ Singleton {
             launcher = false;
             mixer = false;
             wifi= false;
+            battery = false;
             bluetooth = false;
           }
           calendar = true;
@@ -207,6 +208,7 @@ Singleton {
           launcher = false;
           cpu = false;
           if (isVertical){
+            battery = false;
             mixer = false;
             wifi= false;
             bluetooth = false;
@@ -356,6 +358,7 @@ Singleton {
           if (isVertical){
             launcher = false;
             music = false;
+            calendar = false;
           }
           setting = false;
           fullsetting = false;
