@@ -92,13 +92,14 @@ ColumnLayout {
   
   Item {
     Layout.fillHeight: true
+    visible: UPower.displayDevice.isLaptopBattery
   }
 
   StatContainer {
     Layout.fillWidth: true
     Layout.fillHeight: true
     panelName: "battery"
-
+    visible: UPower.displayDevice.isLaptopBattery
     BatteryIcon {
       anchors.centerIn: parent
       textColor: theme.primary.foreground
