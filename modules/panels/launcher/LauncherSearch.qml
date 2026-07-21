@@ -46,7 +46,6 @@ Rectangle {
       onTextChanged: {
         // restart debounce timer mỗi khi gõ
         debounce.running = false;
-        SoundService.playSound("typing-short")
         debounce.start();
       }
 
