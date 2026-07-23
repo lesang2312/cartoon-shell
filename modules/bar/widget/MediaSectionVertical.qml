@@ -27,7 +27,10 @@ Item {
           anchors.fill: parent
           cursorShape: Qt.PointingHandCursor
           hoverEnabled: true
-          onClicked: VisibleService.togglePanel("music")
+          onClicked: {
+            SoundService.playSound("pick")
+            VisibleService.togglePanel("music")
+          }
           onEntered: parent.opacity = 0.8
           onExited: parent.opacity = 1.0
         }

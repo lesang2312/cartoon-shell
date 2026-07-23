@@ -336,7 +336,9 @@ Rectangle {
           color: "transparent"
 
           IconImage {
-            path: modelData.isActive ? "workspace/pacman.png" : modelData.exists ? "workspace/ghost.png" : "workspace/empty.png"
+            path: modelData.isActive || modelData.exists
+              ? `workspace/${Settings.bar.iconWorkspace}/${modelData.isActive ? "active" : "exists"}.png`
+              : "workspace/empty.png"
             size: "large"
             anchors.centerIn: parent
           }
@@ -393,7 +395,9 @@ Rectangle {
           color: "transparent"
 
           IconImage {
-            path: modelData.isActive ? "workspace/pacman.png" : modelData.exists ? "workspace/ghost.png" : "workspace/empty.png"
+            path: modelData.isActive || modelData.exists
+              ? `workspace/${Settings.bar.iconWorkspace}/${modelData.isActive ? "active" : "exists"}.png`
+              : "workspace/empty.png"
             anchors.centerIn: parent
           }
 

@@ -44,6 +44,7 @@ Item {
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
         onClicked: {
+          SoundService.playSound("pick")
           VisibleService.togglePanel("calendar");
         }
 
@@ -105,6 +106,7 @@ Item {
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
         onClicked: {
+          SoundService.playSound("pick")
           VisibleService.togglePanel("weather");
         }
 
@@ -138,7 +140,9 @@ Item {
         path:  `flags/${root.selectedFlag}.png`
         size: "large"
         anchors.centerIn: parent
-        onClicked: VisibleService.togglePanel("flag");
+        onClicked: {
+          VisibleService.togglePanel("flag");
+        }
       }
     }
   }

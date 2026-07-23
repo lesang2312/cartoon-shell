@@ -330,6 +330,7 @@ Item {
                   hoverEnabled: true
                   cursorShape: Qt.PointingHandCursor
                   onClicked: {
+                    SoundService.playSound("pick")
                     setLanguageEditor(modelData.code);
                   }
                 }

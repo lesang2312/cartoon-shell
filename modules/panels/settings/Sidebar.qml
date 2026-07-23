@@ -109,6 +109,7 @@ Rectangle {
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
           onClicked: {
+            SoundService.playSound("pick")
             root.currentIndex = 0;
             root.categoryChanged(0);
           }
@@ -175,6 +176,7 @@ Rectangle {
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
           onClicked: {
+            SoundService.playSound("pick")
             root.currentIndex = 1;
             root.categoryChanged(1);
           }
@@ -241,6 +243,7 @@ Rectangle {
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
           onClicked: {
+            SoundService.playSound("pick")
             root.currentIndex = 2;
             root.categoryChanged(2);
           }
@@ -307,6 +310,7 @@ Rectangle {
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
           onClicked: {
+            SoundService.playSound("pick")
             root.currentIndex = 3;
             root.categoryChanged(3);
           }
@@ -373,6 +377,7 @@ Rectangle {
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
           onClicked: {
+            SoundService.playSound("pick")
             root.currentIndex = 4;
             root.categoryChanged(4);
           }
@@ -439,6 +444,7 @@ Rectangle {
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
           onClicked: {
+            SoundService.playSound("pick")
             root.currentIndex = 5;
             root.categoryChanged(5);
           }
@@ -505,6 +511,7 @@ Rectangle {
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
           onClicked: {
+            SoundService.playSound("pick")
             root.currentIndex = 6;
             root.categoryChanged(6);
           }

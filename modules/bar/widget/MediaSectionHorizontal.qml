@@ -30,6 +30,7 @@ Item {
           cursorShape: Qt.PointingHandCursor
           hoverEnabled: true
           onClicked: {
+            SoundService.playSound("pick")
             VisibleService.togglePanel("music");
           }
           onEntered: songContainer.opacity = 0.8

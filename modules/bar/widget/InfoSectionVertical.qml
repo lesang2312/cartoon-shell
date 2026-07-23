@@ -45,6 +45,7 @@ Item {
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
         onClicked: {
+          SoundService.playSound("pick")
           VisibleService.togglePanel("calendar");
         }
       }
@@ -91,6 +92,7 @@ Item {
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
         onClicked: {
+          SoundService.playSound("pick")
           VisibleService.togglePanel("weather");
         }
 
