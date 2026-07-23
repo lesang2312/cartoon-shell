@@ -24,7 +24,13 @@ ColumnLayout {
           name: "nami"
         },
         {
+          name: "usopp"
+        },
+        {
           name: "sanji"
+        },
+        {
+          name: "chopper"
         }
       ]
 

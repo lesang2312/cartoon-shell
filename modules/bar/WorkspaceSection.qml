@@ -348,7 +348,7 @@ Rectangle {
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             onClicked: {
-              // Gọi hàm switchWs đã được định nghĩa
+              SoundService.playSound("pick")
               root.switchWs(modelData.id);
             }
             onEntered: {
@@ -406,6 +406,7 @@ Rectangle {
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             onClicked: {
+              SoundService.playSound("pick")
               root.switchWs(modelData.id);
             }
             onEntered: {
