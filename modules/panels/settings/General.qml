@@ -62,15 +62,6 @@ Item {
           });
         }
       }
-      Loader {
-        active: root.currentTab === 1
-        source: "./appearance/Theme.qml"
-        onLoaded: {
-          item.visible = Qt.binding(function () {
-              return root.currentTab === 1;
-          });
-        }
-      }
 
       // Tab 1: Date & Time
       ScrollView {
