@@ -4,8 +4,11 @@ import qs.services
 import qs.components
 import qs.commons
 ColumnLayout {
+  CustomText{
+      name: "Icon Workspace: "
+    }
   GridLayout {
-    columns: 4
+    columns: 8
     rowSpacing: ScalerService.s(12)
     columnSpacing: ScalerService.s(12)
 
@@ -31,12 +34,18 @@ ColumnLayout {
         },
         {
           name: "chopper"
+        },
+        {
+          name: "goku"
+        },
+        {
+          name: "karin"
         }
       ]
 
       delegate: ButtonIconImage {
         Layout.preferredHeight: ScalerService.s(40)
-        Layout.preferredWidth: ScalerService.s(80)
+        Layout.preferredWidth: ScalerService.s(40)
         path: `workspace/${modelData.name}/active.png`
 
         onClicked: {

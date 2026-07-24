@@ -8,6 +8,8 @@ import qs.services
 import qs.commons
 import qs.components
 Item {
+  id: root
+  property real animationProgress: 0
   ColumnLayout {
     anchors.fill: parent
     spacing: ScalerService.s(8)
@@ -53,6 +55,7 @@ Item {
               font.family: "ComicShannsMono Nerd Font"
               font.pixelSize: ScalerService.s(12)
               width: parent.width
+              opacity: root.animationProgress > 0.25 ? 1 : 0
 
               // Marquee effect ngang (sẽ thành dọc sau khi xoay)
               x: 0
@@ -85,17 +88,17 @@ Item {
 
             Behavior on opacity {
               NumberAnimation {
-                duration: 100
+                duration: 200
               }
             }
           }
 
           // Artist name
-          Text {
+          CustomText {
             text: Players.mprisPlayer?.trackTitle
             color: theme.primary.dim_foreground
-            font.family: "ComicShannsMono Nerd Font"
-            font.pixelSize: ScalerService.s(10)
+            opacity: root.animationProgress > 0.3 ? 1 : 0
+            size: "xs"
             width: parent.width
             elide: Text.ElideRight
             horizontalAlignment: Text.AlignHCenter
@@ -115,6 +118,7 @@ Item {
         : "play_arrow"
         size: "small"
 
+        opacity: root.animationProgress > 0.35 ? 1 : 0
         Layout.alignment: Qt.AlignVCenter
         onClicked: Players?.mprisPlayer.togglePlaying()
 

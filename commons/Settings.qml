@@ -97,6 +97,7 @@ Singleton {
   component Bar: JsonObject {
     property string position: "top"
     property string iconWorkspace: "pacman"
+    property string iconLauncher: "default"
     property int workspaceCount: 9
     property var ram: {
       "style" : 1,

@@ -39,12 +39,15 @@ Rectangle {
   Component {
     id: horizontalComponent
     Com.InfoSectionHorizontal {
+      animationProgress: root.animationProgress
     }
   }
 
   Component {
     id: verticalComponent
-    Com.InfoSectionVertical {}
+    Com.InfoSectionVertical {
+      animationProgress: root.animationProgress
+    }
   }
   Loader {
     anchors.fill: parent

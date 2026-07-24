@@ -18,16 +18,6 @@ Rectangle {
   anchors.centerIn: parent
   property real animationProgress: 0
   
-  SequentialAnimation on animationProgress {
-    running: true
-    NumberAnimation {
-      from: 0
-      to: 1
-      duration: 1000
-      easing.type: Easing.Linear
-    }
-  }
-  
   implicitWidth: root.animationProgress > 0.5 ? parent.width : 0
   implicitHeight: root.animationProgress > 0.5 ? parent.height : 0
   
@@ -53,6 +43,7 @@ Rectangle {
   Component {
     id: horizontalComponent
     Com.StatusTraySectionHorizontal {
+      animationProgress: root.animationProgress
       isVertical: root.isVertical
     }
   }
@@ -60,6 +51,7 @@ Rectangle {
   Component {
     id: verticalComponent
     Com.StatusTraySectionVertical {
+      animationProgress: root.animationProgress
       isVertical: root.isVertical
     }
   }

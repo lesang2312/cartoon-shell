@@ -10,6 +10,7 @@ import "."
 ColumnLayout {
   id: root
   property bool isVertical: true
+  property real animationProgress: 0
   anchors.fill: parent
   spacing: ScalerService.s(8)
   Item {
@@ -23,8 +24,7 @@ ColumnLayout {
     Layout.fillHeight: true
     panelName: "tray"
     visible: TrayService.hasTray
-
-
+    opacity: root.animationProgress > 0.55 ? 1 : 0
     TrayStat {
       anchors.centerIn: parent
     }
@@ -40,6 +40,7 @@ ColumnLayout {
     Layout.fillWidth: true
     Layout.fillHeight: true
     panelName: "bluetooth"
+    opacity: root.animationProgress > 0.6 ? 1 : 0
 
     BluetoothStat {
       anchors.centerIn: parent
@@ -54,6 +55,7 @@ ColumnLayout {
   StatContainer {
     Layout.fillWidth: true
     Layout.fillHeight: true
+    opacity: root.animationProgress > 0.65 ? 1 : 0
     panelName: "wifi"
 
     WifiStat {
@@ -69,6 +71,7 @@ ColumnLayout {
   StatContainer {
     Layout.fillWidth: true
     Layout.fillHeight: true
+    opacity: root.animationProgress > 0.7 ? 1 : 0
     panelName: "mixer"
 
     VolumeStat {
@@ -84,6 +87,7 @@ ColumnLayout {
   StatContainer {
     Layout.fillWidth: true
     Layout.fillHeight: true
+    opacity: root.animationProgress > 0.75 ? 1 : 0
 
     BrightnessStat {
       anchors.centerIn: parent
@@ -98,6 +102,7 @@ ColumnLayout {
   StatContainer {
     Layout.fillWidth: true
     Layout.fillHeight: true
+    opacity: root.animationProgress > 0.8 ? 1 : 0
     panelName: "battery"
     visible: UPower.displayDevice.isLaptopBattery
     BatteryIcon {
@@ -116,6 +121,7 @@ ColumnLayout {
   StatContainer {
     Layout.fillWidth: true
     Layout.fillHeight: true
+    opacity: root.animationProgress > 0.85 ? 1 : 0
     panelName: "dashboard"
 
     IconImage {

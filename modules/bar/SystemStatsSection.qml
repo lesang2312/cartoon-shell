@@ -17,15 +17,6 @@ Rectangle {
   radius: ScalerService.s(Settings.appearance.radius2)
   anchors.centerIn: parent
   property real animationProgress: 0
-  SequentialAnimation on animationProgress {
-    running: true
-    NumberAnimation {
-      from: 0
-      to: 1
-      duration: 1000
-      easing.type: Easing.Linear
-    }
-  }
   implicitWidth: root.animationProgress > 0.4 ? parent.width : 0
   implicitHeight: root.animationProgress > 0.4 ? parent.height : 0
   Behavior on implicitHeight {

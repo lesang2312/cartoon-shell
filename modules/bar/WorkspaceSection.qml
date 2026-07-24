@@ -15,15 +15,6 @@ Rectangle {
 
   anchors.centerIn: parent
   property real animationProgress: 0
-  SequentialAnimation on animationProgress {
-    running: true
-    NumberAnimation {
-      from: 0
-      to: 1
-      duration: 1000
-      easing.type: Easing.Linear
-    }
-  }
   implicitWidth: root.animationProgress > 0.1 ? parent.width : 0
   implicitHeight: root.animationProgress > 0.1 ? parent.height : 0
   Behavior on implicitHeight {

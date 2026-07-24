@@ -6,17 +6,17 @@ import qs.services.cpu
 import "." as Com
 
 Item {
+  id: root
+  property real animationProgress: 0
   ColumnLayout {
     anchors.fill: parent
     spacing: ScalerService.s(8)
 
-    // CPU Container (vertical)
     Item {
       id: cpuContainerVertical
       Layout.fillWidth: true
       Layout.fillHeight: true
 
-      // Xoay container để hiển thị dọc
       Item {
         anchors.centerIn: parent
         width: parent.height  // Đảo width và height

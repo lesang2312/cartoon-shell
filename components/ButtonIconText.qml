@@ -48,6 +48,11 @@ Rectangle {
         easing.type: Easing.OutQuad
       }
     }
+    Behavior on opacity {
+    NumberAnimation {
+      duration: 200
+    }
+  }
     Behavior on rotation {
       NumberAnimation {
         duration: 500

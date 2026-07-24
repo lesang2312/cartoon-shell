@@ -7,6 +7,7 @@ import qs.components
 import qs.commons
 
 Item {
+  id: root
   property real animationProgress: 0
   ColumnLayout {
     anchors.fill: parent
@@ -32,10 +33,12 @@ Item {
           CustomText {
             name: DateTimeService.currentHour
             isBold: true
+            opacity: root.animationProgress > 0.3 ? 1 : 0
           }
           CustomText {
             name: DateTimeService.currentMinus
             isBold: true
+            opacity: root.animationProgress > 0.35 ? 1 : 0
           }
         }
       }
@@ -73,12 +76,14 @@ Item {
               WeatherService.dataModel.current.condition.code,
               WeatherService.dataModel.current.is_day
             )
+            opacity: root.animationProgress > 0.4 ? 1 : 0
             Layout.alignment: Qt.AlignHCenter
           }
 
           ColumnLayout {
             spacing: ScalerService.s(1)
             CustomText {
+              opacity: root.animationProgress > 0.45 ? 1 : 0
               name: `${WeatherService.dataModel.current.temp_c}°C` || "Đang tải..."
               Layout.alignment: Qt.AlignHCenter
               size: "xs"
@@ -121,6 +126,7 @@ Item {
       Layout.preferredHeight: ScalerService.s(24)
 
       ButtonIconImage{
+        opacity: root.animationProgress > 0.5 ? 1 : 0
         path:  `flags/${root.selectedFlag}.png`
         anchors.centerIn: parent
         onClicked: VisibleService.togglePanel("flag");

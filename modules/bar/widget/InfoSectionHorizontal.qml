@@ -6,6 +6,7 @@ import qs.services
 import qs.commons
 
 Item {
+  id: root
   property real animationProgress: 0
   RowLayout {
     anchors.fill: parent
@@ -29,12 +30,14 @@ Item {
           name: DateTimeService.currentTime
           isBold: true
           size: "small"
+          opacity: root.animationProgress > 0.3 ? 1 : 0
         }
         CustomText {
           id: textCurrentDate
           name : DateTimeService.currentDate
           size: "xs"
           color: theme.primary.dim_foreground
+          opacity: root.animationProgress > 0.35 ? 1 : 0
 
         }
       }
@@ -81,6 +84,7 @@ Item {
         IconImage {
           path: WeatherService.getWeatherIcon(WeatherService.dataModel.current.condition.code,WeatherService.dataModel.current.is_day)
           size: "normal"
+          opacity: root.animationProgress > 0.4 ? 1 : 0
         }
 
         ColumnLayout {
@@ -89,10 +93,12 @@ Item {
             name:  `${WeatherService.dataModel.current.temp_c}°C` || "Loading..."
             Layout.alignment: Qt.AlignVCenter
             size: "small"
+            opacity: root.animationProgress > 0.45 ? 1 : 0
           }
           CustomText {
             id: textCondition
 
+            opacity: root.animationProgress > 0.5 ? 1 : 0
             name: WeatherService.dataModel.current.condition.text.slice(0, 15) || "..."
             size: "xs"
             elide: Text.ElideRight
@@ -138,6 +144,7 @@ Item {
 
       ButtonIconImage{
         path:  `flags/${root.selectedFlag}.png`
+        opacity: root.animationProgress > 0.5 ? 1 : 0
         size: "large"
         anchors.centerIn: parent
         onClicked: {

@@ -10,6 +10,7 @@ import "."
 RowLayout {
   id: root
   property bool isVertical: false
+  property real animationProgress: 0
   anchors.fill: parent
   spacing: ScalerService.s(5)
   
@@ -24,6 +25,7 @@ RowLayout {
     panelName: "tray"
 
     visible: TrayService.hasTray
+    opacity: root.animationProgress > 0.55 ? 1 : 0
 
     TrayStat {
       anchors.centerIn: parent
@@ -40,6 +42,7 @@ RowLayout {
     Layout.fillWidth: true
     Layout.fillHeight: true
     panelName: "bluetooth"
+    opacity: root.animationProgress > 0.6 ? 1 : 0
 
     BluetoothStat {
       anchors.centerIn: parent
@@ -55,6 +58,7 @@ RowLayout {
     Layout.fillWidth: true
     Layout.fillHeight: true
     panelName: "wifi"
+    opacity: root.animationProgress > 0.65 ? 1 : 0
 
     WifiStat {
       anchors.centerIn: parent
@@ -70,6 +74,7 @@ RowLayout {
     Layout.fillWidth: true
     Layout.fillHeight: true
     panelName: "mixer"
+    opacity: root.animationProgress > 0.7 ? 1 : 0
 
     VolumeStat {
       anchors.centerIn: parent
@@ -84,6 +89,7 @@ RowLayout {
   StatContainer {
     Layout.fillWidth: true
     Layout.fillHeight: true
+    opacity: root.animationProgress > 0.75 ? 1 : 0
 
     BrightnessStat {
       anchors.centerIn: parent
@@ -99,6 +105,7 @@ RowLayout {
   StatContainer {
     Layout.fillWidth: true
     Layout.fillHeight: true
+    opacity: root.animationProgress > 0.8 ? 1 : 0
     panelName: "battery"
     visible: UPower.displayDevice.isLaptopBattery
 
@@ -119,6 +126,7 @@ RowLayout {
     Layout.fillWidth: true
     Layout.fillHeight: true
     panelName: "dashboard"
+    opacity: root.animationProgress > 0.85 ? 1 : 0
 
     IconImage {
       path: '/system/poweroff.png'

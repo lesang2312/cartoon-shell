@@ -4,6 +4,8 @@ import "." as Com
 import qs.services
 
 Item {
+  id: root
+  property real animationProgress: 0
   RowLayout {
     anchors.fill: parent
     spacing: ScalerService.s(4)

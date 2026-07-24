@@ -23,7 +23,7 @@ Item {
 
   Behavior on opacity {
     NumberAnimation {
-      duration: 100
+      duration: 200
     }
   }
 }

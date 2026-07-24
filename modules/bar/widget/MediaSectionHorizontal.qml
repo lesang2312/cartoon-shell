@@ -8,6 +8,8 @@ import qs.services
 import qs.commons
 import qs.components
 Item {
+  id: root
+  property real animationProgress: 0
   RowLayout {
     anchors.fill: parent
     spacing: ScalerService.s(12)
@@ -43,6 +45,7 @@ Item {
           color: theme.primary.foreground
           font.family: "ComicShannsMono Nerd Font"
           font.pixelSize: ScalerService.s(16)
+          opacity: root.animationProgress > 0.25 ? 1 : 0
 
           property bool needsMarquee: width > songContainer.width
 
@@ -81,7 +84,7 @@ Item {
 
         Behavior on opacity {
           NumberAnimation {
-            duration: 100
+            duration: 200
           }
         }
       }
@@ -92,6 +95,7 @@ Item {
         textColor: theme.primary.dim_foreground
         size: "xs"
         elide: Text.ElideRight
+        opacity: root.animationProgress > 0.3 ? 1 : 0
         Layout.fillWidth: true
       }
     }
@@ -108,6 +112,8 @@ Item {
         spacing: ScalerService.s(2)
 
         ButtonIconText {
+          opacity: root.animationProgress > 0.35 ? 1 : 0
+
           name: "skip_previous"
           size: "normal"
 
@@ -116,6 +122,7 @@ Item {
 
         }
         ButtonIconText {
+          opacity: root.animationProgress > 0.4 ? 1 : 0
           name: Players.mprisPlayer && Players.mprisPlayer.isPlaying
           ? "pause"
           : "play_arrow"
@@ -126,6 +133,7 @@ Item {
 
         }
         ButtonIconText {
+          opacity: root.animationProgress > 0.45 ? 1 : 0
           name: "skip_next"
           size: "normal"
 

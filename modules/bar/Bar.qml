@@ -34,7 +34,6 @@ PanelWindow {
     sourceComponent: isVertical ? verticalLayout : horizontalLayout
   }
 
-  // Component cho layout ngang (top/bottom)
   Component {
     id: horizontalLayout
 
@@ -45,8 +44,8 @@ PanelWindow {
         running: true
         NumberAnimation {
           from: 0
-          to: 0.6
-          duration: 100
+          to: 1
+          duration: 500
           easing.type: Easing.Linear
         }
       }
@@ -130,8 +129,8 @@ PanelWindow {
         running: true
         NumberAnimation {
           from: 0
-          to: 0.6
-          duration: 100
+          to: 1
+          duration: 500
           easing.type: Easing.Linear
         }
       }
