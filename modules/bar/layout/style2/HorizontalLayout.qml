@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import QtQuick.Effects
 import qs.modules.bar
 import qs.commons
 import qs.services

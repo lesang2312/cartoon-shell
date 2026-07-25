@@ -15,18 +15,35 @@ RowLayout {
 
     Repeater {
         model: CompositorService.uiWorkspaces
-
-        ButtonIconImage {
+        Loader {
             required property var modelData
 
+            sourceComponent: Settings.bar.styleWorkspace === "icon" ? textIcon : imageIcon
+        }
+    }
+    Component {
+        id: imageIcon
+
+        ButtonIconImage {
             size: root.sizeIcon
             opacity: root.animationProgress > 0.2 ? 1 : 0
             path: modelData.isActive || modelData.exists ? `workspace/${Settings.bar.iconWorkspace}/${modelData.isActive ? "active" : "exists"}.png` : "workspace/empty.png"
 
-            // Nhận tín hiệu trực tiếp từ ButtonIconImage
-            onClicked: {
-                CompositorService.switchToWorkspaceById(modelData.id);
+            onClicked: CompositorService.switchToWorkspaceById(modelData.id)
+
+            onWheel: event => {
+                CompositorService.handleScroll(event.angleDelta.y, event.angleDelta.x, root.isVertical);
             }
+        }
+    }
+    Component {
+        id: textIcon
+
+        ButtonIconText {
+            size: "normal"
+            textColor: theme.button.text
+            name: modelData.isActive ? "circle" : (modelData.exists ? "circle_circle" : "radio_button_unchecked")
+            onClicked: CompositorService.switchToWorkspaceById(modelData.id)
 
             onWheel: event => {
                 CompositorService.handleScroll(event.angleDelta.y, event.angleDelta.x, root.isVertical);

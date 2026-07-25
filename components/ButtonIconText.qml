@@ -2,99 +2,110 @@ import QtQuick
 import qs.services
 
 Rectangle {
-  id: root
+    id: root
 
-  // Properties
-  property string name: "undefined"
-  property string size: "normal"  // xs | small | normal | large | xl
-  property color textColor: theme.primary.foreground
-  property string fontFamily: "Material Symbols Rounded"
+    // Properties
+    property string name: "undefined"
+    property string size: "normal"  // xs | small | normal | large | xl
+    property color textColor: theme.primary.foreground
+    property string fontFamily: "Material Symbols Rounded"
 
-  color: "transparent"
+    // Thêm property hovered để sửa lỗi undefined
+    readonly property alias hovered: mouseArea.containsMouse
 
-  // Fixed size based on the maximum (hovered) size
-  implicitWidth: maxSize
-  implicitHeight: maxSize
+    // Signal để forward sự kiện ra ngoài
+    signal clicked
+    signal wheel(var event)
 
-  // Calculate max size to prevent layout shifting
-  readonly property int maxSize: {
-    switch (size) {
-      case "xs": return ScalerService.s(20)     // Max hovered size
-      case "small": return ScalerService.s(26)  // Max hovered size
-      case "normal": return ScalerService.s(40) // Max hovered size
-      case "large": return ScalerService.s(58)  // Max hovered size
-      case "xl": return ScalerService.s(72)     // Max hovered size
-      default: return ScalerService.s(46)       // Max hovered size
-    }
-  }
+    color: "transparent"
 
-  Text {
-    id: iconText
-    anchors.centerIn: parent
+    implicitWidth: maxSize
+    implicitHeight: maxSize
 
-    // Font configuration
-    font.variableAxes: { "FILL": 1 }
-    renderType: Text.NativeRendering
-    font.family: root.fontFamily
-
-    // Bind to root properties
-    text: root.name
-    color: root.hovered ? Qt.lighter(root.textColor, 1.2) : root.textColor
-
-    // Smooth animations
-    Behavior on font.pixelSize {
-      NumberAnimation {
-        duration: 150
-        easing.type: Easing.OutQuad
-      }
-    }
-    Behavior on opacity {
-    NumberAnimation {
-      duration: 200
-    }
-  }
-    Behavior on rotation {
-      NumberAnimation {
-        duration: 500
-        easing.type: Easing.OutQuad
-      }
-    }
-
-    Behavior on color {
-      ColorAnimation { duration: 150 }
-    }
-
-    // Dynamic pixel size based on hover state
-    font.pixelSize: {
-      switch (root.size) {
+    readonly property int maxSize: {
+        switch (size) {
         case "xs":
-        return mouseArea.containsMouse ? ScalerService.s(20) : ScalerService.s(16)
+            return ScalerService.s(20);
         case "small":
-        return mouseArea.containsMouse ? ScalerService.s(26) : ScalerService.s(22)
+            return ScalerService.s(26);
         case "normal":
-        return mouseArea.containsMouse ? ScalerService.s(42) : ScalerService.s(38)
+            return ScalerService.s(32);
         case "large":
-        return mouseArea.containsMouse ? ScalerService.s(58) : ScalerService.s(52)
+            return ScalerService.s(58);
         case "xl":
-        return mouseArea.containsMouse ? ScalerService.s(72) : ScalerService.s(64)
+            return ScalerService.s(72);
         default:
-        return mouseArea.containsMouse ? ScalerService.s(46) : ScalerService.s(40)
-      }
+            return ScalerService.s(46);
+        }
     }
 
-  }
+    Text {
+        id: iconText
+        anchors.centerIn: parent
 
-  MouseArea {
-    id: mouseArea
-    anchors.fill: parent
-    hoverEnabled: true
-    cursorShape: Qt.PointingHandCursor
+        font.variableAxes: {
+            "FILL": 1
+        }
+        renderType: Text.NativeRendering
+        font.family: root.fontFamily
 
-    onClicked: {
-      SoundService.playSound("pick")
-      root.clicked()
+        text: root.name
+        color: root.hovered ? Qt.lighter(root.textColor, 1.2) : root.textColor
+
+        Behavior on font.pixelSize {
+            NumberAnimation {
+                duration: 150
+                easing.type: Easing.OutQuad
+            }
+        }
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 200
+            }
+        }
+        Behavior on rotation {
+            NumberAnimation {
+                duration: 500
+                easing.type: Easing.OutQuad
+            }
+        }
+        Behavior on color {
+            ColorAnimation {
+                duration: 150
+            }
+        }
+
+        font.pixelSize: {
+            switch (root.size) {
+            case "xs":
+                return root.hovered ? ScalerService.s(20) : ScalerService.s(16);
+            case "small":
+                return root.hovered ? ScalerService.s(26) : ScalerService.s(22);
+            case "normal":
+                return root.hovered ? ScalerService.s(34) : ScalerService.s(32);
+            case "large":
+                return root.hovered ? ScalerService.s(58) : ScalerService.s(52);
+            case "xl":
+                return root.hovered ? ScalerService.s(72) : ScalerService.s(64);
+            default:
+                return root.hovered ? ScalerService.s(46) : ScalerService.s(40);
+            }
+        }
     }
-  }
 
-  signal clicked()
+    MouseArea {
+        id: mouseArea
+        anchors.fill: parent
+        hoverEnabled: true
+        cursorShape: Qt.PointingHandCursor
+
+        onClicked: {
+            SoundService.playSound("pick");
+            root.clicked();
+        }
+
+        onWheel: event => {
+            root.wheel(event);
+        }
+    }
 }
