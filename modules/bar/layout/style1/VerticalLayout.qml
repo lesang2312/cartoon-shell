@@ -41,7 +41,7 @@ ColumnLayout {
 
     // WorkspaceSection
     Item {
-        Layout.preferredHeight: Settings.bar.workspaceCount * ScalerService.s(28)
+        Layout.preferredHeight: Settings.bar.workspaceCount * ScalerService.s(32)
         Layout.fillWidth: true
         Com.WorkspaceSection {
             animationProgress: vertical.animationProgress
@@ -55,7 +55,7 @@ ColumnLayout {
 
     // MediaSection
     Item {
-        Layout.preferredHeight: ScalerService.s(180)
+        Layout.preferredHeight: ScalerService.s(160)
         Layout.fillWidth: true
         Com.MediaSection {
             animationProgress: vertical.animationProgress
@@ -69,7 +69,7 @@ ColumnLayout {
 
     // InfoSection
     Item {
-        Layout.preferredHeight: ScalerService.s(180)
+        Layout.preferredHeight: ScalerService.s(150)
         Layout.fillWidth: true
         Com.InfoSection {
             animationProgress: vertical.animationProgress
