@@ -31,31 +31,44 @@ ColumnLayout {
         Repeater {
             model: [
                 {
-                    name: "pacman"
+                    name: "pacman",
+                    style: "image"
                 },
                 {
-                    name: "luffy"
+                    name: "luffy",
+                    style: "image"
                 },
                 {
-                    name: "zoro"
+                    name: "zoro",
+                    style: "image"
                 },
                 {
-                    name: "nami"
+                    name: "nami",
+                    style: "image"
                 },
                 {
-                    name: "usopp"
+                    name: "usopp",
+                    style: "image"
                 },
                 {
-                    name: "sanji"
+                    name: "sanji",
+                    style: "image"
                 },
                 {
-                    name: "chopper"
+                    name: "chopper",
+                    style: "image"
                 },
                 {
-                    name: "goku"
+                    name: "goku",
+                    style: "image"
                 },
                 {
-                    name: "karin"
+                    name: "karin",
+                    style: "image"
+                },
+                {
+                    name: "circle",
+                    style: "icon"
                 }
             ]
 
@@ -125,21 +138,17 @@ ColumnLayout {
                     }
 
                     // Icon image
-                    ButtonIconImage {
+                    IconImage {
                         id: iconImage
-                        width: Math.min(parent.width * 0.8, ScalerService.s(48))
-                        height: Math.min(parent.height * 0.8, ScalerService.s(48))
+                        visible: modelData.style === "image"
                         anchors.centerIn: parent
                         path: `workspace/${modelData.name}/active.png`
-
-                        // Hiệu ứng scale khi click
-                        scale: mouseArea.pressed ? 0.85 : 1.0
-                        Behavior on scale {
-                            NumberAnimation {
-                                duration: 150
-                                easing.type: Easing.OutBack
-                            }
-                        }
+                    }
+                    IconText {
+                        visible: modelData.style === "icon"
+                        name: modelData.name
+                        textColor: theme.button.text
+                        anchors.centerIn: parent
                     }
 
                     // Mouse area
@@ -151,7 +160,12 @@ ColumnLayout {
 
                         onClicked: {
                             SoundService.playSound("pick");
-                            Settings.bar.iconWorkspace = modelData.name;
+                            if (modelData.style === "image") {
+                                Settings.bar.styleWorkspace = "image";
+                                Settings.bar.iconWorkspace = modelData.name;
+                            } else if (modelData.style === "icon") {
+                                Settings.bar.styleWorkspace = "icon";
+                            }
                         }
                     }
                 }
