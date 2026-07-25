@@ -65,7 +65,35 @@ ColumnLayout {
                 Layout.preferredHeight: width
                 Rectangle {
                     id: container
-                    anchors.fill: parent
+                    implicitWidth: 0
+                    anchors.centerIn: delegateItem
+                    implicitHeight: 0
+                    SequentialAnimation on implicitWidth {
+                        running: root.animationProgress > 0.2
+
+                        PauseAnimation {
+                            duration: index * 15
+                        }
+
+                        NumberAnimation {
+                            to: delegateItem.width
+                            duration: 500
+                            easing.type: Easing.OutCubic
+                        }
+                    }
+                    SequentialAnimation on implicitHeight {
+                        running: root.animationProgress > 0.2
+
+                        PauseAnimation {
+                            duration: index * 15
+                        }
+
+                        NumberAnimation {
+                            to: delegateItem.height
+                            duration: 500
+                            easing.type: Easing.OutCubic
+                        }
+                    }
                     anchors.margins: ScalerService.s(2)
                     radius: ScalerService.s(12)
 
@@ -124,34 +152,6 @@ ColumnLayout {
                         onClicked: {
                             SoundService.playSound("pick");
                             Settings.bar.iconWorkspace = modelData.name;
-                        }
-                    }
-
-                    // Animation hiển thị khi load
-                    SequentialAnimation on opacity {
-                        running: root.animationProgress > 0.2
-                        PauseAnimation {
-                            duration: index * 20
-                        }
-                        NumberAnimation {
-                            from: 0
-                            to: 1
-                            duration: 300
-                            easing.type: Easing.OutCubic
-                        }
-                    }
-
-                    // Animation scale khi load
-                    SequentialAnimation on scale {
-                        running: root.animationProgress > 0.2
-                        PauseAnimation {
-                            duration: index * 20
-                        }
-                        NumberAnimation {
-                            from: 0.5
-                            to: 1.0
-                            duration: 400
-                            easing.type: Easing.OutBack
                         }
                     }
                 }

@@ -47,6 +47,10 @@ Item {
             }
 
             // Panel Position Settings
+            Com.StyleBar {
+                Layout.fillWidth: true
+                animationProgress: root.animationProgress
+            }
             Com.IconWorkspace {
                 Layout.fillWidth: true
                 animationProgress: root.animationProgress
