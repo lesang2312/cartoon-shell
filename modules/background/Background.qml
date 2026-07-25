@@ -221,9 +221,9 @@ Variants {
           id: nextVideo
           anchors.fill: parent
           fillMode: VideoOutput.PreserveAspectCrop
-          muted: root.videoMuted
-          loops: root.videoLoop ? MediaPlayer.Infinite : 1
           autoPlay: true
+          loops: MediaPlayer.Infinite
+          muted: true
           playbackRate: root.videoPlaybackRate
           visible: root.nextWallpaperType === "video"
 

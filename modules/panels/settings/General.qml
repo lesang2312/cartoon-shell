@@ -45,14 +45,11 @@ Item {
       }
     }
 
-    // Main Content Area
-    // StackLayout for tabs
     StackLayout {
       Layout.fillWidth: true
       Layout.fillHeight: true
       currentIndex: root.currentTab
 
-      // Tab 0: Language & Region
       Loader {
         active: root.currentTab === 0
         source: "./general/LanguageRegion.qml"
