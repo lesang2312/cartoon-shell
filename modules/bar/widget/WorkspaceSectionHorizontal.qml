@@ -228,7 +228,12 @@ RowLayout {
     Loader {
       required property var modelData
 
-      sourceComponent: Settings.bar.styleWorkspace === "icon" ? numberText : imageIcon
+      sourceComponent:
+      Settings.bar.styleWorkspace === "icon"
+      ? textIcon
+      : Settings.bar.styleWorkspace === "image"
+      ? imageIcon
+      : numberText
     }
   }
   Component {
@@ -266,9 +271,16 @@ RowLayout {
       size: sizeIcon[Settings.bar.style ?? "normal"]
       textColor: modelData.isActive ? theme.button.text : (modelData.exists ? theme.primary.foreground : theme.primary.dim_foreground)
       isBold: modelData.isActive || modelData.exists ? true : false
+      implicitWidth: ScalerService.s(32)
+      implicitHeight: ScalerService.s(32)
       color: "transparent"
-      name: textNumber["ja"]?.[modelData.id] ?? modelData.id.toString()
+      name: textNumber[Settings.bar.iconWorkspace]?.[modelData.id] ?? modelData.id.toString()
       border.width: 0
+      onClicked: CompositorService.switchToWorkspaceById(modelData.id)
+
+      onWheel: event => {
+        CompositorService.handleScroll(event.angleDelta.y, event.angleDelta.x, root.isVertical);
+      }
     }
   }
 }

@@ -21,6 +21,24 @@ ColumnLayout {
     }
   }
 
+  readonly property var numberIcon: ({
+      "en": "1",
+      "ja": "一",
+      "ar": "١",
+      "hi": "१",
+      "bn": "১",
+      "pa": "੧",
+      "gu": "૧",
+      "ta": "௧",
+      "te": "౧",
+      "kn": "೧",
+      "ml": "൧",
+      "th": "๑",
+      "km": "១",
+      "lo": "໑",
+      "my": "၁"
+  })
+
   // Grid hiển thị các icon
   GridLayout {
     Layout.fillWidth: true
@@ -69,6 +87,65 @@ ColumnLayout {
       {
         name: "circle",
         style: "icon"
+      },{
+        name: "en",
+        style: "number"
+      },
+      {
+        name: "ja",
+        style: "number"
+      },
+      {
+        name: "ar",
+        style: "number"
+      },
+      {
+        name: "hi",
+        style: "number"
+      },
+      {
+        name: "bn",
+        style: "number"
+      },
+      {
+        name: "pa",
+        style: "number"
+      },
+      {
+        name: "gu",
+        style: "number"
+      },
+      {
+        name: "ta",
+        style: "number"
+      },
+      {
+        name: "te",
+        style: "number"
+      },
+      {
+        name: "kn",
+        style: "number"
+      },
+      {
+        name: "ml",
+        style: "number"
+      },
+      {
+        name: "th",
+        style: "number"
+      },
+      {
+        name: "km",
+        style: "number"
+      },
+      {
+        name: "lo",
+        style: "number"
+      },
+      {
+        name: "my",
+        style: "number"
       }
       ]
 
@@ -150,6 +227,13 @@ ColumnLayout {
             textColor: theme.button.text
             anchors.centerIn: parent
           }
+          CustomText{
+            name: numberIcon[modelData.name]
+            visible: modelData.style === "number"
+            textColor: theme.button.text
+            anchors.centerIn: parent
+            size: "small"
+          }
 
           // Mouse area
           MouseArea {
@@ -166,6 +250,10 @@ ColumnLayout {
               } else if (modelData.style === "icon") {
                 Settings.bar.styleWorkspace = "icon";
                 Settings.bar.iconWorkspace = modelData.name;
+              } else if (modelData.style === "number") {
+                Settings.bar.styleWorkspace = "number";
+                Settings.bar.iconWorkspace = modelData.name;
+
               }
             }
           }
