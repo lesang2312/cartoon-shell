@@ -60,7 +60,8 @@ Rectangle {
     onExited: root.hovered = false
 
     onClicked: {
-      root.clicked()
+      root.clicked();
+      SoundService.playSound("pick");
     }
     onWheel: event => {
       root.wheel(event);
