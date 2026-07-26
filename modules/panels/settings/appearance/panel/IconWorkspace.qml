@@ -232,7 +232,7 @@ ColumnLayout {
             visible: modelData.style === "number"
             textColor: theme.button.text
             anchors.centerIn: parent
-            size: "small"
+            isBold: true
           }
 
           // Mouse area
