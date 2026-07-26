@@ -6,7 +6,8 @@ Rectangle {
 
   // Properties
   property string name: "undefined"
-  property string size: "normal"  // xs | small | normal | large | xl
+  property string size: "normal"
+  property bool isBold: false
   property bool hovered: false
   property color textColor: theme.button.text
   property string fontFamily: "ComicShannsMono Nerd Font"
@@ -19,8 +20,8 @@ Rectangle {
   color: root.hovered ? theme.button.background_select : theme.button.background
 
   // Fixed size based on the size property (no hover effect)
-  implicitWidth: iconText.width + ScalerService.s(20)
-  implicitHeight: iconText.height + ScalerService.s(5)
+  implicitWidth: iconText.width + ScalerService.s(5)
+  implicitHeight: iconText.height
 
   Text {
     id: iconText
@@ -28,11 +29,12 @@ Rectangle {
 
     // Font configuration
     font.family: root.fontFamily
+    font.bold: root.isBold
     font.pixelSize: {
       switch (root.size) {
         case "xs": return ScalerService.s(16)
         case "small": return ScalerService.s(22)
-        case "normal": return ScalerService.s(38)
+        case "normal": return ScalerService.s(28)
         case "large": return ScalerService.s(52)
         case "xl": return ScalerService.s(64)
         default: return ScalerService.s(40)
@@ -60,7 +62,11 @@ Rectangle {
     onClicked: {
       root.clicked()
     }
+    onWheel: event => {
+      root.wheel(event);
+    }
   }
 
+  signal wheel(var event)
   signal clicked()
 }

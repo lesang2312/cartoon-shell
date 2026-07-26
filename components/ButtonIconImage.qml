@@ -23,7 +23,7 @@ Item {
       case "xs":
       return ScalerService.s(12);
       case "small":
-      return ScalerService.s(16);
+      return ScalerService.s(26);
       case "normal":
       return ScalerService.s(32);
       case "large":

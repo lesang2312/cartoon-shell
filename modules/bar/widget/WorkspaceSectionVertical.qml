@@ -17,7 +17,8 @@ ColumnLayout {
       "style2": "small"
   })
   readonly property var sizeImage: ({
-      "4sx": 4
+      "style1": "normal",
+      "style2": "small",
   })
   Repeater {
     model: CompositorService.uiWorkspaces
@@ -31,7 +32,7 @@ ColumnLayout {
     id: imageIcon
 
     ButtonIconImage {
-      size: root.sizeIcon
+      size: sizeImage[Settings.bar.style ?? "normal"]
       opacity: root.animationProgress > 0.2 ? 1 : 0
       path: modelData.isActive || modelData.exists ? `workspace/${Settings.bar.iconWorkspace}/${modelData.isActive ? "active" : "exists"}.png` : "workspace/empty.png"
 
