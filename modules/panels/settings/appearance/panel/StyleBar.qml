@@ -21,7 +21,7 @@ ColumnLayout {
             id: delegateItem
             Layout.fillWidth: true
             Layout.preferredHeight: ScalerService.s(50)
-            Rectangle {
+            CustomRectangle {
                 id: container
                 anchors.fill: parent
                 anchors.margins: ScalerService.s(2)
@@ -42,7 +42,6 @@ ColumnLayout {
                 }
                 border.width: ScalerService.s(2)
 
-                // Animation cho border và background
                 Behavior on color {
                     ColorAnimation {
                         duration: 200
@@ -54,7 +53,6 @@ ColumnLayout {
                     }
                 }
 
-                // Mouse area
                 MouseArea {
                     id: mouseArea
                     anchors.fill: parent
@@ -67,7 +65,6 @@ ColumnLayout {
                     }
                 }
 
-                // Animation hiển thị khi load
                 SequentialAnimation on opacity {
                     running: root.animationProgress > 0.2
                     PauseAnimation {
