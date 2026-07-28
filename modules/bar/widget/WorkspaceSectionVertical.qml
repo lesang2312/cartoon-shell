@@ -16,6 +16,10 @@ ColumnLayout {
             "style1": "normal",
             "style2": "small"
         })
+    readonly property var sizeIconEmpty: ({
+            "style1": "small",
+            "style2": "xs"
+        })
     readonly property var sizeNumber: ({
             "style1": "normal",
             "style2": "xs"
@@ -28,6 +32,13 @@ ColumnLayout {
     readonly property var sizeImage: ({
             "style1": "normal",
             "style2": "small"
+        })
+    readonly property var nameIcon: ({
+            "pac_man": {
+                "active": "󰮯",
+                "exists": "󰊠",
+                "empty": ""
+            }
         })
     readonly property var textNumber: ({
             "ja": {
@@ -214,6 +225,7 @@ ColumnLayout {
     Repeater {
         model: CompositorService.uiWorkspaces
         Loader {
+            Layout.alignment: Qt.AlignHCenter
             required property var modelData
 
             sourceComponent: Settings.bar.styleWorkspace === "icon" ? textIcon : Settings.bar.styleWorkspace === "image" ? imageIcon : numberText
@@ -238,9 +250,10 @@ ColumnLayout {
         id: textIcon
 
         ButtonIconText {
-            size: sizeIcon[Settings.bar.style ?? "normal"]
-            textColor: theme.button.text
-            name: modelData.isActive ? "circle" : (modelData.exists ? "circle_circle" : "radio_button_unchecked")
+            size: modelData.isActive || modelData.exists ? sizeIcon[Settings.bar.style ?? "normal"] : sizeIconEmpty[Settings.bar.style ?? "normal"]
+            textColor: modelData.isActive ? theme.normal.yellow : (modelData.exists ? theme.normal.blue : theme.primary.dim_foreground)
+            name: modelData.isActive ? nameIcon[Settings.bar.iconWorkspace]["active"] : (modelData.exists ? nameIcon[Settings.bar.iconWorkspace]["exists"] : nameIcon[Settings.bar.iconWorkspace]["empty"])
+            fontFamily: "Symbols Nerd Font"
             onClicked: CompositorService.switchToWorkspaceById(modelData.id)
 
             onWheel: event => {

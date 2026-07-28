@@ -15,6 +15,10 @@ RowLayout {
             "style1": "normal",
             "style2": "small"
         })
+    readonly property var sizeIconEmpty: ({
+            "style1": "small",
+            "style2": "xs"
+        })
     readonly property var sizeImage: ({
             "style1": "normal",
             "style2": "small"
@@ -221,6 +225,7 @@ RowLayout {
         model: CompositorService.uiWorkspaces
         Loader {
             required property var modelData
+            Layout.alignment: Qt.AlignVCenter
 
             sourceComponent: Settings.bar.styleWorkspace === "icon" ? textIcon : Settings.bar.styleWorkspace === "image" ? imageIcon : numberText
         }
@@ -244,7 +249,7 @@ RowLayout {
         id: textIcon
 
         ButtonIconText {
-            size: sizeIcon[Settings.bar.style ?? "normal"]
+            size: modelData.isActive || modelData.exists ? sizeIcon[Settings.bar.style ?? "normal"] : sizeIconEmpty[Settings.bar.style ?? "normal"]
             textColor: modelData.isActive ? theme.normal.yellow : (modelData.exists ? theme.normal.blue : theme.primary.dim_foreground)
             name: modelData.isActive ? nameIcon[Settings.bar.iconWorkspace]["active"] : (modelData.exists ? nameIcon[Settings.bar.iconWorkspace]["exists"] : nameIcon[Settings.bar.iconWorkspace]["empty"])
             fontFamily: "Symbols Nerd Font"

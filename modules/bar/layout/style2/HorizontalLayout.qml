@@ -335,7 +335,7 @@ RowLayout {
                         IconText {
                             name: "bluetooth"
                             size: "small"
-                            textColor: theme.button.text
+                            textColor: theme.normal.blue
                         }
                     }
                 }
@@ -349,7 +349,7 @@ RowLayout {
                         IconText {
                             name: networkService.wifi_icon_text_2
                             size: "small"
-                            textColor: theme.button.text
+                            textColor: theme.normal.green
                         }
                     }
                 }
