@@ -10,12 +10,14 @@ PanelWindow {
     id: panel
     readonly property var widthBar: ({
             "style1": 40,
-            "style2": 35
+            "style2": 35,
+            "style3": 35
         })
 
     readonly property var heightBar: ({
             "style1": 50,
-            "style2": 40
+            "style2": 40,
+            "style3": 45
         })
 
     implicitWidth: isVertical ? ScalerService.s(widthBar[Settings.bar.style] ?? 40) : Screen.width
@@ -31,10 +33,10 @@ PanelWindow {
     }
 
     margins {
-        top: (Settings.bar.position === "top" || Settings.bar.position === "left" || Settings.bar.position === "right") ? ScalerService.s(10) : 0
-        left: (Settings.bar.position === "left" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? ScalerService.s(10) : 0
-        right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? ScalerService.s(10) : 0
-        bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? ScalerService.s(10) : 0
+        top: (Settings.bar.position === "top" || Settings.bar.position === "left" || Settings.bar.position === "right") ? (Settings.bar.style === "style1" || Settings.bar.style === "style2") ? ScalerService.s(10) : 0 : 0
+        left: (Settings.bar.position === "left" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? (Settings.bar.style === "style1" || Settings.bar.style === "style2") ? ScalerService.s(10) : 0 : 0
+        right: (Settings.bar.position === "right" || Settings.bar.position === "top" || Settings.bar.position === "bottom") ? (Settings.bar.style === "style1" || Settings.bar.style === "style2") ? ScalerService.s(10) : 0 : 0
+        bottom: (Settings.bar.position === "bottom" || Settings.bar.position === "left" || Settings.bar.position === "right") ? (Settings.bar.style === "style1" || Settings.bar.style === "style2") ? ScalerService.s(10) : 0 : 0
     }
 
     Loader {

@@ -110,9 +110,10 @@ RowLayout {
                 }
                 ButtonIconText {
                     fontFamily: "Symbols Nerd Font"
-                    name: "󰣇 "
+                    name: "󰣇"
                     textColor: theme.button.text
                     size: "small"
+                    Layout.alignment: Qt.AlignVCenter
                 }
                 Item {
                     Layout.fillWidth: true
@@ -192,7 +193,15 @@ RowLayout {
                     }
                 }
 
-                Com.WorkspaceSectionHorizontal {}
+                CustomRectangle {
+                    Layout.preferredWidth: ScalerService.s(280)
+                    radius: ScalerService.s(Settings.appearance.radius2)
+                    color: theme.primary.dim_background
+                    Layout.fillHeight: true
+                    Com.WorkspaceSectionHorizontal {
+                        anchors.centerIn: parent
+                    }
+                }
                 Item {
                     Layout.preferredWidth: ScalerService.s(12)
                 }
@@ -359,8 +368,9 @@ RowLayout {
                 }
                 ButtonIconText {
                     fontFamily: "Symbols Nerd Font"
-                    name: "󰐥 "
+                    name: "󰐥"
                     size: "small"
+                    Layout.alignment: Qt.AlignVCenter
                     textColor: theme.normal.red
                 }
                 Item {

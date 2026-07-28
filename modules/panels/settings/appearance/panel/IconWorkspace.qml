@@ -22,7 +22,8 @@ ColumnLayout {
     }
 
     readonly property var nameIcon: ({
-            "pac_man": "󰮯"
+            "pac_man": "󰮯",
+            "pokemon": "󰐝"
         })
 
     readonly property var numberIcon: ({
@@ -90,6 +91,10 @@ ColumnLayout {
                 },
                 {
                     name: "pac_man",
+                    style: "icon"
+                },
+                {
+                    name: "pokemon",
                     style: "icon"
                 },
                 {

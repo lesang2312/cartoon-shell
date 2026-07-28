@@ -38,6 +38,11 @@ ColumnLayout {
                 "active": "󰮯",
                 "exists": "󰊠",
                 "empty": ""
+            },
+            "pokemon": {
+                "active": "󰐝",
+                "exists": "󰊠",
+                "empty": ""
             }
         })
     readonly property var textNumber: ({
