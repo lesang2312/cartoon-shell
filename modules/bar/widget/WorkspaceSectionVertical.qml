@@ -21,12 +21,12 @@ ColumnLayout {
             "style2": "xs"
         })
     readonly property var sizeNumber: ({
-            "style1": "normal",
+            "style1": "small",
             "style2": "xs"
         })
     readonly property var sizeRe: ({
             "style1": 32,
-            "style2": 28
+            "style2": 22
         })
 
     readonly property var sizeImage: ({
