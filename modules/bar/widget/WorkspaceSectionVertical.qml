@@ -259,6 +259,8 @@ ColumnLayout {
             textColor: modelData.isActive ? theme.normal.yellow : (modelData.exists ? theme.normal.blue : theme.primary.dim_foreground)
             name: modelData.isActive ? nameIcon[Settings.bar.iconWorkspace]["active"] : (modelData.exists ? nameIcon[Settings.bar.iconWorkspace]["exists"] : nameIcon[Settings.bar.iconWorkspace]["empty"])
             fontFamily: "Symbols Nerd Font"
+            implicitWidth: sizeRe[Settings.bar.style ?? 28]
+            implicitHeight: sizeRe[Settings.bar.style ?? 28]
             onClicked: CompositorService.switchToWorkspaceById(modelData.id)
 
             onWheel: event => {

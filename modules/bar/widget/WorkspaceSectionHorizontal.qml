@@ -13,23 +13,28 @@ RowLayout {
     property bool isVertical: Settings.bar.position === "left" || Settings.bar.position === "right"
     readonly property var sizeIcon: ({
             "style1": "normal",
-            "style2": "small"
+            "style2": "small",
+            "style3": "small"
         })
     readonly property var sizeIconEmpty: ({
             "style1": "small",
-            "style2": "xs"
+            "style2": "xs",
+            "style3": "xs"
         })
     readonly property var sizeImage: ({
             "style1": "normal",
-            "style2": "small"
+            "style2": "small",
+            "style3": "small"
         })
     readonly property var sizeRe: ({
             "style1": 32,
-            "style2": 22
+            "style2": 22,
+            "style3": 22
         })
     readonly property var sizeNumber: ({
             "style1": "small",
-            "style2": "xs"
+            "style2": "xs",
+            "style3": "xs"
         })
     readonly property var nameIcon: ({
             "pac_man": {
@@ -258,6 +263,8 @@ RowLayout {
             textColor: modelData.isActive ? theme.normal.yellow : (modelData.exists ? theme.normal.blue : theme.primary.dim_foreground)
             name: modelData.isActive ? nameIcon[Settings.bar.iconWorkspace]["active"] : (modelData.exists ? nameIcon[Settings.bar.iconWorkspace]["exists"] : nameIcon[Settings.bar.iconWorkspace]["empty"])
             fontFamily: "Symbols Nerd Font"
+            implicitWidth: sizeRe[Settings.bar.style ?? "normal"]
+            implicitHeight: sizeRe[Settings.bar.style ?? "normal"]
             onClicked: CompositorService.switchToWorkspaceById(modelData.id)
 
             onWheel: event => {

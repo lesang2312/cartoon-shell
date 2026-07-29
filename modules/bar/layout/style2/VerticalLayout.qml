@@ -113,6 +113,9 @@ ColumnLayout {
                     fontFamily: "Symbols Nerd Font"
                     name: "󰣇"
                     textColor: theme.button.text
+                    onClicked: {
+                        VisibleService.togglePanel("launcher");
+                    }
                 }
                 Item {
                     Layout.fillHeight: true
@@ -365,6 +368,16 @@ ColumnLayout {
                             name: networkService.wifi_icon_text_2
                             size: "small"
                             textColor: theme.button.text
+                            MouseArea {
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                cursorShape: Qt.PointingHandCursor
+
+                                onClicked: {
+                                    SoundService.playSound("pick");
+                                    VisibleService.togglePanel("wifi");
+                                }
+                            }
                         }
                         IconText {
                             name: "bluetooth"

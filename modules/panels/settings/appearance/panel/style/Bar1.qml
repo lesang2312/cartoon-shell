@@ -182,6 +182,8 @@ Item {
             onClicked: {
                 SoundService.playSound("pick");
                 Settings.bar.style = "style1";
+                Settings.bar.styleWorkspace = "image";
+                Settings.bar.iconWorkspace = "pacman";
             }
         }
 

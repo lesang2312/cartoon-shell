@@ -11,4 +11,5 @@ ColumnLayout {
     spacing: ScalerService.s(20)
     Com.Bar1 {}
     Com.Bar2 {}
+    Com.Bar3 {}
 }

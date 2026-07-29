@@ -114,6 +114,9 @@ RowLayout {
                     textColor: theme.button.text
                     size: "small"
                     Layout.alignment: Qt.AlignVCenter
+                    onClicked: {
+                        VisibleService.togglePanel("launcher");
+                    }
                 }
                 Item {
                     Layout.fillWidth: true
@@ -359,6 +362,17 @@ RowLayout {
                             name: networkService.wifi_icon_text_2
                             size: "small"
                             textColor: theme.normal.green
+                        }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+
+                        onClicked: {
+                            SoundService.playSound("pick");
+                            VisibleService.togglePanel("wifi");
                         }
                     }
                 }

@@ -249,6 +249,8 @@ Item {
             onClicked: {
                 SoundService.playSound("pick");
                 Settings.bar.style = "style2";
+                Settings.bar.styleWorkspace = "icon";
+                Settings.bar.iconWorkspace = "pac_man";
             }
         }
 

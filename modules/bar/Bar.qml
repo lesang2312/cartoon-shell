@@ -17,7 +17,7 @@ PanelWindow {
     readonly property var heightBar: ({
             "style1": 50,
             "style2": 40,
-            "style3": 45
+            "style3": 50
         })
 
     implicitWidth: isVertical ? ScalerService.s(widthBar[Settings.bar.style] ?? 40) : Screen.width
