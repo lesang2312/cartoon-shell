@@ -15,9 +15,7 @@ import "../../widget/" as Com
 RowLayout {
     id: root
     property real animationProgress: 0
-    NetworkService {
-        id: networkService
-    }
+
     readonly property var sink: Pipewire.defaultAudioSink
     property real currentBrightness: BrightnessService.currentBrightness
     function getBrightnessIcon() {
@@ -359,7 +357,7 @@ RowLayout {
                     RowLayout {
                         anchors.centerIn: parent
                         IconText {
-                            name: networkService.wifi_icon_text_2
+                            name: NetworkService.wifi_icon_text_2
                             size: "small"
                             textColor: theme.normal.green
                         }

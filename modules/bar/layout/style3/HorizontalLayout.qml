@@ -12,9 +12,6 @@ import "../../widget/" as Com
 RowLayout {
     id: root
     property real animationProgress: 0
-    NetworkService {
-        id: networkService
-    }
 
     readonly property var sink: Pipewire.defaultAudioSink
     function getIcon(volPercent) {
@@ -139,8 +136,9 @@ RowLayout {
                     Layout.fillHeight: true
                     spacing: ScalerService.s(8)
                     IconText {
-                        name: networkService.wifi_icon_text_1
+                        name: NetworkService.wifi_icon_text_1
                         size: "small"
+                        Layout.alignment: Qt.AlignHCenter
                         textColor: theme.primary.foreground
                         MouseArea {
                             anchors.fill: parent
@@ -154,6 +152,7 @@ RowLayout {
                         }
                     }
                     IconText {
+                        Layout.alignment: Qt.AlignHCenter
                         name: {
                             if (!sink || sink.audio.muted)
                                 return "volume_off";

@@ -12,27 +12,33 @@ Singleton {
     property bool shouldShowOsd: false
 
     function changeBright(delta) {
-      brightnessProcess.command = [
-          "sh",
-          "-c",
-          `
+        brightnessProcess.command = ["sh", "-c", `
           brightnessctl -e4 -n2 set ${delta > 0 ? "5%+" : "5%-"}
           qs ipc --path ~/.config/quickshell/cartoon-shell \
               call brightness set \
               "$(awk "BEGIN {print $(brightnessctl g)/$(brightnessctl m)}")"
-          `
-      ];
+          `];
 
-      brightnessProcess.running = true;
+        brightnessProcess.running = true;
+    }
+    function setBright(value) {
+        brightnessProcess.command = ["sh", "-c", `
+        brightnessctl -e4 -n2 set ${Math.round(value * 100)}%
+        qs ipc --path ~/.config/quickshell/cartoon-shell \
+            call brightness set \
+            "$(awk "BEGIN {print $(brightnessctl g)/$(brightnessctl m)}")"
+        `];
+
+        brightnessProcess.running = true;
     }
 
     Process {
-      id: brightnessProcess
-      running: false
+        id: brightnessProcess
+        running: false
 
-      onExited: {
-          getBrightProcess.running = true;
-      }
+        onExited: {
+            getBrightProcess.running = true;
+        }
     }
 
     Component.onCompleted: {
@@ -47,11 +53,7 @@ Singleton {
         id: getBrightProcess
         running: false
 
-        command: [
-            "bash",
-            "-c",
-            "awk \"BEGIN {print $(brightnessctl g)/$(brightnessctl m)}\""
-        ]
+        command: ["bash", "-c", "awk \"BEGIN {print $(brightnessctl g)/$(brightnessctl m)}\""]
 
         stdout: StdioCollector {
             onTextChanged: {
