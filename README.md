@@ -36,7 +36,10 @@ You can fully customize the applications, display names, and replace the default
 ### Grid Layout Preview
 Here is how the 3x3 App Grid looks inside the dashboard panel with custom pixel-art icons applied:
 
-<img width="163" height="171" alt="screenshot_2026-08-10_22-08-06" src="https://github.com/user-attachments/assets/0ef85876-1a17-4b86-9d69-2c5d43ae4555" />
+<div align="center">
+  <img width="155" height="157" alt="image" src="https://github.com/user-attachments/assets/24aee1bc-0234-4fe0-8782-7ef353423254" />
+</div>
+
 
 ### How to Change Application Icons:
 
@@ -75,23 +78,31 @@ Here is how the 3x3 App Grid looks inside the dashboard panel with custom pixel-
 * **Step 6**: Save the file. **Cartoon Shell** will instantly refresh and apply your new application names and custom graphics.
 
 
-## 🔔 Customizing Alarm Sounds
+## 📅 Customizing Calendar Reminder Sounds
 
-You can fully customize your alarm clock notifications by adding any audio file format (.mp3, .wav, .ogg, etc.) directly into the panel's system directory.
+You can fully customize your calendar reminder notification sounds by adding any audio file format (.mp3, .wav, .ogg, etc.) directly into the panel's calendar directory.
 
 ### Sound Assets Directory:
 ```bash
 ~/.config/quickshell/cartoon-shell/modules/panels/calendar/sounds/
 ```
 
-### How to Change the Alarm Sound:
+### Grid Layout Preview & Sound Settings
+Here is how the dashboard grid panel looks with custom configurations:
 
-* **Step 1**: Prepare your favorite audio file (All popular formats like `.mp3`, `.wav`, or `.ogg` are supported).
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/c2393a7b-87bc-4e62-ac5c-0adaba4efe25" width="250px" alt="Preview 1" style="display:inline-block; vertical-align:middle; margin-right:10px;"/>
+  <img src="https://github.com/user-attachments/assets/01ea9d37-2780-4f6c-80e3-7cee2d3bafc6" width="180px" alt="Preview 2" style="display:inline-block; vertical-align:middle; margin-right:10px;"/>
+  <img src="https://github.com/user-attachments/assets/2756d067-7acd-4625-befa-dbb34719145f" width="170px" alt="Preview 3" style="display:inline-block; vertical-align:middle;"/>
+</div>
+
+
+### How to Change the Reminder Sound:
+
+* **Step 1**: Prepare your preferred audio file (All popular formats like `.mp3`, `.wav`, or `.ogg` are supported).
 * **Step 2**: Copy your audio file directly into the calendar sounds folder:
   ```bash
   ~/.config/quickshell/cartoon-shell/modules/panels/calendar/sounds/
   ```
-* **Step 3**: Rename the audio file or update the calendar configuration files to point to your newly added file.
-* **Step 4**: Restart the **Cartoon Shell** panel, and your custom audio track will now play whenever the alarm goes off.
-
-
+* **Step 3**: Rename the audio file or update the calendar module configurations to reference your newly added file.
+* **Step 4**: Restart the **Cartoon Shell** panel, and your custom audio track will now play whenever a scheduled calendar reminder triggers.
