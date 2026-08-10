@@ -68,11 +68,30 @@ Here is how the 3x3 App Grid looks inside the dashboard panel with custom pixel-
     ],
     "fullname": "Your fullname",
     "username": "Your username",
-    "urlAvatar": "file:///home/linux-sieu-cap-pro-cua-le/Pictures/anh.jpg"
 }
 ```
 *Note: For built-in system applications, you can just input the native icon theme name (like `"kitty"`) instead of using an absolute file path.*
 
 * **Step 6**: Save the file. **Cartoon Shell** will instantly refresh and apply your new application names and custom graphics.
+
+
+## 🔔 Customizing Alarm Sounds
+
+You can fully customize your alarm clock notifications by adding any audio file format (.mp3, .wav, .ogg, etc.) directly into the panel's system directory.
+
+### Sound Assets Directory:
+```bash
+~/.config/quickshell/cartoon-shell/modules/panels/calendar/sounds/
+```
+
+### How to Change the Alarm Sound:
+
+* **Step 1**: Prepare your favorite audio file (All popular formats like `.mp3`, `.wav`, or `.ogg` are supported).
+* **Step 2**: Copy your audio file directly into the calendar sounds folder:
+  ```bash
+  ~/.config/quickshell/cartoon-shell/modules/panels/calendar/sounds/
+  ```
+* **Step 3**: Rename the audio file or update the calendar configuration files to point to your newly added file.
+* **Step 4**: Restart the **Cartoon Shell** panel, and your custom audio track will now play whenever the alarm goes off.
 
 
