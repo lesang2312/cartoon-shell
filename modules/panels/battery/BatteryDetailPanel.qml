@@ -59,7 +59,7 @@ PanelWindow {
   // Tự động refresh khi panel hiển thị
   Timer {
     interval: 2000
-    running: batteryDetailPanel.visible
+    running: false
     repeat: true
     onTriggered: {
       // Refresh dữ liệu nếu cần

@@ -78,9 +78,9 @@ Singleton {
     }
 
     component Dashboard: JsonObject {
-        property string fullname: "long"
+        property string fullname: "duy_le"
         property string urlAvatar: ""
-        property string username: "mailong2401"
+        property string username: "lesang2312"
         property var appGrid: [
             {
                 "name": "firefox"

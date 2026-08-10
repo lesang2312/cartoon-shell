@@ -28,7 +28,7 @@ Rectangle {
     anchors.margins: ScalerService.s(8)
     width: parent.width * 0.6
     height: parent.height * 0.6
-    source: "image://icon/" + root.iconSource
+    source: root.iconSource.startsWith("/") ? ("file://" + root.iconSource) : ("image://icon/" + root.iconSource)
     fillMode: Image.PreserveAspectFit
     smooth: true
     visible: status === Image.Ready

@@ -50,8 +50,8 @@ Item {
   // Initialize and listen to UPower changes
   Timer {
     id: initTimer
-    interval: 100
-    running: true
+    interval: 5000
+    running: false
     repeat: true
     onTriggered: {
       if (UPower.displayDevice && UPower.displayDevice.ready) {

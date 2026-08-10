@@ -105,14 +105,18 @@ Item {
         active: VisibleService.music
         source: "../modules/panels/music/MusicPanel.qml"
         onLoaded: {
-            item.visible = VisibleService.music;
+            item.visible = Qt.binding(function () {
+                return VisibleService.music;
+            });
         }
     }
     Loader {
         active: false
         source: "../modules/panels/win11/actionCenter/ActionCenterPanel.qml"
         onLoaded: {
-            item.visible = false;
+            item.visible = Qt.binding(function () {
+                return false;
+            });
         }
     }
     Loader {
@@ -211,6 +215,12 @@ Item {
         target: "calendar"
         function getToggle() {
             VisibleService.togglePanel("calendar");
+        }
+    }
+    IpcHandler {
+        target: "flag"
+        function getToggle() {
+            VisibleService.togglePanel("flag");
         }
     }
     IpcHandler {

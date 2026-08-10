@@ -9,6 +9,7 @@ import QtQuick.Effects
 import qs.components
 import qs.modules.dialogs
 import qs.modules.panels
+import qs.modules.panels.calendar
 import qs.modules.bar
 import qs.modules.background
 import qs.services
@@ -71,6 +72,7 @@ ShellRoot {
 
             Background {}
             Bar {}
+            AlarmBannerPanel {}
             NotificationPopup {}
             VolumeOsd {}
             BrightnessOsd {}
