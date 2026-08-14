@@ -110,32 +110,23 @@ Item {
       }
 
       // Tab 5: Effects
-      ColumnLayout {
-        width: parent.width
-        spacing: ScalerService.s(20)
-
-        Text {
-          text: lang?.appearance?.effects || "Effects"
-          color: theme.primary.foreground
-          font {
-            family: "ComicShannsMono Nerd Font"
-            pixelSize: ScalerService.s(24)
-            bold: true
+      Loader {
+        id: effectsLoader
+        active: root.currentTab === 5
+        source: "./appearance/Effects.qml"
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        onLoaded: {
+          item.visible = Qt.binding(function () {
+              return root.currentTab === 5;
+          });
+        }
+        onStatusChanged: {
+          if (status === Loader.Error) {
+            console.log("[Appearance] Loader Effects.qml LỖI - xem chi tiết ở dòng cảnh báo QML phía trên trong log terminal");
+          } else if (status === Loader.Ready) {
+            console.log("[Appearance] Loader Effects.qml đã nạp thành công");
           }
-        }
-
-        Rectangle {
-          Layout.fillWidth: true
-          height: ScalerService.s(1)
-          color: theme.primary.foreground
-          opacity: 0.3
-        }
-
-        // Effects settings content
-        Text {
-          text: "Effects settings content"
-          color: theme.primary.foreground
-          font.pixelSize: ScalerService.s(14)
         }
       }
 

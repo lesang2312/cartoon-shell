@@ -1,12 +1,12 @@
-
 ## 🎯 Introduction
 
 **Cartoon Shell** is a modern Wayland panel built entirely with **QuickShell** (QML) specifically for **Hyprland window manager**. The panel provides a smooth user experience with highly customizable interface, multi-language support, and multi-resolution display compatibility.
 
-<p align="center">
-  <video src="https://github.com/user-attachments/assets/f21f069b-70ce-4bba-a92d-8249741ec8d7" controls width="600"></video>
-</p>
+<div align="center">
+  <video src="https://github.com/user-attachments/assets/7b68022d-6507-4404-b2a8-b68e6275a9ce" controls width="600" height="337.5"></video>
+</div>
 
+</p>
 > [!NOTE]
 > This is an updated and feature-extended version of the original "cartoon-shell" project created and owned by **Mai Duong Long** (mailong2401).
 
@@ -28,7 +28,36 @@ git clone https://github.com/lesang2312/dotfiles-hyprland
 cd dotfiles-hyprland
 chmod +x setup.sh
 ./setup.sh
+gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark"
 ```
+
+## 🎛️ Custom Kitty Opacity Slider & New Updates
+
+This version introduces a built-in visual slider inside the control panel, allowing you to dynamically adjust your Kitty terminal transparency on-the-fly without manual configuration editing.
+
+### Kitty Opacity Feature:
+- Real-time background opacity adjustments.
+- Instant integration with the active Kitty instances.
+- Smooth transition effects.
+
+### Opacity Slider Preview
+<div align="center">
+  <img width="318" height="50" alt="image" src="https://github.com/user-attachments/assets/57ac4ea1-eb00-4a02-823a-2cda1e297e4c" />
+  <img width="1334" height="702" alt="image" src="https://github.com/user-attachments/assets/29054dd0-327f-43cd-9903-0d4a941ebca8" />
+</div>
+
+### How to use the Opacity Slider:
+* **Step 1**: Open the Cartoon Shell dashboard/control panel.
+* **Step 2**: Locate the dedicated **Kitty Opacity Slider** component.
+* **Step 3**: Drag the slider left to increase transparency, or right to make the window solid.
+* **Step 4**: The transparency values are automatically managed and saved for your next terminal sessions.
+
+### ✨ Other Key Updates in This Build:
+Along with the opacity slider, this version brings numerous improvements and core enhancements to ensure a smoother desktop experience:
+- **Performance Tweaks**: Optimized QML rendering inside Quickshell to reduce overall CPU and RAM usage.
+- **UI & Layout Fixes**: Improved padding, alignment, and responsiveness across different monitor resolutions.
+- **System Stability**: Fixed random panel crashes when switching system workspaces rapidly.
+- **Smarter Caching**: Configuration files load faster upon launching the system panel.
 
 ## 🎨 Dashboard App Grid Customization
 

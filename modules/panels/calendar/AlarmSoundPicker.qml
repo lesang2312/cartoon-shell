@@ -19,7 +19,7 @@ Item {
   signal closed
 
   property string selectedFileUrl: ""
-  property string selectedFileName: "Mặc định"
+  property string selectedFileName: I18nService.tr("default_sound")
 
   implicitWidth: ScalerService.s(300)
   implicitHeight: ScalerService.s(380)
@@ -104,7 +104,7 @@ Item {
       spacing: ScalerService.s(6)
 
       CustomText {
-        name: "Âm thanh báo"
+        name: I18nService.tr("alarm_sound_title")
         isBold: true
         size: "normal"
         Layout.fillWidth: true
@@ -121,7 +121,7 @@ Item {
     }
 
     CustomText {
-      name: "Copy file .mp3 vào thư mục \"sounds\" (cạnh các file trong thư mục calendar) để bổ sung âm báo mới, sau đó bấm làm mới."
+      name: I18nService.tr("alarm_sound_desc")
       size: "small"
       opacity: 0.6
       wrapMode: Text.WordWrap
@@ -157,14 +157,14 @@ Item {
               name: "notifications"
             }
             CustomText {
-              name: "Mặc định"
+              name: I18nService.tr("default_sound")
               Layout.fillWidth: true
             }
           }
 
           MouseArea {
             anchors.fill: parent
-            onClicked: root.choose("", "Mặc định")
+            onClicked: root.choose("", I18nService.tr("default_sound"))
           }
         }
 
@@ -214,7 +214,7 @@ Item {
           enabled: false
         }
         CustomText {
-          name: "Chưa có file âm thanh nào\ntrong thư mục sounds"
+          name: I18nService.tr("alarm_sound_empty")
           size: "small"
           textColor: theme.primary.dim_foreground
           horizontalAlignment: Text.AlignHCenter

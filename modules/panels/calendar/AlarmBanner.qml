@@ -87,7 +87,7 @@ Item {
         spacing: 0
 
         CustomText {
-          name: root.alarmActive ? (ReminderService.activeAlarm.time + "  ·  Báo thức") : ""
+          name: root.alarmActive ? (ReminderService.activeAlarm.time + "  ·  " + I18nService.tr("alarm_label")) : ""
           isBold: true
           size: "small"
         }

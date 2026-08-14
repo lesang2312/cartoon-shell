@@ -117,6 +117,22 @@ ColumnLayout {
         Layout.fillHeight: true
     }
 
+    // Kitty opacity
+    StatContainer {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        // không set panelName vì widget tự quản lý popup riêng (PopupWindow + grabFocus)
+
+        KittyOpacityStat {
+            anchors.centerIn: parent
+            isVertical: root.isVertical
+        }
+    }
+
+    Item {
+        Layout.fillHeight: true
+    }
+
     StatContainer {
         Layout.fillWidth: true
         Layout.fillHeight: true
