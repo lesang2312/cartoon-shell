@@ -630,11 +630,11 @@ Item {
                                         anchors.fill: parent
                                         hoverEnabled: true
                                         cursorShape: Qt.PointingHandCursor
-                                        // Di chuột vào -> xem trước live, chưa lưu
+                                        // Rê chuột vào -> preview live font đó trên terminal thật (chưa lưu)
                                         onEntered: KittyOpacityService.previewFont(modelData.name)
-                                        // Rời chuột ra mà chưa bấm chọn -> nạp lại cấu hình gốc
+                                        // Rê chuột ra mà CHƯA bấm chọn -> tự khôi phục về font trước đó
                                         onExited: KittyOpacityService.cancelFontPreview()
-                                        // Bấm chọn -> ghi vào kitty.conf, hiện dấu tích
+                                        // Bấm chọn -> mới thực sự ghi vào kitty.conf và áp dụng cho terminal, hiện dấu tích
                                         onClicked: {
                                             SoundService.playSound("pick");
                                             KittyOpacityService.applyFont(modelData.name);

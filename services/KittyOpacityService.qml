@@ -18,6 +18,9 @@ Singleton {
     property real minOpacity: 0.10
     property real maxOpacity: 1.0
 
+    // Đường dẫn tới kitty.conf, dùng để lưu opacity thật (không chỉ đổi live qua remote control)
+    property string configPath: Quickshell.env("HOME") + "/.config/kitty/kitty.conf"
+
     // ============ TRẠNG THÁI ============
     // Danh sách instance: [{ socket: "/tmp/kitty_id_123", label: "nvim ~/proj", opacity: 0.85 }]
     property var instances: []
@@ -119,6 +122,12 @@ except Exception:
         const value = Math.max(root.minOpacity, Math.min(root.maxOpacity, percent / 100));
         root.displayOpacity = value * 100;
 
+        // Lưu lại vào kitty.conf để lần mở kitty tiếp theo vẫn giữ đúng độ trong suốt này.
+        // Đặt TRƯỚC early-return bên dưới, để dù chưa có cửa sổ kitty nào đang chạy
+        // (targets rỗng) giá trị vẫn được lưu cho lần mở kitty sau.
+        // Dùng debounce vì setOpacity() có thể bị gọi liên tục khi lăn chuột / kéo slider.
+        persistOpacityTimer.restart();
+
         const targets = root.targetSockets();
 
         if (targets.length === 0) return;
@@ -139,6 +148,35 @@ except Exception:
     Process {
         id: applyProcess
         running: false
+    }
+
+    // Đợi 400ms sau lần đổi cuối cùng rồi mới ghi file, tránh spam sed khi đang kéo/lăn liên tục
+    Timer {
+        id: persistOpacityTimer
+        interval: 400
+        repeat: false
+        onTriggered: root.persistOpacity()
+    }
+
+    Process {
+        id: persistOpacityProcess
+        running: false
+    }
+
+    // Ghi giá trị background_opacity hiện tại xuống kitty.conf (lưu thật, sống sót qua lần mở kitty sau)
+    function persistOpacity() {
+        const value = (root.displayOpacity / 100).toFixed(2);
+        const writeConf = `
+            conf="${root.configPath}"
+            touch "$conf"
+            if grep -qE '^background_opacity[[:space:]]' "$conf"; then
+                sed -i "s/^background_opacity.*/background_opacity ${value}/" "$conf"
+            else
+                echo "background_opacity ${value}" >> "$conf"
+            fi
+        `;
+        persistOpacityProcess.command = ["bash", "-c", writeConf];
+        persistOpacityProcess.running = true;
     }
 
     // ============ CHỌN / BỎ CHỌN INSTANCE ============
@@ -308,6 +346,9 @@ except Exception:
             currentFont=$(grep -m1 -E '^font_family[[:space:]]' "$HOME/.config/kitty/kitty.conf" 2>/dev/null | sed -E 's/^font_family[[:space:]]+//')
             [ -n "$currentFont" ] && echo "CURRENTFONT|$currentFont"
 
+            currentOpacity=$(grep -m1 -E '^background_opacity[[:space:]]' "$HOME/.config/kitty/kitty.conf" 2>/dev/null | awk '{print $2}')
+            [ -n "$currentOpacity" ] && echo "CURRENTOPACITY|$currentOpacity"
+
             fc-list :spacing=mono family 2>/dev/null | tr ',' '\\n' | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | sort -u | while read -r name; do
               [ -n "$name" ] && echo "FONT|$name"
             done
@@ -327,6 +368,10 @@ except Exception:
                     const value = line.slice(idx + 1);
                     if (key === "USERFONTDIR") dir = value;
                     else if (key === "CURRENTFONT") current = value;
+                    else if (key === "CURRENTOPACITY") {
+                        const parsed = parseFloat(value);
+                        if (!isNaN(parsed)) root.displayOpacity = Math.max(root.minOpacity, Math.min(root.maxOpacity, parsed)) * 100;
+                    }
                     else if (key === "FONT" && value) fontNames.push(value);
                 });
 
@@ -354,11 +399,15 @@ except Exception:
     }
 
     // Rê chuột ra khỏi font mà CHƯA bấm chọn -> nạp lại cấu hình gốc (bỏ override tạm)
+    // QUAN TRỌNG: kitty's "load-config" mặc định VẪN GIỮ các override -o đã gửi trước đó
+    // (xem docs: "any config overrides previously specified ... are respected"), nên nếu
+    // không thêm --ignore-overrides thì override font_family của previewFont() sẽ không
+    // bao giờ bị hủy -> preview coi như bị "set" luôn dù chưa bấm chọn. Đây là chỗ đã fix.
     function cancelFontPreview() {
         if (!root.isPreviewingFont) return;
 
         const targets = root.targetSockets();
-        const cmds = targets.map(s => `kitty @ --to "unix:${s}" load-config >/dev/null 2>&1`);
+        const cmds = targets.map(s => `kitty @ --to "unix:${s}" load-config --ignore-overrides >/dev/null 2>&1`);
         if (cmds.length > 0) {
             fontProcess.command = ["bash", "-c", cmds.join(" ; ")];
             fontProcess.running = true;
@@ -381,7 +430,7 @@ except Exception:
                 echo "font_family ${escaped}" >> "$conf"
             fi
         `;
-        const reloadCmds = targets.map(s => `kitty @ --to "unix:${s}" load-config >/dev/null 2>&1`);
+        const reloadCmds = targets.map(s => `kitty @ --to "unix:${s}" load-config --ignore-overrides >/dev/null 2>&1`);
         fontProcess.command = ["bash", "-c", writeConf + "\n" + reloadCmds.join(" ; ")];
         fontProcess.running = true;
 
