@@ -130,33 +130,24 @@ Item {
         }
       }
 
-      // Tab 6: Dashboard
-      ColumnLayout {
-        width: parent.width
-        spacing: ScalerService.s(20)
-
-        Text {
-          text: lang?.appearance?.layout || "Layout"
-          color: theme.primary.foreground
-          font {
-            family: "ComicShannsMono Nerd Font"
-            pixelSize: ScalerService.s(24)
-            bold: true
+      // Tab 6: Dashboard (cách chia layout)
+      Loader {
+        id: dashboardLoader
+        active: root.currentTab === 6
+        source: "./appearance/dashboard/Dashboard.qml"
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        onLoaded: {
+          item.visible = Qt.binding(function () {
+              return root.currentTab === 6;
+          });
+        }
+        onStatusChanged: {
+          if (status === Loader.Error) {
+            console.log("[Appearance] Loader Dashboard.qml LỖI - xem chi tiết ở dòng cảnh báo QML phía trên trong log terminal");
+          } else if (status === Loader.Ready) {
+            console.log("[Appearance] Loader Dashboard.qml đã nạp thành công");
           }
-        }
-
-        Rectangle {
-          Layout.fillWidth: true
-          height: ScalerService.s(1)
-          color: theme.primary.foreground
-          opacity: 0.3
-        }
-
-        // Layout settings content
-        Text {
-          text: "Layout settings content"
-          color: theme.primary.foreground
-          font.pixelSize: ScalerService.s(14)
         }
       }
 
