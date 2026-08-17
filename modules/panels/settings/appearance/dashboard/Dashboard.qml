@@ -321,17 +321,21 @@ Item {
         }
       }
     }
-    onRunningChanged: {
-      if (!running) {
-        dashboardSettings.applyInProgress = false;
-        // Chỉ báo thành công khi script thật sự chạy xong không lỗi (exit code 0).
-        // Trước đây luôn báo "thành công" bất kể hyprctl reload có fail hay không,
-        // khiến người dùng tưởng đã áp dụng dù thực tế config lỗi và bị bỏ qua.
-        if (applyLayoutProcess.exitCode === 0) {
-          showNotification(lang?.dashboard?.success_apply || "Đã áp dụng bố cục thành công!");
-        } else {
-          showNotification(lang?.dashboard?.error_apply || "Áp dụng thất bại! Kiểm tra log để biết chi tiết (config Lua có thể bị lỗi cú pháp).");
-        }
+    // QUAN TRỌNG: Process của Quickshell KHÔNG hề có property "exitCode" —
+    // nó chỉ phát ra SIGNAL "exited(exitCode, exitStatus)" khi tiến trình
+    // kết thúc. Code cũ đọc "applyLayoutProcess.exitCode" (một property
+    // không tồn tại) nên giá trị đọc được luôn là "undefined", và
+    // "undefined === 0" luôn luôn là false. Kết quả: dù script chạy hoàn
+    // toàn thành công (exit code thật sự = 0), UI vẫn LUÔN LUÔN hiện thông
+    // báo "Áp dụng thất bại!". Sửa bằng cách lấy đúng exit code thật từ
+    // tham số của signal "exited" thay vì từ một property ảo không tồn tại.
+    onExited: (exitCode, exitStatus) => {
+      dashboardSettings.applyInProgress = false;
+      // Chỉ báo thành công khi script thật sự chạy xong không lỗi (exit code 0).
+      if (exitCode === 0) {
+        showNotification(lang?.dashboard?.success_apply || "Đã áp dụng bố cục thành công!");
+      } else {
+        showNotification(lang?.dashboard?.error_apply || "Áp dụng thất bại! Kiểm tra log để biết chi tiết (config Lua có thể bị lỗi cú pháp).");
       }
     }
   }
