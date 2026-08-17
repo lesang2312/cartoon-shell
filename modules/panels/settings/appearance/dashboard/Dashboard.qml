@@ -380,17 +380,32 @@ Item {
       + layoutData.hyprLua
       + decorationAndAnim
       + "EOF\n"
-      + "hyprctl reload && "
+      // QUAN TRỌNG: bắt riêng exit code của "hyprctl reload" và dùng NÓ làm
+      // exit code cuối cùng của cả script (exit "$reload_status" ở cuối).
+      // Trước đây dùng "hyprctl reload && for ... done" nên exit code cuối
+      // cùng lại phụ thuộc vào LỆNH CUỐI trong vòng for (focuswindow/
+      // togglefloating) — chỉ là hiệu ứng xếp lại cửa sổ cho đẹp, không liên
+      // quan gì đến việc config Lua có hợp lệ hay không. Hệ quả: chỉ cần một
+      // cửa sổ toggle floating bị trục trặc (ví dụ cửa sổ đó đã đóng, hoặc
+      // không hỗ trợ floating) là cả script báo "thất bại", khiến người dùng
+      // thấy thông báo sai "config Lua có thể bị lỗi cú pháp" dù thật ra
+      // hyprctl reload đã chạy thành công và config hoàn toàn hợp lệ.
+      + "hyprctl reload; reload_status=$?; "
       // Hyprland KHÔNG tự re-tile các cửa sổ đang mở sẵn khi chỉ đổi thuật toán
       // layout / rounding / animation qua reload — chỉ cửa sổ mở SAU mới nhận
       // layout mới. Ép từng cửa sổ đang mở thoát khỏi tiling rồi gắn lại
       // (toggle floating 2 lần) để chúng được xếp lại + nhận rounding/animation
       // mới ngay, giống hệt những gì thấy ở card xem trước.
+      // Chỉ chạy bước "làm đẹp" này khi reload thật sự thành công, và dù nó
+      // có trục trặc gì đi nữa cũng KHÔNG được làm thay đổi reload_status.
+      + "if [ \"$reload_status\" -eq 0 ]; then "
       + "for addr in $(hyprctl clients -j | grep -oE '\"address\":[[:space:]]*\"0x[0-9a-fA-F]+\"' | grep -oE '0x[0-9a-fA-F]+'); do "
       + "hyprctl dispatch focuswindow address:$addr >/dev/null 2>&1; "
       + "hyprctl dispatch togglefloating >/dev/null 2>&1; "
       + "hyprctl dispatch togglefloating >/dev/null 2>&1; "
-      + "done";
+      + "done; "
+      + "fi; "
+      + "exit \"$reload_status\"";
 
     applyLayoutProcess.command = ["bash", "-c", script];
     applyLayoutProcess.running = true;
